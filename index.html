@@ -17,6 +17,91 @@
 body{transition:background .3s,color .3s}
 .trust p{margin:0 auto;text-align:center}.ways h2{text-align:center}
 body.chatting .alt,body.acct .alt,body.teamv .alt{display:none}
+
+/* ===== role pages (creators / teams) ===== */
+.rpage{display:none}
+body.pagev main,body.pagev .notice,body.pagev .stage .hero,body.pagev .stage .scene,body.pagev .stage .ctrl,body.pagev .alt,body.pagev .dock{display:none}
+body.pagev .stage{margin:0;border:0;border-radius:0;background:none;overflow:visible}body.pagev .stage::before{display:none}
+body.pagev header{transform:none;position:fixed;left:0;right:0;top:0}
+body.pagev .rpage.on{display:block}
+.rhero{margin:84px 16px 0;border-radius:32px;border:1px solid var(--line);position:relative;overflow:hidden;text-align:center;padding:64px 20px 0;
+ background:radial-gradient(900px 420px at 50% 20%,var(--glow-c),transparent 70%),linear-gradient(180deg,var(--stage-a),var(--stage-b))}
+.rhero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(180deg,#000,transparent 80%);pointer-events:none}
+.rhero .k{font:500 12px "JetBrains Mono",monospace;letter-spacing:.2em;color:var(--cyan);margin-bottom:16px;position:relative}
+.rhero h1{font-size:clamp(40px,6.4vw,76px);letter-spacing:-.035em;position:relative}
+.rhero p.sub{color:var(--mute);font-size:19px;max-width:620px;margin:14px auto 26px;position:relative}
+.rhero .ctas{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;position:relative;margin-bottom:44px}
+.mock{position:relative;max-width:980px;margin:0 auto;border:1px solid var(--line);border-bottom:0;border-radius:20px 20px 0 0;background:var(--bg2);box-shadow:0 -10px 60px var(--shadow);overflow:hidden;text-align:left}
+.mock .bar2{display:flex;gap:6px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);font:500 12px "JetBrains Mono",monospace;color:var(--mute)}
+.mock .bar2 i{width:9px;height:9px;border-radius:50%;background:var(--line);display:inline-block}
+.mock .bar2 span{margin-left:10px}
+/* creator mock */
+.cm{display:grid;grid-template-columns:1fr 300px;min-height:340px}
+.stream{position:relative;background:linear-gradient(135deg,#1b2a2a,#2a1f2f 60%,#1a1a24);margin:14px;border-radius:12px;overflow:hidden;min-height:300px}
+.stream .scorebug{position:absolute;top:12px;left:50%;transform:translateX(-50%);font:500 12px "JetBrains Mono",monospace;color:#fff;background:rgba(0,0,0,.55);border-radius:8px;padding:5px 10px}
+.stream .cam{position:absolute;right:12px;bottom:12px;width:120px;height:68px;border-radius:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;font-size:11px;color:#ddd}
+.stream .ovl{position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:6px;font:500 11px "JetBrains Mono",monospace;color:#fff;background:rgba(10,10,15,.75);border:1px solid rgba(53,240,220,.5);border-radius:999px;padding:4px 10px}
+.stream .ovl b{color:#35F0DC;font-weight:500}
+.stream .live{position:absolute;top:12px;left:12px;font:600 11px Barlow;color:#fff;background:#d33;border-radius:4px;padding:2px 6px}
+.stream .note{position:absolute;left:12px;bottom:44px;font:500 10.5px "JetBrains Mono",monospace;color:rgba(255,255,255,.6)}
+.cside{border-left:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:10px}
+.cside .h{font:500 11px "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--mute)}
+.tp{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;line-height:1.4;background:var(--bg)}
+.tp .t{font:500 11px "JetBrains Mono",monospace;color:var(--cyan);margin-bottom:4px;display:flex;justify-content:space-between}
+.tp .t em{font-style:normal;color:var(--gold)}
+.tp.hot{border-color:var(--cyan-line)}
+.cardprev{border:1px solid var(--gold-line);border-radius:12px;padding:10px 12px;font-size:13.5px}
+.cardprev .t{font:500 11px "JetBrains Mono",monospace;color:var(--gold);margin-bottom:4px}
+.cardprev .acts{display:flex;gap:6px;margin-top:8px}.cardprev .acts span{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--mute)}
+/* team mock (Moment Desk) */
+.md{display:grid;grid-template-columns:1fr 1.25fr .9fr;min-height:340px}
+.md>div{padding:14px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:8px}.md>div:last-child{border-right:0}
+.md .h{font:500 11px "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--mute);display:flex;justify-content:space-between}
+.mq{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13.5px;background:var(--bg);cursor:default}
+.mq.sel{border-color:var(--cyan)}
+.mq .r{display:flex;justify-content:space-between;font:500 11px "JetBrains Mono",monospace;color:var(--mute);margin-bottom:3px}
+.mq .r b{font-weight:500;color:var(--gold)}
+.st{display:inline-block;font:500 10.5px "JetBrains Mono",monospace;border-radius:999px;padding:1px 7px;border:1px solid var(--line);color:var(--mute)}
+.st.new{color:var(--cyan);border-color:var(--cyan-line)}.st.ok{color:var(--gold);border-color:var(--gold-line)}
+.ev2{font-size:13.5px;line-height:1.5;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.ev2 .nums{display:flex;gap:14px;margin-top:6px;font:500 12px "JetBrains Mono",monospace;color:var(--mute)}.ev2 .nums b{color:var(--ink);font-weight:500}
+.draft{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px;background:var(--bg)}
+.draft .ch{display:flex;gap:6px;margin-bottom:6px}.draft .ch span{font:500 11px "JetBrains Mono",monospace;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--mute)}.draft .ch span.on{color:var(--ink);border-color:var(--mute)}
+.appr{display:flex;gap:6px}.appr span{font-size:12.5px;border-radius:999px;padding:5px 12px;border:1px solid var(--line)}.appr span.y{background:var(--cta);color:var(--on-cta);border-color:var(--cta);font-weight:600}
+.camp{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);font-size:13.5px}
+.camp .bar3{height:6px;border-radius:999px;background:var(--line);margin:8px 0 4px;overflow:hidden}.camp .bar3 i{display:block;height:100%;background:var(--cyan)}
+.camp .n{font:500 11.5px "JetBrains Mono",monospace;color:var(--mute);display:flex;justify-content:space-between}
+/* role page body */
+.rsec{padding:80px 0;border-top:1px solid var(--line);text-align:center}
+.rsec:first-of-type{border-top:0}
+.rsec h2{font-size:clamp(30px,4vw,44px);margin-bottom:12px}
+.rsec .lead{color:var(--mute);max-width:620px;margin:0 auto 36px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left}
+.g3 .c{border:1px solid var(--line);border-radius:16px;padding:24px;background:var(--bg2)}
+.g3 .c .k{font:500 12px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--cyan);margin-bottom:10px}
+.g3 .c h3{font:700 21px "Chakra Petch",sans-serif;margin-bottom:8px}.g3 .c p{color:var(--mute);font-size:15px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left;counter-reset:st}
+.steps>div{border-top:2px solid var(--line);padding-top:16px}
+.steps>div::before{counter-increment:st;content:"0" counter(st);font:500 13px "JetBrains Mono",monospace;color:var(--cyan);display:block;margin-bottom:8px}
+.steps b{display:block;font-size:17px;margin-bottom:4px}.steps p{color:var(--mute);font-size:15px}
+.flow{max-width:860px;margin:0 auto;text-align:left;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg2)}
+.flow .fr{display:grid;grid-template-columns:120px 1fr 1fr;gap:16px;padding:14px 20px;border-bottom:1px solid var(--line);font-size:15px}
+.flow .fr:last-child{border-bottom:0}.flow .fr.h{font:500 12px "JetBrains Mono",monospace;letter-spacing:.1em;color:var(--mute);background:var(--bg3)}
+.flow .fr .w{font:500 13px "JetBrains Mono",monospace;color:var(--cyan)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:860px;margin:0 auto}
+.metrics>div{border:1px solid var(--line);border-radius:16px;padding:20px;background:var(--bg2)}
+.metrics .v{font:500 30px "JetBrains Mono",monospace;color:var(--gold)}.metrics .l{font-size:14px;color:var(--mute);margin-top:4px}
+.rules{max-width:720px;margin:0 auto;text-align:left;display:grid;gap:10px}
+.rules div{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg2);font-size:15px}
+.rules div::before{content:"✓";color:var(--cyan);font-weight:700}
+.form{max-width:560px;margin:0 auto;text-align:left;border:1px solid var(--line);border-radius:20px;padding:26px;background:var(--bg2);display:grid;gap:12px}
+.form label{font-size:13px;color:var(--mute);display:grid;gap:6px}
+.form input,.form select{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 14px;color:var(--ink);font:inherit;font-size:15px}
+.form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form .pill{justify-self:start;margin-top:4px}
+.form .fine{margin-top:0}
+@media (max-width:860px){.cm{grid-template-columns:1fr}.cside{border-left:0;border-top:1px solid var(--line)}.md{grid-template-columns:1fr}.md>div{border-right:0;border-bottom:1px solid var(--line)}.md>div:nth-child(3){display:none}
+ .g3,.steps,.metrics{grid-template-columns:1fr}.flow .fr{grid-template-columns:1fr;gap:4px}.flow .fr.h{display:none}.form .row2{grid-template-columns:1fr}.rhero{margin:76px 8px 0;border-radius:24px;padding-top:48px}}
 /* ---- v4 hero: centered, image-first ---- */
 .hero{padding:44px 20px 30px!important}
 .hero h1{font-size:clamp(44px,7vw,84px)!important;letter-spacing:-.035em}
@@ -249,8 +334,8 @@ table.t td .q{color:var(--mute);font-size:13.5px;display:block}
   <a class="logo" href="#" onclick="goHome(event)">R<b>O</b>RR</a>
   <nav>
     <a class="lk" href="#today">Today</a>
-    <a class="lk" href="#ways">For creators</a>
-    <a class="lk" href="#ways">For teams</a>
+    <a class="lk" href="#creators" onclick="nav(event,'creators')">For creators</a>
+    <a class="lk" href="#teams" onclick="nav(event,'teams')">For teams</a>
     <button class="themebtn" id="themebtn" onclick="toggleTheme()" aria-label="Switch to light mode"></button>
     <div class="signed-out" style="display:flex;gap:10px;align-items:center">
       <button class="pill ghost" onclick="login()">Log in</button>
@@ -315,10 +400,10 @@ table.t td .q{color:var(--mute);font-size:13.5px;display:block}
       <a class="pill" href="#" onclick="event.preventDefault();scrollTo({top:0,behavior:'smooth'});document.getElementById('q').focus()">Ask free</a></div>
     <div class="way"><div class="k">CREATORS</div><h3>Say the right thing on stream.</h3>
       <ul><li>Live talking points during the match</li><li>Shareable answer cards for chat and socials</li><li>Same account, switch to Creator</li></ul>
-      <a class="pill ghost" href="#">Join the creator beta</a></div>
+      <a class="pill ghost" href="#creators" onclick="nav(event,'creators')">For creators</a></div>
     <div class="way"><div class="k">TEAMS</div><h3>Never miss the moment.</h3>
       <ul><li>Moment queue, ranked live</li><li>Approved drafts with the evidence attached</li><li>Sponsor delivery log, ready to report</li></ul>
-      <a class="pill ghost" href="#">Book a Moment Desk pilot</a></div>
+      <a class="pill ghost" href="#teams" onclick="nav(event,'teams')">For teams</a></div>
   </div>
 </div></section>
 
@@ -338,13 +423,6 @@ table.t td .q{color:var(--mute);font-size:13.5px;display:block}
 </section>
 </main>
 
-<footer><div class="wrap">
-  <div class="links"><a href="#">For teams</a><a href="#">For creators</a><a href="#">Advertise with us</a><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
-  <p>RORR isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties.</p>
-  <p>League of Legends, LCK and all related marks are trademarks of Riot Games, Inc. and their respective owners.</p>
-  <p>wGE+ and other derived metrics are calculated by us and are not official records. Sponsored content is always labelled and never changes an answer.</p>
-  <p>Pitch Interactive Inc. · © 2026</p>
-</div></footer>
 
 
 <section class="account" id="account"><div class="wrap"><div class="hub">
@@ -436,6 +514,154 @@ table.t td .q{color:var(--mute);font-size:13.5px;display:block}
 </div></section>
 <div class="toast" id="toast"></div>
 
+
+<!-- ============ CREATORS ============ -->
+<div class="rpage" id="pg-creators" data-r="creators">
+ <section class="rhero">
+  <div class="k">FOR CREATORS · BETA</div>
+  <h1>Say the right thing, live.</h1>
+  <p class="sub">Muse watches the match with you and hands you the line before the moment passes. Free while you stream.</p>
+  <div class="ctas"><a class="pill" href="#creator-beta" onclick="jump(event,'creator-beta')">Join the creator beta</a><button class="pill ghost" onclick="tryCreator()">Try creator mode</button></div>
+  <div class="mock">
+   <div class="bar2"><i></i><i></i><i></i><span>your stream · co-streaming LCK</span></div>
+   <div class="cm">
+    <div class="stream"><span class="live">LIVE</span><div class="scorebug">T1 14 · 24:10 · 11 GEN</div>
+     <div class="cam">your cam</div><div class="note">RORR overlay · under 3% of screen</div>
+     <div class="ovl"><b>wGE+</b> Jungle +1,450 · drake in 0:40</div></div>
+    <div class="cside">
+     <div class="h">TALKING POINTS</div>
+     <div class="tp hot"><div class="t"><span>NOW · 24:10</span><em>say it</em></div>"If T1 takes this drake, Baron opens. GEN's support has no flash."</div>
+     <div class="tp"><div class="t"><span>21:42</span></div>"GEN walked in two summoners down. That's the whole fight."</div>
+     <div class="h" style="margin-top:4px">ANSWER CARD</div>
+     <div class="cardprev"><div class="t">CARD · 21:42</div>GEN walked in two summoners down. T1 punished it.<div class="acts"><span>Copy link</span><span>Post to chat</span><span>Save</span></div></div>
+    </div>
+   </div>
+  </div>
+ </section>
+ <div class="wrap">
+  <section class="rsec">
+   <h2>Built for the person on the mic.</h2><p class="lead">You read the game for your chat. Muse reads the data for you, so you never stall on "wait, what just happened?"</p>
+   <div class="g3">
+    <div class="c"><div class="k">TALKING POINTS</div><h3>The line, not the spreadsheet.</h3><p>One sentence you can say out loud, ready seconds after a fight. Tap for the numbers behind it.</p></div>
+    <div class="c"><div class="k">ANSWER CARDS</div><h3>Chat asks, you answer with proof.</h3><p>Turn any answer into a card with the timestamp and the swing. Drop it in chat or on socials.</p></div>
+    <div class="c"><div class="k">COMPACT OVERLAY</div><h3>Small enough for the rules.</h3><p>One line at the edge of your scene, sized to stay inside co-streaming overlay limits.</p></div>
+   </div>
+  </section>
+  <section class="rsec">
+   <h2>Set up in a minute.</h2><p class="lead">Same RORR account as the fan side. Switch to Creator, add one browser source, go live.</p>
+   <div class="steps">
+    <div><b>Switch to Creator</b><p>From your account menu. Your history and team stay with you.</p></div>
+    <div><b>Add the overlay</b><p>Paste one browser-source link into OBS or Streamlabs. Or skip it and use the side panel only.</p></div>
+    <div><b>Stream as usual</b><p>Talking points arrive during the match. Cards are one tap away when chat asks.</p></div>
+   </div>
+  </section>
+  <section class="rsec">
+   <h2>Fair to the league, fair to you.</h2><p class="lead">Co-streaming has rules. We build inside them so you never have to choose between RORR and your channel.</p>
+   <div class="rules">
+    <div>Free for creators. We don't charge you, and we don't take a cut of your stream.</div>
+    <div>Overlay stays small and off the game view.</div>
+    <div>Muse never tells your chat who played badly. It says what happened.</div>
+    <div>Every number links back to the moment, so you're never caught repeating a guess.</div>
+   </div>
+  </section>
+  <section class="rsec" id="creator-beta">
+   <h2>Join the creator beta.</h2><p class="lead">We're opening to a small group of LoL co-streamers first.</p>
+   <form class="form" onsubmit="event.preventDefault();toast('Thanks. We\'ll be in touch (demo, nothing sent)')">
+    <div class="row2"><label>Channel name<input required placeholder="e.g. YourChannel"></label><label>Platform<select><option>Twitch</option><option>YouTube</option><option>CHZZK</option><option>SOOP</option><option>Kick</option></select></label></div>
+    <label>Channel link<input required placeholder="https://"></label>
+    <div class="row2"><label>Stream language<select><option>English</option><option>Korean</option><option>Other</option></select></label><label>Email<input type="email" required placeholder="you@example.com"></label></div>
+    <button class="pill">Request access</button>
+    <p class="fine">Preview: this form doesn't send anything yet.</p>
+   </form>
+  </section>
+ </div>
+</div>
+
+<!-- ============ TEAMS ============ -->
+<div class="rpage" id="pg-teams" data-r="teams">
+ <section class="rhero">
+  <div class="k">FOR TEAMS · MOMENT DESK</div>
+  <h1>Never miss the moment.</h1>
+  <p class="sub">A live queue of the moments that matter, drafts your editors approve with the evidence attached, and a delivery log your sponsors can trust.</p>
+  <div class="ctas"><a class="pill" href="#team-pilot" onclick="jump(event,'team-pilot')">Book a pilot call</a><a class="pill ghost" href="#team" onclick="nav(event,'team')">I have an invite</a></div>
+  <div class="mock">
+   <div class="bar2"><i></i><i></i><i></i><span>Moment Desk · T1 vs GEN · Game 3 · 24:40</span></div>
+   <div class="md">
+    <div><div class="h"><span>MOMENT QUEUE</span><span>3 new</span></div>
+     <div class="mq sel"><div class="r"><span>24:31 · Baron</span><b>92</b></div>Baron steal after drake fight <span class="st new">new</span></div>
+     <div class="mq"><div class="r"><span>21:42 · Fight</span><b>78</b></div>3-for-0 bot side, flash down <span class="st ok">approved</span></div>
+     <div class="mq"><div class="r"><span>18:05 · Gold</span><b>64</b></div>Jungle builds 1,450 of the lead <span class="st">in review</span></div>
+    </div>
+    <div><div class="h"><span>EVIDENCE &amp; DRAFT</span><span>v2</span></div>
+     <div class="ev2"><b>What happened:</b> Baron taken 9s after a won drake fight. <b>Why it matters:</b> win chance 41% → 63%.<div class="nums"><span>Gold <b>+3,200</b></span><span>wGE+ JG <b>+1,450</b></span><span>Src <b>live feed</b></span></div></div>
+     <div class="draft"><div class="ch"><span class="on">X</span><span>Instagram</span><span>Discord</span><span>KO</span><span class="on">EN</span></div>Drake, then Baron, 9 seconds apart. That's how you flip a game. 🐉 presented by [Sponsor]</div>
+     <div class="appr"><span class="y">Approve</span><span>Edit</span><span>Skip</span></div>
+    </div>
+    <div><div class="h"><span>CAMPAIGNS</span><span>Q4</span></div>
+     <div class="camp">[Sponsor A] · Play of the game<div class="bar3"><i style="width:75%"></i></div><div class="n"><span>9 / 12 delivered</span><span>3 left</span></div></div>
+     <div class="camp">[Sponsor B] · Match recap<div class="bar3"><i style="width:40%"></i></div><div class="n"><span>4 / 10 delivered</span><span>6 left</span></div></div>
+    </div>
+   </div>
+  </div>
+ </section>
+ <div class="wrap">
+  <section class="rsec">
+   <h2>Your editors stay in charge.</h2><p class="lead">Moment Desk finds and prepares. Your team decides what goes out.</p>
+   <div class="g3">
+    <div class="c"><div class="k">MOMENT QUEUE</div><h3>Ranked while it happens.</h3><p>Kills, objectives and gold swings grouped into moments and ranked by how much they moved the game.</p></div>
+    <div class="c"><div class="k">EVIDENCE &amp; DRAFT</div><h3>Every post shows its work.</h3><p>What happened, why it matters, who drove it, with the source and time. Drafts per channel and language.</p></div>
+    <div class="c"><div class="k">DELIVERY LOG</div><h3>Prove every sponsor post.</h3><p>Tag a campaign, paste the link, and the count updates. Report to sponsors without rebuilding a spreadsheet.</p></div>
+   </div>
+  </section>
+  <section class="rsec">
+   <h2>One match, start to finish.</h2><p class="lead">What Moment Desk does, and what your team does.</p>
+   <div class="flow">
+    <div class="fr h"><span>WHEN</span><span>MOMENT DESK</span><span>YOUR TEAM</span></div>
+    <div class="fr"><span class="w">Before</span><span>Loads roster, channels, campaigns and templates</span><span>Sets focus players and words to avoid</span></div>
+    <div class="fr"><span class="w">Live</span><span>Groups events into moments and ranks them</span><span>Nothing. It runs on its own</span></div>
+    <div class="fr"><span class="w">Moment</span><span>Builds the evidence card and channel drafts</span><span>Approve, edit or skip</span></div>
+    <div class="fr"><span class="w">Posted</span><span>Logs channel, time, link and campaign</span><span>Posts from your own accounts</span></div>
+    <div class="fr"><span class="w">After</span><span>Match report and sponsor delivery summary</span><span>Checks nothing was missed</span></div>
+   </div>
+  </section>
+  <section class="rsec">
+   <h2>What we measure in a pilot.</h2><p class="lead">A 4 to 8 week paid pilot with your content team, judged on numbers we agree up front.</p>
+   <div class="metrics">
+    <div><div class="v">≤15s</div><div class="l">From event to the queue</div></div>
+    <div><div class="v">≤2 min</div><div class="l">From moment to an approvable draft</div></div>
+    <div><div class="v">95%+</div><div class="l">Sponsor posts with a complete delivery record</div></div>
+   </div>
+  </section>
+  <section class="rsec">
+   <h2>How we work with teams.</h2><p class="lead">Built for the people who answer to fans and sponsors.</p>
+   <div class="rules">
+    <div>Nothing posts automatically. A person approves every post.</div>
+    <div>We don't grade players. Drafts describe what happened.</div>
+    <div>Your workspace, drafts and data stay separate from the public fan side, invite only.</div>
+    <div>Every card records the match, time, metrics used and version.</div>
+   </div>
+  </section>
+  <section class="rsec" id="team-pilot">
+   <h2>Book a pilot call.</h2><p class="lead">Thirty minutes with our team. Bring your channel list and one sponsor deliverable you track today.</p>
+   <form class="form" onsubmit="event.preventDefault();toast('Thanks. We\'ll reply within two business days (demo, nothing sent)')">
+    <div class="row2"><label>Team / organization<input required placeholder="Team name"></label><label>Your role<select><option>Content / social lead</option><option>Partnerships / sponsorship</option><option>Marketing</option><option>Other</option></select></label></div>
+    <div class="row2"><label>Leagues / titles<input placeholder="e.g. LCK, LEC"></label><label>Social accounts you run<select><option>1–5</option><option>6–15</option><option>16+</option></select></label></div>
+    <label>Work email<input type="email" required placeholder="you@team.gg"></label>
+    <button class="pill">Request a call</button>
+    <p class="fine">Preview: this form doesn't send anything yet.</p>
+   </form>
+  </section>
+ </div>
+</div>
+
+<footer><div class="wrap">
+  <div class="links"><a href="#teams" onclick="nav(event,'teams')">For teams</a><a href="#creators" onclick="nav(event,'creators')">For creators</a><a href="#">Advertise with us</a><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+  <p>RORR isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties.</p>
+  <p>League of Legends, LCK and all related marks are trademarks of Riot Games, Inc. and their respective owners.</p>
+  <p>wGE+ and other derived metrics are calculated by us and are not official records. Sponsored content is always labelled and never changes an answer.</p>
+  <p>Pitch Interactive Inc. · © 2026</p>
+</div></footer>
+
 <section class="chat" id="chat" aria-live="polite">
   <button class="back" onclick="goHome(event)">← Back to home</button>
   <div class="thread" id="thread"></div>
@@ -519,14 +745,17 @@ document.getElementById('teams').innerHTML=TEAMS.map((t,i)=>`<button class="tmc$
 const ITEMS=[{n:'Default look',s:'Equipped',img:'waving',c:'eq'},{n:'Cheer scarf',s:'Owned · tap to wear',img:'cheer'},{n:'Thinking pose pack',s:'Owned · tap to wear',img:'thinking'},{n:'Team home kit',s:'With team partners · soon',img:'excited',c:'lock'}];
 document.getElementById('items').innerHTML=ITEMS.map(it=>`<div class="it ${it.c||''}" onclick="${it.c==='lock'?"toast('Coming with team partners')":"this.parentNode.querySelectorAll('.it').forEach(x=>x.classList.remove('eq'));this.classList.add('eq');toast('Muse is wearing it')"}"><div class="th"><img src="${IMG[it.img]}" alt=""></div><div class="nm">${it.n}</div><div class="st">${it.s}</div></div>`).join('');
 function nav(e,route){e&&e.preventDefault();document.getElementById('menu').classList.remove('open');document.getElementById('pop').classList.remove('open');
- if(!document.body.classList.contains('body-in')){login()}
+ if((route.startsWith('account/')||route==='team')&&!document.body.classList.contains('body-in')){login()}
  history.pushState({r:route},'','#'+route);route_(route)}
-function route_(r){const b=document.body;b.classList.remove('acct','teamv');
+function route_(r){const b=document.body;b.classList.remove('acct','teamv','pagev');document.querySelectorAll('.rpage').forEach(x=>x.classList.remove('on'));
+ if(r==='creators'||r==='teams'){b.classList.remove('chatting');b.classList.add('pagev');document.getElementById('pg-'+r).classList.add('on');hdr.classList.add('solid');scrollTo(0,0);clearInterval(timer);return}
  if(r.startsWith('account/')){b.classList.remove('chatting');b.classList.add('acct');hdr.classList.add('solid');const t=r.split('/')[1];
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));document.querySelectorAll('.side button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));scrollTo(0,0);clearInterval(timer);return}
  if(r==='team'){b.classList.remove('chatting');b.classList.add('teamv');hdr.classList.add('solid');scrollTo(0,0);clearInterval(timer);return}
  if(r==='chat'&&document.getElementById('thread').children.length){b.classList.add('chatting');return}
  b.classList.remove('chatting');document.getElementById('thread').innerHTML='';hdr.classList.toggle('solid',scrollY>80);restart()}
+function jump(e,id){e.preventDefault();document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+function tryCreator(){history.pushState({},'',location.pathname);route_('');setMode('creator');scrollTo({top:0,behavior:'smooth'})}
 function goHome(e){e.preventDefault();history.pushState({},'',location.pathname);route_('')}
 addEventListener('popstate',()=>route_(location.hash.slice(1)));
 function login(){document.body.classList.add('body-in');renderQuota()}
@@ -544,7 +773,7 @@ function setTheme(t){document.documentElement.dataset.theme=t;const b=document.g
 function toggleTheme(){setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark')}
 (function(){let t=null;try{t=localStorage.getItem('rorr-theme')}catch(e){}if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';setTheme(t)})();
 setMode('fan');
-const ih=location.hash.slice(1);if(ih.startsWith('account/')||ih==='team'){login();route_(ih)}
+const ih=location.hash.slice(1);if(ih.startsWith('account/')||ih==='team'){login();route_(ih)}else if(ih==='creators'||ih==='teams')route_(ih);
 </script>
 </body>
 </html>
