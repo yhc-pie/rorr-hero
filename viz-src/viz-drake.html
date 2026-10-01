@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=960, height=540"/>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:960px;height:540px;overflow:hidden;background:#0E0F15}
+:root{--bg:#0E0F15;--panel:#151722;--line:#262836;--ink:#F2F2F5;--mute:#8C8C9A;--gold:#FFC24A;--cyan:#35F0DC;--dim:#4A4C5C}
+#stage{position:relative;width:960px;height:540px;font-family:"JetBrains Mono",ui-monospace,monospace;color:var(--ink);
+ background:radial-gradient(520px 300px at 70% 30%,rgba(53,240,220,.08),transparent 70%),var(--bg)}
+.scene-content{display:flex;flex-direction:column;justify-content:center;width:100%;height:100%;padding:56px 72px;gap:22px;box-sizing:border-box}
+.tag{display:inline-flex;gap:10px;align-items:center;font-size:22px;letter-spacing:.1em;color:var(--mute)}
+.tag b{color:var(--cyan);font-weight:500}
+.big{font-family:"Chakra Petch",sans-serif;font-weight:700;letter-spacing:-.02em}
+
+.wrap{display:flex;align-items:center;gap:64px;height:100%}
+.ring{position:relative;width:300px;height:300px;flex:none}
+.ring svg{position:absolute;inset:0}
+.ring .c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+.ring .t{font-size:72px;color:var(--ink)}
+.ring .l{font-size:22px;letter-spacing:.2em;color:var(--gold)}
+.right{flex:1;display:flex;flex-direction:column;gap:26px}
+.teams{display:flex;justify-content:space-between;font-size:26px;letter-spacing:.08em}
+.teams .a{color:var(--cyan)}.teams .b{color:var(--mute)}
+.bar{height:22px;border-radius:999px;background:var(--line);overflow:hidden;display:flex}
+.bar i{display:block;height:100%;background:var(--cyan)}
+.pcts{display:flex;justify-content:space-between;align-items:baseline}
+.pcts .p{font-size:64px}.pcts .p.a{color:var(--cyan)}.pcts .p.b{color:var(--mute);font-size:40px}
+.delta{font-size:24px;color:var(--gold);letter-spacing:.06em}
+</style></head><body>
+<div id="stage" data-composition-id="drake" data-start="0" data-duration="6" data-fps="30" data-width="960" data-height="540">
+<div id="main" class="clip" data-start="0" data-duration="6" data-track-index="0" style="width:100%;height:100%">
+<div class="scene-content"><div class="wrap">
+ <div class="ring"><svg viewBox="0 0 300 300"><circle cx="150" cy="150" r="130" fill="none" stroke="#262836" stroke-width="14"/>
+  <circle id="arc" cx="150" cy="150" r="130" fill="none" stroke="#FFC24A" stroke-width="14" stroke-linecap="round" transform="rotate(-90 150 150)" stroke-dasharray="816.8" stroke-dashoffset="0"/></svg>
+  <div class="c"><div class="t big" id="cd">0:40</div><div class="l">DRAKE</div></div></div>
+ <div class="right">
+  <div class="tag" id="tg">WIN CHANCE · <b>24:10</b></div>
+  <div class="teams" id="tm"><span class="a">T1</span><span class="b">GEN</span></div>
+  <div class="bar" id="br"><i id="fill" style="width:52%"></i></div>
+  <div class="pcts" id="pc"><span class="p a big" id="pa">52%</span><span class="p b big" id="pb">48%</span></div>
+  <div class="delta" id="dl">▲ +6 IF T1 TAKES DRAKE</div>
+ </div></div></div>
+</div></div>
+<script>
+const tl=gsap.timeline({paused:true});
+
+const C=816.8;
+tl.fromTo(".ring",{autoAlpha:0,scale:.86},{autoAlpha:1,scale:1,duration:.6,ease:"back.out(1.6)"},0);
+tl.fromTo(["#tg","#tm","#br","#pc"],{autoAlpha:0,y:18},{autoAlpha:1,y:0,duration:.5,stagger:.12,ease:"power3.out"},.25);
+const cd={v:40};tl.fromTo(cd,{v:40},{v:34,duration:4.6,ease:"none",onUpdate:()=>{document.getElementById("cd").textContent="0:"+String(Math.ceil(cd.v)).padStart(2,"0")}},.4);
+tl.fromTo("#arc",{attr:{"stroke-dashoffset":0}},{attr:{"stroke-dashoffset":C*(6/40)},duration:4.6,ease:"none"},.4);
+const w={v:52};tl.fromTo(w,{v:52},{v:58,duration:1.4,ease:"power2.inOut",onUpdate:()=>{const v=Math.round(w.v);document.getElementById("fill").style.width=w.v+"%";document.getElementById("pa").textContent=v+"%";document.getElementById("pb").textContent=(100-v)+"%"}},1.6);
+tl.fromTo("#dl",{autoAlpha:0,x:-12},{autoAlpha:1,x:0,duration:.5,ease:"power3.out"},2.9);
+tl.to("#stage",{duration:6-tl.duration()},tl.duration());
+
+window.__timelines=window.__timelines||{};window.__timelines["drake"]=tl;tl.seek(0);
+</script></body></html>

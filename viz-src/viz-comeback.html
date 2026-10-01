@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=960, height=540"/>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:960px;height:540px;overflow:hidden;background:#0E0F15}
+:root{--bg:#0E0F15;--panel:#151722;--line:#262836;--ink:#F2F2F5;--mute:#8C8C9A;--gold:#FFC24A;--cyan:#35F0DC;--dim:#4A4C5C}
+#stage{position:relative;width:960px;height:540px;font-family:"JetBrains Mono",ui-monospace,monospace;color:var(--ink);
+ background:radial-gradient(520px 300px at 70% 30%,rgba(53,240,220,.08),transparent 70%),var(--bg)}
+.scene-content{display:flex;flex-direction:column;justify-content:center;width:100%;height:100%;padding:56px 72px;gap:22px;box-sizing:border-box}
+.tag{display:inline-flex;gap:10px;align-items:center;font-size:22px;letter-spacing:.1em;color:var(--mute)}
+.tag b{color:var(--cyan);font-weight:500}
+.big{font-family:"Chakra Petch",sans-serif;font-weight:700;letter-spacing:-.02em}
+
+.chart{position:relative}
+.chart svg{display:block}
+.lbl{font-family:"JetBrains Mono";font-size:20px;fill:#8C8C9A;letter-spacing:.08em}
+.end{font-family:"Chakra Petch";font-weight:700;font-size:44px;fill:#FFC24A}
+.low{font-family:"Chakra Petch";font-weight:700;font-size:26px;fill:#8C8C9A}
+.obj{font-family:"JetBrains Mono";font-size:19px;fill:#35F0DC;letter-spacing:.12em}
+</style></head><body>
+<div id="stage" data-composition-id="comeback" data-start="0" data-duration="6" data-fps="30" data-width="960" data-height="540">
+<div id="main" class="clip" data-start="0" data-duration="6" data-track-index="0" style="width:100%;height:100%">
+<div class="scene-content"><div class="tag" id="tg">WIN CHANCE · <b>T1</b> · 0:00 → 26:05</div><div class="chart">
+<svg width="880" height="300" viewBox="0 0 880 300">
+ <line x1="60" y1="155.0" x2="740" y2="155.0" stroke="#262836" stroke-width="2" stroke-dasharray="6 8"/>
+ <text class="lbl" x="0" y="160.0">50%</text>
+ <line id="axis" x1="60" y1="270" x2="740" y2="270" stroke="#262836" stroke-width="2"/>
+ <text class="lbl" x="60" y="294">0:00</text><text class="lbl" x="680" y="294">26:05</text>
+ <path id="ln" d="M60.0 155.0 L164.2 143.5 L268.4 160.8 L372.6 183.8 L450.8 189.5 L529.0 201.0 L581.1 206.8 L625.4 195.2 L659.2 160.8 L690.5 143.5 L700.9 109.0 L719.2 97.5 L740.0 80.2" fill="none" stroke="#35F0DC" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+ <g id="lowp"><circle cx="581.1" cy="206.8" r="7" fill="#8C8C9A"/><text class="low" x="551.1" y="246.8">41%</text></g>
+ <g id="o1"><circle cx="690.5" cy="143.5" r="8" fill="#0E0F15" stroke="#35F0DC" stroke-width="3"/><text class="obj" x="540.5" y="149.5">DRAGON</text></g>
+ <g id="o2"><circle cx="719.2" cy="97.5" r="8" fill="#0E0F15" stroke="#35F0DC" stroke-width="3"/><text class="obj" x="599.2" y="83.5">BARON</text></g>
+ <g id="endp"><circle cx="740.0" cy="80.2" r="10" fill="#FFC24A"/><text class="end" x="758.0" y="94.2">63%</text></g>
+</svg></div></div>
+</div></div>
+<script>
+const tl=gsap.timeline({paused:true});
+
+const ln=document.getElementById("ln");const L=ln.getTotalLength();ln.style.strokeDasharray=L;
+tl.fromTo("#tg",{autoAlpha:0,y:10},{autoAlpha:1,y:0,duration:.4,ease:"power3.out"},0);
+tl.fromTo("#ln",{strokeDashoffset:L},{strokeDashoffset:0,duration:3.2,ease:"power1.inOut"},.3);
+tl.fromTo("#lowp",{autoAlpha:0,scale:.6,transformOrigin:"50% 50%"},{autoAlpha:1,scale:1,duration:.4,ease:"back.out(2)"},1.9);
+tl.fromTo("#o1",{autoAlpha:0},{autoAlpha:1,duration:.35},2.85);
+tl.fromTo("#o2",{autoAlpha:0},{autoAlpha:1,duration:.35},3.25);
+tl.fromTo("#endp",{autoAlpha:0,scale:.5,transformOrigin:"50% 50%"},{autoAlpha:1,scale:1,duration:.5,ease:"back.out(2.2)"},3.5);
+tl.to("#stage",{duration:6-tl.duration()},tl.duration());
+
+window.__timelines=window.__timelines||{};window.__timelines["comeback"]=tl;tl.seek(0);
+</script></body></html>

@@ -1,0 +1,41 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=960, height=540"/>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:960px;height:540px;overflow:hidden;background:#0E0F15}
+:root{--bg:#0E0F15;--panel:#151722;--line:#262836;--ink:#F2F2F5;--mute:#8C8C9A;--gold:#FFC24A;--cyan:#35F0DC;--dim:#4A4C5C}
+#stage{position:relative;width:960px;height:540px;font-family:"JetBrains Mono",ui-monospace,monospace;color:var(--ink);
+ background:radial-gradient(520px 300px at 70% 30%,rgba(53,240,220,.08),transparent 70%),var(--bg)}
+.scene-content{display:flex;flex-direction:column;justify-content:center;width:100%;height:100%;padding:56px 72px;gap:22px;box-sizing:border-box}
+.tag{display:inline-flex;gap:10px;align-items:center;font-size:22px;letter-spacing:.1em;color:var(--mute)}
+.tag b{color:var(--cyan);font-weight:500}
+.big{font-family:"Chakra Petch",sans-serif;font-weight:700;letter-spacing:-.02em}
+
+.head{display:flex;align-items:baseline;justify-content:space-between}
+.total{font-size:84px;color:var(--ink)}.total small{font-size:22px;color:var(--mute);margin-left:12px;letter-spacing:.1em;font-family:"JetBrains Mono"}
+.list{display:flex;flex-direction:column;gap:14px}
+.r{display:grid;grid-template-columns:80px 1fr 130px;align-items:center;gap:18px}
+.role{font-size:24px;color:var(--mute);letter-spacing:.06em}
+.track{height:28px;border-radius:8px;background:var(--line);overflow:hidden}
+.track i{display:block;height:100%;border-radius:8px;background:var(--dim)}
+#b0{background:var(--gold)}
+.v{font-size:26px;text-align:right;color:var(--mute)}#v0{color:var(--gold)}
+</style></head><body>
+<div id="stage" data-composition-id="gold" data-start="0" data-duration="6" data-fps="30" data-width="960" data-height="540">
+<div id="main" class="clip" data-start="0" data-duration="6" data-track-index="0" style="width:100%;height:100%">
+<div class="scene-content"><div class="tag" id="tg">GOLD LEAD · <b>T1</b> · wGE+ BY ROLE</div><div class="head"><div class="total big" id="tot">+0<small>GOLD</small></div></div><div class="list"><div class="r"><span class="role">JG</span><div class="track"><i id="b0" style="width:100.0%"></i></div><span class="v" id="v0">+1,450</span></div><div class="r"><span class="role">MID</span><div class="track"><i id="b1" style="width:48.3%"></i></div><span class="v" id="v1">+700</span></div><div class="r"><span class="role">BOT</span><div class="track"><i id="b2" style="width:41.4%"></i></div><span class="v" id="v2">+600</span></div><div class="r"><span class="role">TOP</span><div class="track"><i id="b3" style="width:20.7%"></i></div><span class="v" id="v3">+300</span></div><div class="r"><span class="role">SUP</span><div class="track"><i id="b4" style="width:10.3%"></i></div><span class="v" id="v4">+150</span></div></div></div>
+</div></div>
+<script>
+const tl=gsap.timeline({paused:true});
+
+const D=[1450, 700, 600, 300, 150];
+tl.fromTo("#tg",{autoAlpha:0,y:10},{autoAlpha:1,y:0,duration:.4,ease:"power3.out"},0);
+tl.fromTo("#tot",{autoAlpha:0,y:16},{autoAlpha:1,y:0,duration:.5,ease:"power3.out"},.15);
+const t={v:0};tl.fromTo(t,{v:0},{v:3200,duration:1.6,ease:"power2.out",onUpdate:()=>{document.getElementById("tot").firstChild.nodeValue="+"+Math.round(t.v).toLocaleString("en-US")}},.3);
+tl.fromTo(".r",{autoAlpha:0,x:-14},{autoAlpha:1,x:0,duration:.35,stagger:.08,ease:"power3.out"},.6);
+D.forEach((v,i)=>{tl.fromTo("#b"+i,{width:"0%"},{width:(v/1450*100)+"%",duration:1.1,ease:"power3.out"},.8+i*.12)});
+tl.fromTo("#b0",{boxShadow:"0 0 0 rgba(255,194,74,0)"},{boxShadow:"0 0 24px rgba(255,194,74,.55)",duration:.5,yoyo:true,repeat:1,ease:"sine.inOut"},2.6);
+tl.to("#stage",{duration:6-tl.duration()},tl.duration());
+
+window.__timelines=window.__timelines||{};window.__timelines["gold"]=tl;tl.seek(0);
+</script></body></html>
