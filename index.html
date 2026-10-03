@@ -670,6 +670,16 @@ body.pagev .lgbar,body.acct .lgbar{display:none}
 .wpop b{font:700 14px Inter,sans-serif;color:var(--cyan)}
 .wpop p{font:400 13.5px/1.5 Inter,sans-serif;color:var(--ink);margin:4px 0 8px}
 .wpop a{font:600 13px Inter,sans-serif;color:var(--cyan);text-decoration:none}.wpop a:hover{text-decoration:underline}
+
+/* rails on wRC+ / about pages for 1220-1519px: narrow content to make room */
+@media (min-width:1220px) and (max-width:1519px){
+ body.pagev:has(#pg-wge.on) .siderail,body.pagev:has(#pg-about.on) .siderail{display:block;position:fixed;top:120px;z-index:20}
+ body.pagev:has(#pg-wge.on) .siderail.l,body.pagev:has(#pg-about.on) .siderail.l{left:24px}
+ body.pagev:has(#pg-wge.on) .siderail.r,body.pagev:has(#pg-about.on) .siderail.r{right:24px}
+ body.pagev:has(#pg-wge.on) .wg,body.pagev:has(#pg-about.on) .ab{max-width:calc(100vw - 432px);padding-left:0;padding-right:0}
+ body.pagev:has(#pg-wge.on) .rhero,body.pagev:has(#pg-about.on) .rhero{margin-left:208px!important;margin-right:208px!important}
+ body.pagev:has(#pg-about.on) .ab-g4{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
