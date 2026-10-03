@@ -556,7 +556,7 @@ html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3{font-family:"Gothic A1",Prete
 
 /* ===== lower: standings + schedule ===== */
 .lower{max-width:1320px;margin:-36px auto 60px;padding:0 20px;display:grid;grid-template-columns:1.45fr 1fr;gap:18px;align-items:start}
-.tscroll{overflow-x:auto}
+.tscroll{overflow-x:auto}.tscroll>.tb{display:table;width:100%}
 .tb.st td,.tb.st th{white-space:nowrap}
 .frm{display:inline-flex;gap:3px}
 .frm i{width:18px;height:18px;border-radius:3px;font:700 10px Inter,sans-serif;font-style:normal;display:inline-grid;place-items:center;background:var(--bg3);color:var(--mute);border:1px solid var(--line)}
@@ -573,8 +573,13 @@ html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3{font-family:"Gothic A1",Prete
 .sm-row .sc{text-align:center;font:700 15px "JetBrains Mono",monospace}
 .sm-row .vs{text-align:center;font:500 12px "JetBrains Mono",monospace;color:var(--mute)}
 .sm-row .go{justify-self:end;font:700 10.5px Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan)}
-@media (max-width:1100px){.lower{grid-template-columns:1fr;margin-top:-30px}}
-@media (max-width:760px){.lower{margin-top:-40px}.sm-row{grid-template-columns:44px 1fr 52px 1fr;padding:10px 12px}.sm-row .go{display:none}}
+.portal>.lower{grid-column:1/-1;margin:0;padding:0;max-width:none;grid-template-columns:1.75fr 1fr}
+.tb.st td,.tb.st th{padding-left:9px;padding-right:9px}
+.portal>.lower .sm-row{grid-template-columns:48px 1fr 54px 1fr}.portal>.lower .sm-row .go{display:none}
+@media (min-width:1101px){.pside{grid-column:3;grid-row:1/span 2}.portal>.lower{grid-column:1/3;grid-row:2}}
+@media (max-width:1280px) and (min-width:1101px){.portal>.lower{grid-template-columns:1fr}}
+@media (max-width:1100px){.portal>.lower{grid-template-columns:1fr}}
+@media (max-width:760px){.sm-row{grid-template-columns:44px 1fr 52px 1fr;padding:10px 12px}.sm-row .go{display:none}}
 /* ad slot on narrow screens */
 @media (max-width:600px){.adslot{flex-wrap:wrap;gap:8px 10px;padding:10px 12px}.adslot .txt{flex:1 1 55%;font-size:14px}.adslot .txt span{display:none}.adslot .pill{font-size:12px;padding:7px 12px}.empty{padding-top:4vh}}
 
@@ -684,11 +689,10 @@ html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3{font-family:"Gothic A1",Prete
    <div id="bl"></div>
   </section>
  </aside>
-</div>
 <section class="lower" aria-label="Standings and schedule">
  <section class="pan" id="p-stand">
   <div class="ph"><h2>League standings</h2><span class="tagx">LCK 2026 · regular season</span></div>
-  <div class="tscroll"><table class="tb st"><thead><tr><th>#</th><th>Team</th><th class="r">Matches</th><th class="r">W</th><th class="r">L</th><th class="r">Win%</th><th class="r">Sets</th><th class="r">Set ±</th><th>Last 5</th><th class="r">Streak</th></tr></thead><tbody id="tb-stand"></tbody></table></div>
+  <div class="tscroll"><table class="tb st"><thead><tr><th>#</th><th>Team</th><th class="r">W</th><th class="r">L</th><th class="r">Win%</th><th class="r">Sets</th><th class="r">Set ±</th><th>Last 5</th><th class="r">Streak</th></tr></thead><tbody id="tb-stand"></tbody></table></div>
   <div class="pf"><span>Top 6 advance to playoffs. Sample data for the preview.</span><span></span></div>
  </section>
  <section class="pan" id="p-sched">
@@ -697,6 +701,7 @@ html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3{font-family:"Gothic A1",Prete
   <div class="pf"><span>Times in KST. Sample data for the preview.</span><span></span></div>
  </section>
 </section>
+</div>
 </main>
 
 
@@ -954,7 +959,7 @@ function renderSched(k){document.querySelectorAll('.stabs button').forEach(b=>b.
   return `<div class="sm-row" data-q="${sc?'Why did they lose that fight?':'Who has the edge in '+m[1]+' vs '+m[2]+'?'}"><span class="tt">${m[0]}</span><span class="tm ${sc&&x<y?'l':''}">${m[1]}</span>${sc?`<span class="sc">${sc}</span>`:'<span class="vs">VS</span>'}<span class="tm b ${sc&&y<x?'l':''}">${m[2]}</span><span class="go">${sc?'Recap →':'Preview →'}</span></div>`}).join('')).join('');
  document.querySelectorAll('#sched .sm-row').forEach(r=>r.onclick=()=>enterChat(r.dataset.q))}
 function renderLower(){const tb=document.getElementById('tb-stand');if(!tb)return;
- tb.innerHTML=STAND.map((t,i)=>`<tr class="${i<3?'top3':''} ${i===5?'cut':''}" onclick="enterChat('Is this comeback real?')"><td class="rk">${i+1}</td><td class="nm"><b>${t[0]}</b></td><td class="r">${t[1]+t[2]}</td><td class="r">${t[1]}</td><td class="r">${t[2]}</td><td class="r">${(t[1]/(t[1]+t[2])).toFixed(3).replace(/^0/,'')}</td><td class="r">${t[3]}</td><td class="r ${t[4]>0?'vp':'vn'}">${t[4]>0?'+':''}${t[4]}</td><td><span class="frm">${[...t[5]].map(c=>`<i class="${c==='W'?'w':''}">${c}</i>`).join('')}</span></td><td class="r">${streak(t[5])}</td></tr>`).join('');
+ tb.innerHTML=STAND.map((t,i)=>`<tr class="${i<3?'top3':''} ${i===5?'cut':''}" onclick="enterChat('Is this comeback real?')"><td class="rk">${i+1}</td><td class="nm"><b>${t[0]}</b></td><td class="r">${t[1]}</td><td class="r">${t[2]}</td><td class="r">${(t[1]/(t[1]+t[2])).toFixed(3).replace(/^0/,'')}</td><td class="r">${t[3]}</td><td class="r ${t[4]>0?'vp':'vn'}">${t[4]>0?'+':''}${t[4]}</td><td><span class="frm">${[...t[5]].map(c=>`<i class="${c==='W'?'w':''}">${c}</i>`).join('')}</span></td><td class="r">${streak(t[5])}</td></tr>`).join('');
  document.querySelectorAll('.stabs button').forEach(b=>b.onclick=()=>renderSched(b.dataset.s));renderSched('up')}
 renderLower();
 
