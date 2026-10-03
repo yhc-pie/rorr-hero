@@ -7,7 +7,7 @@
 <meta name="description" content="Ask Muse about today's LoL esports matches. Answers come with the moment behind every number. Free on the web, live beside the stream in Chrome.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;700;800&family=Chakra+Petch:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Gothic+A1:wght@600;700;800&family=Chakra+Petch:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root,[data-theme=dark]{color-scheme:dark;--bg:#0A0A0F;--bg2:#12121A;--bg3:#181822;--line:#24242F;--ink:#F2F2F5;--mute:#9A9AA8;--gold:#FFC24A;--cyan:#35F0DC;--cta:#FFC24A;--on-cta:#121212;
  --gold-line:#4a3a14;--cyan-line:#145e57;--glass:rgba(10,10,15,.82);--shadow:rgba(0,0,0,.5);--glow-c:rgba(53,240,220,.10);--glow-g:rgba(255,194,74,.07);--dot:rgba(255,255,255,.05);
@@ -414,6 +414,50 @@ table.t td .q{color:var(--mute);font-size:13.5px;display:block}
 @media (prefers-reduced-motion:reduce){.slide,.slide img,.slide .panel{transition:none}}
 @media (max-width:860px){nav .lk{display:none}header .bar{padding:0 18px}.menu{right:18px}.stage{margin:0 8px;border-radius:24px}.rail,.cards3{grid-template-columns:1fr}.row{grid-template-columns:1fr;gap:28px;padding:56px 0}.ask{padding-left:18px}.energy span{display:none}
  .scene{height:380px;margin-left:12px;margin-right:12px}.slide .panel{left:16px;top:44px;width:calc(100% - 32px)}.slide img{right:-30px;bottom:-200px;height:430px;opacity:.55}.signed-out .pill:not(.ghost){display:none}}
+/* ===== THEME: esports broadcast (lolesports-inspired, RORR-owned) ===== */
+:root,[data-theme=dark]{--bg:#0A0D10;--bg2:#13181C;--bg3:#1C2227;--line:#262D33;--ink:#F0F2F4;--mute:#8FA3B0;--gold:#C8AA6E;--cyan:#0AC8B9;--cta:#0AC8B9;--on-cta:#04110F;
+ --gold-line:#5A4C2E;--cyan-line:#0B5C56;--glass:rgba(10,13,16,.88);--shadow:rgba(0,0,0,.55);--glow-c:rgba(10,200,185,.08);--glow-g:rgba(200,170,110,.06);--dot:rgba(255,255,255,.035);
+ --bubble:rgba(19,24,28,.94);--stage-a:#0F1418;--stage-b:#0A0D10;--scene-a:#0E1316;--scene-b:#13191D;--err:#EB4B5C;--err-line:#5A2229}
+[data-theme=light]{--bg:#EEF1F3;--bg2:#FFFFFF;--bg3:#E4E9EC;--line:#D3DAE0;--ink:#0D1418;--mute:#566673;--gold:#8A6D2F;--cyan:#07867C;--cta:#0AC8B9;--on-cta:#04110F;
+ --gold-line:#D9C9A4;--cyan-line:#9ED9D3;--stage-a:#FFFFFF;--stage-b:#EEF1F3;--scene-a:#E9EEF0;--scene-b:#E1E8EB}
+body{font-family:Inter,"Helvetica Neue",Helvetica,Arial,sans-serif}
+h1,h2,h3,.ph h2,.mm-top b,.match .teams,.pcard h2,.post h1{font-family:"Barlow Condensed","Helvetica Neue",Helvetica,Arial,sans-serif!important;font-weight:700!important;letter-spacing:0!important;text-transform:uppercase}
+.hero h1,.rhero h1{font-size:clamp(48px,7vw,92px)!important;line-height:.95}
+.pbody h2{text-transform:none}
+.logo{font-family:"Barlow Condensed",sans-serif;font-weight:800;letter-spacing:.04em;font-size:26px}.logo b{color:var(--cyan)}
+nav .lk{text-transform:uppercase;font-weight:700;font-size:13px;letter-spacing:.1em;color:var(--ink)!important;opacity:.85}nav .lk:hover{opacity:1}
+/* square-ish geometry */
+.pill,.ask button,.energy,.lang,.lang button,.tmc,.chip,.qchips button,.mfilters button,.st,.stat,.tag,.eyebrow,.badge,.adl{border-radius:4px!important}
+.pill{text-transform:uppercase;letter-spacing:.06em;font-weight:700;font-size:13px}
+.pill.ghost{border-color:var(--line)}
+.ask{border-radius:4px!important}
+.pan,.box,.icard,.vis,.way,.card,.match,.pcard,.pcta,.mmock,.form,.rules div,.g3 .c,.metrics>div,.flow,.mrow,.it,.pk,.menu,.pop,.adslot,.mood,.cap,.sviz,.viz,.scene,.stage,.rhero,.msg-u,.tp,.cardprev,.mq,.ev2,.draft,.camp,.mm-m,.themebtn,.avatar{border-radius:4px!important}
+.stage{border-radius:0!important}
+.scene{border-radius:0 0 4px 4px!important}
+/* panel headers like broadcast tables */
+.ph{background:var(--bg3);border-bottom:1px solid var(--line)}
+.ph h2{font-size:18px!important}
+.tb th{text-transform:uppercase;font-family:Inter,Helvetica,sans-serif;font-weight:700;font-size:11px;letter-spacing:.08em}
+.tb tr.top3 .rk{color:var(--cyan)}
+.tb .bar{background:var(--cyan)}
+.tb tbody tr:hover td{background:rgba(10,200,185,.06)}
+.ins-h span:first-child,.pm-k,.k2,.rhero .k,.mood .who,.cap .meta,.msg-m .meta{color:var(--cyan)!important}
+.ins-h,.tagx,.pmeta,.rail-h b{text-transform:uppercase}
+/* ad strip & accents */
+.adtop{background:linear-gradient(90deg,#0A0D10,#0B2F2C 50%,#0A0D10)!important;border-bottom:1px solid #0B5C56}
+[data-theme=light] .adtop{background:linear-gradient(90deg,#0D1418,#0B3A36 50%,#0D1418)!important}
+.notice{background:var(--bg);color:var(--mute)}
+header{background:var(--bg)!important;border-bottom:1px solid var(--line)}
+.stage::before{opacity:.6}
+.big,.end{color:var(--gold)}
+.eb,.energy{color:var(--cyan)!important}
+.trust p{text-transform:none;font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:clamp(28px,3.6vw,44px)!important}
+/* left accent for the active/selected rows, like the event list */
+.side button.on{box-shadow:inset 3px 0 0 var(--cyan)}
+.mq.sel,.tp.hot{border-left:3px solid var(--cyan)!important}
+.m{text-transform:none!important}
+.pcard h2,.post h1,.blogs #bl a,.pbody h2{text-transform:none!important}
+html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3{font-family:"Gothic A1",Pretendard,sans-serif!important;text-transform:none}
 </style>
 </head>
 <body>
