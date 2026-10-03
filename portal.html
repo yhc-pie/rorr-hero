@@ -4,6 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RORR — The AI for LoL esports</title>
+<link rel="icon" type="image/png" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="description" content="RORR is the AI built only for League of Legends esports: ask about live and past pro matches, wGE+ rankings and standings. Watch with Muse in the Chrome side panel.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
@@ -602,6 +604,10 @@ html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3{font-family:"Gothic A1",Prete
 .wgt .rl{font:700 10.5px Inter,sans-serif;letter-spacing:.06em;border:1px solid var(--line);border-radius:4px;padding:2px 6px;color:var(--mute)}
 .wgt tr.me td{background:rgba(10,200,185,.07)}
 @media (max-width:760px){.wg-view button,.wg-unit button{padding:9px 11px;font-size:11px}.wg-f select{min-width:0;width:100%}.wg-f label{flex:1 1 45%}.wg-help{margin-left:0}}
+
+/* brand logo image */
+.logo{display:flex;align-items:center;line-height:0}.logo img{height:54px;width:auto;display:block;transition:transform .2s}.logo:hover img{transform:rotate(-4deg) scale(1.04)}
+@media (max-width:760px){.logo img{height:42px}}
 </style>
 </head>
 <body>
@@ -612,7 +618,7 @@ html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3{font-family:"Gothic A1",Prete
 </div>
 <div class="stage" id="stage">
 <header id="hdr"><div class="bar">
-  <a class="logo" href="#" onclick="goHome(event)">R<b>O</b>RR</a>
+  <a class="logo" href="#" onclick="goHome(event)" aria-label="RORR home"><picture><source srcset="assets/rorr-logo-96.webp 1x, assets/rorr-logo-192.webp 2x" type="image/webp"><img src="assets/rorr-logo-96.png" srcset="assets/rorr-logo-96.png 1x, assets/rorr-logo-192.png 2x" alt="RORR" width="58" height="48"></picture></a>
   <nav>
     <a class="lk" href="#wge" onclick="nav(event,'wge')"><span class="m">wGE+</span></a>
     <a class="lk" href="#blog" onclick="nav(event,'blog')">Blog</a>
