@@ -13,5 +13,5 @@ Sources for the looping charts shown under Muse's sample answers (assets/viz-*.m
 |---|---|
 | viz-drake | "What matters right now?" — drake countdown + win chance |
 | viz-flash | "Why did they lose that fight?" — summoner spells + 3–0 |
-| viz-gold | "Who made the gold lead?" — wGE+ by role |
+| viz-gold | "Who made the gold lead?" — wRC+ by role |
 | viz-comeback | "Is this comeback real?" — win chance line 41% → 63% |

@@ -94,7 +94,7 @@ V['gold']=('''
 .track i{display:block;height:100%;border-radius:8px;background:var(--dim)}
 #b0{background:var(--gold)}
 .v{font-size:26px;text-align:right;color:var(--mute)}#v0{color:var(--gold)}
-''','gold','<div class="scene-content"><div class="tag" id="tg">GOLD LEAD · <b>T1</b> · wGE+ BY ROLE</div><div class="head"><div class="total big" id="tot">+0<small>GOLD</small></div></div><div class="list">'+bars+'</div></div>','''
+''','gold','<div class="scene-content"><div class="tag" id="tg">GOLD LEAD · <b>T1</b> · wRC+ BY ROLE</div><div class="head"><div class="total big" id="tot">+0<small>GOLD</small></div></div><div class="list">'+bars+'</div></div>','''
 const D=%s;
 tl.fromTo("#tg",{autoAlpha:0,y:10},{autoAlpha:1,y:0,duration:.4,ease:"power3.out"},0);
 tl.fromTo("#tot",{autoAlpha:0,y:16},{autoAlpha:1,y:0,duration:.5,ease:"power3.out"},.15);
