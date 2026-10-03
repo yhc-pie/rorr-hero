@@ -653,12 +653,10 @@ body.pagev .lgbar,body.acct .lgbar{display:none}
 .ra-b p{font-size:13px;color:var(--mute);line-height:1.45;margin-bottom:14px}
 .ra-b .pill{display:block;text-align:center;font-size:11.5px;padding:9px 6px}
 @media (min-width:1520px){body.pagev .siderail{display:block;position:fixed;top:120px;z-index:20}.siderail.l{left:calc(50% - 760px)}.siderail.r{right:calc(50% - 760px)}}
-@media (min-width:1220px){body.pagev:has(#pg-blog.on) .siderail,body.pagev:has(#pg-post.on) .siderail{display:block;position:fixed;top:120px;z-index:20}
- body.pagev:has(#pg-blog.on) .siderail.l,body.pagev:has(#pg-post.on) .siderail.l{left:calc(50% - 600px)}
- body.pagev:has(#pg-blog.on) .siderail.r,body.pagev:has(#pg-post.on) .siderail.r{right:calc(50% - 600px)}}
+
 @media (max-height:620px){.siderail{display:none!important}}
 @media (min-width:1520px){body.pagev .rhero{margin-left:calc(50% - 570px)!important;margin-right:calc(50% - 570px)!important}}
-@media (min-width:1220px) and (max-width:1519px){body.pagev:has(#pg-blog.on) .rhero,body.pagev:has(#pg-post.on) .rhero{margin-left:calc(50% - 410px)!important;margin-right:calc(50% - 410px)!important}}
+
 /* ===== wRC+ explainer bubble ===== */
 .wtip{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;border:1px solid var(--mute);background:none;color:var(--mute);font:700 10.5px Inter,sans-serif;cursor:help;vertical-align:2px;margin-left:4px;padding:0;text-transform:none;letter-spacing:0}
 .wtip:hover,.wtip.on{border-color:var(--cyan);color:var(--cyan)}
@@ -671,15 +669,16 @@ body.pagev .lgbar,body.acct .lgbar{display:none}
 .wpop p{font:400 13.5px/1.5 Inter,sans-serif;color:var(--ink);margin:4px 0 8px}
 .wpop a{font:600 13px Inter,sans-serif;color:var(--cyan);text-decoration:none}.wpop a:hover{text-decoration:underline}
 
-/* rails on wRC+ / about pages for 1220-1519px: narrow content to make room */
+/* side rails on all sub pages (wRC+, about, blog, post): same placement everywhere */
 @media (min-width:1220px) and (max-width:1519px){
- body.pagev:has(#pg-wge.on) .siderail,body.pagev:has(#pg-about.on) .siderail{display:block;position:fixed;top:120px;z-index:20}
- body.pagev:has(#pg-wge.on) .siderail.l,body.pagev:has(#pg-about.on) .siderail.l{left:24px}
- body.pagev:has(#pg-wge.on) .siderail.r,body.pagev:has(#pg-about.on) .siderail.r{right:24px}
+ body.pagev .siderail{display:block;position:fixed;top:120px;z-index:20}
+ body.pagev .siderail.l{left:24px}
+ body.pagev .siderail.r{right:24px}
+ body.pagev .rhero{margin-left:208px!important;margin-right:208px!important}
  body.pagev:has(#pg-wge.on) .wg,body.pagev:has(#pg-about.on) .ab{max-width:calc(100vw - 432px);padding-left:0;padding-right:0}
- body.pagev:has(#pg-wge.on) .rhero,body.pagev:has(#pg-about.on) .rhero{margin-left:208px!important;margin-right:208px!important}
  body.pagev:has(#pg-about.on) .ab-g4{grid-template-columns:1fr 1fr}
 }
+
 </style>
 </head>
 <body>
