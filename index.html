@@ -1057,7 +1057,7 @@ function renderQuota(){document.getElementById('quota').innerHTML=document.body.
 function ask(ev,form){ev.preventDefault();const inp=form.querySelector('input');const text=inp.value.trim()||cur().q;inp.value='';enterChat(text)}
 function enterChat(text){
  const preY=scrollY;
- if(!document.body.classList.contains('chatting')){document.body.classList.remove('acct','teamv');document.body.classList.add('chatting');chatFrom={r:/^chat$/.test(location.hash.slice(1))?chatFrom.r:location.hash.slice(1),y:preY};history.pushState({chat:1},'','#chat');scrollTo(0,0);renderSlot();clearInterval(timer);document.getElementById('hdr').classList.add('solid')}
+ if(!document.body.classList.contains('chatting')){document.body.classList.remove('acct','teamv','pagev');document.body.classList.add('chatting');chatFrom={r:/^chat$/.test(location.hash.slice(1))?chatFrom.r:location.hash.slice(1),y:preY};history.pushState({chat:1},'','#chat');scrollTo(0,0);renderSlot();clearInterval(timer);document.getElementById('hdr').classList.add('solid')}
  if(!document.body.classList.contains('body-in'))free=Math.max(0,free-1);else setEnergy(Math.max(0,energy-1));renderQuota();
  const th=document.getElementById('thread');const em=th.querySelector('.empty');if(em)em.remove();th.insertAdjacentHTML('beforeend','<div class="msg-u"></div>');th.lastElementChild.textContent=text;
  const all=[...SETS.fan,...SETS.creator];const hit=all.find(e=>e.q.toLowerCase()===text.toLowerCase()||KO[e.q]===text);
