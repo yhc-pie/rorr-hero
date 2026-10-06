@@ -1127,7 +1127,7 @@ body.onboarding{overflow:hidden}body.onboarding .onb{display:flex;animation:fade
 .md-m.me{background:var(--v-solid);color:#fff}
 .md-stage{background:radial-gradient(120% 70% at 50% 100%,#24124a 0%,#100e16 70%)}
 
-[data-theme=light] .mt-chart .la{fill:var(--team-l)}[data-theme=light] .mt-chart .mk.a circle{fill:#00B395}[data-theme=light] .mt-chart .fa{fill:rgba(0,179,149,.16)}
+[data-theme=light] .mt-chart .la{fill:var(--team-l)}
 [data-theme=light] .du .v.win.a,[data-theme=light] .cv.a.win b{color:var(--team-l)}
 
 /* Muse preview chrome in violet (aqua only marks team A) */
@@ -1176,10 +1176,37 @@ body.ip-open .ipanel{box-shadow:-2px 0 6px rgba(0,0,0,.15)!important}
 .sup-go{background:var(--energy)!important}.sup-go:hover{background:var(--energy-h)!important}.sup-go:active{background:var(--energy-p)!important}
 .sup-amts button.on{border-color:var(--energy)!important;background:color-mix(in srgb,var(--energy) 16%,transparent)!important}
 body:not(.ip-open) .ipanel{box-shadow:none!important}
-.pill{letter-spacing:.02em!important}
+.pill{letter-spacing:0!important}
 .tk-top{white-space:nowrap;gap:6px}.tk-top .tst{overflow:hidden;text-overflow:ellipsis}@media (max-width:760px){.tk{width:140px}.tk-top{font-size:10.5px}}
+/* ===== match detail: design system colouring ===== */
+#pg-match .mt-head,#pg-match .mt-sec{border-radius:16px;box-shadow:var(--sh-surface)}
+#pg-match .mt-head:has(.mt-st.live){border-color:color-mix(in srgb,var(--upcoming) 55%,var(--line));box-shadow:var(--sh-live);background:linear-gradient(180deg,color-mix(in srgb,var(--upcoming) 12%,var(--bg2)),var(--bg2) 70%)}
+#pg-match .mt-st.live{background:var(--live);color:#fff;padding:4px 10px;border-radius:9999px;font:700 12px/1.2 "Pretendard Variable",sans-serif}
+#pg-match .mt-st.live i{background:#fff}
+#pg-match .mt-st.up{background:color-mix(in srgb,var(--upcoming) 16%,transparent);color:var(--upcoming-t);padding:4px 10px;border-radius:9999px;font-weight:700}
+#pg-match .mt-st:not(.live):not(.up){background:var(--bg3);color:var(--mute);padding:4px 10px;border-radius:9999px;font-weight:700}
+#pg-match .mt-score .w{color:var(--ink)}#pg-match .mt-score{color:var(--mute)}
+#pg-match .mt-h h2{font-size:24px;font-weight:600!important;text-transform:none;letter-spacing:-.01em!important}
+#pg-match .mt-chart .fa{fill:color-mix(in srgb,var(--team-l) 22%,transparent)}
+#pg-match .mt-chart .fb{fill:color-mix(in srgb,var(--team-r) 20%,transparent)}
+#pg-match .mt-chart .gl{stroke:var(--line)}
+#pg-match .mt-chart .mk.sw circle{stroke:var(--bg2);stroke-width:2.5}
+#pg-match .mt-legend .sw,#pg-match .sw-card .n{background:var(--ds-primary);color:#fff}
+#pg-match .sw-card{border-radius:12px;background:var(--bg2);box-shadow:var(--sh-surface)}
+#pg-match .sw-card.a .n{background:var(--team-l)}#pg-match .sw-card.b .n{background:var(--team-r)}
+#pg-match .sw-card:hover,#pg-match .du .nm:hover{border-color:var(--ds-selected);color:inherit}
+#pg-match .du .nm:hover{color:var(--ds-selected)}
+#pg-match .du{border-radius:8px;background:var(--bg2)}
+#pg-match .du .rl{color:var(--mute)}
+#pg-match .tl li{border-radius:8px;background:var(--bg2)}
+#pg-match .tl li.a.sw{background:linear-gradient(90deg,color-mix(in srgb,var(--team-l) 12%,transparent),transparent 70%),var(--bg2)}
+#pg-match .tl li.b.sw{background:linear-gradient(90deg,color-mix(in srgb,var(--team-r) 11%,transparent),transparent 70%),var(--bg2)}
+#pg-match .tl em{background:var(--ds-primary);color:#fff}
+#pg-match .tl .k{border-radius:4px}
+#pg-match .tl li.a .g{color:var(--team-l)}#pg-match .tl li.b .g{color:var(--team-r)}
+:root,[data-theme=dark]{--upcoming-t:#B79BFF}[data-theme=light]{--upcoming-t:#5618DA}
 </style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
 <body>
 <div class="notice">An independent fan companion. Not endorsed by Riot Games. · <span style="color:var(--gold)">Preview: sign-in, Energy and payments here are a demo.</span></div>
