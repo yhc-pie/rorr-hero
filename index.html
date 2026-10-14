@@ -2032,6 +2032,10 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 @media (max-width:1100px){.fl-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:860px){.fl-row,.fl-row2{grid-template-columns:1fr}.fl-now{grid-template-columns:1fr auto}.fl-drop{grid-column:1/-1;order:3;border-left:0;padding-left:0}}
 @media (max-width:520px){.fl-cards{grid-template-columns:1fr 1fr;gap:8px}.bx-card.flc{height:300px}.bx-card.flc .in{padding:11px}.bx-card.flc .pe-ph{width:64px;height:62px}.bx-card.flc .pe-nm{font-size:16px}.rm-em{width:34px}}
+
+/* footer fits between the side rail banners on sub pages */
+@media (min-width:1520px){body.pagev footer>.wrap{max-width:1140px}}
+@media (min-width:1220px) and (max-width:1519px){body.pagev footer>.wrap{max-width:calc(100vw - 416px);padding-left:0;padding-right:0}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -3578,7 +3582,7 @@ const STX=(()=>{let tab='cum',role='ALL',base=80;
    <h3>${LX('What replacement level means','대체선수 기준이란')}</h3><p>${LX('The level that backup and call-up players could realistically deliver in the same role if a starter were missing. It is not one team\'s bench or the league\'s worst starter. For now LwRC+ 80 is used as a provisional baseline, and results at 75 and 85 are published alongside.','리그의 주전 공백을 현실적으로 메울 수 있는 후보·콜업 선수들이 같은 포지션에서 낼 것으로 기대되는 수준입니다. 특정 팀의 벤치나 리그 최하위 주전과는 다릅니다. 지금은 LwRC+ 80을 잠정 기준으로 쓰고, 75와 85에서의 결과를 함께 공개합니다.')}</p>
    <h3>${LX('Why we don\'t talk about wins yet','왜 아직 \'승\'으로 말하지 않나요')}</h3><p>${LX('The gold worth one extra win is not the same as a winning team\'s average gold. The same gold is worth different amounts when ahead, in a close game or in a long one, so contribution stays in gold until that link is validated with data.','추가 1승에 해당하는 기여 골드는 승리팀의 평균 골드와 다릅니다. 앞선 상황, 접전, 경기 길이에 따라 같은 골드의 승리 가치가 달라지기 때문에, 이 관계를 데이터로 검증하기 전까지 누적 기여를 골드 단위로만 표기합니다.')}</p>
    <h3>${LX('What these numbers don\'t say','이 숫자가 말하지 않는 것')}</h3><p>${LX('Contribution estimates the value already delivered this season. It does not predict next season or the true skill of injured players, and it misses what data can\'t capture, such as vision, positioning and shotcalling.','누적 기여는 이미 치른 시즌의 가치를 추정합니다. 부상으로 결장한 선수의 실력이나 다음 시즌 성적을 예측하지 않고, 시야·포지셔닝·콜처럼 데이터가 포착하지 못한 기여는 반영되지 않습니다.')}</p>
-   <p class="sx-fine">${LX('LwRC+ borrows only the “100 = average” reading from baseball\'s wRC+. It is RORR\'s own metric and is not affiliated with FanGraphs.','LwRC+는 야구 wRC+의 "100 = 평균" 해석 방식만 빌려 온 RORR의 독자 지표이며, FanGraphs와 관계가 없습니다.')}</p></div>
+   <p class="sx-fine">${LX('LwRC+ borrows only the “100 = average” reading from baseball\'s wRC+. It is RORR\'s own metric.','LwRC+는 야구 wRC+의 "100 = 평균" 해석 방식만 빌려 온 RORR의 독자 지표입니다.')}</p></div>
    <aside class="mx-card"><h3>${LX('Road to WAR','WAR까지의 개발 단계')}</h3><ol class="sx-steps">${steps.map((s,i)=>`<li class="${s[2]}"><span>${i+1}</span><div><b>${s[0]}</b><small>${s[1]}</small></div></li>`).join('')}</ol><small>${LX('When the baseline or formula changes, the date and whether past numbers were recalculated are logged here.','기준이나 산식이 바뀌면 변경일과 재계산 여부를 이 페이지에 기록합니다.')}</small></aside></section>
   <p class="mt-note">${LX('Player names and figures are sample data, not real LCK estimates.','선수명과 수치는 샘플 데이터이며 실제 LCK 추정치가 아닙니다.')}</p>`}
  document.addEventListener('click',e=>{if(!e.target.closest('#stx'))return;const t=e.target.closest('[data-sxtab]');if(t&&!t.disabled){tab=t.dataset.sxtab;render();return}
