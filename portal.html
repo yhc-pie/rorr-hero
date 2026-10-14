@@ -1507,6 +1507,110 @@ body.ip-cmp .p2-card b{font-size:clamp(24px,6vw,36px)}
 @media (max-width:520px){.p2-name{font-size:40px!important}.p2-kpi.k4{grid-template-columns:repeat(2,1fr)}.p2-dv{grid-template-columns:52px minmax(0,1fr) 84px minmax(0,1fr) 52px;gap:6px;padding:10px}.p2-two{grid-template-columns:1fr}.p2-cta{grid-template-columns:1fr}.p2-lane{grid-template-columns:minmax(0,1fr) 36px 44px 36px minmax(0,1fr);padding:10px}.p2-set{grid-template-columns:minmax(0,1fr) 36px 64px 36px;padding:10px}}
 
 .ip-fav[hidden]{display:none!important}
+/* ===== hero v2 (A안 · 라이브 스테이지) ===== */
+.hx{position:relative;overflow:hidden;background:var(--hx-bg,#121722);border-bottom:1px solid var(--hx-edge,#3A4156);min-height:600px;display:flex;flex-direction:column}
+:root[data-theme=light] .hx{--hx-bg:#E6E9F2;--hx-edge:#B9C2D6}
+body.pagev .hx,body.chatting .hx,body.acct .hx{display:none}
+.hx-bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hx-bg .ma{stroke:var(--hx-mesh,#2C3450);stroke-width:1;fill:none}
+.hx-bg .na{fill:var(--hx-node,#3A4364)}
+.hx-bg .mb{stroke:var(--ds-primary);stroke-opacity:.3;stroke-width:1.2;fill:none}
+.hx-bg .nb{fill:var(--ds-primary);fill-opacity:.55}
+:root[data-theme=light] .hx-bg{--hx-mesh:#C3CADB;--hx-node:#AEB7CC}
+@keyframes hxDriftA{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(-36px,18px) rotate(1.2deg)}}
+@keyframes hxDriftB{0%,100%{transform:translate(0,0)}50%{transform:translate(28px,-16px)}}
+@keyframes hxPulse{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:1;transform:scale(1.9)}}
+@keyframes hxSweep{0%{transform:translateX(-700px)}100%{transform:translateX(1900px)}}
+.hx-bg .ga{animation:hxDriftA 38s ease-in-out infinite;transform-origin:1000px 320px}
+.hx-bg .gb{animation:hxDriftB 26s ease-in-out infinite}
+.hx-bg .hot{animation:hxPulse 3.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.hx-bg .sw{animation:hxSweep 9s linear infinite}
+body:not(.hx-run) .hx-bg *{animation-play-state:paused!important}
+.hx-in{position:relative;flex:1;max-width:1320px;width:100%;box-sizing:border-box;margin:0 auto;padding:40px 40px 20px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,600px);gap:56px;align-items:start}
+.hx-l{display:grid;gap:22px;align-content:start;padding-top:8px}
+.hx-eb{justify-self:start;display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:9999px;border:1px solid var(--line);font:700 13px "Pretendard Variable",sans-serif;color:var(--cyan);background:color-mix(in srgb,var(--bg) 60%,transparent)}
+.hx h1{font:800 clamp(38px,4.2vw,58px)/1.08 "Pretendard Variable",sans-serif!important;letter-spacing:-.035em!important;text-transform:none!important;margin:0!important;color:var(--ink)}
+.hx h1 .acc{color:var(--cyan)}
+.hx-sub{margin:0;font-size:18px;line-height:1.6;color:color-mix(in srgb,var(--ink) 80%,var(--mute));max-width:540px}
+.hx-ask{display:grid;gap:12px;max-width:600px}
+.hx-box{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;height:64px;padding:0 8px 0 22px;border-radius:9999px;background:var(--bg2);border:1px solid var(--ai-glow);box-shadow:0 0 12px color-mix(in srgb,var(--ai-glow) 35%,transparent)}
+.hx-box input{border:0;background:transparent;color:var(--ink);font:500 17px "Pretendard Variable",sans-serif;outline:none;min-width:0}
+.hx-box button{height:48px;padding:0 22px;border-radius:9999px;border:0;background:var(--ds-primary);color:#fff;font:700 15px "Pretendard Variable",sans-serif;cursor:pointer}
+.hx-chips{display:flex;flex-wrap:wrap;gap:8px}
+.hx-chips button{height:36px;padding:0 14px;border-radius:9999px!important;border:1px solid var(--line);background:color-mix(in srgb,var(--bg) 70%,transparent);color:color-mix(in srgb,var(--ink) 80%,var(--mute));font:500 13.5px "Pretendard Variable",sans-serif;cursor:pointer}
+.hx-chips button:hover{border-color:var(--cyan);color:var(--ink)}
+.hx-note{font-size:12.5px;color:var(--mute)}
+.hx-r{position:relative;padding-top:4px}
+.hx-pane{animation:hxIn .45s ease}
+@keyframes hxIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.hx-card{border-radius:24px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;gap:18px}
+.hx-card.live{border-color:color-mix(in srgb,var(--upcoming) 60%,var(--line));box-shadow:var(--sh-live)}
+.hx-top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--mute)}
+.hx-lv{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:9999px;background:var(--live);color:#fff;font:800 12.5px "Pretendard Variable",sans-serif}
+.hx-lv i{width:7px;height:7px;border-radius:50%;background:#fff}
+.hx-lv.up{background:color-mix(in srgb,var(--upcoming) 22%,transparent);color:var(--upcoming-t,var(--cyan))}
+.hx-vs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px}
+.hx-vs .t{display:grid;gap:4px;background:none;border:0;padding:0;color:inherit;text-align:left;cursor:pointer}
+.hx-vs .t.b{justify-items:end;text-align:right}
+.hx-vs .t b{font:800 44px/1 "Pretendard Variable",sans-serif}.hx-vs .t.a b{color:var(--team-l)}.hx-vs .t.b b{color:var(--team-r)}
+.hx-vs .t span{font-size:13px;color:var(--mute)}
+.hx-vs .c{display:grid;justify-items:center;gap:4px}.hx-vs .c b{font:800 40px "Pretendard Variable",sans-serif;letter-spacing:-.02em}.hx-vs .c span{font-size:12.5px;color:var(--mute)}
+.hx-wp{border-radius:16px;background:var(--bg3);padding:14px 16px 10px;display:grid;gap:8px}
+.hx-wp .h{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute)}.hx-wp .h b{font-size:15px;color:#E7B84A}:root[data-theme=light] .hx-wp .h b{color:#9A6A10}
+.hx-wp svg{width:100%;height:96px;display:block}
+.hx-wp .base{stroke:var(--line);stroke-dasharray:3 5}.hx-wp .ln{fill:none;stroke:var(--energy-h,#26BEA5);stroke-width:3;stroke-linejoin:round}
+.hx-wp .mk{fill:var(--bg2);stroke:var(--energy-h,#26BEA5);stroke-width:2.5}.hx-wp .mkt{fill:var(--energy-h,#26BEA5);font:700 12px "Pretendard Variable",sans-serif}.hx-wp .end{fill:#E7B84A}
+.hx-wp p{margin:0;font-size:13.5px;color:color-mix(in srgb,var(--ink) 80%,var(--mute))}
+.hx-muse{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:12px;align-items:center}
+.hx-muse img{width:64px;height:64px;object-fit:cover;object-position:center 30%;border-radius:9999px;border:2px solid var(--ds-primary);background:#F0F2F5}
+.hx-bub{justify-self:start;padding:10px 14px;border-radius:16px 16px 16px 4px;background:var(--ds-primary);color:#fff;font:700 14px/1.4 "Pretendard Variable",sans-serif}
+.hx-go{height:44px;padding:0 20px;border-radius:9999px;background:var(--ink);color:var(--bg)!important;text-decoration:none;font:800 14.5px "Pretendard Variable",sans-serif;display:inline-flex;align-items:center;white-space:nowrap;border:0;cursor:pointer}
+.hx-go.pri{background:var(--ds-primary);color:#fff!important}
+.hx-go.gh{background:transparent;color:var(--ink)!important;border:1px solid var(--line)}
+.hx-cd{display:grid;justify-items:center;gap:2px}.hx-cd b{font:800 34px "Pretendard Variable",sans-serif}.hx-cd span{font-size:12.5px;color:var(--mute)}
+.hx-frm{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:13px;color:var(--mute)}
+.hx-frm .f{display:flex;gap:3px}.hx-frm .f.r{justify-content:flex-end}.hx-frm i{font-style:normal;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:11px;font-weight:800;border:1px solid var(--line)}
+.hx-frm i.w{background:var(--team-l);border-color:var(--team-l);color:#fff}
+.hx-mu{position:relative;border-radius:24px;background:#ECEBFF;overflow:hidden;height:420px}
+.hx-mu img{position:absolute;left:20px;bottom:0;width:460px;max-width:80%;height:auto}
+.hx-mu .bs{position:absolute;right:20px;top:24px;width:270px;display:grid;gap:10px}
+.hx-mu .bs span{justify-self:end;padding:11px 15px;border-radius:18px 18px 4px 18px;background:#fff;color:#191F28;font:600 14.5px/1.45 "Pretendard Variable",sans-serif;box-shadow:0 2px 6px rgba(25,31,40,.12)}
+.hx-mu .bs span.p{background:#6F4CFF;color:#fff;font-weight:800;font-size:16px}
+.hx-mu .bs span.d{background:#191F28;color:#F0F2F5;font-size:13px;font-weight:700;border-radius:14px}
+.hx-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hx-holo{padding:4px;border-radius:24px;background:linear-gradient(135deg,#6F4CFF,#2F9CFC,#00B395,#F2C766,#FE2054)}
+.hx-holo>div{border-radius:20px;background:var(--bg2);padding:24px;display:grid;gap:14px}
+.hx-holo .tier{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:#C9B8FF}
+.hx-holo .tier em{font-style:normal;color:var(--energy-h,#26BEA5);border:1px solid currentColor;border-radius:9999px;padding:2px 9px;font-size:11.5px}
+.hx-holo h3{margin:0;font:800 24px/1.3 "Pretendard Variable",sans-serif;text-transform:none;letter-spacing:-.01em}
+.hx-holo .m{font-size:13.5px;color:var(--mute)}
+.hx-holo .k{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border-radius:12px;overflow:hidden;background:var(--line)}
+.hx-holo .k div{background:var(--bg3);padding:10px 12px;display:grid;gap:2px;font-size:12px;color:var(--mute)}.hx-holo .k b{font-size:17px;color:var(--ink)}
+.hx-rank{display:grid;gap:8px}
+.hx-rank button{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);text-align:left;cursor:pointer;font-family:inherit}
+.hx-rank button:hover{border-color:var(--cyan)}
+.hx-rank .n{font:800 18px "Pretendard Variable",sans-serif;color:#E7B84A}.hx-rank button:nth-child(2) .n{color:#AEB6C4}.hx-rank button:nth-child(3) .n{color:#C98B5A}
+.hx-rank b{font-size:16px}.hx-rank small{color:var(--mute);margin-left:6px}.hx-rank em{font:800 22px "Pretendard Variable",sans-serif;font-style:normal}
+.hx-tabs{position:relative;max-width:1320px;width:100%;box-sizing:border-box;margin:0 auto;padding:8px 40px 26px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.hx-tabs button{border:0;background:transparent;color:var(--mute);text-align:left;padding:0;cursor:pointer;display:grid;gap:6px;font-family:inherit}
+.hx-tabs .bar{height:3px;border-radius:9999px;background:var(--line);position:relative;overflow:hidden}
+.hx-tabs .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--cyan)}
+.hx-tabs button[aria-selected=true]{color:var(--ink)}
+.hx-tabs button[aria-selected=true] .bar i{width:100%}
+body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar var(--hx-dur,8s) linear forwards}
+.hx:hover .hx-tabs button[aria-selected=true] .bar i,.hx:focus-within .hx-tabs button[aria-selected=true] .bar i{animation-play-state:paused}
+@keyframes hxBar{to{width:100%}}
+.hx-tabs .n{font:700 12px "Pretendard Variable",sans-serif}.hx-tabs button[aria-selected=true] .n{color:var(--cyan)}
+.hx-tabs b{font-size:15px}
+@media (max-width:1100px){.hx-in{grid-template-columns:1fr;gap:28px;padding:40px 24px 16px}.hx-r{max-width:640px}.hx-tabs{padding:8px 24px 22px}}
+@media (max-width:760px){.hx{min-height:0}.hx-bg *{animation:none!important}.hx-in{padding:24px 16px 12px;gap:18px}.hx-sub{font-size:15.5px}.hx-box{height:54px;padding:0 6px 0 16px}.hx-box button{height:44px;padding:0 16px}
+ .hx-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.hx-chips button{flex:none}
+ .hx-card{padding:16px;gap:12px;border-radius:20px}.hx-vs .t b{font-size:30px}.hx-vs .c b{font-size:26px}.hx-wp svg{height:80px}
+ .hx-muse{grid-template-columns:44px minmax(0,1fr)}.hx-muse img{width:44px;height:44px}.hx-muse .hx-go{grid-column:1/-1;justify-content:center}
+ .hx-mu{height:320px}.hx-mu .bs{width:210px;right:12px}.hx-mu .bs span{font-size:13px}
+ .hx-tabs{gap:8px;padding:4px 16px 18px}.hx-tabs b{font-size:12px;font-weight:600}.hx-tabs .n{display:none}}
+@media (prefers-reduced-motion:reduce){.hx-bg *,.hx-pane{animation:none!important}}
+
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -1565,40 +1669,13 @@ body.ip-cmp .p2-card b{font-size:clamp(24px,6vw,36px)}
 </div>
 
 <main>
-<section class="pos hc" aria-label="Highlights" aria-roledescription="carousel" id="hc">
- <div class="hc-track" id="hc-track">
-  <div class="hc-s on" data-i="0" role="group" aria-roledescription="slide" aria-label="1 / 4">
-   <div class="pos-in">
-    <div class="pos-l"><div class="pos-k">LOL ESPORTS AI</div><h1>The AI built only for <span class="acc">LoL esports.</span></h1>
-     <p>General AI knows yesterday's League. RORR knows this match.</p></div>
-    <ul class="pos-r"><li><b>Starting with LCK</b><span>Every LCK match, live and past. More leagues are on the way.</span></li><li><b>Live and past games</b><span>Ask mid-match or about any game you missed.</span></li><li><b>Numbers you can open</b><span>Every figure links to the moment it came from.</span></li></ul>
-   </div>
-  </div>
-  <div class="hc-s hc-muse" data-i="1" role="group" aria-roledescription="slide" aria-label="2 / 4" aria-hidden="true">
-   <div class="pos-in">
-    <div class="pos-l"><div class="pos-k">MEET MUSE · CHROME SIDE PANEL</div><h1>Watch the match <span class="acc">with Muse.</span></h1>
-     <p>She talks first when the match turns and cheers your team with you, right beside the stream.</p>
-     <div class="hc-cta"><a class="pill" href="https://chromewebstore.google.com/detail/rorr/aeijenbcnhhmcgknnimiddbdgpndfcpn" target="_blank" rel="noopener" tabindex="-1">Add to Chrome · Free</a><a class="pill ghost" href="#muse" onclick="nav(event,'muse')" tabindex="-1">Try Muse · 30s</a></div></div>
-    <div class="hc-art"><div class="hc-stream"><span class="hc-live"><i></i>LIVE</span><span class="hc-sb">T1 <b>1 : 0</b> DNS</span></div>
-     <div class="hc-panel"><img src="assets/muse-surprised.webp" alt="Muse"><div class="hc-bub">That fight!! We're back in it!</div></div></div>
-   </div>
-  </div>
-  <div class="hc-s hc-live-s" data-i="2" role="group" aria-roledescription="slide" aria-label="3 / 4" aria-hidden="true">
-   <div class="pos-in" id="hc-live"></div>
-  </div>
-  <div class="hc-s" data-i="3" role="group" aria-roledescription="slide" aria-label="4 / 4" aria-hidden="true">
-   <div class="pos-in">
-    <div class="pos-l"><div class="pos-k">LwRC+ · WHO REALLY CARRIED</div><h1>Same gold, <span class="acc">different value.</span></h1>
-     <p>LwRC+ shows how much each player turned resources into wins. 100 is league average for the role.</p>
-     <div class="hc-cta"><a class="pill" href="#wrc" onclick="nav(event,'wrc')" tabindex="-1">See LwRC+ rankings</a><a class="pill ghost" href="#blog/what-is-wrc" onclick="nav(event,'blog/what-is-wrc')" tabindex="-1">What is LwRC+?</a></div></div>
-    <ol class="hc-top" id="hc-top"></ol>
-   </div>
-  </div>
+<section class="hx" id="hc" aria-label="RORR">
+ <svg class="hx-bg" id="hx-bg" viewBox="0 0 1440 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+ <div class="hx-in">
+  <div class="hx-l" id="hx-l"></div>
+  <div class="hx-r" id="hx-r" aria-live="polite"></div>
  </div>
- <button class="hc-nav l" type="button" aria-label="Previous slide">‹</button><button class="hc-nav r" type="button" aria-label="Next slide">›</button>
- <div class="hc-dots" role="tablist" id="hc-dots">
-  <button type="button" class="on" aria-label="RORR AI"></button><button type="button" aria-label="Muse"></button><button type="button" aria-label="Live match"></button><button type="button" aria-label="LwRC+"></button>
- </div>
+ <div class="hx-tabs" id="hx-tabs" role="tablist" aria-label="Highlights"></div>
 </section>
 <div class="lgbar" aria-label="League"><div class="lgbar-in"><span class="lgk">League</span><div class="lgchips" id="lgchips" role="tablist"></div><span class="lgr" id="lgregion"></span></div></div>
 <div class="portal">
@@ -3056,31 +3133,84 @@ document.addEventListener('click',e=>{const el=e.target.closest('a,button');if(!
  if(el.dataset.install!==undefined||/(Add|Install)\b.{0,30}Chrome|Add Muse|크롬에 .{0,12}추가/i.test(t)){e.preventDefault();e.stopPropagation();window.open(WEBSTORE,'_blank','noopener')}},true);
 
 /* ===== hero carousel ===== */
-const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render(){}};const S=[...root.querySelectorAll('.hc-s')],D=[...root.querySelectorAll('.hc-dots button')];let i=0,t=null,paused=false;
- const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
- function go(n,user){const prev=i;i=(n+S.length)%S.length;if(prev===i)return;S.forEach((s,k)=>{s.classList.toggle('on',k===i);s.classList.toggle('out',k===prev);s.setAttribute('aria-hidden',k===i?'false':'true');s.querySelectorAll('a,button').forEach(x=>x.tabIndex=k===i?0:-1)});
-  D.forEach((d,k)=>{d.classList.toggle('on',k===i);d.setAttribute('aria-selected',k===i)});if(user)restart()}
- function restart(){clearInterval(t);if(!RM)t=setInterval(()=>{if(!paused&&!document.hidden&&!document.body.classList.contains('pagev')&&!document.body.classList.contains('chatting'))go(i+1)},7000)}
- root.querySelector('.hc-nav.l').onclick=()=>go(i-1,1);root.querySelector('.hc-nav.r').onclick=()=>go(i+1,1);D.forEach((d,k)=>d.onclick=()=>go(k,1));
- root.addEventListener('mouseenter',()=>paused=true);root.addEventListener('mouseleave',()=>paused=false);root.addEventListener('focusin',()=>paused=true);root.addEventListener('focusout',()=>paused=false);
- root.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')go(i-1,1);if(e.key==='ArrowRight')go(i+1,1)});
- let x0=null,y0=0;root.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
- root.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))go(i+(dx<0?1:-1),1);x0=null});
- function render(){const pick=x=>LG==='ALL'||x.lg===LG;const live=DB.sched.filter(pick).find(x=>x.st==='live');const m=live||DB.sched.filter(pick).filter(x=>x.st==='up').sort((a,b)=>a.at-b.at)[0];const box=document.getElementById('hc-live');
-  if(box&&m){let k,h,p,card;
-   if(m.st==='live'){const G=gameModel(m);const lead=G.g,leader=lead>=0?m.a:m.b;const pct=Math.min(50,Math.abs(lead)/120);const[sa,sb]=m.series.split(':');
-    k=LX(`LIVE NOW · ${m.lg} · GAME ${m.game}`,`지금 라이브 · ${m.lg} · ${m.game}세트`);h=LX(`${leader} lead by <span class="acc">${Math.abs(lead).toLocaleString('en-US')} gold.</span>`,`${leader}, <span class="acc">${Math.abs(lead).toLocaleString('en-US')} 골드</span> 리드 중`);
-    p=LX(`${m.min} minutes in. See the gold timeline, the swing points and every player's LwRC+ as it happens.`,`${m.min}분 진행 중. 골드 타임라인과 스윙 포인트, 선수별 LwRC+를 실시간으로 확인하세요.`);
-    card=`<a class="hc-card" href="#match/${m.id}" data-m="${m.id}" tabindex="-1"><span class="st"><i class="dot"></i>LIVE · G${m.game} · ${m.min}′</span><div class="tm"><span class="a">${m.a}</span><span class="sc">${sa} : ${sb}</span><span class="b">${m.b}</span></div><div class="bar"><i style="${lead>=0?`right:50%;width:${pct}%;background:var(--team-l)`:`left:50%;width:${pct}%;background:var(--team-r)`}"></i></div><div class="meta"><span>${m.a} ${LX('ahead','우세')}</span><span>${LX('Gold lead','골드 리드')}</span><span>${m.b} ${LX('ahead','우세')}</span></div></a>`}
-   else{k=LX(`NEXT UP · ${m.lg}`,`다음 경기 · ${m.lg}`);h=LX(`${m.a} vs ${m.b} <span class="acc">${fmtWhen(m)}.</span>`,`${m.a} 대 ${m.b} <span class="acc">${fmtWhen(m)}</span>`);p=LX('Check the form, team LwRC+ and the matchups before it starts.','시작 전에 최근 폼, 팀 LwRC+, 라인별 매치업을 확인하세요.');
-    card=`<a class="hc-card" href="#match/${m.id}" data-m="${m.id}" tabindex="-1"><span class="st up">${fmtWhen(m)}</span><div class="tm"><span class="a">${m.a}</span><span class="sc">vs</span><span class="b">${m.b}</span></div><div class="meta"><span>#${standings(m.lg).indexOf(TEAM[m.a])+1}</span><span>${LX('Standing','순위')}</span><span>#${standings(m.lg).indexOf(TEAM[m.b])+1}</span></div></a>`}
-   const on=S[2].classList.contains('on');
-   box.innerHTML=`<div class="pos-l"><div class="pos-k">${k}</div><h1>${h}</h1><p>${p}</p><div class="hc-cta"><a class="pill" href="#match/${m.id}" data-m="${m.id}" tabindex="${on?0:-1}">${LX('Open the match','경기 보기')}</a><button class="pill ghost" type="button" data-askm="${LX(`What just swung ${m.a} vs ${m.b}?`,`${m.a} 대 ${m.b}, 방금 무엇이 흐름을 바꿨어?`)}" tabindex="${on?0:-1}">${LX('Ask RORR about it','RORR에 물어보기')}</button></div></div>${card}`;
-   if(on)box.querySelectorAll('a,button').forEach(x=>x.tabIndex=0)}
-  const top=document.getElementById('hc-top');if(top){const P=DB.players.filter(pick).slice().sort((a,b)=>b.ix-a.ix).slice(0,3);top.innerHTML=P.map(x=>`<li data-ent="player/${encodeURIComponent(x.name)}"><span><b>${x.name}</b><small>${x.team} · ${x.role}</small></span><em>${x.ix}</em></li>`).join('')}}
- root.addEventListener('click',e=>{const li=e.target.closest('.hc-top li');if(li){nav(null,li.dataset.ent)}
-  const q=e.target.closest('[data-askm]');if(q&&root.contains(q)){e.preventDefault();e.stopPropagation();enterChat(q.dataset.askm)}},true);
- restart();return{render,go}})();
+const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render(){},go(){}};
+ const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;const DUR=8000;let i=0,t=null,t0=0,left=DUR,paused=false;
+ const $=id=>document.getElementById(id);
+ /* geometric background: two triangulated meshes, drifting slowly (static on phones / reduced motion) */
+ (function bg(){const svg=$('hx-bg');if(!svg)return;let seed=7;const rnd=()=>{seed=seed*16807%2147483647;return(seed-1)/2147483646};
+  const mesh=(cols,rows,w,h,ox,oy,jit)=>{const P=[];for(let r=0;r<=rows;r++)for(let c=0;c<=cols;c++)P.push([Math.round(ox+c*w/cols+(rnd()-.5)*jit),Math.round(oy+r*h/rows+(rnd()-.5)*jit)]);
+   const at=(c,r)=>P[r*(cols+1)+c];let d='';const L=(p,q)=>{d+=`M${p[0]} ${p[1]}L${q[0]} ${q[1]}`};
+   for(let r=0;r<=rows;r++)for(let c=0;c<=cols;c++){const p=at(c,r);if(c<cols)L(p,at(c+1,r));if(r<rows)L(p,at(c,r+1));if(c<cols&&r<rows){if((c+r)%2)L(p,at(c+1,r+1));else L(at(c+1,r),at(c,r+1))}}return{d,P}};
+  const A=mesh(14,6,1680,760,-120,-60,70),B=mesh(6,3,900,720,620,-40,120);
+  const hot=[3,9,14,20,24].map((k,j)=>`<circle class="hot" cx="${B.P[k][0]}" cy="${B.P[k][1]}" r="4" fill="${j%2?'#26BEA5':'#C9B8FF'}" style="animation-delay:${(j*.7).toFixed(1)}s"/>`).join('');
+  svg.innerHTML=`<defs><linearGradient id="hxf" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".25"/><stop offset=".45" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff"/></linearGradient><mask id="hxm"><rect width="1440" height="640" fill="url(#hxf)"/></mask>
+   <linearGradient id="hxs" x1="0" x2="1"><stop offset="0" stop-color="#6F4CFF" stop-opacity="0"/><stop offset=".5" stop-color="#6F4CFF" stop-opacity=".16"/><stop offset="1" stop-color="#6F4CFF" stop-opacity="0"/></linearGradient></defs>
+   <g mask="url(#hxm)"><g class="ga"><path class="ma" d="${A.d}"/>${A.P.map(p=>`<circle class="na" cx="${p[0]}" cy="${p[1]}" r="2"/>`).join('')}</g>
+   <g class="gb"><path class="mb" d="${B.d}"/>${B.P.map(p=>`<circle class="nb" cx="${p[0]}" cy="${p[1]}" r="3"/>`).join('')}${hot}</g>
+   <g transform="skewX(-18)"><rect class="sw" width="520" height="640" fill="url(#hxs)"/></g></g>`;
+  /* only animate while the hero is on screen */
+  new IntersectionObserver(([en])=>document.body.classList.toggle('hx-run',en.isIntersecting&&!RM)).observe(root)})();
+ const TABS=()=>[[LX('Live now','지금 경기'),LX('Next match','다음 경기')],[LX('Watch with Muse','Muse와 같이 보기')],[LX('Holo card of the week','이번 주 홀로그램 카드')],[LX('LwRC+ · Who carried','LwRC+ · 누가 캐리했나')]];
+ const pick=x=>LG==='ALL'||x.lg===LG;
+ const curMatch_=()=>{const S=DB.sched.filter(pick);return S.find(x=>x.st==='live')||S.filter(x=>x.st==='up').sort((a,b)=>a.at-b.at)[0]};
+ const wp=g=>Math.round(100/(1+Math.exp(-g/2600)));
+ const kName={fb:'FIRST BLOOD',drg:'DRAGON',her:'HERALD',fight:'FIGHT',baron:'BARON',push:'PUSH'};
+ function left_(){$('hx-l').innerHTML=`<span class="hx-eb">${LX('LoL esports AI','LoL e스포츠 전용 AI')} · ${LG==='ALL'?'LCK':LG} 2026</span>
+  <h1>${LX('The match is moving.<br><span class="acc">RORR knows why</span><br>it turns.','경기는 지금 흐르고,<br><span class="acc">RORR는 그 이유를</span><br>알고 있어요.')}</h1>
+  <p class="hx-sub">${LX("General AI knows yesterday's League. RORR reads live data to explain the flow and the turning points of this match.",'범용 AI는 어제의 롤을 압니다. RORR는 라이브 데이터로 지금 이 경기의 흐름과 승부처를 설명해요.')}</p>
+  <form class="hx-ask" id="hx-ask"><label class="hx-box"><input id="hx-q" autocomplete="off" aria-label="${LX('Ask about a match','경기에 대해 질문')}" placeholder="${LX('Why did that fight go wrong?','방금 그 한타, 왜 진 거야?')}"><button type="submit">${LX('Ask','질문하기')}</button></label>
+   <div class="hx-chips">${[LX("I'm new to LoL. What matters right now?",'롤 잘 모르는데, 지금 뭐가 중요해?'),LX('Who built the gold lead?','골드 리드는 누가 만든 거야?'),LX('Is this a comeback?','이거 역전각이야?')].map(q=>`<button type="button" data-hxq="${q.replace(/"/g,'&quot;')}">${q}</button>`).join('')}</div>
+   <span class="hx-note">${LX('Suggested questions are free. Typing your own needs a login and uses ⚡1.','추천 질문은 무료예요. 직접 입력한 질문은 로그인 후 ⚡1이 들어요.')}</span></form>`}
+ function paneMatch(){const m=curMatch_();if(!m)return `<div class="hx-card"><p>${LX('No matches scheduled.','예정된 경기가 없어요.')}</p></div>`;const A=TEAM[m.a],B=TEAM[m.b];const S=standings(m.lg);
+  const sub=T=>LX(`${T.W}W ${T.L}L · #${S.indexOf(T)+1}`,`${T.W}승 ${T.L}패 · ${S.indexOf(T)+1}위`);
+  const teams=c=>`<div class="hx-vs"><button type="button" class="t a" data-tm="${m.a}"><b>${m.a}</b><span>${sub(A)}</span></button>${c}<button type="button" class="t b" data-tm="${m.b}"><b>${m.b}</b><span>${sub(B)}</span></button></div>`;
+  if(m.st==='live'){const G=gameModel(m);const[sa,sb]=m.series.split(':');const pts=G.pts;const n=pts.length-1||1;const W=520,H=110;const x=k=>Math.round(k/n*(W-12)+4),y=v=>Math.round(H-6-(v/100)*(H-12));
+   const line=pts.map((p,k)=>`${x(k)},${y(wp(p.g))}`).join(' ');const sw=G.sw.filter(e=>e.t<=pts.length-1).sort((a,b)=>b.t-a.t)[0]||G.ev[G.ev.length-1];
+   const now=wp(G.g);const lead=G.g>=0?m.a:m.b;const pa=Math.max(now,100-now);
+   let mk='',cap=LX(`${G.dur} minutes in. ${lead} lead by ${Math.abs(G.g).toLocaleString('en-US')} gold.`,`${G.dur}분 진행. ${lead}가 골드 ${Math.abs(G.g).toLocaleString('en-US')} 앞서 있어요.`),muse=LX(`${lead} are ahead. Stay with me!`,`${lead}가 앞서고 있어요. 끝까지 같이 봐요!`);
+   if(sw){const b0=wp(sw.g0),b1=wp(sw.g1);mk=`<circle class="mk" cx="${x(sw.t)}" cy="${y(b1)}" r="6"/><text class="mkt" x="${x(sw.t)}" y="${Math.max(14,y(b1)-12)}" text-anchor="middle">${kName[sw.k]||''}</text>`;
+    cap=`${evText(sw,m)} · ${m.a} ${b0}% → ${b1}%`;muse=sw.k==='baron'?LX('Did you see that Baron?!','방금 그 바론 봤어요?!'):sw.k==='fight'?LX('What a fight!','와, 방금 한타!'):LX('That changes things!','이걸로 흐름이 바뀌어요!')}
+   return `<article class="hx-card live"><div class="hx-top"><span class="hx-lv"><i></i>LIVE · ${LX('Game','')} ${m.game}${LX('','세트')} ${G.dur}′</span><span>${m.lg} 2026 · ${LX('Best of 3','3판 2선승')}</span></div>
+    ${teams(`<div class="c"><b>${sa} : ${sb}</b><span>${LX('Gold','골드')} ${goldStr(G.g)}</span></div>`)}
+    <div class="hx-wp"><div class="h"><span>${m.a} ${LX('win chance','승리확률')}</span><b>${now}%</b></div><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${LX('Win chance over time','승리확률 추이')}"><line class="base" x1="0" x2="${W}" y1="${y(50)}" y2="${y(50)}"/><polyline class="ln" points="${line}"/>${mk}<circle class="end" cx="${x(n)}" cy="${y(now)}" r="6"/></svg><p>${cap}</p></div>
+    <div class="hx-muse"><img src="assets/muse-excited.webp" alt="Muse"><span class="hx-bub">${muse}</span><a class="hx-go" href="#match/${m.id}" data-m="${m.id}">${LX('Watch →','경기 보기 →')}</a></div></article>`}
+  const fm=T=>[...T.form].map(c=>`<i class="${c==='W'?'w':''}">${c}</i>`).join('');
+  return `<article class="hx-card"><div class="hx-top"><span class="hx-lv up">${fmtWhen(m)} (${tzLabel()})</span><span>${m.lg} 2026 · ${LX('Best of 3','3판 2선승')}</span></div>
+   ${teams(`<div class="hx-cd"><span>${LX('Starts in','시작까지')}</span><b>${MX.countdown(m)}</b></div>`)}
+   <div class="hx-wp"><div class="h"><span>${LX('Last 5','최근 5경기')}</span><span>Team LwRC+ ${A.ix} · ${B.ix}</span></div><div class="hx-frm"><span class="f">${fm(A)}</span><span></span><span class="f r">${fm(B)}</span></div><p>${LX(`${A.ix>=B.ix?m.a:m.b} come in with the higher team LwRC+. Check the lane matchups before it starts.`,`팀 LwRC+는 ${A.ix>=B.ix?m.a:m.b}가 앞서요. 시작 전에 라인별 매치업을 확인해 보세요.`)}</p></div>
+   <div class="hx-muse"><img src="assets/muse-excited.webp" alt="Muse"><span class="hx-bub">${LX('I will ping you when it starts!','시작하면 바로 알려 드릴게요!')}</span><a class="hx-go" href="#match/${m.id}" data-m="${m.id}">${LX('Preview →','미리보기 →')}</a></div></article>`}
+ function paneMuse(){return `<div class="hx-mu"><img src="assets/muse-waving.webp" alt="${LX('Muse waving','손을 흔드는 Muse')}"><div class="bs"><span>${LX('Vision fight before dragon. See the jungler?','드래곤 앞 시야 싸움 시작이에요. 정글 위치 보여요?')}</span><span class="p">${LX("Baron steal!! We're back in it!",'와 바론 스틸!! 우리 다시 앞서요!')}</span><span class="d">${LX('Beside YouTube, CHZZK, SOOP and Twitch','YouTube·치지직·SOOP·Twitch 옆에서')}</span></div></div>
+  <div class="hx-acts"><a class="hx-go pri" href="${WEBSTORE}" target="_blank" rel="noopener">${LX('Add to Chrome · Free','Chrome에 추가 · 무료')}</a><a class="hx-go gh" href="#muse" onclick="nav(event,'muse')">${LX('Try Muse · 30s','Muse 30초 체험')}</a></div>`}
+ function paneHolo(){const S=DB.sched.filter(pick).filter(x=>x.st!=='up');let best=null;S.forEach(m=>{const G=gameModel(m);G.ev.forEach(e=>{const d=Math.abs(wp(e.g1)-wp(e.g0));if(!best||d>best.d)best={m,e,d,G}})});
+  if(!best)return '';const{m,e}=best;const fans=1200+(hashStr(m.id)%5000);const T=e.side==='a'?m.a:m.b;const p=SUP.isPartner('team',T);const when=localParts(m.at).d;
+  return `<div class="hx-holo"><div><div class="tier"><span>${LX('Hologram · all-time moment','홀로그램 · 역대급 순간')}</span><em>${LX('Boost card','Boost 카드')}</em></div>
+   <h3>${p?evText(e,m):LX(`${kName[e.k]==='BARON'?'Baron':'Fight'} turnaround`,`${e.k==='baron'?'바론':'교전'} 역전`)}</h3>
+   <span class="m">${p?`${m.a} vs ${m.b}`:LX("Today's match","오늘의 경기")} · ${when} · ${String(e.t).padStart(2,'0')}:${String(hashStr(m.id+e.t)%60).padStart(2,'0')}</span>
+   <div class="k"><div>${LX('Win chance','승리확률')}<b>${wp(e.g0)}% → ${wp(e.g1)}%</b></div><div>${LX('Fans boosted','함께 Boost')}<b>${fans.toLocaleString('en-US')}</b></div><div>${LX('Card','카드')}<b>#${String(hashStr(m.id)%900+100).padStart(5,'0')}</b></div></div></div></div>
+   <div class="hx-acts"><a class="hx-go pri" href="#match/${m.id}" data-m="${m.id}">${LX('Relive the moment','그 순간 다시 보기')}</a><a class="hx-go gh" href="#blog/how-boost-works" onclick="nav(event,'blog/how-boost-works')">${LX('How Boost cards work','Boost 카드 안내')}</a></div>`}
+ function paneRank(){const P=DB.players.filter(pick).slice().sort((a,b)=>b.ix-a.ix).slice(0,3);
+  return `<div class="hx-card"><div class="hx-top"><b style="font-size:18px;color:var(--ink)">${LX('Who carried · LwRC+','누가 캐리했나 · LwRC+')}</b><span>${LX('100 = league average for the role','100 = 포지션 리그 평균')}</span></div>
+   <div class="hx-rank">${P.map((x,k)=>`<button type="button" data-hxp="${x.name}"><span class="n">${k+1}</span><span><b>${x.name}</b><small>${x.team} · ${MX.role(x.role)}</small></span><em>${x.ix}</em></button>`).join('')}</div>
+   <div class="hx-acts" style="margin-top:0"><a class="hx-go pri" href="#wrc" onclick="nav(event,'wrc')">${LX('See LwRC+ rankings','LwRC+ 순위 보기')}</a><a class="hx-go gh" href="#blog/what-is-wrc" onclick="nav(event,'blog/what-is-wrc')">${LX('What is LwRC+?','LwRC+란?')}</a></div></div>`}
+ const PANES=[paneMatch,paneMuse,paneHolo,paneRank];
+ function tabs(){const T=TABS();const m=curMatch_();$('hx-tabs').innerHTML=T.map((x,k)=>`<button type="button" role="tab" id="hx-t${k}" aria-controls="hx-r" aria-selected="${k===i}"><span class="bar"><i></i></span><span class="n">0${k+1}</span><b>${k===0?(m&&m.st==='live'?x[0]:x[1]):x[0]}</b></button>`).join('');
+  $('hx-tabs').style.setProperty('--hx-dur',DUR+'ms');$('hx-tabs').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>go(k,1))}
+ function pane(anim){const r=$('hx-r');r.innerHTML=`<div class="hx-pane"${anim?'':' style="animation:none"'}>${PANES[i]()}</div>`;r.setAttribute('aria-labelledby','hx-t'+i)}
+ function go(n,user){i=(n+PANES.length)%PANES.length;tabs();pane(true);restart()}
+ function restart(){clearTimeout(t);left=DUR;t0=Date.now();if(!RM&&!paused)t=setTimeout(tick,left)}
+ function tick(){const b=document.body.classList;if(document.hidden||b.contains('pagev')||b.contains('chatting')||b.contains('acct')||!b.contains('hx-run')){t=setTimeout(tick,1000);return}go(i+1)}
+ const pause=()=>{if(paused)return;paused=true;clearTimeout(t);left=Math.max(500,left-(Date.now()-t0))},resume=()=>{if(!paused)return;paused=false;t0=Date.now();if(!RM)t=setTimeout(tick,left)};
+ root.addEventListener('mouseenter',pause);root.addEventListener('mouseleave',resume);root.addEventListener('focusin',pause);root.addEventListener('focusout',e=>{if(!root.contains(e.relatedTarget))resume()});
+ $('hx-tabs').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){go(i+(e.key==='ArrowRight'?1:-1),1);$('hx-t'+i).focus()}});
+ let x0=null,y0=0;$('hx-r').addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+ $('hx-r').addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy))go(i+(dx<0?1:-1),1);x0=null});
+ root.addEventListener('submit',e=>{if(e.target.id!=='hx-ask')return;e.preventDefault();const inp=$('hx-q');const typed=inp.value.trim();if(!typed){inp.focus();return}
+  if(!document.body.classList.contains('body-in')){showGate(typed);return}if(energy<1){lowEnergy(1);return}inp.value='';enterChat(typed,{typed:true})});
+ root.addEventListener('click',e=>{const q=e.target.closest('[data-hxq]');if(q){enterChat(q.dataset.hxq);return}
+  const p=e.target.closest('[data-hxp]');if(p){openPlayer(p.dataset.hxp);return}
+  const tm=e.target.closest('.hx-vs [data-tm]');if(tm){e.stopPropagation();openTeam(tm.dataset.tm)}},true);
+ let lastKey='';function render(){const key=LANG+LG;if(key!==lastKey){left_();lastKey=key}tabs();pane(false);if(!t&&!RM)restart()}
+ return{render,go}})();
 </script>
 </body>
 </html>
