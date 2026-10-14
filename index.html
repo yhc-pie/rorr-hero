@@ -1849,8 +1849,8 @@ footer>.wrap{max-width:1320px}
 
 /* ===== anchored score bar: header + ticker stay on top while scrolling ===== */
 body:not(.chatting) .stage{position:sticky;top:0;z-index:40;transition:transform .3s ease}
-body:not(.pagev):not(.acct):not(.teamv):not(.chatting) .stage:has(header.hide){transform:translateY(calc(-1 * var(--hh,69px)))}
-body:not(.pagev):not(.acct):not(.teamv):not(.chatting) header.hide{transform:none}
+body:not(.chatting) .stage:has(header.hide){transform:translateY(calc(-1 * var(--hh,69px)))}
+body:not(.chatting) header.hide{transform:none}
 body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}body.pagev .ticker,body.acct .ticker,body.teamv .ticker{margin-top:0!important}
 
 /* ===== T1 partner edition card ===== */
@@ -1930,6 +1930,41 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 @media (max-width:640px){.rk-pods{grid-template-columns:1fr;align-items:stretch}.rk-pod.p1{order:-1}
  .rk-row{grid-template-columns:40px 40px minmax(0,1fr) auto;padding:10px 12px;gap:8px;font-size:13.5px}.rk-row>.r:not(.on){display:none}
  .rk-ban{padding:18px;gap:14px}.rk-ban>img{width:48px;height:48px}}
+
+/* ===== fan messages v2: context + reactions ===== */
+.fl-ms{height:330px;gap:12px}
+.fl-ms .ms{display:grid;grid-template-columns:none;gap:4px;max-height:200px;font-size:13px;align-items:start}
+.fl-ms .fl-ms .ms-h{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-width:0}.fl-ms .fl-ms .ms-h>b{font-size:13px;color:var(--ink)}
+.fl-ms .ms-cx{display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0}
+.fl-ms .ms-tm{display:inline-flex;align-items:center;gap:4px;height:20px;padding:0 7px;border-radius:9999px;background:rgba(226,1,45,.14);color:#FF8FA3;font:800 11px "Pretendard Variable",sans-serif}
+.fl-ms .ms-tm img{width:14px;height:14px;object-fit:contain}
+.fl-ms .ms-tm.np{background:var(--bg2);color:var(--mute);font-weight:700;border:1px solid var(--line)}
+:root[data-theme=light] .fl-ms .ms-tm{color:#B0002A;background:#FFE9ED}:root[data-theme=light] .fl-ms .ms-tm.np{background:var(--bg2);color:var(--mute)}
+.fl-ms .ms-mo{display:inline-flex;align-items:center;gap:5px;height:20px;max-width:230px;padding:0 8px;border-radius:9999px;border:1px solid var(--line);background:transparent;color:var(--mute);font:600 11px "Pretendard Variable",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer}
+.fl-ms .ms-mo[data-bxmm]:hover{border-color:var(--cyan);color:var(--ink)}.fl-ms .ms-mo:not([data-bxmm]){cursor:default}
+.fl-ms .ms-mo i{flex:none;width:7px;height:7px;border-radius:50%;background:#AEB6C4}.fl-ms .ms-mo.gold i{background:#E7B84A}.fl-ms .ms-mo.holo i{background:conic-gradient(#6F4CFF,#2F9CFC,#00B395,#F2C766,#FE2054,#6F4CFF)}
+.fl-ms .ms-mo .lv{color:#FF5C7A;font-weight:800}
+.fl-ms .ms-pl{font-size:11px;font-weight:700;color:var(--cyan)}
+.fl-ms .fl-ms .ms-t{margin:0;font-size:13.5px;line-height:1.45;color:color-mix(in srgb,var(--ink) 86%,var(--mute))}
+.fl-ms .ms-a{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.fl-ms .fl-ms .ms-a em{font-style:normal;font-size:11px;color:var(--mute);margin:0 6px 0 0}
+.fl-ms .ms-like,.fl-ms .ms-rb,.fl-ms .ms-more{height:24px;padding:0 8px;border:0;border-radius:9999px;background:transparent;color:var(--mute);font:600 11.5px "Pretendard Variable",sans-serif;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.fl-ms .ms-like:hover,.fl-ms .ms-rb:hover,.fl-ms .ms-more:hover{background:var(--bg2);color:var(--ink)}
+.fl-ms .ms-like b,.fl-ms .ms-rb b{font-weight:800;color:inherit}
+.fl-ms .ms-like.on{color:#FFC56B;background:rgba(255,197,107,.12)}
+.fl-ms .ms-more{padding:0 6px;font-size:14px;letter-spacing:.05em;opacity:.7}
+.fl-ms .ms-mw{position:relative;margin-left:auto}
+.fl-ms .ms-menu{display:none;position:absolute;right:0;bottom:calc(100% + 4px);z-index:5;padding:4px;border-radius:10px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
+.fl-ms .ms-mw.open .ms-menu{display:block}
+.fl-ms .ms-menu button{display:block;white-space:nowrap;height:30px;padding:0 12px;border:0;border-radius:7px;background:transparent;color:var(--ink);font:600 12.5px "Pretendard Variable",sans-serif;cursor:pointer}.fl-ms .ms-menu button:hover{background:var(--bg3)}
+.fl-ms .ms-chips{display:flex;gap:6px;flex-wrap:wrap;padding-top:2px}.fl-ms .ms-chips[hidden]{display:none}
+.fl-ms .ms-chips button{height:26px;padding:0 10px;border-radius:9999px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:600 12px "Pretendard Variable",sans-serif;cursor:pointer}.fl-ms .ms-chips button:hover{border-color:var(--cyan)}
+.fl-ms .ms-rpl{font-size:12px;color:var(--mute);padding-left:4px}.fl-ms .ms-rpl b{color:var(--ink)}
+.fl-ms .ms.open{max-height:none}
+.ms-f{display:inline-flex;gap:2px;padding:2px;border-radius:9999px;background:var(--bg2)}
+.ms-f button{height:24px;padding:0 10px;border:0;border-radius:9999px;background:transparent;color:var(--mute);font:700 11.5px "Pretendard Variable",sans-serif;cursor:pointer}.ms-f button.on{background:var(--bg3);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.ms-note{display:block;margin-top:8px;font-size:11.5px;color:var(--mute)}
+:root[data-theme=light] .fl-ms .ms-like.on{color:#9A5B00;background:#FFF1D6}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -2709,32 +2744,67 @@ const BX=(()=>{const K='rorr-bx';
  function noteEnergy(n){if(S.used.m!==month())S.used={m:month(),e:0};S.used.e+=n;save()}
  function addBoost(o){/* o:{cur,amt,mom,partner,label,msg} */const ptsAdd=20+(o.mom?{silver:10,gold:30,holo:60}[o.mom.tier]:0);S.pts+=ptsAdd;let card=null;
   if(o.mom&&o.ext){card={id:'c'+Date.now(),no:1+(hashStr(o.mom.id)%9000)+S.cards.length,tier:o.mom.tier,cur:o.cur,deco:decoOf(o.cur,o.amt),partner:o.partner?1:0,pe:o.partner?'T1':null,t:o.mom.t,sub:o.mom.sub,w0:o.mom.w0,w1:o.mom.w1,fans:o.mom.fans+1,d:today(),amt:o.amt,m:o.mom.m?o.mom.m.id:null};S.cards.unshift(card)}
-  S.hist.unshift({d:today(),w:o.label,cur:o.cur,n:o.amt,card:card&&card.id});if(o.msg&&S.msgOn){S.msgs.unshift({t:o.msg,at:Date.now()});setTimeout(()=>msMine(o.msg),400)}if(o.cur==='energy')noteEnergy(o.amt);save();setUI();return{card,ptsAdd}}
+  S.hist.unshift({d:today(),w:o.label,cur:o.cur,n:o.amt,card:card&&card.id});if(o.msg&&S.msgOn){const cx=o.mom?{sub:o.mom.sub,w:o.mom.t,tier:o.mom.tier,pl:o.mom.pl||null,np:o.partner?0:1,mid:o.mom.m?o.mom.m.id:cardMatch({sub:o.mom.sub}),now:o.mom.m&&o.mom.m.st==='live'?1:0}:null;S.msgs.unshift({t:o.msg,at:Date.now(),c:cx});setTimeout(()=>msMine(o.msg,cx),400)}if(o.cur==='energy')noteEnergy(o.amt);save();setUI();return{card,ptsAdd}}
  /* ----- main page: fandom live ----- */
  const RARE=[{tier:'holo',cur:'energy',deco:3,pe:'T1',pl:'Faker',t:['Elder fight turnaround, all the way to the Nexus','장로 교전 역전, 넥서스까지'],sub:'T1 vs GEN · 2026-10-12 · G3 33:51',w0:30,w1:71,fans:6210,no:88,own:'minji_07'},
   {tier:'gold',cur:'energy',deco:2,pe:'T1',pl:'Oner',t:["Oner's Baron steal, then a won fight","Oner 바론 스틸 후 한타 대승"],sub:'T1 vs DNS · 2026-10-15 · G2 24:10',w0:44,w1:72,fans:2184,no:1937,own:null},
   {tier:'gold',cur:'energy',deco:1,pe:'T1',t:['4-for-0 fight at 18 minutes','18분 4:0 한타'],sub:'T1 vs KT · 2026-10-11 · G1 18:02',w0:50,w1:72,fans:1930,no:1650,own:'ZedMain'},
   {tier:'holo',cur:'spark',deco:1,t:['Elder fight turnaround wins the series','장로 교전 역전으로 시리즈 승리'],sub:'TODAY1 · 2026-10-13 · G3 31:42',w0:27,w1:71,fans:3870,no:240,own:'dragonsoul'}];
- /* live fan message stream (chat-like: typing → message, oldest fades out at the top) */
- const POOL=[['lck_dad',['Screamed at that game-3 Elder fight. With you to the end','3세트 장로 교전 보고 소리 질렀어요. 끝까지 같이 갑니다']],['nori',['The bot lane was rock solid today','오늘 바텀 라인 진짜 단단했다']],['yuna.gg',['Got my first hologram card!','첫 홀로그램 카드 받았어요!']],
-  ['minji_07',['That Baron call was perfect','방금 바론 콜 완벽했어요']],['ZedMain',['Proud of this roster','이 로스터 정말 자랑스러워요']],[null,['Win or lose, see you next match','이기든 지든 다음 경기도 같이 봐요']],['dragonsoul',['Elder fight nerves are real','장로 한타 때 심장 떨어지는 줄']],
-  ['hanbit',['Jungle pathing this game is so clean','이번 경기 정글 동선 너무 깔끔해요']],['sol_kr',['Boosted the dragon steal, worth it','드래곤 스틸 순간 Boost했어요, 후회 없음']],['bluebuff',['Mid is cooking right now','미드 지금 폼 미쳤다']],[null,['First time watching with Muse, love it','Muse랑 처음 같이 보는데 너무 좋아요']],
-  ['rift_mom',['Drink water and keep cheering everyone','다들 물 마시면서 응원해요']],['sejin',['That teamfight at 18 was a movie','18분 한타는 영화였다']],['yuna.gg',['Gold card collection growing','골드 카드 모으는 재미가 있네요']],['midgap',['GG, great series both teams','GG, 두 팀 다 멋졌어요']]];
- let fq=[],fi=0,ft=null,ftyping=null;
+ /* live fan message stream: each message carries its team + moment context; reactions and preset replies only (no free-text comments) */
+ const MC={elder:{sub:'T1 vs GEN · 2026-10-12 · G3 33:51',w:['Elder fight turnaround','장로 교전 역전'],tier:'holo',pl:'Faker'},
+  baron:{sub:'T1 vs DNS · 2026-10-15 · G2 24:10',w:["Oner's Baron steal",'Oner 바론 스틸'],tier:'gold',pl:'Oner'},
+  kt:{sub:'T1 vs KT · 2026-10-11 · G1 18:02',w:['4-for-0 fight','4:0 한타'],tier:'gold'},
+  np1:{sub:'TODAY1 · 2026-10-13 · G3 31:42',w:['Elder fight turnaround','장로 교전 역전'],tier:'holo',np:1},
+  np2:{sub:'TODAY1 · 2026-10-13 · G2 17:20',w:['Dragon steal','드래곤 스틸'],tier:'gold',np:1},
+  lvBaron:{live:1,w:['Baron fight','바론 교전'],tier:'gold',pl:'Oner'},lvBot:{live:1,w:['Bot lane 2-for-0','바텀 2:0 교전'],tier:'silver',pl:'Peyz'},
+  lvMid:{live:1,w:['Mid solo kill','미드 솔로킬'],tier:'silver',pl:'Faker'},lvJg:{live:1,w:['Jungle invade','정글 인베이드'],tier:'silver',pl:'Oner'},lvFight:{live:1,w:['Teamfight win','한타 승리'],tier:'gold'}};
+ const POOL=[['lck_dad',['Screamed at that game-3 Elder fight. With you to the end','3세트 장로 교전 보고 소리 질렀어요. 끝까지 같이 갑니다'],'elder'],['nori',['The bot lane was rock solid today','오늘 바텀 라인 진짜 단단했다'],'lvBot'],['yuna.gg',['Got my first hologram card!','첫 홀로그램 카드 받았어요!'],'elder'],
+  ['minji_07',['That Baron call was perfect','방금 바론 콜 완벽했어요'],'lvBaron'],['ZedMain',['Proud of this roster','이 로스터 정말 자랑스러워요'],'kt'],[null,['Win or lose, see you next match','이기든 지든 다음 경기도 같이 봐요'],'lvFight'],['dragonsoul',['Elder fight nerves are real','장로 한타 때 심장 떨어지는 줄'],'np1'],
+  ['hanbit',['Jungle pathing this game is so clean','이번 경기 정글 동선 너무 깔끔해요'],'lvJg'],['sol_kr',['Boosted the dragon steal, worth it','드래곤 스틸 순간 Boost했어요, 후회 없음'],'np2'],['bluebuff',['Mid is cooking right now','미드 지금 폼 미쳤다'],'lvMid'],[null,['First time watching with Muse, love it','Muse랑 처음 같이 보는데 너무 좋아요'],'lvFight'],
+  ['rift_mom',['Drink water and keep cheering everyone','다들 물 마시면서 응원해요'],'lvFight'],['sejin',['That teamfight at 18 was a movie','18분 한타는 영화였다'],'kt'],['yuna.gg',['Gold card collection growing','골드 카드 모으는 재미가 있네요'],'baron'],['midgap',['GG, great series both teams','GG, 두 팀 다 멋졌어요'],'np1']];
+ const RPL=[['GG','GG'],['See you next match!','다음 경기도 같이!'],['Best moment','이 순간 최고'],['To the end','끝까지 간다']];
+ let fq=[],fi=0,ft=null,ftyping=null,mf='t1';const liked={},replied={};
  const nmOf=n=>n||LX('Anonymous supporter','익명 서포터');
  const ago=t=>{const s=Math.max(1,Math.round((Date.now()-t)/1000));return s<10?LX('just now','방금'):s<60?LX(`${s}s ago`,`${s}초 전`):LX(`${Math.round(s/60)}m ago`,`${Math.round(s/60)}분 전`)};
- function msRow(m,cls){return `<div class="ms ${cls||''}" data-id="${m.id}" data-at="${m.at}"><span><b>${esc(m.me?(S.anon?LX('You (anonymous)','나 (익명)'):ME):nmOf(m.n))}</b> ${esc(LX(m.t[0],m.t[1]))}<em>${ago(m.at)}</em></span>${m.me?'':`<button type="button" class="rp" data-bxreport aria-label="${LX('Report message','메시지 신고')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4h11l-1.5 4L16 12H5"/></svg></button>`}</div>`}
- function msDraw(){const box=document.getElementById('fl-ms');if(!box)return;box.innerHTML=fq.map(m=>msRow(m)).join('')+(ftyping?`<div class="ms typing"><span><b>${esc(nmOf(ftyping))}</b> <i class="dots"><i></i><i></i><i></i></i></span></div>`:'')}
- function msPush(m){fq.push(m);if(fq.length>6)fq.shift();const box=document.getElementById('fl-ms');if(!box)return;box.querySelectorAll('.ms.typing').forEach(x=>x.remove());
-  box.insertAdjacentHTML('beforeend',msRow(m,'in'));const rows=box.querySelectorAll('.ms:not(.typing)');if(rows.length>6){const old=rows[0];old.classList.add('out');setTimeout(()=>old.remove(),450)}}
- function msSeed(){if(fq.length)return;const now=Date.now();for(let k=0;k<4;k++){const p=POOL[fi++%POOL.length];fq.push({id:'m'+fi,n:p[0],t:p[1],at:now-(4-k)*21000})}}
+ const liveT1=()=>DB.sched.find(x=>x.st==='live'&&(x.a==='T1'||x.b==='T1'));
+ function ctxOf(key,salt){const c=Object.assign({},MC[key]||MC.baron);if(c.live){const lv=liveT1();if(!lv)return Object.assign({},MC.baron);const r=hashStr(key+salt);const mm=8+r%26,ss=String(r%60).padStart(2,'0');c.sub=`${lv.a} vs ${lv.b} · ${localParts(lv.at).d} · G${lv.game} ${mm}:${ss}`;c.mid=lv.id;c.now=1}else c.mid=cardMatch({sub:c.sub});return c}
+ function ctxHTML(c){if(!c)return'';const g=(/ G(\d+) /.exec(c.sub)||[])[1],tm=(/(\d\d:\d\d)\s*$/.exec(c.sub)||[])[1];const when=g&&tm?LX(`G${g} ${tm}`,`${g}세트 ${tm}`):'';
+  const team=c.np?`<span class="ms-tm np">${LX("Today's match 1",'오늘의 1경기')}</span>`:`<span class="ms-tm"><img src="${T1LOGO}" alt="" width="14" height="14">T1</span>`;
+  const p=!c.np&&c.pl&&T1P[c.pl]?`<span class="ms-pl">${LX(`for ${c.pl}`,`${c.pl}에게`)}</span>`:'';
+  return `<div class="ms-cx">${team}<button type="button" class="ms-mo ${c.tier}"${c.mid?` data-bxmm="${c.mid}"`:''} title="${LX('Go to this moment','이 순간으로 이동')}"><i aria-hidden="true"></i>${c.now?'<span class="lv">LIVE</span> ':''}${when} · ${esc(LX(c.w[0],c.w[1]))}</button>${p}</div>`}
+ function msRow(m,cls){const L=(hashStr(m.t[0])%38)+(m.me?0:3)+(liked[m.id]?1:0);const R=m.me?0:hashStr(m.t[1])%4;const my=replied[m.id];
+  return `<div class="ms ${cls||''}" data-id="${m.id}" data-at="${m.at}"><div class="ms-h"><b>${esc(m.me?(S.anon?LX('You (anonymous)','나 (익명)'):ME):nmOf(m.n))}</b>${ctxHTML(m.c)}</div>
+   <p class="ms-t">${esc(LX(m.t[0],m.t[1]))}</p>
+   <div class="ms-a"><em>${ago(m.at)}</em><button type="button" class="ms-like${liked[m.id]?' on':''}" data-bxlike aria-pressed="${!!liked[m.id]}" title="${LX('Cheer too','나도 응원')}"><span aria-hidden="true">🙌</span> ${LX('Me too','나도 응원')} <b>${L}</b></button>
+   ${m.me?'':`<button type="button" class="ms-rb" data-bxreply aria-expanded="false">${LX('Reply','답장')}${R+(my?1:0)?` <b>${R+(my?1:0)}</b>`:''}</button><span class="ms-mw"><button type="button" class="ms-more" data-bxmore aria-label="${LX('More','더보기')}" aria-haspopup="menu">⋯</button><span class="ms-menu" role="menu"><button type="button" role="menuitem" data-bxreport>${LX('Report message','메시지 신고')}</button></span></span>`}</div>
+   ${my?`<div class="ms-rpl">↳ <b>${S.anon?LX('You (anonymous)','나 (익명)'):ME}</b> ${esc(LX(...RPL[my-1]))}</div>`:''}
+   <div class="ms-chips" hidden>${RPL.map((x,i)=>`<button type="button" data-bxrp="${i+1}">${LX(x[0],x[1])}</button>`).join('')}</div></div>`}
+ const fits=m=>mf==='all'||!(m.c&&m.c.np);
+ function nextPool(){for(let k=0;k<POOL.length;k++){const p=POOL[fi++%POOL.length];if(mf==='all'||!(MC[p[2]]||{}).np)return p}return POOL[0]}
+ function msDraw(){const box=document.getElementById('fl-ms');if(!box)return;box.innerHTML=fq.filter(fits).map(m=>msRow(m)).join('')+(ftyping?`<div class="ms typing"><div class="ms-h"><b>${esc(nmOf(ftyping))}</b> <i class="dots"><i></i><i></i><i></i></i></div></div>`:'');
+  document.querySelectorAll('[data-bxmf]').forEach(b=>{b.classList.toggle('on',b.dataset.bxmf===mf);b.setAttribute('aria-pressed',b.dataset.bxmf===mf)})}
+ function msPush(m){fq.push(m);if(fq.length>12)fq.shift();if(!fits(m))return;const box=document.getElementById('fl-ms');if(!box)return;box.querySelectorAll('.ms.typing').forEach(x=>x.remove());
+  box.insertAdjacentHTML('beforeend',msRow(m,'in'));const rows=box.querySelectorAll('.ms:not(.typing)');if(rows.length>5){const old=rows[0];old.classList.add('out');setTimeout(()=>old.remove(),450)}}
+ function msSeed(){if(fq.length)return;const now=Date.now();for(let k=0;k<5;k++){const p=POOL[fi++%POOL.length];fq.push({id:'m'+fi,n:p[0],t:p[1],c:ctxOf(p[2],fi),at:now-(5-k)*21000})}}
  function msTick(){const b=document.body.classList;const box=document.getElementById('fl-ms');
-  const idle=document.hidden||b.contains('pagev')||b.contains('chatting')||b.contains('acct')||!box||box.matches(':hover');
-  if(!idle){const p=POOL[fi++%POOL.length];ftyping=p[0]||'';box.insertAdjacentHTML('beforeend',`<div class="ms typing"><span><b>${esc(nmOf(p[0]))}</b> <i class="dots"><i></i><i></i><i></i></i></span></div>`);
-   setTimeout(()=>{ftyping=null;msPush({id:'m'+fi,n:p[0],t:p[1],at:Date.now()})},1100+Math.random()*700)}
-  ft=setTimeout(msTick,3200+Math.random()*2600)}
- setInterval(()=>{document.querySelectorAll('#fl-ms .ms[data-at]').forEach(r=>{const e=r.querySelector('em');if(e)e.textContent=ago(+r.dataset.at)})},10000);
- function msMine(t){if(!S.msgOn)return;msPush({id:'me'+Date.now(),me:1,t:[t,t],at:Date.now()})}
+  const idle=document.hidden||b.contains('pagev')||b.contains('chatting')||b.contains('acct')||!box||box.matches(':hover')||box.querySelector('.ms.open,.ms-mw.open');
+  if(!idle){const p=nextPool();ftyping=p[0]||'';box.insertAdjacentHTML('beforeend',`<div class="ms typing"><div class="ms-h"><b>${esc(nmOf(p[0]))}</b> <i class="dots"><i></i><i></i><i></i></i></div></div>`);
+   setTimeout(()=>{ftyping=null;msPush({id:'m'+fi,n:p[0],t:p[1],c:ctxOf(p[2],fi),at:Date.now()})},1100+Math.random()*700)}
+  ft=setTimeout(msTick,3600+Math.random()*2800)}
+ setInterval(()=>{document.querySelectorAll('#fl-ms .ms[data-at]').forEach(r=>{const e=r.querySelector('.ms-a em');if(e)e.textContent=ago(+r.dataset.at)})},10000);
+ function msMine(t,c){if(!S.msgOn)return;msPush({id:'me'+Date.now(),me:1,t:[t,t],c:c||null,at:Date.now()})}
+ const msFind=el=>{const r=el.closest('.ms[data-id]');return r?{r,m:fq.find(x=>x.id===r.dataset.id)}:{}};
+ document.addEventListener('click',e=>{const t=e.target;
+  if(!t.closest('.ms-mw'))document.querySelectorAll('.ms-mw.open').forEach(x=>x.classList.remove('open'));
+  const mf_=t.closest('[data-bxmf]');if(mf_){mf=mf_.dataset.bxmf;msDraw();return}
+  const mm=t.closest('[data-bxmm]');if(mm){nav(null,'match/'+mm.dataset.bxmm);return}
+  if(!t.closest('#fl-ms'))return;
+  const inn=document.body.classList.contains('body-in');
+  if(t.closest('[data-bxlike]')){if(!inn){openAuth('login');return}const{r,m}=msFind(t);if(!m)return;liked[m.id]=!liked[m.id];r.outerHTML=msRow(m);return}
+  if(t.closest('[data-bxreply]')){if(!inn){openAuth('login');return}const{r}=msFind(t);if(!r)return;const c=r.querySelector('.ms-chips');const op=c.hidden;document.querySelectorAll('#fl-ms .ms.open').forEach(x=>{x.classList.remove('open');x.querySelector('.ms-chips').hidden=true});c.hidden=!op;r.classList.toggle('open',op);t.closest('[data-bxreply]').setAttribute('aria-expanded',op);return}
+  const rp=t.closest('[data-bxrp]');if(rp){const{r,m}=msFind(t);if(!m)return;replied[m.id]=+rp.dataset.bxrp;r.outerHTML=msRow(m);toast(LX('Reply sent','답장을 보냈어요'));return}
+  const mo=t.closest('[data-bxmore]');if(mo){const w=mo.closest('.ms-mw');const o=!w.classList.contains('open');document.querySelectorAll('.ms-mw.open').forEach(x=>x.classList.remove('open'));w.classList.toggle('open',o);return}
+  if(t.closest('[data-bxreport]'))t.closest('.ms-mw').classList.remove('open')});
  let goalX=0;
  function renderFL(){const el=document.getElementById('fl');if(!el)return;const inn=document.body.classList.contains('body-in');const goal=724180+S.pts-2340;const lv=DB.sched.find(x=>x.st==='live');
   const others=DB.teams.filter(t=>t.lg==='LCK'&&!SUP.isPartner('team',t.team)).length;
@@ -2752,7 +2822,7 @@ const BX=(()=>{const K='rorr-bx';
    <div class="fl-row3"><div class="fl-b"><div class="p2-hh"><h3>${LX('T1 fandom season goal','T1 팬덤 시즌 목표')}</h3><span class="pt">${LX('Partner team','파트너 팀')}</span></div><div class="gl"><b id="fl-goal">${(goal+goalX).toLocaleString('en-US')}</b><span>/ 1,000,000 P</span></div><span class="pb"><i id="fl-goalbar" style="width:${Math.min(100,(goal+goalX)/10000)}%"></i></span>
      <span class="nt">${LX(`Fandoms awaiting partnership (${others}): ${(312400).toLocaleString('en-US')} P combined · names and ranks not shown`,`파트너 준비 중 팬덤 ${others}곳 합산 ${(312400).toLocaleString('en-US')} P · 이름·순위 비공개`)}</span></div>
     <div class="fl-b"><div class="p2-hh"><h3>${LX('Supporter highlights','서포터 하이라이트')}</h3><a class="fl-all" href="#rank" onclick="nav(event,'rank')">${LX('T1 supporter ranking →','T1 서포터 순위 →')}</a></div>${hl.map(h=>`<div class="hl"><span><em>${h[0]}</em> · <b>${h[1]}</b></span><b>${h[2]}</b></div>`).join('')}</div>
-    <div class="fl-b fl-msb"><div class="p2-hh"><h3>${LX('Fan messages','응원 메시지')} <span class="fl-live"><i></i>LIVE</span></h3><span>${LX('Filtered · report if needed','욕설 필터 · 신고 가능')}</span></div><div class="fl-ms" id="fl-ms"></div></div></div></div>
+    <div class="fl-b fl-msb"><div class="p2-hh"><h3>${LX('Fan messages','응원 메시지')} <span class="fl-live"><i></i>LIVE</span></h3><span class="ms-f" role="group" aria-label="${LX('Filter messages','메시지 필터')}"><button type="button" data-bxmf="t1" class="${mf==='t1'?'on':''}">T1</button><button type="button" data-bxmf="all" class="${mf==='all'?'on':''}">${LX('All matches','전체 경기')}</button></span></div><div class="fl-ms" id="fl-ms"></div><span class="ms-note">${LX('Messages are sent with a Boost · filtered and reviewed','Boost와 함께 보낸 메시지 · 욕설 필터·검수 후 노출')}</span></div></div></div>
    <p class="fl-n">${LX('Personal payment amounts are never shown. Anonymous settings apply everywhere, and accounts under 19 are hidden from highlights by default.','개인 결제액은 표시하지 않아요. 익명 설정은 모든 화면에 적용되고, 만 19세 미만 계정은 하이라이트에 기본으로 노출되지 않아요.')} <a href="#account/boost" onclick="nav(event,'account/boost')">${LX('My Boost →','내 Boost →')}</a></p>`;msSeed();msDraw();if(!ft&&!matchMedia('(prefers-reduced-motion: reduce)').matches)ft=setTimeout(msTick,2500)}
  /* ----- account › My Boost ----- */
  function renderMy(f){const el=document.getElementById('bx-my');if(!el)return;f=f||el.dataset.f||'all';el.dataset.f=f;if(S.used.m!==month())S.used={m:month(),e:0};
