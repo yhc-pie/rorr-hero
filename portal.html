@@ -1611,6 +1611,140 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
  .hx-tabs{gap:8px;padding:4px 16px 18px}.hx-tabs b{font-size:12px;font-weight:600}.hx-tabs .n{display:none}}
 @media (prefers-reduced-motion:reduce){.hx-bg *,.hx-pane{animation:none!important}}
 
+/* ===== Boost economy UI ===== */
+:root{--spark:#FFB547;--spark-ink:#2A1B00}
+:root[data-theme=light]{--spark:#C77700;--spark-ink:#fff}
+.bx-i{width:14px;height:14px;flex:none;display:inline-block;vertical-align:-2px}.bx-i.e{fill:var(--energy)}.bx-i.s{fill:var(--spark)}
+.spark{display:flex;align-items:center;gap:6px;font:500 14px "Pretendard Variable",sans-serif;color:var(--spark);border:1px solid color-mix(in srgb,var(--spark) 55%,transparent);border-radius:999px;background:transparent;padding:6px 12px;cursor:pointer}
+.spark b{font-weight:700}
+@media (max-width:760px){.spark span{display:none}}
+/* cards */
+.bx-card{padding:3px;border-radius:18px;background:linear-gradient(135deg,#8C93A3,#D5DAE3,#8C93A3)}
+.bx-card.gold{background:linear-gradient(135deg,#A8782A,#F2C766,#A8782A)}
+.bx-card.holo{background:linear-gradient(135deg,#6F4CFF,#2F9CFC,#00B395,#F2C766,#FE2054)}
+.bx-card .in{border-radius:15px;background:var(--bg2);padding:16px;display:grid;gap:8px;height:100%;box-sizing:border-box;align-content:start}
+.bx-card .hd{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.bx-card .tr{font:800 11.5px "Pretendard Variable",sans-serif;color:var(--mute)}.bx-card.gold .tr{color:#C9972E}.bx-card.holo .tr{color:#9B7BFF}
+:root:not([data-theme=light]) .bx-card.gold .tr{color:#F2C766}:root:not([data-theme=light]) .bx-card.holo .tr{color:#C9B8FF}
+.bx-card .dc{font:700 10.5px "Pretendard Variable",sans-serif;padding:2px 8px;border-radius:9999px;border:1px solid currentColor;white-space:nowrap}.bx-card .dc.energy{color:var(--energy)}.bx-card .dc.spark{color:var(--spark)}
+.bx-card .sbt{font-size:12px;color:var(--mute)}.bx-card .tt{font-size:16px;line-height:1.35}
+.bx-card .kv{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 10px;font-size:12px;color:var(--mute);border-top:1px solid var(--line);padding-top:8px}.bx-card .kv b{color:var(--ink)}
+.bx-card .ow,.bx-card .ft{font-size:11.5px;color:var(--mute)}
+.bx-card.sm .in{padding:12px;gap:5px;min-height:118px}.bx-card.sm .tt{font-size:14px}
+/* fandom live (home) */
+.fl{max-width:1320px;margin:24px auto 0;padding:0 20px;box-sizing:border-box}
+.fl>.fl-in,.fl{display:grid;gap:16px}
+.fl-wrap{border-radius:20px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;gap:18px}
+body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
+.fl-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}.fl-h>div{display:flex;align-items:baseline;gap:10px}
+.fl-h h2{margin:0;font:800 22px "Pretendard Variable",sans-serif;text-transform:none;letter-spacing:-.01em}.fl-h .nw{font-size:12px;font-weight:700;color:var(--cyan);padding:2px 8px;border-radius:9999px;background:color-mix(in srgb,var(--ds-primary) 18%,transparent)}.fl-h>span{font-size:13px;color:var(--mute)}
+.fl-row{display:flex;flex-wrap:wrap;gap:16px}
+.fl-me{flex:1 1 320px;min-width:0;display:grid;gap:14px;padding:20px;border-radius:16px;background:var(--bg3);align-content:start}
+.fl-me .who{display:flex;align-items:center;gap:12px}.fl-me .av{width:44px;height:44px;border-radius:9999px;display:grid;place-items:center;font-weight:800;background:var(--bg2);box-shadow:0 0 0 3px var(--ds-primary)}
+.fl-me .who>div{display:grid;gap:2px}.fl-me .who span{font-size:12.5px;color:var(--mute)}
+.fl-me .rk{display:flex;align-items:baseline;gap:8px}.fl-me .rk b{font:800 34px "Pretendard Variable",sans-serif;letter-spacing:-.02em}.fl-me .rk span{font-size:13.5px;color:var(--energy)}
+.fl-me .k3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border-radius:10px;overflow:hidden;background:var(--line)}.fl-me .k3 div{background:var(--bg2);padding:10px;display:grid;gap:2px;font-size:12px;color:var(--mute)}.fl-me .k3 b{font-size:15px;color:var(--ink)}
+.fl-me.out p{margin:0;font-size:14px;line-height:1.6;color:var(--mute)}
+.fl-rare{flex:999 1 620px;min-width:0;display:grid;gap:12px;align-content:start}
+.fl-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.fl-row3{display:flex;flex-wrap:wrap;gap:16px}
+.fl-b{flex:1 1 300px;min-width:0;padding:18px;border-radius:16px;background:var(--bg3);display:grid;gap:10px;align-content:start}
+.fl-b .pt{color:var(--energy)!important;font-weight:700}.fl-b .gl,.aw-side .gl,.bx-gl{display:flex;align-items:baseline;gap:6px}.fl-b .gl b,.aw-side .gl b,.bx-gl b{font:800 24px "Pretendard Variable",sans-serif}.fl-b .gl span,.aw-side .gl span,.bx-gl span{font-size:13px;color:var(--mute)}
+.fl-b .pb,.aw-side .pb,.bx-pb{height:8px;border-radius:9999px;background:var(--bg2);position:relative;overflow:hidden;display:block}.fl-b .pb i,.aw-side .pb i,.bx-pb i{position:absolute;left:0;top:0;bottom:0;border-radius:9999px;background:var(--ds-primary)}
+.aw-side .pb i{background:var(--spark)}
+.fl-b .nt{font-size:12px;color:var(--mute)}
+.fl-b .hl{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}.fl-b .hl em{font-style:normal;color:var(--mute)}
+.fl-b .ms{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13px}.fl-b .ms span{color:color-mix(in srgb,var(--ink) 80%,var(--mute))}.fl-b .ms b{color:var(--ink)}
+.fl-b .rp{width:32px;height:32px;border-radius:9999px;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:pointer;display:grid;place-items:center}.fl-b .rp svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2}
+.fl-n{margin:0;font-size:12px;color:var(--mute);line-height:1.6}.fl-n a{color:var(--cyan)}
+/* right rail spark card */
+.pan.sparkc{padding:18px;display:grid;gap:8px}.sparkc b{display:flex;align-items:center;gap:6px;font-size:15px}.sparkc span{font-size:13px;color:var(--mute);line-height:1.55}.sparkc a{font-size:13.5px;font-weight:700;color:var(--cyan)}
+/* side panel boost */
+.bx-notice{margin:0;padding:14px 16px;border-radius:12px;background:var(--bg3);border:1px solid var(--line);font-size:13.5px;line-height:1.65;color:color-mix(in srgb,var(--ink) 80%,var(--mute))}
+.bx-now{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:16px;border-radius:14px;background:var(--bg3);border:1px solid var(--line);color:var(--ink);text-align:left;cursor:pointer;font-family:inherit;width:100%}
+.ipanel .sup:not(.off) .bx-now{background:color-mix(in srgb,var(--upcoming) 22%,var(--bg2));border-color:color-mix(in srgb,var(--upcoming) 55%,var(--line));box-shadow:var(--sh-live)}
+.bx-now.sel{outline:2px solid var(--energy);outline-offset:2px}.sup.off .bx-now.sel{outline-color:var(--spark)}
+.bx-now .tx{display:grid;gap:3px}.bx-now b{font-size:15.5px}.bx-now em{font-style:normal;font-size:12.5px;color:var(--mute)}
+.bx-tc{font-size:12px;font-weight:800;padding:3px 9px;border-radius:9999px;border:1px solid currentColor;color:var(--mute)}.bx-tc.gold{color:#C9972E}.bx-tc.holo{color:#9B7BFF}
+.bx-cap{font-size:12.5px;color:var(--mute);line-height:1.55;margin:0}
+.bx-cur{margin:0;padding:0;border:0;display:grid;grid-template-columns:1fr 1fr;gap:8px}.bx-cur legend{font-size:13px;color:var(--mute);margin-bottom:8px;padding:0}
+.bx-cur label{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:8px;align-items:center;padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);cursor:pointer}
+.bx-cur label input{width:16px;height:16px;margin:0}.bx-cur label.e input{accent-color:var(--energy)}.bx-cur label.s input{accent-color:var(--spark)}
+.bx-cur label.on.e{border:2px solid var(--energy);background:color-mix(in srgb,var(--energy) 10%,var(--bg2))}.bx-cur label.on.s{border:2px solid var(--spark);background:color-mix(in srgb,var(--spark) 10%,var(--bg2))}
+.bx-cur label.dis{opacity:.55;border-style:dashed;cursor:not-allowed}
+.bx-cur label span{display:grid;gap:2px}.bx-cur label b{font-size:14.5px}.bx-cur label em{font-style:normal;font-size:12px;color:var(--mute)}.bx-cur label em i{font-style:normal}
+.sup-box .sup-amts{grid-template-columns:repeat(auto-fit,minmax(0,1fr))}
+.sup-box .sup-amts button.on.spark,.sup.off .sup-amts button.on{border-color:var(--spark)!important;background:color-mix(in srgb,var(--spark) 16%,transparent)!important}
+.sup-box .sup-go{display:inline-flex;align-items:center;justify-content:center;gap:8px}.sup-box .sup-go .bx-i{fill:currentColor}
+.sup-box .sup-go.spk{background:var(--spark)!important;color:var(--spark-ink)!important}
+.bx-ded{font-size:12.5px;color:color-mix(in srgb,var(--ink) 80%,var(--mute));text-align:center}
+.bx-dist{display:grid;gap:8px;padding:14px;border-radius:12px;background:var(--bg2);font-size:13px}
+.bx-dist .h{display:flex;justify-content:space-between;gap:8px}.bx-dist .h span{color:var(--mute);font-size:12px}
+.bx-dist .dsb{display:flex;height:10px;border-radius:9999px;overflow:hidden;gap:2px}.bx-dist .dsb i:nth-child(1){background:var(--team-l)}.bx-dist .dsb i:nth-child(2){background:var(--mute)}.bx-dist .dsb i:nth-child(3){background:var(--ds-primary)}
+.bx-dist .lg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:color-mix(in srgb,var(--ink) 80%,var(--mute))}
+.bx-dist.off span{color:var(--mute);line-height:1.55}
+.bx-wait{margin:0;padding:14px;border-radius:12px;border:1px dashed var(--line);font-size:13.5px;color:var(--mute)}
+.bx-ntf{display:grid;gap:10px;padding:18px;border-radius:14px;border:1px dashed var(--line)}.bx-ntf span{font-size:13px;color:var(--mute);line-height:1.6}.bx-ntf .p2-btn{justify-self:start;height:40px}.bx-ntf .p2-btn.on{border-color:var(--energy);color:var(--energy)}
+.bx-lb{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.bx-lb li{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg3);font-size:14px}
+.bx-lb li em{font-style:normal;font-size:12px;color:var(--mute)}.bx-lb .r1{color:#E7B84A}.bx-lb .r2{color:#AEB6C4}.bx-lb .r3{color:#C98B5A}.bx-lb li b:first-child{color:var(--mute)}
+.bx-lb li.me{background:color-mix(in srgb,var(--ds-primary) 18%,var(--bg2))}.bx-lb li.me b:first-child{color:var(--cyan)}
+.bx-lbt{display:inline-flex}.bx-lbt button{cursor:pointer!important;color:var(--mute)!important}.bx-lbt button.on{color:var(--bg)!important}
+.bx-tg{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;background:var(--bg3);cursor:pointer}
+.bx-tg span{display:grid;gap:2px}.bx-tg b{font-size:14.5px}.bx-tg em{font-style:normal;font-size:12.5px;color:var(--mute)}.bx-tg input{width:20px;height:20px;accent-color:var(--ds-primary)}
+.bx-tg.sm{padding:8px 0;background:transparent}.bx-tg.sm b{font-size:13.5px;font-weight:500}
+.ipanel .mom .ic svg{width:20px;height:20px}
+/* reward modal card */
+.rw-cardslot{display:grid;gap:10px;margin:10px 0;text-align:left}.rw-cardslot:empty{display:none}.rw-new{font:700 12px "Pretendard Variable",sans-serif;color:var(--cyan);text-align:center}.rw-cardslot .p2-btn{justify-self:center}
+.rw-amt .bx-i{width:22px;height:22px;vertical-align:-3px}
+/* my boost */
+.bx-bal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.bx-bal>div{padding:18px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);display:grid;gap:6px;align-content:start}
+.bx-bal .e{border-color:color-mix(in srgb,var(--energy) 45%,var(--line))}.bx-bal .s{border-color:color-mix(in srgb,var(--spark) 45%,var(--line))}
+.bx-bal>div>span{font-size:13.5px;color:var(--mute);display:flex;align-items:center;gap:6px}
+.bx-bal>div b{font:800 30px "Pretendard Variable",sans-serif}.bx-bal em{font-style:normal;font-size:12.5px;color:var(--mute)}.bx-bal em a{color:var(--cyan)}
+.bx-two{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;margin-bottom:16px}.bx-two .box{display:grid;gap:10px;align-content:start;margin:0}
+.bx-rk{display:flex;align-items:baseline;gap:10px}.bx-rk b{font:800 38px "Pretendard Variable",sans-serif;letter-spacing:-.02em}.bx-rk span{font-size:14px;color:var(--mute)}
+.bx-ln{display:flex;justify-content:space-between;padding:10px 12px;border-radius:8px;background:var(--bg3);font-size:14px}.bx-ln span{color:var(--mute)}.bx-ln.tot{background:transparent}
+.bx-two .p2-btn{justify-self:start}
+.bx-f{margin-left:auto}.bx-f button{cursor:pointer!important;color:var(--mute)!important}.bx-f button.on{color:var(--bg)!important}
+.box .p2-hh h3 small{font-size:13px;color:var(--mute);font-weight:600}
+.bx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-top:12px}
+.bx-cw{display:grid;gap:6px}.bx-sh{justify-self:start;background:none;border:0;color:var(--cyan);font:600 12.5px "Pretendard Variable",sans-serif;cursor:pointer;padding:2px 0}
+.bx-tw{overflow-x:auto;margin-top:10px}.bx-tw td.cur-energy{color:var(--energy);font-weight:700}.bx-tw td.cur-spark{color:var(--spark);font-weight:700}
+@media (max-width:860px){.bx-bal,.bx-two{grid-template-columns:1fr}}
+/* spark ad wall */
+#pg-spark .wrap{max-width:1100px}
+.aw-tm{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 18px;border-radius:14px;background:var(--bg3);border:1px solid var(--line);font-size:14px;margin-bottom:16px}
+.aw-tm .tg{font-size:12px;font-weight:800;padding:4px 10px;border-radius:9999px;background:var(--upcoming);color:#fff}
+.aw-g{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
+.aw-main{display:grid;gap:14px;margin:0}
+.aw-play{aspect-ratio:16/9;border-radius:14px;background:#10141C;border:1px dashed var(--line);display:grid;place-items:center;align-content:center;gap:10px;text-align:center;color:#9AA1B5;font-size:14px}
+.aw-play small{display:block;font-size:12px;margin-top:6px}.aw-play b{font:800 44px "Pretendard Variable",sans-serif;color:#F0F2F5}.aw-play.ok b{color:var(--spark)}
+.aw-play .pb{width:60%;height:6px;border-radius:9999px;background:#262D40;position:relative;overflow:hidden}.aw-play .pb i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--spark);transition:width 1s linear}
+.aw-n{margin:0;padding:14px 16px;border-radius:12px;background:color-mix(in srgb,var(--spark) 10%,transparent);border:1px solid color-mix(in srgb,var(--spark) 40%,transparent);font-size:14.5px;line-height:1.6}
+.aw-b{display:flex;flex-wrap:wrap;gap:8px}.p2-btn.spk{background:var(--spark);border-color:var(--spark);color:var(--spark-ink)}.p2-btn:disabled{opacity:.5;cursor:not-allowed}
+.aw-side{display:grid;gap:16px}.aw-side .box{margin:0;display:grid;gap:10px}
+.aw-r{margin:0;padding-left:18px;display:grid;gap:7px;font-size:13.5px;color:color-mix(in srgb,var(--ink) 80%,var(--mute));line-height:1.55}
+@media (max-width:860px){.aw-g{grid-template-columns:1fr}}
+/* share modal */
+.bx-modal{position:fixed;inset:0;z-index:200;background:rgba(10,12,18,.72);display:none;place-items:center;padding:16px;overflow-y:auto}
+.bx-modal.on{display:grid}
+.bx-sheet{position:relative;width:min(860px,100%);border-radius:20px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;grid-template-columns:400px minmax(0,1fr);gap:24px;box-shadow:var(--sh-float)}
+.bx-x{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:9999px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:20px;cursor:pointer}
+.bx-prev{aspect-ratio:4/5;border-radius:18px;background:#10141C;color:#F0F2F5;padding:24px;display:grid;grid-template-rows:auto auto 1fr auto;gap:14px;box-sizing:border-box;overflow:hidden}
+.bx-prev .hd{display:flex;justify-content:space-between}.bx-prev .hd span{font-size:12px;color:#9AA1B5}
+.bx-prev .who{display:grid;gap:4px}.bx-prev .who span{font-size:13px;color:#9AA1B5}.bx-prev .who b{font:800 21px/1.3 "Pretendard Variable",sans-serif}
+.bx-prev .bx-card{align-self:start}.bx-prev .bx-card .in{background:#1D2333;color:#F0F2F5}
+.bx-prev .ft{margin:0;font-size:10px;color:#9AA1B5;line-height:1.5}
+.bx-opt{display:grid;gap:10px;align-content:start;padding-top:24px}.bx-opt h3{margin:0;font:800 22px "Pretendard Variable",sans-serif;text-transform:none}.bx-opt p{margin:0;font-size:14px;line-height:1.6;color:var(--mute)}
+.bx-opt .bx-tg{background:var(--bg3);padding:10px 14px}
+@media (max-width:760px){.bx-sheet{grid-template-columns:1fr;padding:16px}.bx-prev{max-width:320px;justify-self:center;width:100%}}
+.bx-card{min-width:0}.bx-card .hd{flex-wrap:wrap}.bx-card .dc{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.sup-box .lnk,.bx-ntf .lnk{font-size:13.5px;text-decoration:none;color:var(--cyan)}
+.bx-tw th,.bx-tw td{padding-right:14px}
+.bx-tw th:last-child,.bx-tw td:last-child{padding-left:24px}
+
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -1634,6 +1768,7 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
       <button class="pill" onclick="openAuth('signup')">Sign up free</button>
     </div>
     <div class="signed-in" style="gap:10px;align-items:center">
+      <button class="spark" title="Spark balance" onclick="nav(event,'spark')"><b>✦ <i class="sk" style="font-style:normal">35</i></b> <span>Spark</span></button>
       <button class="energy" title="Energy balance" onclick="togglePop()"><b class="eb">⚡ 120</b> <span>Energy</span></button>
       <button class="avatar" onclick="toggleMenu()" aria-label="Account">C</button>
     </div>
@@ -1641,6 +1776,8 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
   <div class="menu" id="menu">
     <div class="who"><b>Charles</b><span>RORR fan</span></div>
     <a href="#account/energy" onclick="nav(event,'account/energy')">Energy <small class="eb2">⚡ 120 left</small></a>
+    <a href="#account/boost" onclick="nav(event,'account/boost')">My Boost <small>✦ <i class="sk" style="font-style:normal">35</i></small></a>
+    <a href="#spark" onclick="nav(event,'spark')">Get Spark</a>
     <a href="#account/plus" onclick="nav(event,'account/plus')">RORR Plus <small class="soon-b">Soon</small></a>
     <a href="#account/collection" onclick="nav(event,'account/collection')">My team &amp; Muse items <small class="soon-b">Soon</small></a>
     <a href="#account/billing" onclick="nav(event,'account/billing')">Billing &amp; receipts</a>
@@ -1677,6 +1814,7 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
  </div>
  <div class="hx-tabs" id="hx-tabs" role="tablist" aria-label="Highlights"></div>
 </section>
+<section class="fl" aria-label="Fandom live"><div class="fl-wrap" id="fl"></div></section>
 <div class="lgbar" aria-label="League"><div class="lgbar-in"><span class="lgk">League</span><div class="lgchips" id="lgchips" role="tablist"></div><span class="lgr" id="lgregion"></span></div></div>
 <div class="portal">
  <section class="pan" id="p-rank">
@@ -1703,6 +1841,7 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
    <ul><li>Reacts the moment it happens</li><li>Cheers your team with you</li><li>Right beside the stream</li></ul>
    <a class="pill" href="#muse">Try Muse · 30s</a>
   </section>
+  <section class="pan sparkc"><b><svg class="bx-i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/></svg>Get Spark</b><span>Watch an ad to get Spark for Boosts. Free, and only for Boosts.</span><a href="#spark" onclick="nav(event,'spark')">Go to the ad wall →</a></section>
   <section class="pan blogs">
    <div class="ph"><h2>From the blog</h2><a class="tagx" href="#blog" onclick="nav(event,'blog')">All →</a></div>
    <div id="bl"></div>
@@ -1724,6 +1863,7 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
  <aside class="side">
   <div class="me"><button class="avatar" style="pointer-events:none">C</button><div><b>Charles</b><span>RORR fan</span></div></div>
   <button data-t="energy" onclick="nav(event,'account/energy')">Energy <small class="eb3">120</small></button>
+  <button data-t="boost" onclick="nav(event,'account/boost')">My Boost <small class="sk">35</small></button>
   <button data-t="plus" onclick="nav(event,'account/plus')">RORR Plus <small class="soon-b">Soon</small></button>
   <button data-t="collection" onclick="nav(event,'account/collection')">My team &amp; items <small class="soon-b">Soon</small></button>
   <button data-t="billing" onclick="nav(event,'account/billing')">Billing</button>
@@ -1753,6 +1893,8 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
     <tr><td>2026-09-28</td><td>Top-up · ⚡ 100 · ₩13,000</td><td class="r plus">+100</td></tr>
    </table></div>
   </div>
+  <!-- MY BOOST -->
+  <div class="tab" data-t="boost" id="bx-my"></div>
   <!-- PLUS -->
   <div class="tab" data-t="plus">
    <h2>RORR Plus</h2><p class="lead">A membership for fans who want to go deeper.</p>
@@ -1893,6 +2035,7 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
 <div class="rpage" id="pg-post" data-r="post">
  <article class="post wrap" id="post"></article>
 </div>
+<div class="rpage" id="pg-spark" data-r="spark"><div class="wrap" id="bx-wall"></div></div>
 <div class="rpage" id="pg-contact" data-r="contact">
  <section class="rhero" style="padding-bottom:28px">
   <div class="k">CONTACT</div>
@@ -2155,6 +2298,7 @@ function nav(e,route){e&&e.preventDefault();document.getElementById('menu').clas
 function route_(r){const b=document.body;if(typeof MD!=='undefined'){if(r==='muse'){MD.open(true);return}MD.close()}if(/^(player|team|compare)\//.test(r)){if(b.classList.contains('chatting')||b.classList.contains('pagev')||b.classList.contains('acct'))route_('');openEntity(r,true);return}if(typeof closeEntity==='function')closeEntity();b.classList.remove('acct','teamv','pagev');document.querySelectorAll('.rpage').forEach(x=>x.classList.remove('on'));
  if(r.startsWith('match/')){b.classList.remove('chatting');b.classList.add('pagev');renderMatch(r.slice(6));document.getElementById('pg-match').classList.add('on');hdr.classList.add('solid');scrollTo(0,0);clearInterval(timer);return}
  if(r==='contact'){b.classList.remove('chatting');b.classList.add('pagev');CT.show();document.getElementById('pg-contact').classList.add('on');hdr.classList.add('solid');scrollTo(0,0);clearInterval(timer);return}
+ if(r==='spark'){b.classList.remove('chatting');b.classList.add('pagev');BX.renderWall();document.getElementById('pg-spark').classList.add('on');hdr.classList.add('solid');scrollTo(0,0);clearInterval(timer);return}
  if(r==='stats'){b.classList.remove('chatting');b.classList.add('pagev');STX.render();document.getElementById('pg-stats').classList.add('on');hdr.classList.add('solid');scrollTo(0,0);clearInterval(timer);return}
  if(r==='about'){b.classList.remove('chatting');b.classList.add('pagev');document.getElementById('pg-about').classList.add('on');hdr.classList.add('solid');scrollTo(0,0);clearInterval(timer);return}
  if(r==='wge')r='wrc';
@@ -2162,7 +2306,7 @@ function route_(r){const b=document.body;if(typeof MD!=='undefined'){if(r==='mus
  if(r==='blog/what-is-wge')r='blog/what-is-wrc';
  if(r==='blog'||r.startsWith('blog/')){b.classList.remove('chatting');b.classList.add('pagev');if(r==='blog'){renderBlog();document.getElementById('pg-blog').classList.add('on')}else{renderPost(r.slice(5));document.getElementById('pg-post').classList.add('on')}hdr.classList.add('solid');scrollTo(0,0);clearInterval(timer);return}
  if(r.startsWith('account/')){b.classList.remove('chatting');b.classList.add('acct');hdr.classList.add('solid');const t=r.split('/')[1];
-  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));document.querySelectorAll('.side button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));scrollTo(0,0);clearInterval(timer);return}
+  if(t==='boost')BX.renderMy();document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t===t));document.querySelectorAll('.side button').forEach(x=>x.classList.toggle('on',x.dataset.t===t));scrollTo(0,0);clearInterval(timer);return}
  if(r==='chat'&&document.getElementById('thread').children.length){b.classList.add('chatting');return}
  b.classList.remove('chatting');hdr.classList.toggle('solid',scrollY>80);restart()}
 function jump(e,id){e.preventDefault();document.getElementById(id).scrollIntoView({behavior:'smooth'})}
@@ -2327,87 +2471,243 @@ function playerAxes(p,pool){const sp=x=>{const r=mkRnd(hashStr(x.name));const v=
  return f.map(([l,fn])=>({l,v:pctRank(pool.map(fn),fn(p))}))}
 function teamAxes(t,pool){const f=[[LX('Win%','승률'),x=>x.wr],[LX('Set ±','세트 득실'),x=>x.sd],['LwRC+',x=>x.ix],[LX('Form','최근 흐름'),x=>[...x.form].filter(c=>c==='W').length],[LX('Depth','로스터 깊이'),x=>Math.min(...DB.players.filter(p=>p.team===x.team).map(p=>p.ix))],[LX('Carry','에이스'),x=>Math.max(...DB.players.filter(p=>p.team===x.team).map(p=>p.ix))]];
  return f.map(([l,fn])=>({l,v:pctRank(pool.map(fn),fn(t))}))}
-/* ===== Energy Boost (support a player or team) ===== */
-const SUP=(()=>{const key='rorr-support';
- const load=()=>{try{return JSON.parse(localStorage.getItem(key)||'{}')}catch(e){return{}}};const save=d=>{try{localStorage.setItem(key,JSON.stringify(d))}catch(e){}};
- const SAMPLE=[['minji_07','You were unreal last split. Keep going!',50],['ZedMain','Proud of this roster 💙',10],['lck_dad','Win or lose, we are with you',100],['nori','See you at the finals',10]];
- function level(t){return t>=500?4:t>=200?3:t>=50?2:t>0?1:0}
- const PARTNERS=['T1'];/* teams with a signed Boost partnership */
- const NK=['minji_07','ZedMain','lck_dad','nori','faker_fan22','sol_kr','midgap','jinx_irl','hanbit','dragonsoul','yuna.gg','bluebuff','kkk_99','sejin','rift_mom'];
- const MSG=['You were unreal last split. Keep going!','Proud of this roster 💙','Win or lose, we are with you','See you at the finals','That baron call 👏','Always behind you'];
+/* ===== Boost economy (policy v1.0): Energy ⚡ paid, Spark ✦ ad reward, moment cards, points ===== */
+const BX=(()=>{const K='rorr-bx';
+ const CFG={sparkPerAd:5,dailyAds:10,teamShare:[40,35,25],monthCap:null,deco:{e2:50,e3:100}};
+ const ME='Charles';
+ const SEED=()=>({spark:35,pts:2340,streak:7,best:11,anon:false,hl:true,msgOn:true,ads:{d:'',n:0},used:{m:'',e:0},msgs:[],
+  cards:[
+   {id:'s1',no:88,tier:'holo',cur:'energy',deco:3,partner:1,t:['Elder fight turnaround, all the way to the Nexus','장로 교전 역전, 넥서스까지'],sub:'T1 vs GEN · 2026-10-12 · G3 33:51',w0:30,w1:71,fans:6210,d:'2026-10-12',amt:500},
+   {id:'s2',no:1937,tier:'gold',cur:'energy',deco:2,partner:1,t:["Gansen's Baron steal","Gansen 바론 스틸"],sub:'T1 vs DNS · 2026-10-15 · G2 24:10',w0:44,w1:72,fans:2184,d:'2026-10-15',amt:50},
+   {id:'s3',no:1204,tier:'gold',cur:'spark',deco:1,partner:0,t:['Baron fight turnaround','바론 교전 역전'],sub:'TODAY1 · 2026-10-13 · G2 24:10',w0:31,w1:68,fans:1204,d:'2026-10-13',amt:10},
+   {id:'s4',no:412,tier:'silver',cur:'spark',deco:1,partner:1,t:['Zulux solo kill','Zulux 솔로킬'],sub:'T1 vs DNS · 2026-10-15 · G1 08:42',w0:50,w1:56,fans:842,d:'2026-10-15',amt:5},
+   {id:'s5',no:377,tier:'silver',cur:'energy',deco:1,partner:1,t:['First dragon secured','첫 드래곤 확보'],sub:'T1 vs KT · 2026-10-11 · G1 11:05',w0:48,w1:54,fans:790,d:'2026-10-11',amt:10}],
+  hist:[{d:'2026-10-15',w:['T1 vs DNS · G2 24:10 Baron fight','T1 vs DNS · 2세트 24:10 바론 교전'],cur:'energy',n:50,card:'s2'},{d:'2026-10-13',w:["Today's match 1 · G2 24:10","오늘의 1경기 · 2세트 24:10"],cur:'spark',n:10,card:'s3'},{d:'2026-10-12',w:['T1 vs GEN · G3 33:51 Elder fight','T1 vs GEN · 3세트 33:51 장로 교전'],cur:'energy',n:500,card:'s1'}]});
+ let S;try{S=JSON.parse(localStorage.getItem(K)||'null')}catch(e){}if(!S||!S.cards)S=SEED();
+ const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+ const today=()=>new Date(Date.now()+9*3600e3).toISOString().slice(0,10);const month=()=>today().slice(0,7);
+ const IC={e:'<svg class="bx-i e" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>',s:'<svg class="bx-i s" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/></svg>'};
+ const TIER={silver:['Silver · regular moment','실버 · 일반 순간'],gold:['Gold · turning point','골드 · 승부처'],holo:['Hologram · all-time','홀로그램 · 역대급']};
+ const tierOf=d=>d>=30?'holo':d>=12?'gold':'silver';
+ const decoOf=(cur,amt)=>cur==='spark'?1:amt>=CFG.deco.e3?3:amt>=CFG.deco.e2?2:1;
+ const decoTxt=c=>`${c.cur==='spark'?'Spark':'Energy'} ${LX('Lv.'+c.deco,c.deco+'단계')}`;
+ const subTxt=sub=>sub.replace('TODAY1',LX("Today's match 1",'오늘의 1경기')).replace(/ G(\d+) /,(m,g)=>' '+LX('G'+g,g+'세트')+' ');
+ function cardHTML(c,o){o=o||{};return `<article class="bx-card ${c.tier}${o.sm?' sm':''}"><div class="in"><div class="hd"><span class="tr">${LX(...TIER[c.tier])}</span><span class="dc ${c.cur}">${decoTxt(c)}</span></div>
+  <span class="sbt">${esc(subTxt(c.sub))}</span><b class="tt">${esc(LX(c.t[0],c.t[1]))}</b>
+  ${o.sm?'':`<div class="kv"><span>${LX('Win chance','승리확률')} <b>${c.w0}% → ${c.w1}%</b></span><span>${LX('Boosted with','함께 Boost')} <b>${c.fans.toLocaleString('en-US')}</b></span></div>`}
+  ${o.owner?`<span class="ow">${o.owner}</span>`:''}${o.sm?'':`<span class="ft">#${String(c.no).padStart(5,'0')} · ${LX('Not tradeable','거래·양도 불가')}</span>`}</div></article>`}
+ function setUI(){document.querySelectorAll('.sk').forEach(e=>e.textContent=S.spark.toLocaleString());try{renderFL()}catch(e){}}
+ const rank=()=>Math.max(1,Math.round(18402*Math.exp(-S.pts/470)));
+ const pct=()=>Math.max(1,Math.round(rank()/18402*100));
+ function spendSpark(n,what){if(S.spark<n){toast(LX(`Not enough Spark · you need ✦ ${n}, you have ✦ ${S.spark}.`,`Spark가 부족해요 · ✦ ${n} 필요, 보유 ✦ ${S.spark}.`));return false}S.spark-=n;save();setUI();return true}
+ function noteEnergy(n){if(S.used.m!==month())S.used={m:month(),e:0};S.used.e+=n;save()}
+ function addBoost(o){/* o:{cur,amt,mom,partner,label,msg} */const ptsAdd=20+(o.mom?{silver:10,gold:30,holo:60}[o.mom.tier]:0);S.pts+=ptsAdd;let card=null;
+  if(o.mom){card={id:'c'+Date.now(),no:1+(hashStr(o.mom.id)%9000)+S.cards.length,tier:o.mom.tier,cur:o.cur,deco:decoOf(o.cur,o.amt),partner:o.partner?1:0,t:o.mom.t,sub:o.mom.sub,w0:o.mom.w0,w1:o.mom.w1,fans:o.mom.fans+1,d:today(),amt:o.amt};S.cards.unshift(card)}
+  S.hist.unshift({d:today(),w:o.label,cur:o.cur,n:o.amt,card:card&&card.id});if(o.msg&&S.msgOn)S.msgs.unshift({t:o.msg,at:Date.now()});if(o.cur==='energy')noteEnergy(o.amt);save();setUI();return{card,ptsAdd}}
+ /* ----- main page: fandom live ----- */
+ const RARE=[{tier:'holo',cur:'energy',deco:3,t:['Elder fight turnaround, all the way to the Nexus','장로 교전 역전, 넥서스까지'],sub:'T1 vs GEN · 2026-10-12 · G3 33:51',w0:30,w1:71,fans:6210,no:88,own:'minji_07'},
+  {tier:'gold',cur:'energy',deco:2,t:["Gansen's Baron steal, then a won fight","Gansen 바론 스틸 후 한타 대승"],sub:'T1 vs DNS · 2026-10-15 · G2 24:10',w0:44,w1:72,fans:2184,no:1937,own:null},
+  {tier:'gold',cur:'energy',deco:1,t:['4-for-0 fight at 18 minutes','18분 4:0 한타'],sub:'T1 vs KT · 2026-10-11 · G1 18:02',w0:50,w1:72,fans:1930,no:1650,own:'ZedMain'},
+  {tier:'holo',cur:'spark',deco:1,t:['Elder fight turnaround wins the series','장로 교전 역전으로 시리즈 승리'],sub:'TODAY1 · 2026-10-13 · G3 31:42',w0:27,w1:71,fans:3870,no:240,own:'dragonsoul'}];
+ function renderFL(){const el=document.getElementById('fl');if(!el)return;const inn=document.body.classList.contains('body-in');const goal=724180+S.pts-2340;
+  const others=DB.teams.filter(t=>t.lg==='LCK'&&!SUP.isPartner('team',t.team)).length;
+  const me=inn?`<div class="fl-me"><div class="who"><span class="av">${ME[0]}</span><div><b>${S.anon?LX('Anonymous supporter','익명 서포터'):ME}</b><span>${LX('T1 fandom supporter','T1 팬덤 서포터')}</span></div></div>
+    <div class="rk"><b>${LX('#'+rank(),rank()+'위')}</b><span>${LX(`Top ${pct()}%`,`상위 ${pct()}%`)}</span></div>
+    <div class="k3"><div><span>${LX('Points','포인트')}</span><b>${S.pts.toLocaleString('en-US')} P</b></div><div><span>${LX('Streak','연속 응원')}</span><b>${LX(S.streak+' games',S.streak+'경기')}</b></div><div><span>${LX('Cards','카드')}</span><b>${LX(S.cards.length+'',S.cards.length+'장')}</b></div></div>
+    <button type="button" class="p2-btn pri" data-bxshare="">${LX('Show off my rank & cards','내 순위·카드 자랑하기')}</button></div>`
+   :`<div class="fl-me out"><b>${LX('Where do you rank?','내 순위는 몇 위일까요?')}</b><p>${LX('Boost big moments during a match to collect cards and points. Rankings use cheering, not money.','경기 중 큰 순간에 Boost하면 카드와 포인트가 쌓여요. 순위는 결제 금액이 아니라 응원 참여로 매겨요.')}</p><button type="button" class="p2-btn pri" onclick="openAuth('login')">${LX('Log in to see my rank','로그인하고 내 순위 보기')}</button></div>`;
+  const hl=[[LX('Most cards this week','카드 최다'),'minji_07',LX('41 cards','41장')],[LX('Longest streak','최장 연속 응원'),LX('Anonymous supporter','익명 서포터'),LX('23 games','23경기')],[LX('Most big moments','큰 순간 참여'),'ZedMain',LX('9 times','9회')]];
+  const mine=inn&&S.msgOn?S.msgs.slice(0,1).map(m=>[S.anon?LX('Anonymous supporter','익명 서포터'):ME,m.t]):[];
+  const msgs=[...mine,['lck_dad',LX('Screamed at that game-3 Elder fight. With you to the end','3세트 장로 교전 보고 소리 질렀어요. 끝까지 같이 갑니다')],['nori',LX('The bot lane was rock solid today','오늘 바텀 라인 진짜 단단했다')],['yuna.gg',LX('Got my first hologram card!','첫 홀로그램 카드 받았어요!')]].slice(0,3);
+  el.innerHTML=`<div class="fl-h"><div><h2>${LX('Fandom live','팬덤 라이브')}</h2><span class="nw">${LX('New','신규')}</span></div><span>${LX('Ranked by cheering, not by money','순위는 결제 금액이 아니라 응원 참여로 매겨요')}</span></div>
+   <div class="fl-row">${me}<div class="fl-rare"><div class="p2-hh"><h3>${LX('Rare cards this week','이번 주 레어 카드')}</h3><span>${LX('Border = size of the moment · badge = Boost level','테두리 = 순간의 크기 · 배지 = Boost 단계')}</span></div>
+    <div class="fl-cards">${RARE.map(c=>cardHTML(c,{sm:0,owner:LX('Owner · ','소유 · ')+(c.own||LX('Anonymous supporter','익명 서포터'))})).join('')}</div></div></div>
+   <div class="fl-row3"><div class="fl-b"><div class="p2-hh"><h3>${LX('T1 fandom season goal','T1 팬덤 시즌 목표')}</h3><span class="pt">${LX('Partner team','파트너 팀')}</span></div><div class="gl"><b>${goal.toLocaleString('en-US')}</b><span>/ 1,000,000 P</span></div><span class="pb"><i style="width:${Math.min(100,goal/10000)}%"></i></span>
+     <span class="nt">${LX(`Fandoms awaiting partnership (${others}): ${(312400).toLocaleString('en-US')} P combined · names and ranks not shown`,`파트너 준비 중 팬덤 ${others}곳 합산 ${(312400).toLocaleString('en-US')} P · 이름·순위 비공개`)}</span></div>
+    <div class="fl-b"><div class="p2-hh"><h3>${LX('Supporter highlights','서포터 하이라이트')}</h3></div>${hl.map(h=>`<div class="hl"><span><em>${h[0]}</em> · <b>${h[1]}</b></span><b>${h[2]}</b></div>`).join('')}</div>
+    <div class="fl-b"><div class="p2-hh"><h3>${LX('Fan messages','응원 메시지')}</h3><span>${LX('Filtered · report if needed','욕설 필터 · 신고 가능')}</span></div>${msgs.map(m=>`<div class="ms"><span><b>${esc(m[0])}</b> ${esc(m[1])}</span><button type="button" class="rp" data-bxreport aria-label="${LX('Report message','메시지 신고')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4h11l-1.5 4L16 12H5"/></svg></button></div>`).join('')}</div></div>
+   <p class="fl-n">${LX('Personal payment amounts are never shown. Anonymous settings apply everywhere, and accounts under 19 are hidden from highlights by default.','개인 결제액은 표시하지 않아요. 익명 설정은 모든 화면에 적용되고, 만 19세 미만 계정은 하이라이트에 기본으로 노출되지 않아요.')} <a href="#account/boost" onclick="nav(event,'account/boost')">${LX('My Boost →','내 Boost →')}</a></p>`}
+ /* ----- account › My Boost ----- */
+ function renderMy(f){const el=document.getElementById('bx-my');if(!el)return;f=f||el.dataset.f||'all';el.dataset.f=f;if(S.used.m!==month())S.used={m:month(),e:0};
+  const cnt=t=>S.cards.filter(c=>c.tier===t).length;const list=S.cards.filter(c=>f==='all'||c.tier===f);
+  const bd=[[LX(`${S.cards.length} cards collected`,`모은 카드 ${S.cards.length}장`),Math.round(S.pts*.49)],[LX(`Streak ${S.streak} games (best ${S.best})`,`연속 응원 ${S.streak}경기 (최고 ${S.best})`),Math.round(S.pts*.27)],[LX('Big moments (gold and up)','큰 순간 참여 (골드 이상)'),S.pts-Math.round(S.pts*.49)-Math.round(S.pts*.27)]];
+  el.innerHTML=`<h2>${LX('My Boost','내 Boost')}</h2><p class="lead">${LX('Your balances, rank, cards and Boost history. Only you can see amounts.','잔액, 순위, 카드, Boost 내역이에요. 금액은 나에게만 보여요.')}</p>
+  <div class="bx-bal"><div class="e"><span>${IC.e}${LX('Energy · paid','Energy · 유료 재화')}</span><b class="eb3">${energy.toLocaleString()}</b><em>${LX('Unused Energy is refundable','미사용분 환불 가능')} · <a href="#account/energy" onclick="nav(event,'account/energy')">${LX('Top up','충전·환불')}</a></em></div>
+   <div class="s"><span>${IC.s}${LX('Spark · ad reward','Spark · 광고 보상')}</span><b class="sk">${S.spark}</b><em>${LX('Expires at season end · not transferable or cashable','시즌 종료 시 소멸 · 양도·현금화 불가')} · <a href="#spark" onclick="nav(event,'spark')">${LX('Get Spark','Spark 받기')}</a></em></div>
+   <div class="u"><span>${LX('Energy used this month','이번 달 Energy 사용')}</span><b>${S.used.e.toLocaleString()}</b><em>${LX('Monthly limit: to be set','월 한도: 확정 전')}</em></div></div>
+  <div class="bx-two"><div class="box"><div class="p2-hh"><h3>${LX('My rank','내 순위')}</h3><span>${LX('2026 season · by participation','2026 시즌 · 참여 기준')}</span></div><div class="bx-rk"><b>${LX('#'+rank(),rank()+'위')}</b><span>${LX(`T1 fandom · top ${pct()}%`,`T1 팬덤 · 상위 ${pct()}%`)}</span></div>
+    ${bd.map(x=>`<div class="bx-ln"><span>${x[0]}</span><b>${x[1].toLocaleString('en-US')} P</b></div>`).join('')}<div class="bx-ln tot"><b>${LX('Total points','응원 포인트 합계')}</b><b>${S.pts.toLocaleString('en-US')} P</b></div>
+    <button type="button" class="p2-btn pri" data-bxshare="">${LX('Show off my rank','내 순위 자랑하기')}</button></div>
+   <div class="box"><div class="p2-hh"><h3>${LX('Privacy','공개 설정')}</h3></div>
+    ${[['anon',LX('Show me as anonymous in rankings','순위에 익명으로 표시'),LX('Applies to the home page, matches and rankings','메인·경기·순위 페이지 모두 적용')],['hl',LX('Show me in home page highlights','메인 하이라이트에 노출'),LX('Off by default for users under 19','만 19세 미만은 기본 꺼짐')],['msgOn',LX('Make my messages public','응원 메시지 공개'),LX('Shown on the fan wall after review','검토 후 팬 월에 노출')]].map(x=>`<label class="bx-tg"><span><b>${x[1]}</b><em>${x[2]}</em></span><input type="checkbox" data-bxset="${x[0]}" ${S[x[0]]?'checked':''}></label>`).join('')}</div></div>
+  <div class="box"><div class="p2-hh"><h3>${LX('Card collection','카드 컬렉션')} <small>${S.cards.length}</small></h3><div class="p2-tabs bx-f">${[['all',LX('All','전체')],['holo',LX('Hologram','홀로그램')+' '+cnt('holo')],['gold',LX('Gold','골드')+' '+cnt('gold')],['silver',LX('Silver','실버')+' '+cnt('silver')]].map(x=>`<button type="button" class="${f===x[0]?'on':''}" data-bxf="${x[0]}">${x[1]}</button>`).join('')}</div></div>
+   <div class="bx-grid">${list.map(c=>`<div class="bx-cw">${cardHTML(c,{sm:1})}<button type="button" class="bx-sh" data-bxshare="${c.id}">${LX('Share','자랑하기')}</button></div>`).join('')||`<p class="fine">${LX('No cards yet.','아직 카드가 없어요.')}</p>`}</div></div>
+  <div class="box"><div class="p2-hh"><h3>${LX('Boost history','Boost 내역')}</h3><span>${LX('Visible only to you','나에게만 보여요')}</span></div>
+   <div class="bx-tw"><table class="t"><tr><th>${LX('Date','날짜')}</th><th>${LX('Moment','순간')}</th><th>${LX('Currency','재화')}</th><th class="r">${LX('Amount','수량')}</th><th>${LX('Card','받은 카드')}</th></tr>
+   ${S.hist.slice(0,30).map(h=>{const c=S.cards.find(x=>x.id===h.card);return `<tr><td>${h.d}</td><td>${esc(LX(h.w[0],h.w[1]))}</td><td class="cur-${h.cur}">${h.cur==='spark'?'Spark':'Energy'}</td><td class="r">${h.n}</td><td>${c?`${LX(...TIER[c.tier]).split(' · ')[0]} · ${decoTxt(c)}`:'—'}</td></tr>`}).join('')}</table></div></div>`}
+ /* ----- Spark ad wall ----- */
+ let adT=null;
+ function renderWall(state){const el=document.getElementById('bx-wall');if(!el)return;if(S.ads.d!==today())S.ads={d:today(),n:0};const inn=document.body.classList.contains('body-in');
+  const live=DB.sched.find(x=>x.st==='live');const left=CFG.dailyAds-S.ads.n;
+  const stage=state==='play'?`<div class="aw-play"><span>${LX('Ad playing','광고 재생 중')}</span><b id="aw-cd">5</b><span class="pb"><i id="aw-pb"></i></span></div>`
+   :state==='verify'?`<div class="aw-play"><span>${LX('Checking with the server…','서버 확인 중…')}</span></div>`
+   :state==='done'?`<div class="aw-play ok"><b>✦ +${CFG.sparkPerAd}</b><span>${LX('Spark added to your balance','Spark가 잔액에 들어왔어요')}</span></div>`
+   :`<div class="aw-play idle">${LX('Rewarded video ad','보상형 영상 광고')}<small>${LX('Google Ad Manager web rewarded (planned)','Google Ad Manager 웹 보상형 (예정)')}</small></div>`;
+  el.innerHTML=`<section class="rhero" style="padding-bottom:20px"><div class="k">SPARK</div><h1>${LX('Watch an ad, get Spark','광고 보고 Spark 받기')}</h1><p class="sub">${LX("Spark is a free currency you can only use for Boosts. It can't be exchanged for Energy or combined with it.",'Spark는 Boost에만 쓸 수 있는 무료 재화예요. Energy와 바꾸거나 합칠 수 없어요.')}</p></section>
+  <div class="aw-tm">${live?`<span class="tg">${LX('Match on','경기 중')}</span>${LX(`${live.a} vs ${live.b} is live. The ad wall never interrupts a moment: watch between games or after the match.`,`${live.a} 대 ${live.b} 경기가 진행 중이에요. 광고 월은 경기 중 순간을 끊지 않아요. 세트 사이나 경기 후에 이용해 주세요.`)}`:`<span class="tg">${LX('Good time','지금 보기 좋은 시간')}</span>${LX('No match is live right now.','지금은 진행 중인 경기가 없어요.')}`}</div>
+  <div class="aw-g"><div class="box aw-main">${stage}
+    <p class="aw-n">${LX(`Watching one ad gives you ✦ ${CFG.sparkPerAd} Spark, which can't be transferred or cashed out. You can skip and keep using RORR as usual.`,`광고 1편 시청 시 양도·현금화 불가 Spark ${CFG.sparkPerAd}개 제공. 건너뛰어도 기본 이용 가능`)}</p>
+    <div class="aw-b"><button type="button" class="p2-btn spk" data-aw="go" ${state==='play'||state==='verify'||left<=0?'disabled':''}>${left<=0?LX('Daily limit reached','오늘 한도 도달'):LX('Watch and get Spark','광고 보고 Spark 받기')}</button><button type="button" class="p2-btn" data-aw="skip">${LX('Skip','건너뛰기')}</button></div>
+    ${inn?'':`<p class="fine">${LX('Spark is tied to your account, so log in first.','Spark는 계정에 쌓이므로 먼저 로그인해 주세요.')}</p>`}</div>
+   <div class="aw-side"><div class="box"><div class="p2-hh"><h3>${LX('Today','오늘 받은 Spark')}</h3><span>${LX('Resets 00:00 KST','매일 00:00 (KST) 초기화')}</span></div><div class="gl"><b>${S.ads.n}</b><span>/ ${CFG.dailyAds} ${LX('ads','편')}</span></div><span class="pb"><i style="width:${S.ads.n/CFG.dailyAds*100}%"></i></span><span class="fine">${LX('Balance','보유')} ✦ <b class="sk">${S.spark}</b></span></div>
+    <div class="box"><div class="p2-hh"><h3>${LX('Spark rules','Spark 이용 규칙')}</h3></div><ul class="aw-r">${[LX('Stays on your logged-in account and cannot move to another account.','로그인한 계정에만 쌓이고 다른 계정으로 넘길 수 없어요.'),LX("Can't be bought, refunded or cashed out. Boosts only.",'구매·환불·현금화가 되지 않으며 Boost에만 사용해요.'),LX('Unused Spark expires at the end of the season.','이번 시즌이 끝나면 남은 Spark는 소멸해요.'),LX('Spark Boosts are never shared with a team.','Spark Boost는 어느 팀에도 배분되지 않아요.'),LX('Spark from invalid views can be taken back.','비정상 시청이 확인되면 지급된 Spark가 회수될 수 있어요.'),LX('Ads unsuitable for minors, and gambling, alcohol, tobacco, adult and political ads are blocked.','청소년에게 부적합한 광고와 도박·주류·담배·성인·정치 광고는 차단해요.')].map(x=>`<li>${x}</li>`).join('')}</ul></div></div></div>
+  <p class="fine" style="margin-top:16px">${LX('This page has no banners other than rewarded ads, and no app-install or survey offerwalls. Demo: no real ad is shown.','이 페이지에는 보상형 광고 외 배너를 두지 않고, 앱 설치·설문형 오퍼월은 쓰지 않아요. 데모: 실제 광고는 나오지 않아요.')}</p>`}
+ function playAd(){if(!document.body.classList.contains('body-in')){openAuth('login',playAd);return}if(S.ads.d!==today())S.ads={d:today(),n:0};if(S.ads.n>=CFG.dailyAds)return;
+  renderWall('play');let n=5;clearInterval(adT);adT=setInterval(()=>{n--;const c=document.getElementById('aw-cd'),p=document.getElementById('aw-pb');if(c)c.textContent=n;if(p)p.style.width=((5-n)/5*100)+'%';
+   if(n<=0){clearInterval(adT);renderWall('verify');setTimeout(()=>{S.ads.n++;S.spark+=CFG.sparkPerAd;save();setUI();renderWall('done');toast(LX(`✦ ${CFG.sparkPerAd} Spark added`,`Spark ✦ ${CFG.sparkPerAd} 지급 완료`))},900)}},1000)}
+ /* ----- share (show off) ----- */
+ function share(cardId){const c=cardId?S.cards.find(x=>x.id===cardId):S.cards[0];let o={rank:true,card:!!c,anon:S.anon};
+  let el=document.getElementById('bx-share');if(!el){el=document.createElement('div');el.id='bx-share';el.className='bx-modal';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');document.body.appendChild(el)}
+  const draw=()=>{const nm=o.anon?LX('Anonymous supporter','익명 서포터'):ME;
+   el.innerHTML=`<div class="bx-sheet"><button type="button" class="bx-x" data-bxx aria-label="${LX('Close','닫기')}">×</button><div class="bx-prev"><div class="hd"><b>RORR</b><span>${today()}</span></div>
+    <div class="who"><span>${LX(`${nm}'s moment`,`${nm}의 순간`)}</span>${o.rank?`<b>${LX(`T1 fandom supporter #${rank()} · top ${pct()}%`,`T1 팬덤 서포터 ${rank()}위 · 상위 ${pct()}%`)}</b>`:''}</div>
+    ${o.card&&c?cardHTML(c,{sm:0}):''}<p class="ft">${LX(`Rank: 2026 season cheering points (participation) · as of ${today()} · source RORR · win chance is RORR's own estimate.`,`순위 기준: 2026 시즌 응원 포인트(참여 기반) · ${today()} 집계 · 출처 RORR · 승리확률은 RORR 자체 추정치.`)} An independent fan companion. Not endorsed by Riot Games.</p></div>
+    <div class="bx-opt"><h3>${LX('Show off','자랑하기')}</h3><p>${LX('Saved as a 4:5 image (1080×1350). Date, basis, source and the non-affiliation notice are always included. Payment amounts never are.','4:5 이미지(1080×1350)로 저장돼요. 날짜·집계 기준·출처·비제휴 고지가 항상 들어가고, 결제 금액은 넣지 않아요.')}</p>
+     ${[['rank',LX('My fandom rank','팬덤 내 순위')],['card',LX('One featured card','대표 카드 1장')],['anon',LX('Show "Anonymous supporter" instead of my name','닉네임 대신 "익명 서포터"로 표시')]].map(x=>`<label class="bx-tg sm"><span><b>${x[1]}</b></span><input type="checkbox" data-bxo="${x[0]}" ${o[x[0]]?'checked':''} ${x[0]==='card'&&!c?'disabled':''}></label>`).join('')}
+     <div class="aw-b"><button type="button" class="p2-btn pri" data-bxsave>${LX('Save image','이미지 저장')}</button><button type="button" class="p2-btn" data-bxcopy>${LX('Copy link','링크 복사')}</button><button type="button" class="p2-btn" data-bxx-share>${LX('Share on X','X에 공유')}</button></div></div></div>`};
+  draw();el.classList.add('on');document.body.classList.add('bx-modal-on');
+  el.onclick=e=>{if(e.target===el||e.target.closest('[data-bxx]')){el.classList.remove('on');document.body.classList.remove('bx-modal-on');return}
+   const op=e.target.closest('[data-bxo]');if(op){o[op.dataset.bxo]=op.checked;draw();return}
+   const url=location.origin+location.pathname;const txt=LX(`I'm #${rank()} in the T1 fandom on RORR`,`RORR T1 팬덤 서포터 ${rank()}위`);
+   if(e.target.closest('[data-bxcopy]')){try{navigator.clipboard.writeText(url)}catch(_){}toast(LX('Link copied','링크를 복사했어요'));return}
+   if(e.target.closest('[data-bxx-share]')){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url),'_blank','noopener');return}
+   if(e.target.closest('[data-bxsave]'))saveImg(c,o)}}
+ function saveImg(c,o){const cv=document.createElement('canvas');cv.width=1080;cv.height=1350;const x=cv.getContext('2d');const F='"Pretendard Variable",Pretendard,sans-serif';
+  x.fillStyle='#10141C';x.fillRect(0,0,1080,1350);x.fillStyle='#F0F2F5';x.font=`800 44px ${F}`;x.fillText('RORR',72,110);x.fillStyle='#9AA1B5';x.font=`500 30px ${F}`;x.textAlign='right';x.fillText(today(),1008,110);x.textAlign='left';
+  const nm=o.anon?LX('Anonymous supporter','익명 서포터'):ME;x.fillStyle='#9AA1B5';x.font=`500 32px ${F}`;x.fillText(LX(`${nm}'s moment`,`${nm}의 순간`),72,220);
+  if(o.rank){x.fillStyle='#F0F2F5';x.font=`800 60px ${F}`;x.fillText(LX(`T1 fandom #${rank()}`,`T1 팬덤 서포터 ${rank()}위`),72,300);x.font=`700 40px ${F}`;x.fillStyle='#26BEA5';x.fillText(LX(`Top ${pct()}%`,`상위 ${pct()}%`),72,360)}
+  if(o.card&&c){const y0=430,h=560;const g=x.createLinearGradient(72,y0,1008,y0+h);(c.tier==='holo'?['#6F4CFF','#2F9CFC','#00B395','#F2C766','#FE2054']:c.tier==='gold'?['#A8782A','#F2C766','#A8782A']:['#8C93A3','#D5DAE3','#8C93A3']).forEach((s,i,a)=>g.addColorStop(i/(a.length-1),s));
+   const rr=(X,Y,W,H,R,f)=>{x.beginPath();x.moveTo(X+R,Y);x.arcTo(X+W,Y,X+W,Y+H,R);x.arcTo(X+W,Y+H,X,Y+H,R);x.arcTo(X,Y+H,X,Y,R);x.arcTo(X,Y,X+W,Y,R);x.closePath();x.fillStyle=f;x.fill()};
+   rr(72,y0,936,h,40,g);rr(80,y0+8,920,h-16,34,'#1D2333');x.fillStyle=c.tier==='holo'?'#C9B8FF':c.tier==='gold'?'#F2C766':'#C9CEDA';x.font=`800 30px ${F}`;x.fillText(LX(...TIER[c.tier]),124,y0+76);
+   x.fillStyle='#9AA1B5';x.font=`500 30px ${F}`;x.fillText(subTxt(c.sub),124,y0+140);x.fillStyle='#F0F2F5';x.font=`800 50px ${F}`;
+   const words=LX(c.t[0],c.t[1]);let line='',yy=y0+220;for(const ch of words.split(/(\s+)/)){const t=line+ch;if(x.measureText(t).width>830&&line){x.fillText(line.trim(),124,yy);line=ch;yy+=64}else line=t}x.fillText(line.trim(),124,yy);
+   x.fillStyle='#C9CEDA';x.font=`600 32px ${F}`;x.fillText(`${LX('Win chance','승리확률')} ${c.w0}% → ${c.w1}%  ·  ${LX('Boosted with','함께 Boost')} ${c.fans.toLocaleString('en-US')}`,124,y0+h-120);
+   x.fillStyle=c.cur==='spark'?'#FFB547':'#00B395';x.font=`700 28px ${F}`;x.fillText(decoTxt(c)+'  ·  #'+String(c.no).padStart(5,'0'),124,y0+h-64)}
+  x.fillStyle='#9AA1B5';x.font=`500 24px ${F}`;const ft=[LX(`Rank: 2026 season cheering points (participation) · as of ${today()} · source RORR`,`순위 기준: 2026 시즌 응원 포인트(참여 기반) · ${today()} 집계 · 출처 RORR`),LX("Win chance is RORR's own estimate. An independent fan companion. Not endorsed by Riot Games.",'승리확률은 RORR 자체 추정치 · An independent fan companion. Not endorsed by Riot Games.')];
+  ft.forEach((t,i)=>x.fillText(t,72,1220+i*40));
+  const a=document.createElement('a');a.download=`rorr-${today()}.png`;a.href=cv.toDataURL('image/png');a.click();toast(LX('Image saved','이미지를 저장했어요'))}
+ document.addEventListener('click',e=>{const sh=e.target.closest('[data-bxshare]');if(sh){e.preventDefault();share(sh.dataset.bxshare||null);return}
+  if(e.target.closest('[data-bxreport]')){toast(LX('Thanks. We will review this message.','신고가 접수됐어요. 검토 후 조치할게요.'));return}
+  const f=e.target.closest('[data-bxf]');if(f){renderMy(f.dataset.bxf);return}
+  const aw=e.target.closest('[data-aw]');if(aw){if(aw.dataset.aw==='go')playAd();else{toast(LX('Skipped. You can keep using RORR as usual.','건너뛰었어요. 기본 기능은 그대로 쓸 수 있어요.'));nav(null,'')}}});
+ document.addEventListener('change',e=>{const t=e.target.closest('[data-bxset]');if(t){S[t.dataset.bxset]=t.checked;save();renderFL()}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){const el=document.getElementById('bx-share');if(el&&el.classList.contains('on')){el.classList.remove('on');document.body.classList.remove('bx-modal-on')}}});
+ return{S:()=>S,CFG,IC,TIER,tierOf,decoOf,decoTxt,cardHTML,spendSpark,addBoost,renderFL,renderMy,renderWall,share,setUI,rank,pct,save}})();
+
+/* ===== Boost in the side panel (policy v1.0) ===== */
+const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknames & IP */
  const isPartner=(kind,id)=>PARTNERS.includes(kind==='team'?id:(PBY[id]||{}).team);
  const teamOf=(kind,id)=>kind==='team'?id:(PBY[id]||{}).team;
- const anon=()=>{try{return localStorage.getItem('rorr-boost-anon')==='1'}catch(e){return false}};
  const notified=t=>{try{return JSON.parse(localStorage.getItem('rorr-boost-notify')||'[]').includes(t)}catch(e){return false}};
+ const wp=g=>Math.round(100/(1+Math.exp(-g/2600)));
+ const KN={fb:['First blood','퍼스트 블러드'],drg:['Dragon fight','드래곤 교전'],her:['Herald play','전령 교전'],fight:['Team fight','한타'],baron:['Baron fight','바론 교전'],push:['Push into the base','본진 진입']};
  function moments(kind,id){if(kind!=='player')return[];const pl=PBY[id];if(!pl)return[];const r=mkRnd(hashStr(id+'mom'));const nx=DB.sched.filter(x=>(x.a===pl.team||x.b===pl.team)&&x.st!=='final').sort((a,b)=>a.at-b.at)[0];
-  const day=t=>{const d=new Date(t);return d.toISOString().slice(0,10)};const out=[];
-  const g=200+Math.floor(r()*4)*100;out.push({id:'g'+g,t:LX(`${g}th LCK game`,`LCK 통산 ${g}경기`),d:nx?(nx.st==='live'?LX('Today · live now','오늘 · 진행 중'):day(nx.at)):'',st:nx&&nx.st==='live'?'now':'up',ic:'🎮'});
-  const k=(1+Math.floor(r()*3))*500;out.push({id:'k'+k,t:LX(`${k.toLocaleString('en-US')} career kills`,`통산 ${k.toLocaleString('en-US')}킬`),d:day(Date.now()-86400000*(2+Math.floor(r()*9))),st:'past',ic:'⚔️'});
-  if(r()<.6){const y=2+Math.floor(r()*5);out.push({id:'y'+y,t:LX(`${y} years since pro debut`,`프로 데뷔 ${y}주년`),d:day(Date.now()+86400000*(3+Math.floor(r()*20))),st:'up',ic:'🎉'})}
+  const day=t=>new Date(t).toISOString().slice(0,10);const out=[];
+  const g=200+Math.floor(r()*4)*100;out.push({id:'g'+g,t:LX(`${g}th LCK game`,`LCK 통산 ${g}경기`),d:nx?(nx.st==='live'?LX('Today · live now','오늘 · 진행 중'):day(nx.at)):'',st:nx&&nx.st==='live'?'now':'up',ic:'g'});
+  const k=(1+Math.floor(r()*3))*500;out.push({id:'k'+k,t:LX(`${k.toLocaleString('en-US')} career kills`,`통산 ${k.toLocaleString('en-US')}킬`),d:day(Date.now()-86400000*(2+Math.floor(r()*9))),st:'past',ic:'k'});
+  if(r()<.6){const y=2+Math.floor(r()*5);out.push({id:'y'+y,t:LX(`${y} years since pro debut`,`프로 데뷔 ${y}주년`),d:day(Date.now()+86400000*(3+Math.floor(r()*20))),st:'up',ic:'y'})}
   return out}
- const MOMIC={g:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 21h8M12 17v4M6 4h12v4a6 6 0 01-12 0zM6 6H3a3 3 0 003 3M18 6h3a3 3 0 01-3 3"/></svg>',k:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/></svg>',y:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18.4 5.6l-2.1 2.1M21 12h-3M7 21l3-9 4 4-7 5z"/></svg>'};
- function board(kind,id,mid){const r=mkRnd(hashStr(id+(mid||'')+'lb'));const d=load()[kind+':'+id]||{t:0,m:[]};const mine=mid?d.m.filter(x=>x.mid===mid).reduce((a,x)=>a+x.n,0):d.t;
-  const rows=NK.slice(0,10).map((n,i)=>({n,v:Math.round((mid?900:4200)*Math.pow(.72,i)*(0.85+r()*.3)/10)*10})).sort((a,b)=>b.v-a.v);
-  if(mine)rows.push({n:anon()?LX('You (anonymous)','나 (익명)'):LX('You','나'),v:mine,me:1});rows.sort((a,b)=>b.v-a.v);
-  const top=rows.slice(0,5);const meI=rows.findIndex(x=>x.me);
-  return `<ol class="lb">${top.map((x,i)=>`<li class="${x.me?'me':''}"><span class="rk rk${i+1}">${i+1}</span><b>${x.n}</b><em>⚡ ${x.v.toLocaleString('en-US')}</em></li>`).join('')}${meI>4?`<li class="me gap"><span class="rk">${meI+1}</span><b>${rows[meI].n}</b><em>⚡ ${rows[meI].v.toLocaleString('en-US')}</em></li>`:''}</ol>`}
- function html(kind,id){const d=load()[kind+':'+id]||{t:0,m:[]};const lv=level(d.t);const r=mkRnd(hashStr(id+'sup'));const on=isPartner(kind,id);const tm=teamOf(kind,id);
-  const wall=[...d.m.slice(-2).reverse().map(x=>[anon()?LX('You (anonymous)','나 (익명)'):LX('You','나'),x.msg,x.n]),...MSG.slice(0,3).map((m,i)=>[NK[i],m,[50,10,100][i]])].slice(0,4);
-  const total=Math.round(800+r()*4200)+d.t;const M=moments(kind,id);
-  const how=`<details class="sup-how"><summary>${LX('How is Boost used? →','Boost는 어떻게 쓰이나요? →')}</summary><ul>
-    <li>${LX('Boost is a cheer you send with Energy. It is not a cash gift or a tip paid directly to a player.','Boost는 Energy로 보내는 응원이에요. 선수에게 직접 전달되는 현금 선물이나 후원금이 아니에요.')}</li>
-    <li>${LX(`A share of every Boost goes to the team under an official partnership with RORR. Right now that is ${PARTNERS.join(', ')}.`,`Boost 금액의 일부는 RORR와 공식 파트너십을 맺은 구단에 배분돼요. 현재 파트너 구단: ${PARTNERS.join(', ')}.`)}</li>
-    <li>${LX('Teams without a partnership can\'t receive Boosts yet. You can ask to be notified when they open.','파트너십이 없는 구단은 아직 Boost를 받을 수 없어요. 열리면 알림을 받을 수 있어요.')}</li>
-    <li>${LX('Messages are checked before they appear on the fan wall. Rankings show your nickname, or you can stay anonymous.','메시지는 검토 후 팬 월에 올라가요. 순위에는 닉네임이 표시되며 익명으로 할 수도 있어요.')}</li>
-   </ul><a class="lnk" href="#blog/how-boost-works" onclick="nav(event,'blog/how-boost-works')">${LX('Read the full Boost guide →','Boost 안내 전체 보기 →')}</a></details>`;
-  const mom=M.length?`<div class="sup-moms"><div class="p2-hh"><h3>${LX('Moments to celebrate','기념할 순간')}</h3></div>${M.map(m=>{const mt=d.m.filter(x=>x.mid===m.id).reduce((a,x)=>a+x.n,0)+Math.round(200+mkRnd(hashStr(id+m.id))()*1800);
-    return `<div class="mom ${m.st}"><span class="ic">${MOMIC[m.id[0]]||MOMIC.g}</span><div><b>${m.t}</b><small>${m.st==='now'?`<i class="lv"></i>`:''}${m.d}${m.st==='past'?' · '+LX('reached','달성'):m.st==='up'?' · '+LX('coming up','예정'):''}${on?` · ⚡ ${mt.toLocaleString('en-US')}`:''}</small></div>${on?`<button type="button" class="mom-go" data-mom="${m.id}" data-mt="${m.t.replace(/"/g,'&quot;')}">${LX('Boost this','기념 Boost')}</button>`:''}</div>`}).join('')}</div>`:'';
-  if(!on){const nt=notified(tm);return `<div class="ip-sec sup off">${mom}<div class="sup-box off"><div class="p2-hh"><h3>${LX('Boost with Energy','Energy로 Boost')}</h3><span class="sup-pt off">${LX('Not open yet','아직 열리지 않음')}</span></div>
-   <div class="sup-card off"><span class="sup-lock">🔒</span><div><b>${LX(`Boost isn't open for ${tm} yet`,`${tm}은(는) 아직 Boost가 열리지 않았어요`)}</b><p>${LX(`Boost opens for teams with an official RORR partnership. ${tm} isn't a partner yet.`,`Boost는 RORR와 공식 파트너십을 맺은 구단부터 열려요. ${tm}은(는) 아직 파트너가 아니에요.`)}</p>
-   <button type="button" class="pill ghost sup-notify ${nt?'on':''}" data-team="${tm}">${nt?LX('✓ We\'ll let you know','✓ 열리면 알려드릴게요'):LX('Notify me when it opens','열리면 알림 받기')}</button></div></div>
-   <div class="sup-amts dis" aria-disabled="true">${[10,50,100,500].map(n=>`<button type="button" disabled>⚡ ${n}</button>`).join('')}</div>
-   ${how}</div></div>`}
-  return `<div class="ip-sec sup">${mom}<div class="sup-box"><div class="p2-hh"><h3>${LX('Boost with Energy','Energy로 Boost')}</h3><span class="sup-pt">${LX('Official partner','공식 파트너')} · ${tm}</span></div>
-   <p class="sup-lead">${LX(`⚡ ${total.toLocaleString('en-US')} boosted by fans this week`,`이번 주 팬 Boost ⚡ ${total.toLocaleString('en-US')}`)}${d.t?` · <span class="sup-me">${LX('You','나')}: ⚡ ${d.t} · Lv.${lv}</span>`:''}</p>
-   <div class="sup-for" hidden><span>${LX('For','기념')}: <b></b></span><button type="button" class="sup-for-x" aria-label="Clear">×</button></div>
-   <div class="sup-amts" role="radiogroup">${[10,50,100,500].map((n,i)=>`<button type="button" class="${i===1?'on':''}" data-amt="${n}">⚡ ${n}</button>`).join('')}</div>
-   <label class="sup-msg"><span>${LX('Message (optional)','메시지 (선택)')}</span><textarea maxlength="80" rows="2" placeholder="${LX(`Say something to ${id}…`,`${id}에게 한마디…`)}"></textarea><em>0/80</em></label>
-   <button class="sup-go" type="button" data-sup="${kind}|${id}">${LX(`Boost ${id} ⚡ 50`,`${id}에 ⚡ 50 Boost`)}</button>
-   <p class="ip-note">${LX('Messages are checked before they appear. Be kind: no insults about players.','메시지는 검토 후 노출돼요. 선수를 향한 비난은 올라가지 않아요.')}</p>
-   <div class="sup-rank"><div class="sup-rh"><b>${LX('Top supporters','서포터 순위')}</b><span class="lb-tabs"><button type="button" class="on" data-lb="">${LX('This season','이번 시즌')}</button>${M.filter(m=>m.st!=='past').slice(0,1).map(m=>`<button type="button" data-lb="${m.id}">${m.t}</button>`).join('')}</span></div><div class="lb-box">${board(kind,id,'')}</div>
-    <label class="chk lb-anon"><input type="checkbox" ${anon()?'checked':''}> ${LX('Show me as anonymous','익명으로 표시')}</label></div>
-   ${how}</div></div>`}
- function bind(root){const box=root.querySelector('.sup');if(!box)return;
-  const nb=box.querySelector('.sup-notify');if(nb)nb.onclick=()=>{const t=nb.dataset.team;let L=[];try{L=JSON.parse(localStorage.getItem('rorr-boost-notify')||'[]')}catch(e){}if(!L.includes(t))L.push(t);try{localStorage.setItem('rorr-boost-notify',JSON.stringify(L))}catch(e){}nb.classList.add('on');nb.textContent=LX('✓ We\'ll let you know','✓ 열리면 알려드릴게요');toast(LX(`We'll tell you when ${t} opens Boost`,`${t} Boost가 열리면 알려드릴게요`))};
-  if(box.classList.contains('off'))return;
-  let amt=50,mid='',mt='';const go=box.querySelector('.sup-go'),ta=box.querySelector('textarea'),cnt=box.querySelector('.sup-msg em'),forEl=box.querySelector('.sup-for');
-  const[kind0,id0]=go.dataset.sup.split('|');
-  const label=()=>{go.textContent=mid?LX(`Boost ⚡ ${amt} for this moment`,`이 순간에 ⚡ ${amt} Boost`):LX(`Boost ${id0} ⚡ ${amt}`,`${id0}에 ⚡ ${amt} Boost`)};
-  box.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{box.querySelectorAll('[data-amt]').forEach(x=>x.classList.toggle('on',x===b));amt=+b.dataset.amt;label()});
-  box.querySelectorAll('.mom-go').forEach(b=>b.onclick=()=>{mid=b.dataset.mom;mt=b.dataset.mt;forEl.hidden=false;forEl.querySelector('b').textContent=mt;box.querySelectorAll('.mom').forEach(x=>x.classList.toggle('sel',x.contains(b)));ta.placeholder=LX(`Congrats on ${mt}!`,`${mt} 축하해요!`);label();forEl.scrollIntoView({behavior:'smooth',block:'center'})});
-  forEl.querySelector('.sup-for-x').onclick=()=>{mid='';mt='';forEl.hidden=true;box.querySelectorAll('.mom').forEach(x=>x.classList.remove('sel'));ta.placeholder=LX(`Say something to ${id0}…`,`${id0}에게 한마디…`);label()};
-  box.querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{box.querySelectorAll('[data-lb]').forEach(x=>x.classList.toggle('on',x===b));box.querySelector('.lb-box').innerHTML=board(kind0,id0,b.dataset.lb)});
-  const an=box.querySelector('.lb-anon input');an.onchange=()=>{try{localStorage.setItem('rorr-boost-anon',an.checked?'1':'0')}catch(e){}const cur=box.querySelector('[data-lb].on');box.querySelector('.lb-box').innerHTML=board(kind0,id0,cur?cur.dataset.lb:'')};
-  ta.oninput=()=>{cnt.textContent=ta.value.length+'/80'};
-  go.onclick=()=>{const kind=kind0,id=id0;const send=()=>{if(energy<amt){lowEnergy(amt);return}
-    const msg=ta.value.trim().slice(0,80);if(/\b(trash|idiot|stupid|retire|ff)\b|못하|쓰레기|은퇴/i.test(msg)){toast(LX('Let\'s keep it kind · edit your message','따뜻하게 보내 주세요 · 메시지를 수정해 주세요'));return}
-    if(!spend(amt,'Boost',id+(mt?` · ${mt}`:'')+(msg?` · "${msg}"`:'')))return;const d=load();const k=kind+':'+id;d[k]=d[k]||{t:0,m:[]};d[k].t+=amt;d[k].m.push({n:amt,msg,mid,at:Date.now()});save(d);
-    reward(kind,id,amt,msg||(mt?LX(`Congrats on ${mt}!`,`${mt} 축하해요!`):''),level(d[k].t),level(d[k].t-amt));if(ipKey)openEntity(ipKey)};
+ /* the latest moment of a live match involving the team */
+ function liveMoment(team,partner){const m=DB.sched.find(x=>x.st==='live'&&(x.a===team||x.b===team));if(!m)return null;const G=gameModel(m);const e=G.ev.filter(x=>x.t<=G.dur).slice(-1)[0];if(!e)return{m,none:1};
+  const w0=wp(e.g0),w1=wp(e.g1);const ss=String(hashStr(m.id+e.t)%60).padStart(2,'0');const tm=`${String(e.t).padStart(2,'0')}:${ss}`;const d=localParts(m.at).d;
+  const fans=600+hashStr(m.id+e.t)%2400;const tier=BX.tierOf(Math.abs(w1-w0));
+  return{m,e,id:`${m.id}:${e.t}`,w0,w1,tier,fans,tm,t:partner?(()=>{const sv=LANG;LANG='en';const a=evText(e,m);LANG='ko';const b=evText(e,m);LANG=sv;return[a,b]})():[KN[e.k][0],KN[e.k][1]],sub:partner?`${m.a} vs ${m.b} · ${d} · G${m.game} ${tm}`:`TODAY1 · ${d} · G${m.game} ${tm}`}}
+ const MI={g:'<path d="M8 21h8M12 17v4M6 4h12v4a6 6 0 01-12 0zM6 6H3a3 3 0 003 3M18 6h3a3 3 0 01-3 3"/>',k:'<path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/>',y:'<path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18.4 5.6l-2.1 2.1M21 12h-3M7 21l3-9 4 4-7 5z"/>'};
+ const tierChip=t=>`<span class="bx-tc ${t}">${LX(...BX.TIER[t]).split(' · ')[0]}</span>`;
+ function board(scope){const r=mkRnd(hashStr('lb'+scope));const N=[['minji_07',6,2],[null,5,2],['ZedMain',5,1],['lck_dad',4,1],['dragonsoul',4,0]];const S=BX.S();const base=scope==='m'?1240:4200;
+  const rows=N.map((x,i)=>({n:x[0]||LX('Anonymous supporter','익명 서포터'),c:LX(`${x[1]} cards${x[2]?` · ${x[2]} gold`:''}`,`카드 ${x[1]}${x[2]?` · 골드 ${x[2]}`:''}`),p:Math.round(base*Math.pow(.86,i)*(0.95+r()*.1)/5)*5}));
+  const me=scope==='m'?Math.min(rows[4].p-5,(S.hist.filter(h=>h.d===new Date(Date.now()+9*3600e3).toISOString().slice(0,10)).length)*60+150):S.pts;const myRank=scope==='m'?(me>rows[4].p?0:128):BX.rank();
+  return `<ol class="bx-lb">${rows.map((x,i)=>`<li><b class="r${i+1}">${i+1}</b><span>${esc(x.n)}</span><em>${x.c}</em><b>${x.p.toLocaleString('en-US')} P</b></li>`).join('')}${document.body.classList.contains('body-in')?`<li class="me"><b>${myRank||'—'}</b><span>${S.anon?LX('You (anonymous)','나 (익명)'):LX('You','나')}</span><em></em><b>${me.toLocaleString('en-US')} P</b></li>`:''}</ol>`}
+ const how=()=>`<details class="sup-how"><summary>${LX('How is Boost used? →','Boost는 어떻게 쓰이나요? →')}</summary><ul>
+   <li>${LX('Boost is a cheer you send at a moment in the match. It is not a cash gift or a tip paid to a player.','Boost는 경기 중 순간에 보내는 응원이에요. 선수에게 직접 전달되는 현금 선물이나 후원금이 아니에요.')}</li>
+   <li>${LX('Energy is paid; Spark comes from watching ads. They are never combined or exchanged.','Energy는 유료 재화, Spark는 광고 시청으로 받는 재화예요. 서로 바꾸거나 합칠 수 없어요.')}</li>
+   <li>${LX(`Only Energy Boosts for partner teams are shared with the team. Partner: ${PARTNERS.join(', ')}.`,`파트너 팀에 보낸 Energy Boost만 팀에 배분돼요. 현재 파트너: ${PARTNERS.join(', ')}.`)}</li>
+   <li>${LX('Every moment Boost gives you a moment card. Border = size of the moment, badge = your Boost level. Nothing is random and cards cannot be traded.','순간에 Boost하면 모먼트 카드를 받아요. 테두리 = 순간의 크기, 배지 = Boost 단계. 무작위 요소가 없고 거래할 수 없어요.')}</li>
+  </ul><a class="lnk" href="#blog/how-boost-works" onclick="nav(event,'blog/how-boost-works')">${LX('Read the full Boost guide →','Boost 안내 전체 보기 →')}</a></details>`;
+ function html(kind,id){const tm=teamOf(kind,id);const on=isPartner(kind,id);const lm=liveMoment(tm,on);const S=BX.S();const M=on?moments(kind,id):[];
+  const nowCard=lm&&!lm.none?`<section class="p2-sec"><div class="p2-hh"><h3>${LX('Right now','지금 이 순간')}</h3><span>${on?`${lm.m.a} vs ${lm.m.b} · `:LX("Today's match · ",'오늘의 경기 · ')}${LX('G'+lm.m.game,lm.m.game+'세트')}</span></div>
+    <button type="button" class="bx-now sel" data-mom="${lm.id}"><span class="p2-lv"><i></i>${lm.tm}</span><span class="tx"><b>${esc(LX(lm.t[0],lm.t[1]))}</b><em>${LX(`${lm.m.a} win chance ${lm.w0}% → ${lm.w1}%`,`${lm.m.a} 승리확률 ${lm.w0}% → ${lm.w1}%`)}</em></span>${tierChip(lm.tier)}</button>
+    <span class="bx-cap">${on?LX(`Boost now to get a ${lm.tier} moment card. Boosted with ${lm.fans.toLocaleString('en-US')}`,`지금 Boost하면 모먼트 카드를 바로 받아요. 함께 Boost ${lm.fans.toLocaleString('en-US')}명`):`${lm.m.a} ${LX('vs','대')} ${lm.m.b}, ${localParts(lm.m.at).d} ${LX('G'+lm.m.game,lm.m.game+'세트')} ${lm.tm} · ${LX(`boosted with ${lm.fans.toLocaleString('en-US')}`,`함께 Boost ${lm.fans.toLocaleString('en-US')}명`)}`}</span></section>`:'';
+  const mom=M.length?`<section class="p2-sec sup-moms"><div class="p2-hh"><h3>${LX('Moments to celebrate','기념할 순간')}</h3></div>${M.map(m=>`<div class="mom ${m.st}"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${MI[m.ic]}</svg></span><div><b>${m.t}</b><small>${m.st==='now'?'<i class="lv"></i>':''}${m.d}${m.st==='past'?' · '+LX('reached','달성'):m.st==='up'?' · '+LX('coming up','예정'):''}</small></div><button type="button" class="mom-go" data-mom="ms:${id}:${m.id}" data-mt="${esc(m.t)}">${LX('Boost this','기념 Boost')}</button></div>`).join('')}</section>`:'';
+  if(!on){const nt=notified(tm);
+   return `<div class="ip-sec sup off" data-kind="${kind}" data-id="${esc(id)}" data-team="${tm}">
+    <p class="bx-notice">${LX('This is a fandom theme without a partnership or settlement agreement. It is a digital Boost feature provided by RORR and does not guarantee any payment to or partnership with a team.','현재 제휴·정산 약정이 체결되지 않은 팬덤 테마입니다. 본 이용은 RORR가 제공하는 디지털 부스트 기능이며, 특정 팀에 대한 금전 지급 또는 제휴를 보장하지 않습니다.')}</p>
+    ${nowCard}
+    <section class="sup-box"><div class="p2-hh"><h3>${LX('Cheer with Spark','Spark로 응원하기')}</h3><span class="sup-pt off">${LX('Partner pending','파트너 준비 중')}</span></div>
+     <div class="bx-cur"><label class="s on"><input type="radio" name="bxc-${esc(id)}" value="spark" checked>${BX.IC.s}<span><b>Spark</b><em>${LX('Balance','보유')} <i class="sk">${S.spark}</i></em></span></label><label class="dis" aria-disabled="true"><input type="radio" disabled>${BX.IC.e}<span><b>Energy</b><em>${LX('Not available for this match','이 경기에서는 사용 불가')}</em></span></label></div>
+     ${lm&&!lm.none?`<div class="sup-amts" role="radiogroup">${[5,10,20].map((n,i)=>`<button type="button" class="${i===1?'on':''}" data-amt="${n}">${n}</button>`).join('')}</div>
+     <button class="sup-go spk" type="button">${LX('Boost this moment with Spark 10','Spark 10으로 이 순간 Boost')}</button><span class="bx-ded"></span>`
+     :`<p class="bx-wait">${LX('Spark Boosts open during big moments of a live match.','Spark 응원은 경기 중 큰 순간에 열려요.')}</p>`}
+     <div class="bx-dist off"><b>${LX('Not shared with any team','팀에 분배되지 않음')}</b><span>${LX('Boosts in this match are not paid to any team. There are no paid items for sale either.','이 경기에서 보낸 Boost는 어느 팀에도 지급되지 않아요. 판매 상품과 유료 장식도 없어요.')}</span></div>
+     <a class="lnk" href="#spark" onclick="nav(event,'spark')">${LX('Get Spark (website ad wall) →','Spark 받기 (웹사이트 광고 월) →')}</a></section>
+    <section class="p2-sec bx-mine"><div class="p2-hh"><h3>${LX('Fandom ranking','팬덤 순위')}</h3></div><p class="bx-cap">${LX('Fandoms awaiting partnership have no ranking table. They are shown combined on the home page.','파트너 준비 중 팬덤은 순위표를 따로 만들지 않고, 메인에서 합산 포인트로만 보여 줘요.')}</p></section>
+    <section class="bx-ntf"><b>${LX('Want to know when Energy Boosts open?','Energy 응원이 열리면 알려드릴까요?')}</b><span>${LX('Energy Boosts, team sharing and fandom rankings open once a partnership is signed. We cannot promise when.','팀과 제휴가 맺어지면 Energy Boost, 팀 배분, 팬덤 순위가 열려요. 시점은 약속드릴 수 없어요.')}</span>
+     <button type="button" class="p2-btn sup-notify ${nt?'on':''}" data-team="${tm}">${nt?LX('✓ We\'ll let you know','✓ 열리면 알려드릴게요'):LX('Notify me when it opens','열리면 알림 받기')}</button></section>
+    ${how()}</div>`}
+  const target=lm&&!lm.none?'now':(M.find(m=>m.st!=='past')?'':'');
+  return `<div class="ip-sec sup" data-kind="${kind}" data-id="${esc(id)}" data-team="${tm}">${nowCard}${mom}
+   <section class="sup-box"><div class="p2-hh"><h3>${LX('Send a Boost','Boost 보내기')}</h3><span class="sup-pt">${LX('Partner team','파트너 팀')} · ${tm}</span></div>
+    <div class="sup-for" hidden><span>${LX('For','기념')}: <b></b></span><button type="button" class="sup-for-x" aria-label="Clear">×</button></div>
+    <fieldset class="bx-cur"><legend>${LX('Pay with','어떤 재화로 보낼까요?')}</legend><label class="e on"><input type="radio" name="bxc-${esc(id)}" value="energy" checked>${BX.IC.e}<span><b>Energy</b><em>${LX('Balance','보유')} <i class="eb3">${energy}</i> · ${LX('paid','유료')}</em></span></label><label class="s"><input type="radio" name="bxc-${esc(id)}" value="spark">${BX.IC.s}<span><b>Spark</b><em>${LX('Balance','보유')} <i class="sk">${S.spark}</i> · ${LX('ad reward','광고 보상')}</em></span></label></fieldset>
+    <div class="sup-amts" role="radiogroup"></div>
+    <label class="sup-msg"><span>${LX('Message (optional)','응원 메시지 (선택)')}</span><textarea maxlength="80" rows="2" placeholder="${LX(`Say something to ${id}…`,`${id}에게 한마디…`)}"></textarea><em>0/80</em></label>
+    <button class="sup-go" type="button"></button><span class="bx-ded"></span>
+    <div class="bx-dist"></div>
+    <a class="lnk" href="#spark" onclick="nav(event,'spark')">${LX('Get Spark (website ad wall · before, between or after games) →','Spark 받기 (웹사이트 광고 월 · 경기 전·세트 사이·경기 후) →')}</a></section>
+   ${lm&&!lm.none?`<section class="p2-sec"><div class="p2-hh"><h3>${LX('Fandom goal for this match','이 경기 팬덤 목표')}</h3><span>${LX(`${tm} fandom`,`${tm} 팬덤`)}</span></div><div class="bx-gl"><b>${(30000+hashStr(lm.m.id)%15000).toLocaleString('en-US')}</b><span>/ 50,000 P</span></div><span class="bx-pb"><i style="width:${(30000+hashStr(lm.m.id)%15000)/500}%"></i></span><span class="bx-cap">${LX('Points come from Boosts, streaks and big moments, counted the same for Energy and Spark.','포인트는 Boost 횟수·연속 응원·큰 순간 참여로 쌓여요. Energy·Spark 모두 같은 기준이에요.')}</span></section>`:''}
+   <section class="p2-sec sup-rank"><div class="p2-hh"><h3>${LX('Supporter ranking','서포터 순위')}</h3><span class="p2-tabs bx-lbt">${lm&&!lm.none?`<button type="button" class="on" data-lb="m">${LX('This match','이 경기')}</button>`:''}<button type="button" class="${lm&&!lm.none?'':'on'}" data-lb="s">${LX('This season','이번 시즌')}</button></span></div><div class="lb-box">${board(lm&&!lm.none?'m':'s')}</div>
+    <label class="bx-tg sm"><span><b>${LX('Show me as anonymous','순위에 익명으로 표시')}</b></span><input type="checkbox" data-bxset="anon" ${S.anon?'checked':''}></label><span class="bx-cap">${LX('Ranked by cheering points, not money.','금액 대신 응원 포인트로 순위를 매겨요.')}</span></section>
+   ${how()}</div>`}
+ function bind(root){const box=root.querySelector('.sup');if(!box)return;const kind=box.dataset.kind,id=box.dataset.id,tm=box.dataset.team,on=!box.classList.contains('off');
+  const nb=box.querySelector('.sup-notify');if(nb)nb.onclick=()=>{let L=[];try{L=JSON.parse(localStorage.getItem('rorr-boost-notify')||'[]')}catch(e){}if(!L.includes(tm))L.push(tm);try{localStorage.setItem('rorr-boost-notify',JSON.stringify(L))}catch(e){}nb.classList.add('on');nb.textContent=LX('✓ We\'ll let you know','✓ 열리면 알려드릴게요');toast(LX('We\'ll tell you when it opens','열리면 알려드릴게요'))};
+  box.querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{box.querySelectorAll('[data-lb]').forEach(x=>x.classList.toggle('on',x===b));box.querySelector('.lb-box').innerHTML=board(b.dataset.lb)});
+  const go=box.querySelector('.sup-go');if(!go)return;const lm=liveMoment(tm,on);const S=BX.S();
+  let cur=on?'energy':'spark',amt=on?50:10,mid=lm&&!lm.none?lm.id:'',mt='';
+  const amts=box.querySelector('.sup-amts'),ded=box.querySelector('.bx-ded'),dist=box.querySelector('.bx-dist'),ta=box.querySelector('textarea'),forEl=box.querySelector('.sup-for');
+  const A={energy:[10,50,100,500],spark:[5,10,20]};
+  const label=()=>{const C=cur==='energy'?'Energy':'Spark';const bal=cur==='energy'?energy:S.spark;
+   go.innerHTML=`${cur==='energy'?BX.IC.e:BX.IC.s}${mid?LX(`Boost this moment with ${C} ${amt}`,`${C} ${amt}으로 이 순간 Boost`):LX(`Boost ${id} with ${C} ${amt}`,`${id}에 ${C} ${amt} Boost`)}`;go.classList.toggle('spk',cur==='spark');
+   const mom=mid&&lm&&mid===lm.id?lm:null;const card=mid?`${mom?LX(...BX.TIER[mom.tier]).split(' · ')[0]:LX('Gold','골드')} · ${cur==='spark'?'Spark':'Energy'} ${LX('Lv.'+BX.decoOf(cur,amt),BX.decoOf(cur,amt)+'단계')}`:'';
+   ded.textContent=`${C} ${bal.toLocaleString()} → ${Math.max(0,bal-amt).toLocaleString()} · `+(card?LX(`card: ${card}`,`받는 카드: ${card}`):cur==='energy'?LX('Spark balance unchanged','Spark 잔액은 그대로예요'):LX('Energy balance unchanged','Energy 잔액은 그대로예요'));
+   if(dist&&on){const[a,b,c]=BX.CFG.teamShare;dist.className='bx-dist'+(cur==='spark'?' off':'');dist.innerHTML=cur==='energy'?`<div class="h"><b>${LX('How this Energy Boost is shared','이 Energy Boost의 배분')}</b><span>${LX('Example · set by team agreement','예시 · 팀 협약으로 확정')}</span></div><div class="dsb"><i style="width:${a}%"></i><i style="width:${b}%"></i><i style="width:${c}%"></i></div><div class="lg"><span>${tm} ${a}%</span><span>${LX('Payments & ops','결제·운영')} ${b}%</span><span>RORR ${c}%</span></div>`:`<b>${LX('Spark Boosts are not shared with the team','Spark Boost는 팀에 배분되지 않아요')}</b><span>${LX('Spark comes from ads, so nothing is paid to the team.','Spark는 광고 보상이라 팀에 지급되지 않아요.')}</span>`}};
+  const drawAmts=()=>{if(!amts)return;if(on){amts.innerHTML=A[cur].map(n=>`<button type="button" class="${n===amt?'on':''} ${cur}" data-amt="${n}">${n}</button>`).join('')}amts.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{amts.querySelectorAll('[data-amt]').forEach(x=>x.classList.toggle('on',x===b));amt=+b.dataset.amt;label()})};
+  box.querySelectorAll('.bx-cur input').forEach(r=>r.onchange=()=>{if(r.disabled)return;cur=r.value;amt=cur==='energy'?50:10;box.querySelectorAll('.bx-cur label').forEach(l=>l.classList.toggle('on',l.contains(r)));drawAmts();label()});
+  box.querySelectorAll('[data-mom]').forEach(b=>b.onclick=()=>{mid=b.dataset.mom;mt=b.dataset.mt||'';box.querySelectorAll('[data-mom]').forEach(x=>x.classList.toggle('sel',x===b));box.querySelectorAll('.mom').forEach(x=>x.classList.toggle('sel',x.contains(b)));
+   if(forEl&&mt){forEl.hidden=false;forEl.querySelector('b').textContent=mt}else if(forEl)forEl.hidden=true;label();(box.querySelector('.sup-box')||box).scrollIntoView({behavior:'smooth',block:'center'})});
+  if(forEl)forEl.querySelector('.sup-for-x').onclick=()=>{mid='';mt='';forEl.hidden=true;box.querySelectorAll('[data-mom]').forEach(x=>x.classList.remove('sel'));box.querySelectorAll('.mom').forEach(x=>x.classList.remove('sel'));label()};
+  const cnt=box.querySelector('.sup-msg em');if(ta)ta.oninput=()=>{cnt.textContent=ta.value.length+'/80'};
+  drawAmts();label();
+  go.onclick=()=>{const send=()=>{const msg=ta?ta.value.trim().slice(0,80):'';if(/\b(trash|idiot|stupid|retire|ff)\b|못하|쓰레기|은퇴/i.test(msg)){toast(LX('Let\'s keep it kind · edit your message','따뜻하게 보내 주세요 · 메시지를 수정해 주세요'));return}
+    const isNow=lm&&mid===lm.id;const mom=isNow?lm:mid?{id:mid,tier:'gold',t:[mt,mt],sub:`${tm} · ${new Date(Date.now()+9*3600e3).toISOString().slice(0,10)} · ${LX('Milestone','기념일')} `,w0:50,w1:50,fans:300+hashStr(mid)%900}:null;
+    const what=isNow?LX(lm.t[0],lm.t[1]):mt||id;
+    if(cur==='energy'){if(!spend(amt,'Boost',`${id} · ${what}${msg?` · "${msg}"`:''}`))return}else if(!BX.spendSpark(amt)){nav(null,'spark');return}
+    const lbl=isNow?[`${on?`${lm.m.a} vs ${lm.m.b}`:"Today's match"} · G${lm.m.game} ${lm.tm} ${lm.t[0]}`,`${on?`${lm.m.a} vs ${lm.m.b}`:'오늘의 경기'} · ${lm.m.game}세트 ${lm.tm} ${lm.t[1]}`]:[`${id}${mt?' · '+mt:''}`,`${id}${mt?' · '+mt:''}`];
+    const r=BX.addBoost({cur,amt,mom,partner:on,label:lbl,msg});reward(on?id:LX("this moment",'이 순간'),cur,amt,msg,r);if(ipKey)openEntity(ipKey)};
    if(!document.body.classList.contains('body-in'))openAuth('login',send);else send()}}
- function reward(kind,id,amt,msg,lv,prevLv){const tier=amt>=500?4:amt>=100?3:amt>=50?2:1;
-  const img=['muse-smile','muse-waving','muse-surprised','muse-excited'][tier-1];
-  const line=[LX(`${id} got your cheer!`,`${id}에게 응원이 닿았어요!`),LX(`Waving at ${id} with you!`,`같이 ${id}에게 손 흔들어요!`),LX(`Wait, that's a big one! ${id} will love this!`,`와, 이렇게나요? ${id}가 정말 기뻐할 거예요!`),LX(`You're the best fan ever! Let's go ${id}!!`,`최고의 팬이에요! ${id} 가자!!`)][tier-1];
-  const el=document.getElementById('reward');el.dataset.tier=tier;
-  el.querySelector('.rw-muse').src='assets/'+img+'.webp';el.querySelector('.rw-amt').textContent='⚡ '+amt;el.querySelector('.rw-line').textContent=line;
-  const mb=el.querySelector('.rw-msg');mb.textContent=msg?`“${msg}”`:'';mb.hidden=!msg;
-  el.querySelector('.rw-to').textContent=LX(`Boost sent to ${id}`,`${id}에게 Boost 전송`);
-  const up=el.querySelector('.rw-lv');up.hidden=lv<=prevLv;up.textContent=LX(`Supporter Lv.${lv} unlocked`,`서포터 Lv.${lv} 달성`);
+ function reward(to,cur,amt,msg,r){const tier=amt>=500?4:amt>=100?3:amt>=50?2:1;const img=['muse-smile','muse-waving','muse-surprised','muse-excited'][tier-1];
+  const line=[LX(`${to} got your cheer!`,`${to}에 응원이 닿았어요!`),LX(`Waving at ${to} with you!`,`같이 손 흔들어요!`),LX("Wait, that's a big one!",'와, 이렇게나요?'),LX("You're the best fan ever!",'최고의 팬이에요!')][tier-1];
+  const el=document.getElementById('reward');el.dataset.tier=tier;el.querySelector('.rw-muse').src='assets/'+img+'.webp';el.querySelector('.rw-amt').innerHTML=(cur==='spark'?BX.IC.s:BX.IC.e)+' '+amt;el.querySelector('.rw-line').textContent=line;
+  const mb=el.querySelector('.rw-msg');mb.textContent=msg?`“${msg}”`:'';mb.hidden=!msg;el.querySelector('.rw-to').textContent=LX(`Boost sent · +${r.ptsAdd} P`,`Boost 전송 · +${r.ptsAdd} P`);
+  let slot=el.querySelector('.rw-cardslot');if(!slot){slot=document.createElement('div');slot.className='rw-cardslot';el.querySelector('.rw-lv').before(slot)}
+  slot.innerHTML=r.card?`<span class="rw-new">${LX('New moment card','새 모먼트 카드')}</span>${BX.cardHTML(r.card)}<button type="button" class="p2-btn" data-bxshare="${r.card.id}">${LX('Show it off','자랑하기')}</button>`:'';
+  el.querySelector('.rw-lv').hidden=true;
   const fx=el.querySelector('.rw-fx');fx.innerHTML='';const n=[14,24,40,70][tier-1];
   for(let i=0;i<n;i++){const s=document.createElement('i');s.style.left=(50+(Math.random()-.5)*20)+'%';s.style.setProperty('--dx',(Math.random()*900-450)+'px');s.style.setProperty('--dy',(-200-Math.random()*420)+'px');s.style.setProperty('--r',(Math.random()*720-360)+'deg');s.style.background=['#2F9CFC','#6F4CFF','#FE2054','#fff'][i%4];s.style.animationDelay=(Math.random()*.25)+'s';fx.appendChild(s)}
   el.classList.remove('on');void el.offsetWidth;el.classList.add('on');document.body.classList.add('rewarding')}
  function closeReward(){const el=document.getElementById('reward');if(!el.classList.contains('on'))return false;el.classList.remove('on');document.body.classList.remove('rewarding');return true}
- document.getElementById('reward').addEventListener('click',e=>{if(e.target.closest('.rw-ok')||e.target.id==='reward')closeReward()});
- return{html,bind,closeReward,moments,isPartner}})();
+ document.getElementById('reward').addEventListener('click',e=>{if(e.target.closest('[data-bxshare]')){closeReward();return}if(e.target.closest('.rw-ok')||e.target.id==='reward')closeReward()});
+ return{html,bind,closeReward,moments,isPartner,liveMoment}})();
+
 
 /* ===== compare (two players / two teams) in the info panel ===== */
 /* ===== side panel v2 (design canvas: team / team compare / player / player compare) ===== */
@@ -2701,11 +3001,11 @@ function mxMoment(m){if(typeof SUP==='undefined'||!SUP.moments)return null;for(c
   for(const r of ROLES){const p=MX.pl(t,r);const mm=SUP.moments('player',p.name).find(x=>x.st!=='past');if(mm)return{p,mm}}}return null}
 function mxBoostCard(m,phase){const x=mxMoment(m);if(!x)return '';const r=mkRnd(hashStr(x.p.name+x.mm.id));const tot=Math.round(800+r()*1600)*(phase==='post'?10:1);
  const title=phase==='post'?LX(`${x.p.name} reached it: ${x.mm.t}`,`${x.p.name}, ${x.mm.t} 달성`):LX('A moment to celebrate','이 경기의 기념 순간');
- const body=phase==='post'?LX(`${Math.round(tot/17).toLocaleString('en-US')} fans celebrated with ⚡ ${tot.toLocaleString('en-US')} in Boosts.`,`팬 ${Math.round(tot/17).toLocaleString('en-US')}명이 ⚡ ${tot.toLocaleString('en-US')} Boost로 축하했어요.`):LX(`${x.p.name} · ${x.mm.t}. Boosts sent during the match count toward this moment's ranking.`,`${x.p.name} · ${x.mm.t}. 경기 중에 보낸 Boost는 이 순간의 순위에 반영돼요.`);
+ const body=phase==='post'?LX(`${Math.round(tot/17).toLocaleString('en-US')} fans celebrated, earning ${tot.toLocaleString('en-US')} P together.`,`팬 ${Math.round(tot/17).toLocaleString('en-US')}명이 함께 축하해 ${tot.toLocaleString('en-US')} P를 모았어요.`):LX(`${x.p.name} · ${x.mm.t}. Boosts sent during the match count toward this moment's ranking.`,`${x.p.name} · ${x.mm.t}. 경기 중에 보낸 Boost는 이 순간의 순위에 반영돼요.`);
  const top=[['minji_07',.32],['ZedMain',.22],['lck_dad',.16]];
- return `<section class="mx-card"><h3>${title}</h3><p>${body}</p>${phase!=='pre'?`<ol class="mx-lb">${top.map((t,i)=>`<li><span><b class="rk${i+1}">${i+1}</b>${t[0]}</span><em>⚡ ${Math.round(tot*t[1]/10)*10}</em></li>`).join('')}</ol>`:`<div class="mx-row2"><span>${LX('So far','지금까지')} ⚡ ${tot.toLocaleString('en-US')}</span><span>${LX(`${Math.round(tot/6)} supporters`,`서포터 ${Math.round(tot/6)}명`)}</span></div>`}
-  <button class="mx-boost" type="button" data-pl="${x.p.name}">⚡ ${phase==='post'?LX('Send a congrats Boost','축하 Boost 보내기'):phase==='live'?LX('Boost now','지금 Boost 보내기'):LX('Send a celebration Boost','기념 Boost 보내기')}</button>
-  <small>${LX(`${x.p.team} official partner · a share goes to the team`,`${x.p.team} 공식 파트너 · Boost 일부는 구단에 배분`)}</small></section>`}
+ return `<section class="mx-card"><h3>${title}</h3><p>${body}</p>${phase!=='pre'?`<ol class="mx-lb">${top.map((t,i)=>`<li><span><b class="rk${i+1}">${i+1}</b>${t[0]}</span><em>${Math.round(tot*t[1]/10)*10} P</em></li>`).join('')}</ol>`:`<div class="mx-row2"><span>${LX('So far','지금까지')} ${tot.toLocaleString('en-US')} P</span><span>${LX(`${Math.round(tot/6)} supporters`,`서포터 ${Math.round(tot/6)}명`)}</span></div>`}
+  <button class="mx-boost" type="button" data-pl="${x.p.name}">${phase==='post'?LX('Send a congrats Boost','축하 Boost 보내기'):phase==='live'?LX('Boost now','지금 Boost 보내기'):LX('Send a celebration Boost','기념 Boost 보내기')}</button>
+  <small>${LX(`${x.p.team} partner team · Energy Boosts are partly shared with the team, Spark Boosts are not`,`${x.p.team} 파트너 팀 · Energy Boost 일부는 팀에 배분, Spark Boost는 배분 없음`)}</small></section>`}
 function mxAsk(qs){return `<div class="mx-asks">${qs.map(q=>`<button type="button" data-askm="${q.replace(/"/g,'&quot;')}">${q}</button>`).join('')}</div>`}
 function mxPre(m,G,A,B){const H=MX.h2h(m);const L=ROLES.map(r=>({r,a:MX.pl(m.a,r),b:MX.pl(m.b,r)}));
  const key=L.slice().sort((x,y)=>(y.a.ix+y.b.ix)-(x.a.ix+x.b.ix))[0];const gap=L.slice().sort((x,y)=>Math.abs(y.a.ix-y.b.ix)-Math.abs(x.a.ix-x.b.ix))[0];
@@ -3053,8 +3353,8 @@ document.addEventListener('click',e=>{if(e.target.id==='dockin'&&!document.body.
 document.addEventListener('click',e=>{const a=e.target.closest('a[href="#muse"]');if(a){e.preventDefault();openMuse()}});
 addEventListener('keydown',e=>{if(e.key!=='/'||e.metaKey||e.ctrlKey||e.altKey)return;const t=e.target;if(t&&(t.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)))return;if(document.body.classList.contains('chatting')||document.body.classList.contains('museing'))return;e.preventDefault();if(typeof closeEntity==='function')closeEntity();openChat()});
 addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(typeof SUP!=='undefined'&&SUP.closeReward())return;if(typeof AU!=='undefined'&&AU.close())return;if(typeof MD!=='undefined'&&MD.close())return;if(typeof closeEntity==='function'&&closeEntity())return;if(document.body.classList.contains('chatting'))closeChat(e)});
-function login(){document.body.classList.add('body-in');renderQuota()}
-function logout(e){e&&e.preventDefault();document.body.classList.remove('body-in');document.getElementById('menu').classList.remove('open');renderQuota()}
+function login(){document.body.classList.add('body-in');renderQuota();try{BX.renderFL()}catch(e){}}
+function logout(e){e&&e.preventDefault();document.body.classList.remove('body-in');document.getElementById('menu').classList.remove('open');renderQuota();try{BX.renderFL()}catch(e){}}
 function toggleMenu(){document.getElementById('menu').classList.toggle('open')}
 function seg(b){b.parentNode.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b))}
 document.addEventListener('click',e=>{const mn=document.getElementById('menu');if(mn.classList.contains('open')&&!e.target.closest('.menu,.energy,.avatar'))mn.classList.remove('open');const pp=document.getElementById('pop');if(pp.classList.contains('open')&&!e.target.closest('.pop,.energy'))pp.classList.remove('open')});
@@ -3098,12 +3398,12 @@ const OBS_CFG={subtree:true,childList:true,characterData:true,attributes:true,at
 const obs=new MutationObserver(ms=>{if(LANG!=='ko')return;obs.disconnect();
  ms.forEach(m=>{if(m.type==='childList')m.addedNodes.forEach(walk);else if(m.type==='characterData')trNode(m.target);else if(m.type==='attributes'&&!m.attributeName.startsWith('data-'))trEl(m.target)});
  obs.observe(document.body,OBS_CFG)});
-function setLang(l){LANG=l;setTimeout(()=>{try{renderTicker();if(curMatch&&document.getElementById('pg-match').classList.contains('on'))renderMatch(curMatch);if(document.getElementById('pg-stats').classList.contains('on'))STX.render()}catch(e){}},0);document.documentElement.lang=l;try{localStorage.setItem('rorr-lang',l)}catch(e){}
+function setLang(l){LANG=l;setTimeout(()=>{try{renderTicker();if(curMatch&&document.getElementById('pg-match').classList.contains('on'))renderMatch(curMatch);if(document.getElementById('pg-stats').classList.contains('on'))STX.render();BX.renderFL();if(document.getElementById('pg-spark').classList.contains('on'))BX.renderWall();if(document.body.classList.contains('acct'))BX.renderMy();if(ipKey)openEntity(ipKey,true)}catch(e){}},0);document.documentElement.lang=l;try{localStorage.setItem('rorr-lang',l)}catch(e){}
  document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.l===l));
  document.getElementById('langname').textContent=l==='ko'?'Korean':'English';
  obs.disconnect();if(l==='ko'){walk(document.body);obs.observe(document.body,OBS_CFG)}else restoreAll()}
 (function(){let l=null;try{l=localStorage.getItem('rorr-lang')}catch(e){}setLang(l==='ko'?'ko':'en')})();
-setMode('fan');
+setMode('fan');try{BX.setUI()}catch(e){}
 const ih=location.hash.slice(1);if(ih.startsWith('account/')){login();route_(ih)}else if(ih==='blog'||ih.startsWith('blog/'))route_(ih);
 
 /* ===== contact form (static: hands off to email until a form backend is connected) ===== */
