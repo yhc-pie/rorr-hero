@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RORR — 지표 페이지 & 경기 페이지(전·중·후) 시안 v1</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* ===== RORR Design System (2026-06) token layer — lifted from rorr-hero/index.html ===== */
+:root,[data-theme=dark]{
+ --ds-primary:#6F4CFF;--ds-secondary:#2D39B4;--ds-accent:#FF6F00;--ds-selected:#209FEE;
+ --energy:#00B395;--team-l:#2F9CFC;--team-l50:#C0E1FE;--team-r:#FE2054;--team-r50:#FFBCCB;
+ --ai-glow:#138DFF;--upcoming:#5618DA;--success:#11C72D;
+ --bg:#191F28;--bg2:#1D2333;--bg3:#262D40;--line:#313644;--ink:#F0F2F5;--mute:#9AA1B5;
+ --v-ui:#9CA3F1;--v-solid:#6F4CFF;--cta:#6F4CFF;--on-cta:#FFFFFF;--live:#E5484D;
+ --glass:rgba(25,31,40,.78);--shadow:rgba(0,0,0,.45);
+ --sh-surface:0 2px 4px rgba(255,255,255,.06);--sh-live:0 2px 4px rgba(86,24,218,.2);
+ --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+[data-theme=light]{
+ --bg:#F0F2F5;--bg2:#FFFFFF;--bg3:#E9EEF4;--line:#CED6E6;--ink:#000000;--mute:#757B90;
+ --v-ui:#6F4CFF;--live:#C10F0F;--glass:rgba(255,255,255,.8);--shadow:rgba(0,0,0,.12);
+ --sh-surface:0 2px 4px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Pretendard Variable",Pretendard,"Apple SD Gothic Neo",sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.mute{color:var(--mute)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--ds-selected);outline-offset:2px;border-radius:6px}
+
+/* review chrome (not part of the product) */
+.review{position:sticky;top:0;z-index:20;background:var(--glass);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.review .wrap{display:flex;align-items:center;gap:12px;height:56px}
+.review b{font-size:13px;letter-spacing:.04em}
+.seg{display:flex;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:7px 12px;border-radius:7px;font-size:13px;color:var(--mute);min-height:34px}
+.seg button[aria-selected=true]{background:var(--bg3);color:var(--ink);font-weight:600}
+.seg .sep{width:1px;background:var(--line);margin:4px 2px}
+.spacer{flex:1}
+.ghost{border:1px solid var(--line);background:none;border-radius:8px;padding:6px 10px;font-size:12px;color:var(--mute)}
+
+/* product chrome */
+.gnb{border-bottom:1px solid var(--line)}
+.gnb .wrap{display:flex;align-items:center;gap:22px;height:52px;font-size:13px}
+.logo{font-weight:800;letter-spacing:.08em}
+.gnb nav{display:flex;gap:18px;color:var(--mute)}
+.gnb nav .on{color:var(--ink);font-weight:600}
+.disclaim{font-size:11px;color:var(--mute);text-align:center;padding:6px;border-bottom:1px solid var(--line)}
+.page{display:none;padding:28px 0 64px}
+.page.on{display:block}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--v-ui)}
+h1{font-size:28px;line-height:1.25;margin:6px 0 8px;letter-spacing:-.02em;text-wrap:balance}
+h2{font-size:17px;margin:0 0 12px;letter-spacing:-.01em}
+.lede{color:var(--mute);max-width:62ch;margin:0}
+.panel{background:var(--bg2);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh-surface)}
+.pad{padding:18px 20px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--mute)}
+.tag.beta{color:var(--ds-accent);border-color:color-mix(in srgb,var(--ds-accent) 45%,transparent)}
+.tag.live{color:#fff;background:var(--live);border-color:var(--live)}
+.tag.prov{color:var(--ds-selected);border-color:color-mix(in srgb,var(--ds-selected) 45%,transparent)}
+.tag.final{color:var(--success);border-color:color-mix(in srgb,var(--success) 45%,transparent)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
+.tag.live .dot{animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){.tag.live .dot{animation:none}}
+.L{color:var(--team-l)}.R{color:var(--team-r)}
+
+/* ===== STATS PAGE ===== */
+.stats-head{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin-bottom:22px}
+.qpair{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border-radius:14px;overflow:hidden;border:1px solid var(--line);margin-bottom:22px}
+.qpair>div{background:var(--bg2);padding:16px 20px}
+.qpair .k{font-size:12px;color:var(--mute)}
+.qpair .q{font-size:16px;font-weight:600;margin:4px 0 2px}
+.stats-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:none;border-radius:999px;padding:6px 12px;font-size:12px;min-height:32px;color:var(--mute)}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:11px;font-weight:600;color:var(--mute);text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,th:nth-child(2){text-align:left}
+td{padding:10px;border-bottom:1px solid var(--line);text-align:right}
+td:first-child,td:nth-child(2){text-align:left}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover td,tbody tr.sel td{background:var(--bg3)}
+.pl b{display:block;font-weight:600}
+.pl span{font-size:11px;color:var(--mute)}
+.bar{display:inline-block;height:6px;border-radius:3px;background:var(--v-solid);vertical-align:middle;margin-left:8px}
+.bar.neg{background:var(--team-r)}
+.ci{font-size:10px;color:var(--mute);display:block}
+.scatter svg{width:100%;height:auto;display:block}
+.legend{display:flex;gap:14px;font-size:11px;color:var(--mute);margin-top:8px;flex-wrap:wrap}
+.sens{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--mute);margin:14px 0 4px}
+.sens input{accent-color:var(--v-solid);flex:1}
+.method{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:16px}
+.step{padding:14px 16px;border-left:1px solid var(--line)}
+.step:first-child{border-left:0}
+.step .n{font-family:var(--mono);font-size:11px;color:var(--v-ui)}
+.step b{display:block;font-size:13px;margin:4px 0}
+.step p{margin:0;font-size:12px;color:var(--mute)}
+.step.wip b::after{content:" · 검증 중";color:var(--ds-accent);font-weight:500;font-size:11px}
+
+/* ===== MATCH SHARED ===== */
+.match-hero{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;padding:22px 24px}
+.team{display:flex;align-items:center;gap:14px}
+.team.r{justify-content:flex-end;text-align:right}
+.crest{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:14px;color:#fff}
+.crest.L{background:var(--team-l)}.crest.R{background:var(--team-r)}
+.team b{font-size:20px;display:block}
+.team span{font-size:12px;color:var(--mute)}
+.mid{text-align:center}
+.score{font-family:var(--mono);font-size:40px;font-weight:700;letter-spacing:.02em}
+.phase{display:flex;gap:4px;justify-content:center;margin-top:10px}
+.phase i{width:28px;height:4px;border-radius:2px;background:var(--line)}
+.phase i.on{background:var(--v-ui)}
+.cols{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;margin-top:16px}
+.stack{display:grid;gap:16px;align-content:start}
+
+/* PRE */
+.count{font-family:var(--mono);font-size:28px;font-weight:700}
+.vs-row{display:grid;grid-template-columns:56px 1fr 90px 1fr 56px;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.vs-row:last-child{border-bottom:0}
+.vs-row .lab{text-align:center;font-size:11px;color:var(--mute)}
+.half{height:8px;background:var(--bg3);border-radius:4px;position:relative;overflow:hidden}
+.half i{position:absolute;top:0;bottom:0;border-radius:4px}
+.half.l i{right:0;background:var(--team-l)}
+.half.r i{left:0;background:var(--team-r)}
+.vs-row .v{font-family:var(--mono);font-weight:600}
+.vs-row .v.r{text-align:right}
+.lane{display:grid;grid-template-columns:1fr 52px 1fr;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.lane:last-child{border-bottom:0}
+.lane .pos{text-align:center;font-size:11px;font-weight:700;color:var(--mute)}
+.lane .p{font-size:13px}
+.lane .p.r{text-align:right}
+.lane .p small{display:block;font-family:var(--mono);font-size:11px;color:var(--mute)}
+.edge{font-weight:700}
+.watch{display:grid;gap:10px}
+.watch li{list-style:none;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:13px}
+.watch ul{margin:0;padding:0;display:grid;gap:10px}
+.watch b{display:block;margin-bottom:2px}
+.pred{display:flex;height:34px;border-radius:8px;overflow:hidden;font-family:var(--mono);font-size:13px;font-weight:700}
+.pred div{display:flex;align-items:center;padding:0 12px;color:#fff}
+.cta{background:var(--cta);color:var(--on-cta);border:0;border-radius:10px;padding:11px 16px;font-weight:600;min-height:44px;width:100%}
+
+/* LIVE */
+.live-top{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 20px;border-bottom:1px solid var(--line)}
+.wp svg{width:100%;height:auto;display:block}
+.wp-head{display:flex;justify-content:space-between;align-items:baseline}
+.wp-now{font-family:var(--mono);font-size:30px;font-weight:700}
+.feed{max-height:430px;overflow:auto}
+.ev{display:grid;grid-template-columns:48px 1fr auto;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.ev:last-child{border-bottom:0}
+.ev time{font-family:var(--mono);font-size:12px;color:var(--mute)}
+.ev .d{font-family:var(--mono);font-size:12px;font-weight:700}
+.ev.new{animation:fadein .5s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(-4px)}}
+.ask{display:flex;gap:8px;margin-top:12px}
+.ask input{flex:1;background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:11px 12px;color:var(--ink);font:inherit;min-height:44px}
+.board td,.board th{padding:7px 8px;font-size:12px}
+.prov-note{font-size:11px;color:var(--mute);margin-top:8px}
+
+/* POST */
+.verdict{font-size:20px;font-weight:700;line-height:1.4;margin:0 0 6px;letter-spacing:-.01em;text-wrap:pretty}
+.moments{display:grid;gap:0}
+.mo{display:grid;grid-template-columns:64px 1fr 70px;gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line)}
+.mo:last-child{border-bottom:0}
+.mo .t{font-family:var(--mono);font-size:12px;color:var(--mute)}
+.mo b{display:block;font-size:14px}
+.mo p{margin:2px 0 0;font-size:12px;color:var(--mute)}
+.mo .sw{font-family:var(--mono);font-weight:700;text-align:right}
+.pcards{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.pc{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--bg2)}
+.pc .pos{font-size:10px;font-weight:700;color:var(--mute)}
+.pc b{display:block;font-size:14px;margin:2px 0 8px}
+.pc .big{font-family:var(--mono);font-size:22px;font-weight:700}
+.pc .sub{font-size:11px;color:var(--mute)}
+.pc .delta{font-family:var(--mono);font-size:11px}
+.split3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border-radius:12px;overflow:hidden}
+.split3>div{background:var(--bg2);padding:14px 16px}
+.split3 .k{font-size:11px;color:var(--mute)}
+.split3 .v{font-family:var(--mono);font-size:18px;font-weight:700}
+
+/* explainer box (review only) */
+.why{margin-top:28px;border:1px dashed var(--line);border-radius:14px;padding:16px 20px;font-size:13px}
+.why h3{margin:0 0 8px;font-size:12px;letter-spacing:.08em;color:var(--mute);text-transform:uppercase}
+.why ul{margin:0;padding-left:18px;display:grid;gap:4px}
+
+@media (max-width:900px){
+ .stats-grid,.cols{grid-template-columns:1fr}
+ .pcards{grid-template-columns:repeat(2,1fr)}
+ .method{grid-template-columns:1fr 1fr}
+ .step:nth-child(3){border-left:0}
+ .qpair{grid-template-columns:1fr}
+ .match-hero{grid-template-columns:1fr;text-align:center}
+ .team,.team.r{justify-content:center;text-align:center}
+ .review .wrap{height:auto;flex-wrap:wrap;padding:8px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- review controls -->
+<div class="review"><div class="wrap">
+ <b>시안 v1</b>
+ <div class="seg" role="tablist" aria-label="페이지">
+  <button role="tab" data-p="stats" aria-selected="true">지표 페이지</button>
+  <span class="sep"></span>
+  <button role="tab" data-p="pre" aria-selected="false">경기 전</button>
+  <button role="tab" data-p="live" aria-selected="false">경기 중</button>
+  <button role="tab" data-p="post" aria-selected="false">경기 후</button>
+ </div>
+ <span class="spacer"></span>
+ <button class="ghost" id="theme">라이트/다크</button>
+</div></div>
+
+<div class="disclaim">An independent fan companion. Not endorsed by Riot Games. · 모든 선수명·수치는 샘플이며 실제 기록이 아닙니다.</div>
+<header class="gnb"><div class="wrap">
+ <span class="logo">RORR</span>
+ <nav><a>경기</a><a class="on" id="nav-stats">지표</a><a>Ask</a><a>블로그</a></nav>
+</div></header>
+
+<main class="wrap">
+
+<!-- ================= STATS ================= -->
+<section class="page on" id="p-stats" aria-label="지표 페이지">
+ <div class="stats-head">
+  <div>
+   <div class="eyebrow">LCK 2026 · 정규시즌 · 세트 기준</div>
+   <h1>얼마나 잘했나, 그리고 얼마나 보탰나</h1>
+   <p class="lede">wGE+는 출전했을 때의 기여 <b>수준</b>(포지션 평균 = 100), 누적 기여는 대체선수 대비 시즌 전체에 더한 <b>총량</b>입니다. 두 숫자를 함께 봐야 "잘한 선수"와 "많이 보탠 선수"가 구분됩니다.</p>
+  </div>
+  <span class="tag beta">누적 기여 · 베타 v1.0</span>
+ </div>
+
+ <div class="qpair">
+  <div><div class="k">wGE+ (= LwRC+)</div><div class="q">출전했을 때 얼마나 높은 수준으로 기여했나?</div><div class="mute" style="font-size:12px">같은 시즌·포지션 평균 100. 120 = 평균보다 20% 더 기여.</div></div>
+  <div><div class="k">누적 기여 (대체선수 대비)</div><div class="q">대체선수 대신 뛰어서 시즌에 얼마나 더 보탰나?</div><div class="mute" style="font-size:12px">단위 = 기여 골드. 대체선수 수준 = 0, 그보다 못하면 음수. 승(WAR) 환산은 검증 후 공개.</div></div>
+ </div>
+
+ <div class="stats-grid">
+  <div class="panel pad">
+   <div class="filters" role="group" aria-label="포지션">
+    <button class="chip" aria-pressed="true">전체</button><button class="chip" aria-pressed="false">TOP</button><button class="chip" aria-pressed="false">JG</button><button class="chip" aria-pressed="false">MID</button><button class="chip" aria-pressed="false">BOT</button><button class="chip" aria-pressed="false">SUP</button>
+    <span class="spacer"></span>
+   </div>
+   <table aria-label="선수 지표">
+    <thead><tr><th>#</th><th>선수</th><th>세트</th><th>wGE+</th><th>누적 기여 <span class="ci" style="display:inline">(골드)</span></th></tr></thead>
+    <tbody id="tbody"></tbody>
+   </table>
+   <div class="sens"><label for="rep">대체 기준 민감도</label><input id="rep" type="range" min="75" max="85" step="5" value="80"><span class="num" id="repv">80</span></div>
+   <div class="prov-note">대체 기준(wGE+ 75·80·85)은 잠정값입니다. 기준을 바꿔도 순위가 유지되는 구간만 확신하세요. 범위 막대는 표본 불확실성.</div>
+  </div>
+
+  <div class="stack">
+   <div class="panel pad scatter">
+    <h2>수준 × 출전량</h2>
+    <svg id="sc" viewBox="0 0 420 300" role="img" aria-label="wGE+ 대비 출전 세트 산점도"></svg>
+    <div class="legend"><span>● 원 크기 = 누적 기여</span><span>가로 = 출전 세트 · 세로 = wGE+</span></div>
+   </div>
+   <div class="panel pad" id="pick">
+    <div class="eyebrow">선택한 선수</div>
+    <h2 id="pk-name" style="margin-top:6px">—</h2>
+    <div class="split3">
+     <div><div class="k">wGE+</div><div class="v" id="pk-w">—</div></div>
+     <div><div class="k">출전 세트</div><div class="v" id="pk-g">—</div></div>
+     <div><div class="k">누적 기여</div><div class="v" id="pk-c">—</div></div>
+    </div>
+    <p class="mute" style="font-size:12px;margin:10px 0 0" id="pk-read"></p>
+   </div>
+  </div>
+ </div>
+
+ <div class="panel" style="margin-top:16px">
+  <div class="pad" style="padding-bottom:0"><h2>계산 방식 (요약)</h2></div>
+  <div class="method">
+   <div class="step"><span class="n">01</span><b>세트별 기여 골드</b><p>생산·차단·손실을 같은 골드 가치로 합산 (wGE+의 원재료)</p></div>
+   <div class="step"><span class="n">02</span><b>대체선수 기대치 차감</b><p>같은 출전 조건에서 후보·콜업 선수층이 냈을 기여를 뺌</p></div>
+   <div class="step"><span class="n">03</span><b>시즌 누적</b><p>확정 기록만 합산. 실시간 잠정치는 포함하지 않음</p></div>
+   <div class="step wip"><span class="n">04</span><b>승수 환산 (WAR)</b><p>추가 1승당 기여 골드를 데이터로 추정한 뒤 공개</p></div>
+  </div>
+  <div class="pad mute" style="font-size:12px;border-top:1px solid var(--line)">전체 방법론과 한계 → <a href="#">wGE+ 방법론</a> · 모델 v1.0 · 기준 변경 시 재계산 이력 공개</div>
+ </div>
+</section>
+
+<!-- ================= PRE ================= -->
+<section class="page" id="p-pre" aria-label="경기 전">
+ <div class="panel">
+  <div class="match-hero">
+   <div class="team"><div class="crest L">T1</div><div><b>T1</b><span>15–3 · 세트 +21</span></div></div>
+   <div class="mid"><span class="tag">경기 전</span><div class="count" id="cd" style="margin-top:8px">02:14:09</div><div class="mute" style="font-size:12px">오늘 17:00 KST · Bo3 · LCK R2</div></div>
+   <div class="team r"><div><b>GEN</b><span>15–3 · 세트 +23</span></div><div class="crest R">GEN</div></div>
+  </div>
+ </div>
+
+ <div class="cols">
+  <div class="stack">
+   <div class="panel pad">
+    <h2>무엇을 봐야 하나</h2>
+    <div class="watch"><ul>
+     <li><b>정글 초반 동선</b>Gansen은 시즌 첫 10분 기여 골드가 정글 1위. GEN은 이 구간 차단 기여가 리그 2위.</li>
+     <li><b>바텀 2:2</b>양 팀 모두 바텀 wGE+가 팀 내 최고. 라인전 결과가 드래곤 타이밍을 결정해 왔습니다.</li>
+     <li><b>장기전 여부</b>T1은 30분 이후 승률이 GEN보다 낮습니다(샘플). 경기가 길어지면 흐름이 바뀔 수 있습니다.</li>
+    </ul></div>
+   </div>
+   <div class="panel pad">
+    <h2>라인별 맞대결 <span class="mute" style="font-size:12px;font-weight:400">시즌 wGE+</span></h2>
+    <div id="lanes"></div>
+   </div>
+  </div>
+  <div class="stack">
+   <div class="panel pad">
+    <h2>사전 승리 예측</h2>
+    <div class="pred"><div style="background:var(--team-l);width:52%">T1 52%</div><div style="background:var(--team-r);width:48%;justify-content:flex-end">48% GEN</div></div>
+    <p class="mute" style="font-size:12px;margin:8px 0 0">시즌 기록 기반. 경기 전 예측은 약 65% 정확도 수준이라 참고용입니다.</p>
+   </div>
+   <div class="panel pad">
+    <h2>팀 비교</h2>
+    <div id="vs"></div>
+   </div>
+   <div class="panel pad">
+    <h2>경기 중 Muse와 함께 보기</h2>
+    <p class="mute" style="font-size:13px;margin:0 0 12px">시작 알림을 받으면 이 페이지가 자동으로 라이브 화면으로 바뀝니다.</p>
+    <button class="cta">시작 알림 받기</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ================= LIVE ================= -->
+<section class="page" id="p-live" aria-label="경기 중">
+ <div class="panel">
+  <div class="live-top"><div><span class="tag live"><span class="dot"></span>LIVE · 세트 2</span> <span class="mute" style="font-size:12px;margin-left:8px">세트 1 T1 승</span></div><span class="num mute" id="clock" style="font-size:13px">24:10</span></div>
+  <div class="match-hero">
+   <div class="team"><div class="crest L">T1</div><div><b>T1</b><span class="num">킬 11 · 골드 52.1k · 드래곤 3</span></div></div>
+   <div class="mid"><div class="score"><span class="L">1</span> : <span class="R">0</span></div><div class="phase"><i class="on"></i><i class="on"></i><i></i></div></div>
+   <div class="team r"><div><b>GEN</b><span class="num">킬 6 · 골드 48.9k · 드래곤 1</span></div><div class="crest R">GEN</div></div>
+  </div>
+ </div>
+
+ <div class="cols">
+  <div class="stack">
+   <div class="panel pad wp">
+    <div class="wp-head"><h2>실시간 승리 확률</h2><div><span class="wp-now L" id="wpnow">58%</span> <span class="mute" style="font-size:12px">T1</span></div></div>
+    <svg id="wpsvg" viewBox="0 0 640 220" role="img" aria-label="승리 확률 추이"></svg>
+    <div class="legend"><span>점 = 확률이 크게 움직인 순간 · 누르면 장면</span></div>
+   </div>
+   <div class="panel pad">
+    <h2>지금 경기 wGE+ <span class="tag prov">잠정</span></h2>
+    <table class="board"><thead><tr><th>포지션</th><th>T1</th><th>wGE+</th><th>GEN</th><th>wGE+</th></tr></thead><tbody id="board"></tbody></table>
+    <div class="prov-note">경기 중 수치는 잠정치입니다. 경기 종료 후 확정되며 시즌 누적에는 확정치만 반영됩니다.</div>
+   </div>
+  </div>
+  <div class="stack">
+   <div class="panel pad">
+    <h2>결정적 순간</h2>
+    <div class="feed" id="feed"></div>
+    <div class="ask"><input placeholder="지금 경기에 대해 물어보세요" aria-label="질문"><button class="cta" style="width:auto">Ask</button></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<!-- ================= POST ================= -->
+<section class="page" id="p-post" aria-label="경기 후">
+ <div class="panel">
+  <div class="match-hero">
+   <div class="team"><div class="crest L">T1</div><div><b>T1</b><span>승리 · 시즌 16–3</span></div></div>
+   <div class="mid"><span class="tag final">경기 종료 · 확정</span><div class="score" style="margin-top:6px"><span class="L">2</span> : <span class="R">0</span></div><div class="mute" style="font-size:12px">세트 1 31:02 · 세트 2 28:47</div></div>
+   <div class="team r"><div><b>GEN</b><span>패배 · 시즌 15–4</span></div><div class="crest R">GEN</div></div>
+  </div>
+ </div>
+
+ <div class="cols">
+  <div class="stack">
+   <div class="panel pad">
+    <div class="eyebrow">한 줄 요약</div>
+    <p class="verdict" style="margin-top:6px">T1이 드래곤 3스택을 먼저 쌓고 24분 바론 한타에서 흐름을 굳혔다. 승부를 가른 건 바텀 라인전이었다.</p>
+    <p class="mute" style="font-size:13px;margin:0">사전 예측 52% → 실제 2:0. 승리 확률이 가장 크게 움직인 순간 3개를 골랐습니다.</p>
+   </div>
+   <div class="panel pad">
+    <h2>흐름을 바꾼 순간 <span class="mute" style="font-size:12px;font-weight:400">승리 확률 변화</span></h2>
+    <div class="moments" id="moments"></div>
+   </div>
+   <div class="panel pad wp">
+    <h2>세트 2 승리 확률 전체</h2>
+    <svg id="wpsvg2" viewBox="0 0 640 200" role="img" aria-label="세트 2 승리 확률 전체 추이"></svg>
+   </div>
+  </div>
+  <div class="stack">
+   <div class="panel pad">
+    <h2>이 경기가 시즌에 남긴 것 <span class="tag final">확정</span></h2>
+    <div class="split3">
+     <div><div class="k">T1 누적 기여</div><div class="v L">+3,420</div></div>
+     <div><div class="k">GEN 누적 기여</div><div class="v R">−610</div></div>
+     <div><div class="k">순위 변동</div><div class="v">T1 1위</div></div>
+    </div>
+    <p class="prov-note">이번 시리즈 2세트의 대체선수 대비 기여 골드 합. <a href="#" id="tostats">지표 페이지에서 시즌 전체 보기 →</a></p>
+   </div>
+   <div class="panel pad">
+    <h2>공유하기</h2>
+    <p class="mute" style="font-size:13px;margin:0 0 12px">선수 카드는 날짜·기준·출처가 함께 찍힌 이미지로 공유됩니다.</p>
+    <button class="cta">선수 카드 이미지 만들기</button>
+   </div>
+  </div>
+ </div>
+ <div class="panel pad" style="margin-top:16px">
+  <h2>선수별 확정 wGE+ <span class="mute" style="font-size:12px;font-weight:400">이번 시리즈 · 괄호는 시즌 평균 대비</span></h2>
+  <div class="pcards" id="pcards"></div>
+ </div>
+</section>
+
+<!-- review-only explainer -->
+<aside class="why" id="why"></aside>
+</main>
+
+<script>
+// ---------- sample data (fictional) ----------
+const P=[
+ {n:"Vinru",t:"GEN",p:"MID",g:39,w:196,c:58400,u:6100},
+ {n:"Hexsha",t:"T1",p:"BOT",g:41,w:186,c:55200,u:5600},
+ {n:"Gansen",t:"T1",p:"JG",g:41,w:184,c:53800,u:5900},
+ {n:"Daelen",t:"GEN",p:"BOT",g:39,w:179,c:49900,u:5800},
+ {n:"Zulux",t:"T1",p:"MID",g:41,w:178,c:50100,u:5200},
+ {n:"Kamo",t:"HLE",p:"SUP",g:41,w:175,c:46300,u:6400},
+ {n:"Riven0",t:"DK",p:"TOP",g:18,w:191,c:24800,u:7900},
+ {n:"Faeion",t:"GEN",p:"JG",g:39,w:169,c:42100,u:6000},
+ {n:"Kyesen",t:"HLE",p:"TOP",g:41,w:163,c:40700,u:5500},
+ {n:"Bastro",t:"KT",p:"SUP",g:62,w:131,c:31200,u:4100},
+ {n:"Lumo",t:"BRO",p:"JG",g:12,w:72,c:-3900,u:5200},
+];
+const fmt=n=>(n>0?"+":n<0?"−":"")+Math.abs(Math.round(n)).toLocaleString();
+let rep=80;
+const cum=p=>p.c+(80-rep)*p.g*38; // sensitivity: lower bar → more cumulative
+function renderTable(){
+ const rows=[...P].sort((a,b)=>cum(b)-cum(a));
+ const mx=Math.max(...rows.map(r=>Math.abs(cum(r))));
+ document.getElementById('tbody').innerHTML=rows.map((r,i)=>`<tr data-n="${r.n}"><td class="num">${i+1}</td><td class="pl"><b>${r.n}</b><span>${r.t} · ${r.p}</span></td><td class="num">${r.g}</td><td class="num">${r.w}</td><td class="num">${fmt(cum(r))}<span class="bar ${cum(r)<0?'neg':''}" style="width:${Math.abs(cum(r))/mx*60}px"></span><span class="ci">±${r.u.toLocaleString()}</span></td></tr>`).join('');
+ document.querySelectorAll('#tbody tr').forEach(tr=>tr.onclick=()=>pick(tr.dataset.n));
+ renderScatter();
+}
+function pick(n){
+ const r=P.find(x=>x.n===n); if(window.__sel!==n){window.__sel=n;renderScatter();}
+ document.querySelectorAll('#tbody tr').forEach(t=>t.classList.toggle('sel',t.dataset.n===n));
+ document.querySelectorAll('#sc circle').forEach(c=>c.setAttribute('stroke-width',c.dataset.n===n?3:0));
+ document.getElementById('pk-name').textContent=`${r.n} · ${r.t} ${r.p}`;
+ document.getElementById('pk-w').textContent=r.w;
+ document.getElementById('pk-g').textContent=r.g;
+ document.getElementById('pk-c').textContent=fmt(cum(r));
+ const read=r.g<25?`출전이 적어 누적 기여는 낮지만 출전했을 때 수준(wGE+ ${r.w})은 높습니다. 표본이 작아 범위(±${r.u.toLocaleString()})가 넓습니다.`
+  :r.w<100?`대체선수 수준보다 낮은 기여가 누적돼 음수입니다. 많이 뛴 것이 곧 많이 보탠 것은 아닙니다.`
+  :r.w<150?`수준은 상위권보다 낮지만 ${r.g}세트를 꾸준히 뛰어 누적 기여가 쌓였습니다.`
+  :`높은 수준과 많은 출전을 함께 갖춘 선수입니다.`;
+ document.getElementById('pk-read').textContent=read;
+}
+function renderScatter(){
+ const s=document.getElementById('sc'),W=420,H=300,m={l:36,r:12,t:12,b:28};
+ const x=g=>m.l+(g-0)/(70)*(W-m.l-m.r), y=w=>H-m.b-(w-60)/(150)*(H-m.t-m.b);
+ let h=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(100)}" y2="${y(100)}" stroke="var(--line)" stroke-dasharray="3 4"/><text x="${W-m.r}" y="${y(100)-5}" text-anchor="end" font-size="10" fill="var(--mute)">평균 100</text>`;
+ h+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(rep)}" y2="${y(rep)}" stroke="var(--ds-accent)" stroke-opacity=".6" stroke-dasharray="2 3"/><text x="${W-m.r}" y="${y(rep)+13}" text-anchor="end" font-size="10" fill="var(--ds-accent)">대체 기준 ${rep}</text>`;
+ [0,20,40,60].forEach(g=>h+=`<text x="${x(g)}" y="${H-8}" font-size="10" fill="var(--mute)" text-anchor="middle">${g}</text>`);
+ [100,150,200].forEach(w=>h+=`<text x="${m.l-6}" y="${y(w)+3}" font-size="10" fill="var(--mute)" text-anchor="end">${w}</text>`);
+ P.forEach(p=>{const r=Math.max(4,Math.sqrt(Math.max(cum(p),0))/22);h+=`<circle data-n="${p.n}" cx="${x(p.g)}" cy="${y(p.w)}" r="${r}" fill="${cum(p)<0?'var(--team-r)':'var(--v-solid)'}" fill-opacity=".55" stroke="var(--ink)" stroke-width="0" style="cursor:pointer"><title>${p.n} wGE+ ${p.w}, ${p.g}세트</title></circle>${(p.g<30||p.g>55||p.w<120||p.n===(window.__sel||'Hexsha'))?`<text x="${x(p.g)+r+3}" y="${y(p.w)+3}" font-size="10" fill="var(--mute)">${p.n}</text>`:''}`});
+ s.innerHTML=h;
+ s.querySelectorAll('circle').forEach(c=>c.onclick=()=>pick(c.dataset.n));
+}
+document.getElementById('rep').oninput=e=>{rep=+e.target.value;document.getElementById('repv').textContent=rep;renderTable();pick(document.querySelector('#tbody tr.sel')?.dataset.n||'Hexsha')};
+document.querySelectorAll('.filters .chip').forEach(c=>c.onclick=()=>{document.querySelectorAll('.filters .chip').forEach(x=>x.setAttribute('aria-pressed',x===c))});
+
+// ---------- PRE ----------
+const lanes=[["Kyesen?","TOP","—"],["Gansen","JG","Faeion"],["Zulux","MID","Vinru"],["Hexsha","BOT","Daelen"],["Hexya","SUP","Mirae"]];
+const lw={Kyesen:150,Gansen:184,Faeion:169,Zulux:178,Vinru:196,Hexsha:186,Daelen:179,Hexya:175,Mirae:158,Tarn:142,Okje:149};
+const L2=[["Tarn","TOP","Okje"],["Gansen","JG","Faeion"],["Zulux","MID","Vinru"],["Hexsha","BOT","Daelen"],["Hexya","SUP","Mirae"]];
+document.getElementById('lanes').innerHTML=L2.map(([a,pos,b])=>{const d=lw[a]-lw[b];return `<div class="lane"><div class="p">${a}<small>${lw[a]}${d>0?' <span class="edge L">▲</span>':''}</small></div><div class="pos">${pos}</div><div class="p r">${b}<small>${d<0?'<span class="edge R">▲</span> ':''}${lw[b]}</small></div></div>`}).join('');
+const vs=[["팀 wGE+",175,167],["첫 드래곤",62,58],["15분 골드차",1.4,1.9],["30분+ 승률",55,71]];
+document.getElementById('vs').innerHTML=vs.map(([k,a,b])=>{const m=Math.max(a,b);return `<div class="vs-row"><span class="v">${a}${k.includes('률')||k.includes('드래곤')?'%':k.includes('골드')?'k':''}</span><div class="half l"><i style="width:${a/m*100}%"></i></div><span class="lab">${k}</span><div class="half r"><i style="width:${b/m*100}%"></i></div><span class="v r">${b}${k.includes('률')||k.includes('드래곤')?'%':k.includes('골드')?'k':''}</span></div>`}).join('');
+
+// ---------- win prob ----------
+const wp=[50,51,49,52,55,54,53,57,52,48,47,49,52,58,56,55,52,41,44,47,58,61,63,66,58];
+function drawWP(id,data,H,cut){
+ const s=document.getElementById(id),W=640,pad=24,n=data.length-1;
+ const x=i=>pad+i/(cut||n)*(W-2*pad),y=v=>pad+(100-v)/100*(H-2*pad);
+ let h=`<rect x="${pad}" y="${pad}" width="${W-2*pad}" height="${(H-2*pad)/2}" fill="var(--team-l)" fill-opacity=".05"/><rect x="${pad}" y="${H/2}" width="${W-2*pad}" height="${(H-2*pad)/2}" fill="var(--team-r)" fill-opacity=".05"/>`;
+ h+=`<line x1="${pad}" x2="${W-pad}" y1="${y(50)}" y2="${y(50)}" stroke="var(--line)"/>`;
+ h+=`<text x="${pad+4}" y="${pad+12}" font-size="10" fill="var(--team-l)">T1</text><text x="${pad+4}" y="${H-pad-4}" font-size="10" fill="var(--team-r)">GEN</text>`;
+ h+=`<polyline fill="none" stroke="var(--ink)" stroke-width="2" points="${data.map((v,i)=>x(i)+','+y(v)).join(' ')}"/>`;
+ [[13,"+6"],[17,"−11"],[20,"+11"]].forEach(([i,l])=>{if(i<data.length)h+=`<circle cx="${x(i)}" cy="${y(data[i])}" r="5" fill="var(--bg2)" stroke="var(--v-ui)" stroke-width="2" style="cursor:pointer"><title>${l}%p</title></circle>`});
+ s.innerHTML=h;
+}
+drawWP('wpsvg',wp,220,30);
+drawWP('wpsvg2',[...wp,70,74,79,83,90,100],200);
+
+const evs=[["24:10","바론 한타 승리 · Hexsha 트리플킬","+11","L"],["21:42","GEN 소환사 주문 없이 바텀 교전 · T1 3–0","+11","L"],["19:05","GEN 미드 2인 갱킹 성공","−11","R"],["14:30","T1 3번째 드래곤","+6","L"]];
+document.getElementById('feed').innerHTML=evs.map((e,i)=>`<div class="ev ${i==0?'new':''}"><time>${e[0]}</time><span>${e[1]}</span><span class="d ${e[3]}">${e[2]}%p</span></div>`).join('');
+const bd=[["TOP","Tarn",132,"Okje",118],["JG","Gansen",171,"Faeion",104],["MID","Zulux",163,"Vinru",141],["BOT","Hexsha",208,"Daelen",96],["SUP","Hexya",150,"Mirae",112]];
+document.getElementById('board').innerHTML=bd.map(r=>`<tr><td class="mute">${r[0]}</td><td>${r[1]}</td><td class="num L">${r[2]}</td><td>${r[3]}</td><td class="num R">${r[4]}</td></tr>`).join('');
+
+// ---------- POST ----------
+const mo=[["세트2 24:10","바론 한타","Hexsha가 바론 진입 직후 뒤를 잡아 트리플킬. 이후 GEN은 시야를 되찾지 못했다.","+11"],["세트2 21:42","소환사 주문 빠진 GEN 바텀","GEN 바텀·서포터 모두 점멸이 없는 타이밍에 T1이 강제 교전.","+11"],["세트1 18:20","3번째 드래곤 스틸","Gansen의 강타 싸움 승리로 드래곤 영혼 경쟁에서 앞섰다.","+9"]];
+document.getElementById('moments').innerHTML=mo.map(m=>`<div class="mo"><span class="t">${m[0]}</span><div><b>${m[1]}</b><p>${m[2]}</p></div><span class="sw L">${m[3]}%p</span></div>`).join('');
+const pc=[["TOP","Tarn",128,+6],["JG","Gansen",176,-8],["MID","Zulux",159,-19],["BOT","Hexsha",201,+15],["SUP","Hexya",149,-26]];
+document.getElementById('pcards').innerHTML=pc.map(p=>`<div class="pc"><div class="pos">T1 · ${p[0]}</div><b>${p[1]}</b><div class="big">${p[2]}</div><div class="sub">wGE+ <span class="delta ${p[3]>=0?'L':'R'}">(${p[3]>=0?'+':''}${p[3]})</span></div></div>`).join('')+'';
+document.getElementById('tostats').onclick=e=>{e.preventDefault();go('stats')};
+
+// ---------- review explainer ----------
+const WHY={
+ stats:["표면: <b>Compare</b> — 순위표가 주인공, 산점도는 '수준 vs 출전량'을 한눈에 보여주는 보조.","PDF 결론 반영: wGE+(수준)와 누적 기여(총량)를 같은 줄에 병기. WAR '승' 단위는 검증 전이라 쓰지 않고 '기여 골드'로 표시, 4단계에 '검증 중' 표기.","대체 기준 75·80·85 민감도 슬라이더 = 문서의 민감도 분석을 사용자에게 공개. 순위가 흔들리는 구간을 직접 보게 함.","표본 불확실성(±)을 숫자 옆에 상시 노출 → '숫자로 싸우되 근거와 한계도 함께' 원칙."],
+ pre:["표면: <b>Compare / Decide</b> — 두 팀을 같은 구조로 나란히. 경기 전엔 볼거리가 없으므로 '무엇을 봐야 하나'를 맨 위에.","시즌 wGE+로 라인별 맞대결, 사전 예측은 정확도 한계(약 65%)를 같이 표기.","CTA는 1개: 시작 알림 → 페이지가 그대로 라이브 화면으로 전환(같은 URL)."],
+ live:["표면: <b>Monitor</b> — 정적 설명 대신 승리 확률 그래프와 사건 피드가 주인공. 새 사건은 위로 쌓임.","wGE+는 '잠정' 배지. 시즌 누적에는 확정치만 반영(PDF 9장: 실시간 잠정치와 확정치 구분).","Ask 입력창은 피드 아래에 고정 — 보다가 바로 질문하는 흐름."],
+ post:["표면: <b>Inspect / Learn</b> — 결과 한 줄 요약 → 흐름을 바꾼 순간 3개 → 선수별 확정치 순으로 '왜'를 파고듦.","'이 경기가 시즌에 남긴 것'으로 경기 페이지와 지표 페이지를 연결(누적 기여 변화).","공유 카드에 날짜·기준·출처를 박아 커뮤니티 인용 시 맥락이 따라가게 함."]};
+function go(p){
+ document.querySelectorAll('.page').forEach(s=>s.classList.toggle('on',s.id==='p-'+p));
+ document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-selected',b.dataset.p===p));
+ document.getElementById('nav-stats').classList.toggle('on',p==='stats');
+ document.getElementById('why').innerHTML=`<h3>설계 메모 (리뷰용, 실제 화면엔 없음)</h3><ul>${WHY[p].map(x=>`<li>${x}</li>`).join('')}</ul>`;
+ localStorage.setItem('rorr-v1-page',p);
+}
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>go(b.dataset.p));
+document.getElementById('theme').onclick=()=>{const h=document.documentElement;h.dataset.theme=h.dataset.theme==='dark'?'light':'dark'};
+let cd=2*3600+14*60+9;setInterval(()=>{cd--;const s=String;document.getElementById('cd').textContent=[cd/3600|0,(cd%3600)/60|0,cd%60].map(v=>s(v).padStart(2,'0')).join(':')},1000);
+renderTable();pick('Hexsha');go(localStorage.getItem('rorr-v1-page')||'stats');
+</script>
+</body>
+</html>
