@@ -1842,7 +1842,7 @@ footer>.wrap{max-width:1320px}
 .lchg.out{opacity:0;transition:opacity .5s}
 @keyframes lchIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}@keyframes lchBlink{50%{opacity:.35}}
 @media (prefers-reduced-motion:reduce){.fl-drop .dp,.lchg,[data-lc].bump{animation:none}}
-.bx-ext{margin:0;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--ds-primary) 10%,var(--bg2));border:1px solid color-mix(in srgb,var(--ds-primary) 30%,var(--line));font-size:12.5px;line-height:1.55;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}.bx-ext a{color:var(--cyan);font-weight:700;white-space:nowrap}.bx-ext.hx{margin-top:12px}.box .bx-ext{margin-top:10px}.rw-cardslot .bx-ext{text-align:left}
+.bx-ext{margin:0;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--ds-primary) 10%,var(--bg2));border:1px solid color-mix(in srgb,var(--ds-primary) 30%,var(--line));font-size:12.5px;line-height:1.55;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}.bx-ext a{color:var(--cyan);font-weight:700;white-space:nowrap}.bx-ext.hx{display:block;width:100%;max-width:600px;margin-top:10px;padding:0;background:none;border:0;font-size:12px;color:var(--mute)}.bx-ext.hx a{white-space:normal}.box .bx-ext{margin-top:10px}.rw-cardslot .bx-ext{text-align:left}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -3618,7 +3618,7 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
    <h3>${p?evText(e,m):LX(`${kName[e.k]==='BARON'?'Baron':'Fight'} turnaround`,`${e.k==='baron'?'바론':'교전'} 역전`)}</h3>
    <span class="m">${p?`${m.a} vs ${m.b}`:LX("Today's match","오늘의 경기")} · ${when} · ${String(e.t).padStart(2,'0')}:${String(hashStr(m.id+e.t)%60).padStart(2,'0')}</span>
    <div class="k"><div>${LX('Win chance','승리확률')}<b>${wp(e.g0)}% → ${wp(e.g1)}%</b></div><div>${LX('Fans boosted','함께 Boost')}<b>${fans.toLocaleString('en-US')}</b></div><div>${LX('Card','카드')}<b>#${String(hashStr(m.id)%900+100).padStart(5,'0')}</b></div></div></div></div>
-   <div class="hx-acts"><a class="hx-go pri" href="#match/${m.id}" data-m="${m.id}">${LX('Relive the moment','그 순간 다시 보기')}</a><a class="hx-go gh" href="#blog/how-boost-works" onclick="nav(event,'blog/how-boost-works')">${LX('How Boost cards work','Boost 카드 안내')}</a></div><p class="bx-ext hx">${BX_EXT()}</p>`}
+   <div class="hx-acts"><a class="hx-go pri" href="#match/${m.id}" data-m="${m.id}">${LX('Relive the moment','그 순간 다시 보기')}</a><a class="hx-go gh" href="#blog/how-boost-works" onclick="nav(event,'blog/how-boost-works')">${LX('About moment cards','모먼트 카드 안내')}</a></div><p class="bx-ext hx">${LX('Moment cards are not sold · earned only in the Chrome extension during a match.','모먼트 카드는 판매하지 않아요 · 경기 중 Chrome 확장 프로그램에서만 받을 수 있어요.')} <a href="${WEBSTORE}" target="_blank" rel="noopener">${LX('Get the extension →','확장 프로그램 받기 →')}</a></p>`}
  function paneRank(){const P=DB.players.filter(pick).slice().sort((a,b)=>b.ix-a.ix).slice(0,3);
   return `<div class="hx-card"><div class="hx-top"><b style="font-size:18px;color:var(--ink)">${LX('Who carried · LwRC+','누가 캐리했나 · LwRC+')}</b><span>${LX('100 = league average for the role','100 = 포지션 리그 평균')}</span></div>
    <div class="hx-rank">${P.map((x,k)=>`<button type="button" data-hxp="${x.name}"><span class="n">${k+1}</span><span><b>${x.name}</b><small>${x.team} · ${MX.role(x.role)}</small></span><em>${x.ix}</em></button>`).join('')}</div>
