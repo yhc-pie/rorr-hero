@@ -1376,6 +1376,137 @@ body:not(.ip-open) .ipanel{box-shadow:none!important}
 @media (max-width:1000px){.sx-viz,.sx-method{grid-template-columns:1fr}.sx-base{margin-left:0}}
 @media (max-width:760px){.stx{margin-top:84px;gap:28px}.sx-two{grid-template-columns:1fr}.sx-plot{height:280px}.sx-viz figure{padding:16px 16px 40px 52px}}
 @media (min-width:1220px) and (max-width:1519px){body.pagev:has(#pg-stats.on) .stx{max-width:calc(100vw - 432px)}}
+/* ===== side panel v2 ===== */
+.ipanel{width:min(440px,92vw)}body.ip-cmp .ipanel{width:min(560px,96vw)}
+.ip-top{gap:10px;padding:0 20px}.ip-sp{flex:1}
+.ip-k{font:700 13px "Pretendard Variable",sans-serif!important;letter-spacing:0!important;text-transform:none!important;color:var(--mute)!important}
+.ip-x,.ip-fav{width:36px!important;height:36px!important;border-radius:9999px!important;border:1px solid var(--line)!important;background:transparent!important;color:var(--ink)!important;display:grid!important;place-items:center;cursor:pointer;padding:0}
+.ip-x:hover,.ip-fav:hover{border-color:var(--cyan)!important}
+.ip-fav.on{color:#E7B84A!important;border-color:#E7B84A!important}.ip-fav.on svg{fill:currentColor}
+.ip-body{padding:24px 20px 32px!important;gap:28px!important}
+.p2-hero{display:grid;gap:14px}
+.p2-id{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.p2-id>div:first-child{display:grid;gap:6px;min-width:0}
+.p2-name{font:800 48px/1 "Pretendard Variable",sans-serif!important;letter-spacing:-.03em;color:var(--team-l);margin:0!important;overflow-wrap:anywhere}
+.p2-name.pl{font-size:44px!important;color:var(--ink)}
+.p2-sub{font-size:14px;color:var(--mute)}.p2-sub .ent{font-weight:800;color:var(--team-l);background:none;border:0;padding:0;font-size:14px;cursor:pointer}
+.p2-ix{display:grid;justify-items:end;gap:2px}.p2-ix span{font-size:12.5px;color:var(--mute);display:flex;align-items:center;gap:4px}.p2-ix b{font:800 36px/1 "Pretendard Variable",sans-serif}
+.p2-kpi{display:grid;gap:1px;border-radius:12px;overflow:hidden;background:var(--line)}
+.p2-kpi.k4{grid-template-columns:repeat(4,minmax(0,1fr))}.p2-kpi.k2{grid-template-columns:1fr 1fr}
+.p2-kpi>div{background:var(--bg3);padding:10px 12px;display:grid;gap:2px;align-content:start}
+.p2-kpi span{font-size:12px;color:var(--mute);display:flex;align-items:center;gap:4px}.p2-kpi b{font-size:17px;font-weight:800}
+.p2-kpi.k2>div{padding:14px}.p2-kpi b.big{font-size:34px;line-height:1.1}.p2-kpi em{font-style:normal;font-size:12px;color:var(--mute);line-height:1.45}
+.p2-kpi .up,.p2-pl .c.up{color:var(--energy)}.p2-kpi .dn,.p2-pl .c.dn{color:var(--live)}
+.p2-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.p2-btn{height:44px;border-radius:9999px;font:700 14px "Pretendard Variable",sans-serif;cursor:pointer;padding:0 12px;color:var(--ink);background:transparent;border:1px solid var(--line)}
+.p2-btn.pri{background:var(--ds-primary);border-color:var(--ds-primary);color:#fff}.p2-btn.pri:hover{filter:brightness(1.08)}
+.p2-btn.ai{border-color:var(--ai-glow);box-shadow:0 0 8px color-mix(in srgb,var(--ai-glow) 45%,transparent)}.p2-btn.ai:hover{background:color-mix(in srgb,var(--ai-glow) 10%,transparent)}
+.p2-btn.lg{height:48px;font-size:15px;width:100%}
+.p2-live{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;border-radius:12px;background:color-mix(in srgb,var(--upcoming) 22%,var(--bg2));border:1px solid color-mix(in srgb,var(--upcoming) 55%,var(--line));color:var(--ink);box-shadow:var(--sh-live);cursor:pointer;text-align:left;font:500 14.5px "Pretendard Variable",sans-serif;width:100%}
+.p2-lv{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:9999px;background:var(--live);color:#fff;font-size:12px;font-weight:800}.p2-lv i{width:7px;height:7px;border-radius:50%;background:#fff}
+.p2-live .go{font-weight:700;color:var(--upcoming-t,var(--cyan));font-size:14px}.p2-live .ga{color:var(--team-l)}.p2-live .gb{color:var(--team-r)}
+.p2-sec{display:grid;gap:10px}
+.p2-hh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.p2-hh h3{margin:0;font:700 17px "Pretendard Variable",sans-serif;color:var(--ink);letter-spacing:0;text-transform:none}
+.p2-hh>span{font-size:12.5px;color:var(--mute)}.p2-hh.sm>span:first-child{font-size:13px}
+body.ip-cmp .p2-hh h3{font-size:18px}
+.p2-bars{position:relative;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;align-items:end;padding:12px 12px 0;border-radius:12px;background:var(--bg3)}
+.p2-bars>div{display:grid;gap:4px;justify-items:center;align-self:end}.p2-bars span{font-size:10.5px;color:var(--mute)}
+.p2-bars i{display:block;width:100%;border-radius:4px 4px 0 0;background:color-mix(in srgb,var(--mute) 45%,var(--bg3))}
+.p2-bars i.w{background:var(--team-l)}.p2-bars i.s{background:color-mix(in srgb,var(--team-l) 45%,var(--bg3))}
+.p2-ref{position:absolute;left:12px;right:12px;border-top:1.5px dashed var(--mute);opacity:.7;pointer-events:none;margin-bottom:0}
+.p2-barl{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:6px;padding:0 12px;text-align:center;font-size:11px;font-weight:800;color:var(--mute);margin-top:-4px}.p2-barl .w{color:var(--team-l)}
+.p2-p{margin:0;font-size:14.5px;line-height:1.7;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}.p2-p.lg{font-size:15px;line-height:1.75}
+.p2-stats{display:grid;gap:6px}.p2-stats div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:8px;background:var(--bg3);font-size:13.5px}.p2-stats span{color:var(--mute)}
+.p2-roster{display:grid;gap:6px}
+.p2-pl{display:grid;grid-template-columns:52px minmax(0,1fr) 44px 80px;gap:10px;align-items:center;min-height:48px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);text-align:left;cursor:pointer;font-family:inherit}
+.p2-pl:hover,.p2-rrow:hover,.p2-q:hover,.p2-card:hover{border-color:var(--cyan)}
+.p2-pl .rl{font-size:12px;font-weight:700;color:var(--mute)}.p2-pl b{font-size:15px}.p2-pl .ix{font-size:15px;font-weight:800;text-align:right}.p2-pl .c{font-size:13px;font-weight:700;text-align:right}
+.p2-list{display:grid;border-radius:12px;background:var(--bg3);overflow:hidden}
+.p2-rrow{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 14px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);font:500 14px "Pretendard Variable",sans-serif;text-align:left;cursor:pointer;width:100%}
+.p2-list>:last-child{border-bottom:0}
+.p2-rrow em{font-style:normal;color:var(--mute);font-size:13px}
+.p2-rrow.pl{grid-template-columns:minmax(0,1fr) 48px 84px}.p2-rrow.pl .ix{text-align:right;font-weight:800}.p2-rrow.pl .kda{text-align:right;color:var(--mute);font-size:13px}
+.p2-wl{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;border:1px solid var(--line);color:var(--mute)}
+.p2-wl.w{background:var(--team-l);border-color:var(--team-l);color:#fff}.p2-wl.lv{background:var(--live);border-color:var(--live);color:#fff}
+.p2-q{min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:500 14px "Pretendard Variable",sans-serif;text-align:left;cursor:pointer}
+.p2-parts{display:grid;gap:12px}.p2-parts .hd{display:flex;justify-content:space-between;gap:8px;font-size:14px;margin-bottom:6px}.p2-parts .hd em,.p2-pp .hd em{font-style:normal;color:var(--mute);font-size:12px}
+.p2-parts .hd b{font-weight:800}.p2-parts .hd b.a{color:var(--team-l)}.p2-parts .hd b.b{color:var(--cyan)}.p2-parts .hd b.c{color:var(--live)}
+.p2-parts .tr{position:relative;height:10px;border-radius:9999px;background:var(--bg3)}
+.p2-parts .tr i{position:absolute;left:0;top:0;bottom:0;border-radius:9999px}.p2-parts .tr i.a{background:var(--team-l)}.p2-parts .tr i.b{background:var(--cyan)}.p2-parts .tr i.c{background:var(--live)}
+.p2-parts .tr s{position:absolute;top:-4px;bottom:-4px;width:2px;margin-left:-1px;background:var(--ink);border-radius:2px}
+/* compare */
+.p2-back{justify-self:start;background:none;border:0;color:var(--cyan);font:700 14px "Pretendard Variable",sans-serif;cursor:pointer;padding:0}
+.p2-tabs{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border-radius:9999px;background:var(--bg3);width:fit-content;max-width:100%}
+.p2-tabs button{height:32px;padding:0 12px;border-radius:9999px;border:0;background:transparent;color:color-mix(in srgb,var(--mute) 70%,var(--bg3));font:700 13px "Pretendard Variable",sans-serif;cursor:not-allowed;display:inline-flex;align-items:center;gap:5px}
+.p2-tabs button.on{background:var(--ink);color:var(--bg);cursor:default;padding:0 14px;font-weight:800}
+.p2-tabs em{font-style:normal;font-size:10px;padding:1px 5px;border-radius:9999px;border:1px solid var(--line)}
+.p2-chips{display:flex;flex-wrap:wrap;gap:6px}
+.p2-chip{height:36px;padding:0 14px;border-radius:9999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:700 13.5px "Pretendard Variable",sans-serif;cursor:pointer}
+.p2-chip em{font-style:normal;font-weight:600;color:var(--mute)}
+.p2-chip.on{border-color:var(--team-r);background:color-mix(in srgb,var(--team-r) 14%,transparent)}
+.p2-chip.srch{border-style:dashed;color:var(--mute)}
+.p2-pick .cmp-sel{height:40px;border-radius:10px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);padding:0 10px;font:500 14px "Pretendard Variable",sans-serif}
+.p2-info{margin:0;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--ds-primary) 12%,var(--bg2));font-size:13px;line-height:1.6;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}
+.p2-vs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center}.p2-vs .vs{font-size:14px;font-weight:700;color:var(--mute)}
+.p2-card{display:grid;gap:4px;padding:16px;border-radius:12px;background:var(--bg3);border:1px solid transparent;cursor:pointer;text-align:left;color:var(--ink);font-family:inherit;min-width:0}
+.p2-card.b{justify-items:end;text-align:right}
+.p2-card b{font:800 36px/1 "Pretendard Variable",sans-serif;overflow-wrap:anywhere}.p2-card.a b{color:var(--team-l)}.p2-card.b b{color:var(--team-r)}
+.p2-card span{font-size:13px;color:var(--mute)}
+body.ip-cmp .p2-card b{font-size:clamp(24px,6vw,36px)}
+.p2-radar{margin:0;padding:12px;border-radius:16px;background:var(--bg3);display:grid;gap:8px}
+.p2-radar svg{width:100%;height:auto;display:block;font-family:"Pretendard Variable",sans-serif}
+.p2-radar .rg,.p2-radar .sp{fill:none;stroke:var(--line);stroke-width:1}
+.p2-radar .pa{fill:color-mix(in srgb,var(--team-l) 20%,transparent);stroke:var(--team-l);stroke-width:2.5;stroke-linejoin:round}
+.p2-radar .pb{fill:color-mix(in srgb,var(--team-r) 18%,transparent);stroke:var(--team-r);stroke-width:2.5;stroke-linejoin:round}
+.p2-radar .lb{fill:var(--ink);font-size:14px;font-weight:700}.p2-radar .vl{font-size:13px;font-weight:800}.p2-radar .va{fill:var(--team-l)}.p2-radar .vb{fill:var(--team-r)}.p2-radar .dt{fill:var(--mute)}
+.p2-radar figcaption{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--mute)}
+.p2-radar figcaption span::before{content:"";display:inline-block;width:12px;height:3px;margin-right:6px;vertical-align:middle;background:var(--team-l)}.p2-radar figcaption .lb2::before{background:var(--team-r)}
+.p2-dv{display:grid;grid-template-columns:64px minmax(0,1fr) 112px minmax(0,1fr) 64px;gap:10px;align-items:center;padding:11px 12px;border-radius:10px;background:var(--bg3)}
+.p2-dv>b{font-size:15px;font-weight:600;color:color-mix(in srgb,var(--ink) 75%,var(--mute))}.p2-dv>b:last-child{text-align:right}
+.p2-dv>b.win{font-weight:800}.p2-dv>b.win.a{color:var(--team-l)}.p2-dv>b.win.b{color:var(--team-r)}
+.p2-dv .k{font-size:12.5px;color:var(--mute);text-align:center}
+.p2-dv .bar{height:6px;border-radius:9999px;background:color-mix(in srgb,var(--line) 70%,var(--bg3));position:relative;overflow:hidden}
+.p2-dv .bar i{position:absolute;top:0;bottom:0;border-radius:9999px}.p2-dv .bar.l i{right:0;background:var(--team-l)}.p2-dv .bar.r i{left:0;background:var(--team-r)}.p2-dv .bar i.dim{opacity:.45}
+.p2-lane{display:grid;grid-template-columns:minmax(0,1fr) 44px 56px 44px minmax(0,1fr);gap:8px;align-items:center;padding:11px 14px;border-radius:10px;background:var(--bg3);font-size:14.5px}
+.p2-lane .nm{background:none;border:0;padding:0;color:var(--ink);font:700 14.5px "Pretendard Variable",sans-serif;text-align:left;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.p2-lane .nm.r{text-align:right}.p2-lane .nm:hover{color:var(--cyan)}
+.p2-lane .va{color:var(--team-l);text-align:right;font-weight:500}.p2-lane .vb{color:var(--team-r);font-weight:500}.p2-lane .win{font-weight:800}
+.p2-lane .rl{font-size:12px;font-weight:700;color:var(--mute);text-align:center}
+.p2-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.p2-two>div{padding:16px;border-radius:12px;background:var(--bg3);display:grid;gap:8px;align-content:start}
+.p2-two .p2c,.p2-cap{font-size:13px;color:var(--mute)}
+.p2-fm{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px;align-items:center;font-size:13px}
+.p2-fm .frm{display:flex;gap:3px}.p2-fm .frm i{font-style:normal;font-weight:800;font-size:11px;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;border:1px solid var(--line);color:var(--mute)}.p2-fm .frm i.w{background:var(--team-l);border-color:var(--team-l);color:#fff}
+.p2a{color:var(--team-l)}.p2b{color:var(--team-r)}
+.p2-h2h{font-size:22px;font-weight:800}.p2-h2h i{font-style:normal;font-weight:400;color:var(--mute)}
+.p2-pp{display:grid;gap:6px;padding:12px;border-radius:10px;background:var(--bg3)}.p2-pp .hd{font-size:14px}
+.p2-pp .ln{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:10px;align-items:center}.p2-pp .ln>span{height:8px;border-radius:9999px;background:color-mix(in srgb,var(--line) 70%,var(--bg3));position:relative;overflow:hidden}
+.p2-pp .ln i{position:absolute;left:0;top:0;bottom:0;border-radius:9999px}.p2-pp .ln.a i{background:var(--team-l)}.p2-pp .ln.b i{background:var(--team-r)}
+.p2-pp .ln b{text-align:right;font-size:13.5px}.p2-pp .ln.a b{color:var(--team-l)}.p2-pp .ln.b b{color:var(--team-r)}
+.p2-set{display:grid;grid-template-columns:minmax(0,1fr) 44px 72px 44px;gap:8px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);font-size:14px}
+.p2-set .d{color:var(--mute);font-size:13px}.p2-set b{font-weight:500;text-align:center}.p2-set .va{color:var(--team-l)}.p2-set .vb{color:var(--team-r)}.p2-set .win{font-weight:800}.p2-set .w{text-align:center;font-size:12.5px;font-weight:700}
+.p2-ctas{gap:8px}
+/* Boost box in the panel */
+.ipanel .sup{display:grid;gap:28px;border:0!important;padding:0!important;background:none!important}
+.ipanel .sup-moms{margin:0;display:grid;gap:8px}
+.ipanel .mom{grid-template-columns:24px minmax(0,1fr) auto;padding:14px 16px;background:var(--bg3);border-color:var(--line)}
+.ipanel .mom .ic{color:var(--mute);display:grid;place-items:center}.ipanel .mom.now{background:color-mix(in srgb,var(--upcoming) 22%,var(--bg2))}.ipanel .mom.now .ic{color:var(--upcoming-t,var(--cyan))}
+.sup-box{display:grid;gap:12px;padding:18px;border-radius:16px;background:var(--bg3)}
+.sup-box .sup-pt{float:none;font-size:12px;font-weight:700;padding:3px 9px;border-radius:9999px}
+.sup-pt.off{color:var(--mute)!important;background:color-mix(in srgb,var(--mute) 14%,transparent)!important}
+.sup-lead{margin:0;font-size:14px;line-height:1.6;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}
+.sup-box .sup-amts,.sup-box .sup-msg,.sup-box .sup-go,.sup-box .sup-for,.sup-box .sup-rank,.sup-box .sup-how{margin-top:0}
+.sup-box .sup-amts button{height:40px;background:var(--bg2)}
+.sup-box .sup-msg textarea{background:var(--bg2)}
+.sup-box .sup-go{height:44px;border-radius:9999px;border:0;color:#062A22!important;font:800 15px "Pretendard Variable",sans-serif;cursor:pointer;width:100%}
+.sup-box .sup-card.off{background:var(--bg2)!important}
+.sup-rh{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;font-size:14px}
+.sup-box .lb li{background:var(--bg2)}
+.sup-box .sup-how{border:0;padding:0;background:none}
+.sup-box .sup-how summary{list-style:none;color:var(--cyan);font-weight:600;font-size:13.5px}.sup-box .sup-how summary::-webkit-details-marker{display:none}
+.sup-box .sup-how[open]{padding:12px;border-radius:12px;background:var(--bg2)}
+@media (max-width:520px){.p2-name{font-size:40px!important}.p2-kpi.k4{grid-template-columns:repeat(2,1fr)}.p2-dv{grid-template-columns:52px minmax(0,1fr) 84px minmax(0,1fr) 52px;gap:6px;padding:10px}.p2-two{grid-template-columns:1fr}.p2-cta{grid-template-columns:1fr}.p2-lane{grid-template-columns:minmax(0,1fr) 36px 44px 36px minmax(0,1fr);padding:10px}.p2-set{grid-template-columns:minmax(0,1fr) 36px 64px 36px;padding:10px}}
+
+.ip-fav[hidden]{display:none!important}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -1822,7 +1953,7 @@ body:not(.ip-open) .ipanel{box-shadow:none!important}
   <button class="pill rw-ok" type="button">Nice!</button></div>
 </div>
 <div class="iscrim" id="iscrim"></div>
-<aside class="ipanel" id="ipanel" role="dialog" aria-labelledby="ip-name"><div class="ip-top"><span class="ip-k" id="ip-k">Player</span><button class="ip-x" type="button" aria-label="Close">×</button></div><div class="ip-body" id="ip-body"></div></aside>
+<aside class="ipanel" id="ipanel" role="dialog" aria-labelledby="ip-name"><div class="ip-top"><span class="ip-k" id="ip-k">Player</span><span class="ip-sp"></span><button class="ip-fav" id="ip-fav" type="button" aria-label="Add to favorites" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></svg></button><button class="ip-x" type="button" aria-label="Close"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div><div class="ip-body" id="ip-body"></div></aside>
 <div class="wpop" id="wpop" role="tooltip"><b><span class="m">LwRC+</span></b><p>The gold lead a player creates against the same role, scaled so 100 is the league average for that role. Higher is better.</p><a href="#blog/what-is-wrc">Read the full explainer →</a></div>
 
 
@@ -2087,32 +2218,10 @@ function nextMatch(team){const lv=DB.sched.find(x=>x.st==='live'&&(x.a===team||x
 function lastResult(team){const m=DB.sched.filter(x=>x.sc&&(x.a===team||x.b===team)).sort((a,b)=>b.at-a.at)[0];if(!m)return '';
  const [x,y]=m.sc.split(':').map(Number);const us=m.a===team?x:y,them=m.a===team?y:x,opp=m.a===team?m.b:m.a;
  return `<div class="ip-row"><span>Last result</span><b class="${us>them?'w':'l'}">${us>them?'W':'L'} ${us}:${them}</b><span>vs <button class="ent" data-t="${opp}">${opp}</button></span></div>`}
-function playerHTML(p){const lgP=DB.players.filter(x=>x.lg===p.lg).sort((a,b)=>b.ix-a.ix);const rk=lgP.indexOf(p)+1;
- const roleP=lgP.filter(x=>x.role===p.role);const rr=roleP.indexOf(p)+1;const t=TEAM[p.team];
- return `<div class="ip-hero"><div class="ip-av">${p.role}</div><div><h2 id="ip-name">${p.name}</h2><div class="ip-sub"><button class="ent" data-t="${p.team}">${p.team}</button><span>${p.role}</span><em class="lgt">${p.lg}</em></div></div></div>
- <div class="ip-big"><div><div class="ip-h"><span class="m">LwRC+</span> <button class="wtip" type="button" aria-label="What is LwRC+?">?</button></div><div class="ip-num">${p.ix}</div></div>
- <div class="ip-rk"><div><b>#${rk}</b><span>in ${p.lg}</span></div><div><b>#${rr}</b><span>${p.role} in ${p.lg}</span></div></div></div>
- <div class="ip-sec"><div class="ip-h">Last 10 games</div>${spark(p)}<div class="ip-cap"><span>100 = league average for the role</span></div></div>
- <div class="ip-grid"><div><span>Games</span><b>${p.g}</b></div><div><span>Gold +/G</span><b>${p.pg>0?'+':''}${p.pg}</b></div><div><span>Team share</span><b>${Math.round(Math.max(0,p.pg)/Math.max(1,t.pg)*100)}%</b></div><div><span>Team record</span><b>${t.W}–${t.L}</b></div></div>
- ${nextMatch(p.team)}
- ${SUP.html('player',p.name)}
- <div class="ip-acts"><button class="pill" data-ask="How is ${p.name} (${p.team} ${p.role}) creating gold this season?">Ask RORR about ${p.name}</button><button class="pill ghost" data-cmp="player|${p.name}">Compare with another player</button><button class="pill ghost" data-wrc="${p.team}|${p.lg}">${p.team} in LwRC+ rankings</button></div>
- <p class="ip-note">Sample player name and figures for the preview.</p>`}
-function teamHTML(t){const S=standings(t.lg);const rk=S.indexOf(t)+1;const byIx=DB.teams.filter(x=>x.lg===t.lg).sort((a,b)=>b.ix-a.ix);const ir=byIx.indexOf(t)+1;
- const roster=DB.players.filter(p=>p.team===t.team).sort((a,b)=>ROLE_ORDER[a.role]-ROLE_ORDER[b.role]);
- return `<div class="ip-hero"><div class="ip-av t">${t.team}</div><div><h2 id="ip-name">${t.team}</h2><div class="ip-sub"><span>${LGS[t.lg].r}</span><em class="lgt">${t.lg}</em></div></div></div>
- <div class="ip-big"><div><div class="ip-h">Standing</div><div class="ip-num">#${rk}</div></div>
- <div class="ip-rk"><div><b>${t.W}–${t.L}</b><span>Win% ${t.wr.toFixed(3).replace(/^0/,'')}</span></div><div><b>${t.ix}</b><span><span class="m">LwRC+</span> · #${ir} in ${t.lg}</span></div></div></div>
- <div class="ip-sec"><div class="ip-h">Form</div><div class="ip-form"><span class="frm">${[...t.form].map(c=>`<i class="${c==='W'?'w':''}">${c}</i>`).join('')}</span><span class="ip-sd ${t.sd>0?'vp':'vn'}">Set ± ${t.sd>0?'+':''}${t.sd}</span></div>${lastResult(t.team)}</div>
- <div class="ip-sec"><div class="ip-h">Roster</div><div class="ip-roster">${roster.map(p=>`<button class="ip-pl" data-p="${p.name}"><span class="rl">${p.role}</span><b>${p.name}</b><span class="ix">${p.ix}</span></button>`).join('')}</div></div>
- ${nextMatch(t.team)}
- ${SUP.html('team',t.team)}
- <div class="ip-acts"><button class="pill" data-ask="How is ${t.team} playing this season?">Ask RORR about ${t.team}</button><button class="pill ghost" data-cmp="team|${t.team}">Compare with another team</button><button class="pill ghost" data-wrc="${t.team}|${t.lg}">${t.team} in LwRC+ rankings</button></div>
- <p class="ip-note">Sample figures for the preview.</p>`}
 let ipKey=null;
 function openEntity(key,fromRoute){if(key.startsWith('compare/')){const q=key.split('/');openCompare(q[1],decodeURIComponent(q[2]),q[3]&&decodeURIComponent(q[3]));return}document.body.classList.remove('ip-cmp');const [kind,id]=key.split('/');const body=document.getElementById('ip-body');
- if(kind==='player'){const p=PBY[decodeURIComponent(id)];if(!p)return;body.innerHTML=playerHTML(p);document.getElementById('ip-k').textContent='Player'}
- else{const t=TEAM[decodeURIComponent(id)];if(!t)return;body.innerHTML=teamHTML(t);document.getElementById('ip-k').textContent='Team'}
+ if(kind==='player'){const n=decodeURIComponent(id);const p=PBY[n];if(!p)return;body.innerHTML=playerHTML(p);setTop(LX('Player','선수'),'player|'+n)}
+ else{const n=decodeURIComponent(id);const t=TEAM[n];if(!t)return;body.innerHTML=teamHTML(t);setTop(LX('Team','팀'),'team|'+n)}
  SUP.bind(body);ipKey=key;document.body.classList.add('ip-open');document.getElementById('ipanel').scrollTop=0;body.scrollTop=0;
  const b=document.body.classList;if(!fromRoute&&!b.contains('chatting')&&!b.contains('pagev')&&!b.contains('acct'))history.replaceState(null,'','#'+key)}
 const openPlayer=n=>openEntity('player/'+n),openTeam=t=>openEntity('team/'+t);
@@ -2126,6 +2235,7 @@ document.getElementById('ipanel').addEventListener('click',e=>{const t=e.target;
  const w=t.closest('[data-wrc]');if(w){const[team,lg]=w.dataset.wrc.split('|');closeEntity();if(document.body.classList.contains('chatting'))document.body.classList.remove('chatting');
   nav(null,'wrc');document.getElementById('wf-lg').value=lg;wv.v='inteam';wv.sort='v';wv.dir=-1;wgRender();document.getElementById('wf-team').value=team;wgRender()}});
 document.getElementById('iscrim').addEventListener('click',closeEntity);
+document.getElementById('ip-fav').addEventListener('click',e=>{e.stopPropagation();const b=e.currentTarget;const[k,id]=b.dataset.fav.split('|');favToggle(k,id);setTop(document.getElementById('ip-k').textContent,b.dataset.fav)});
 /* entity links anywhere on the page (rows, schedule, chat chips) */
 document.addEventListener('click',e=>{if(e.target.closest('#ipanel,.wtip,#wpop'))return;
  const ent=e.target.closest('.ent[data-t]');if(ent){e.stopPropagation();openTeam(ent.dataset.t);return}
@@ -2140,13 +2250,6 @@ function playerAxes(p,pool){const sp=x=>{const r=mkRnd(hashStr(x.name));const v=
  return f.map(([l,fn])=>({l,v:pctRank(pool.map(fn),fn(p))}))}
 function teamAxes(t,pool){const f=[[LX('Win%','승률'),x=>x.wr],[LX('Set ±','세트 득실'),x=>x.sd],['LwRC+',x=>x.ix],[LX('Form','최근 흐름'),x=>[...x.form].filter(c=>c==='W').length],[LX('Depth','로스터 깊이'),x=>Math.min(...DB.players.filter(p=>p.team===x.team).map(p=>p.ix))],[LX('Carry','에이스'),x=>Math.max(...DB.players.filter(p=>p.team===x.team).map(p=>p.ix))]];
  return f.map(([l,fn])=>({l,v:pctRank(pool.map(fn),fn(t))}))}
-function radarSVG(A,B,na,nb){const n=A.length,R=92,cx=130,cy=118;const pt=(i,v)=>{const ang=-Math.PI/2+i*2*Math.PI/n;const r=R*Math.max(.04,v/100);return [cx+r*Math.cos(ang),cy+r*Math.sin(ang)]};
- const poly=X=>X.map((d,i)=>pt(i,d.v).map(z=>z.toFixed(1)).join(',')).join(' ');
- const rings=[25,50,75,100].map(l=>`<polygon class="rg" points="${A.map((d,i)=>pt(i,l).map(z=>z.toFixed(1)).join(',')).join(' ')}"/>`).join('');
- const spokes=A.map((d,i)=>{const[x,y]=pt(i,100);return `<line class="sp" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>`}).join('');
- const labels=A.map((d,i)=>{const[x,y]=pt(i,122);const anc=Math.abs(x-cx)<8?'middle':x>cx?'start':'end';return `<text x="${x}" y="${y+4}" text-anchor="${anc}">${d.l}<tspan class="va" x="${x}" dy="13">${d.v}</tspan><tspan class="vb" dx="4">${B[i].v}</tspan></text>`}).join('');
- return `<div class="radar"><svg viewBox="-48 -6 356 262" role="img" aria-label="Radar comparison">${rings}${spokes}<polygon class="pa" points="${poly(A)}"/><polygon class="pb" points="${poly(B)}"/>${labels}</svg>
- <div class="rd-leg"><span class="la">${na}</span><span class="lb">${nb}</span><span class="rd-n">${LX('Percentile within the league (100 = best)','리그 내 백분위 (100 = 최고)')}</span></div></div>`}
 /* ===== Energy Boost (support a player or team) ===== */
 const SUP=(()=>{const key='rorr-support';
  const load=()=>{try{return JSON.parse(localStorage.getItem(key)||'{}')}catch(e){return{}}};const save=d=>{try{localStorage.setItem(key,JSON.stringify(d))}catch(e){}};
@@ -2165,6 +2268,7 @@ const SUP=(()=>{const key='rorr-support';
   const k=(1+Math.floor(r()*3))*500;out.push({id:'k'+k,t:LX(`${k.toLocaleString('en-US')} career kills`,`통산 ${k.toLocaleString('en-US')}킬`),d:day(Date.now()-86400000*(2+Math.floor(r()*9))),st:'past',ic:'⚔️'});
   if(r()<.6){const y=2+Math.floor(r()*5);out.push({id:'y'+y,t:LX(`${y} years since pro debut`,`프로 데뷔 ${y}주년`),d:day(Date.now()+86400000*(3+Math.floor(r()*20))),st:'up',ic:'🎉'})}
   return out}
+ const MOMIC={g:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 21h8M12 17v4M6 4h12v4a6 6 0 01-12 0zM6 6H3a3 3 0 003 3M18 6h3a3 3 0 01-3 3"/></svg>',k:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2"/></svg>',y:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18.4 5.6l-2.1 2.1M21 12h-3M7 21l3-9 4 4-7 5z"/></svg>'};
  function board(kind,id,mid){const r=mkRnd(hashStr(id+(mid||'')+'lb'));const d=load()[kind+':'+id]||{t:0,m:[]};const mine=mid?d.m.filter(x=>x.mid===mid).reduce((a,x)=>a+x.n,0):d.t;
   const rows=NK.slice(0,10).map((n,i)=>({n,v:Math.round((mid?900:4200)*Math.pow(.72,i)*(0.85+r()*.3)/10)*10})).sort((a,b)=>b.v-a.v);
   if(mine)rows.push({n:anon()?LX('You (anonymous)','나 (익명)'):LX('You','나'),v:mine,me:1});rows.sort((a,b)=>b.v-a.v);
@@ -2173,44 +2277,41 @@ const SUP=(()=>{const key='rorr-support';
  function html(kind,id){const d=load()[kind+':'+id]||{t:0,m:[]};const lv=level(d.t);const r=mkRnd(hashStr(id+'sup'));const on=isPartner(kind,id);const tm=teamOf(kind,id);
   const wall=[...d.m.slice(-2).reverse().map(x=>[anon()?LX('You (anonymous)','나 (익명)'):LX('You','나'),x.msg,x.n]),...MSG.slice(0,3).map((m,i)=>[NK[i],m,[50,10,100][i]])].slice(0,4);
   const total=Math.round(800+r()*4200)+d.t;const M=moments(kind,id);
-  const how=`<details class="sup-how"><summary>${LX('How Boost works','Boost는 어떻게 쓰이나요?')}</summary><ul>
+  const how=`<details class="sup-how"><summary>${LX('How is Boost used? →','Boost는 어떻게 쓰이나요? →')}</summary><ul>
     <li>${LX('Boost is a cheer you send with Energy. It is not a cash gift or a tip paid directly to a player.','Boost는 Energy로 보내는 응원이에요. 선수에게 직접 전달되는 현금 선물이나 후원금이 아니에요.')}</li>
     <li>${LX(`A share of every Boost goes to the team under an official partnership with RORR. Right now that is ${PARTNERS.join(', ')}.`,`Boost 금액의 일부는 RORR와 공식 파트너십을 맺은 구단에 배분돼요. 현재 파트너 구단: ${PARTNERS.join(', ')}.`)}</li>
     <li>${LX('Teams without a partnership can\'t receive Boosts yet. You can ask to be notified when they open.','파트너십이 없는 구단은 아직 Boost를 받을 수 없어요. 열리면 알림을 받을 수 있어요.')}</li>
     <li>${LX('Messages are checked before they appear on the fan wall. Rankings show your nickname, or you can stay anonymous.','메시지는 검토 후 팬 월에 올라가요. 순위에는 닉네임이 표시되며 익명으로 할 수도 있어요.')}</li>
    </ul><a class="lnk" href="#blog/how-boost-works" onclick="nav(event,'blog/how-boost-works')">${LX('Read the full Boost guide →','Boost 안내 전체 보기 →')}</a></details>`;
-  const mom=M.length?`<div class="sup-moms"><div class="ip-h">${LX('Moments to celebrate','기념할 순간')}</div>${M.map(m=>{const mt=d.m.filter(x=>x.mid===m.id).reduce((a,x)=>a+x.n,0)+Math.round(200+mkRnd(hashStr(id+m.id))()*1800);
-    return `<div class="mom ${m.st}"><span class="ic">${m.ic}</span><div><b>${m.t}</b><small>${m.st==='now'?`<i class="lv"></i>`:''}${m.d}${m.st==='past'?' · '+LX('reached','달성'):m.st==='up'?' · '+LX('coming up','예정'):''}${on?` · ⚡ ${mt.toLocaleString('en-US')}`:''}</small></div>${on?`<button type="button" class="mom-go" data-mom="${m.id}" data-mt="${m.t.replace(/"/g,'&quot;')}">${LX('Boost this','기념 Boost')}</button>`:''}</div>`}).join('')}</div>`:'';
-  if(!on){const nt=notified(tm);return `<div class="ip-sec sup off"><div class="ip-h">${LX('Boost with Energy','Energy로 Boost')}</div>
+  const mom=M.length?`<div class="sup-moms"><div class="p2-hh"><h3>${LX('Moments to celebrate','기념할 순간')}</h3></div>${M.map(m=>{const mt=d.m.filter(x=>x.mid===m.id).reduce((a,x)=>a+x.n,0)+Math.round(200+mkRnd(hashStr(id+m.id))()*1800);
+    return `<div class="mom ${m.st}"><span class="ic">${MOMIC[m.id[0]]||MOMIC.g}</span><div><b>${m.t}</b><small>${m.st==='now'?`<i class="lv"></i>`:''}${m.d}${m.st==='past'?' · '+LX('reached','달성'):m.st==='up'?' · '+LX('coming up','예정'):''}${on?` · ⚡ ${mt.toLocaleString('en-US')}`:''}</small></div>${on?`<button type="button" class="mom-go" data-mom="${m.id}" data-mt="${m.t.replace(/"/g,'&quot;')}">${LX('Boost this','기념 Boost')}</button>`:''}</div>`}).join('')}</div>`:'';
+  if(!on){const nt=notified(tm);return `<div class="ip-sec sup off">${mom}<div class="sup-box off"><div class="p2-hh"><h3>${LX('Boost with Energy','Energy로 Boost')}</h3><span class="sup-pt off">${LX('Not open yet','아직 열리지 않음')}</span></div>
    <div class="sup-card off"><span class="sup-lock">🔒</span><div><b>${LX(`Boost isn't open for ${tm} yet`,`${tm}은(는) 아직 Boost가 열리지 않았어요`)}</b><p>${LX(`Boost opens for teams with an official RORR partnership. ${tm} isn't a partner yet.`,`Boost는 RORR와 공식 파트너십을 맺은 구단부터 열려요. ${tm}은(는) 아직 파트너가 아니에요.`)}</p>
    <button type="button" class="pill ghost sup-notify ${nt?'on':''}" data-team="${tm}">${nt?LX('✓ We\'ll let you know','✓ 열리면 알려드릴게요'):LX('Notify me when it opens','열리면 알림 받기')}</button></div></div>
    <div class="sup-amts dis" aria-disabled="true">${[10,50,100,500].map(n=>`<button type="button" disabled>⚡ ${n}</button>`).join('')}</div>
-   ${mom}${how}</div>`}
-  return `<div class="ip-sec sup"><div class="ip-h">${LX('Boost with Energy','Energy로 Boost')} <span class="sup-pt">${LX('Official partner','공식 파트너')} · ${tm}</span></div>
-   <div class="sup-card"><img class="sup-muse" src="assets/muse-waving.webp" alt=""><div><b>${LX(`Boost ${id}`,`${id} Boost 하기`)}</b><p>${LX('Your Boost and message go on the fan wall with a Muse cheer.','Boost와 메시지는 Muse의 응원과 함께 팬 월에 올라가요.')}</p>
-    <div class="sup-stat"><span>⚡ ${total.toLocaleString('en-US')} ${LX('boosted by fans this week','이번 주 팬 Boost')}</span>${d.t?`<span class="sup-me">${LX('You','나')}: ⚡ ${d.t} · Lv.${lv}</span>`:''}</div></div></div>
-   ${mom}
+   ${how}</div></div>`}
+  return `<div class="ip-sec sup">${mom}<div class="sup-box"><div class="p2-hh"><h3>${LX('Boost with Energy','Energy로 Boost')}</h3><span class="sup-pt">${LX('Official partner','공식 파트너')} · ${tm}</span></div>
+   <p class="sup-lead">${LX(`⚡ ${total.toLocaleString('en-US')} boosted by fans this week`,`이번 주 팬 Boost ⚡ ${total.toLocaleString('en-US')}`)}${d.t?` · <span class="sup-me">${LX('You','나')}: ⚡ ${d.t} · Lv.${lv}</span>`:''}</p>
    <div class="sup-for" hidden><span>${LX('For','기념')}: <b></b></span><button type="button" class="sup-for-x" aria-label="Clear">×</button></div>
    <div class="sup-amts" role="radiogroup">${[10,50,100,500].map((n,i)=>`<button type="button" class="${i===1?'on':''}" data-amt="${n}">⚡ ${n}</button>`).join('')}</div>
    <label class="sup-msg"><span>${LX('Message (optional)','메시지 (선택)')}</span><textarea maxlength="80" rows="2" placeholder="${LX(`Say something to ${id}…`,`${id}에게 한마디…`)}"></textarea><em>0/80</em></label>
-   <button class="pill sup-go" type="button" data-sup="${kind}|${id}">${LX('Boost ⚡ 50','⚡ 50 Boost')}</button>
+   <button class="sup-go" type="button" data-sup="${kind}|${id}">${LX(`Boost ${id} ⚡ 50`,`${id}에 ⚡ 50 Boost`)}</button>
    <p class="ip-note">${LX('Messages are checked before they appear. Be kind: no insults about players.','메시지는 검토 후 노출돼요. 선수를 향한 비난은 올라가지 않아요.')}</p>
-   ${how}
-   <div class="sup-rank"><div class="ip-h">${LX('Top supporters','서포터 순위')}<span class="lb-tabs"><button type="button" class="on" data-lb="">${LX('This season','이번 시즌')}</button>${M.filter(m=>m.st!=='past').slice(0,1).map(m=>`<button type="button" data-lb="${m.id}">${m.t}</button>`).join('')}</span></div><div class="lb-box">${board(kind,id,'')}</div>
+   <div class="sup-rank"><div class="sup-rh"><b>${LX('Top supporters','서포터 순위')}</b><span class="lb-tabs"><button type="button" class="on" data-lb="">${LX('This season','이번 시즌')}</button>${M.filter(m=>m.st!=='past').slice(0,1).map(m=>`<button type="button" data-lb="${m.id}">${m.t}</button>`).join('')}</span></div><div class="lb-box">${board(kind,id,'')}</div>
     <label class="chk lb-anon"><input type="checkbox" ${anon()?'checked':''}> ${LX('Show me as anonymous','익명으로 표시')}</label></div>
-   <div class="sup-wall"><div class="ip-h">${LX('Fan wall','팬 월')}</div>${wall.map(w=>`<div class="fw"><b>${w[0]}</b><span>${w[1]?w[1].replace(/</g,'&lt;'):''}</span><em>⚡${w[2]}</em></div>`).join('')}</div></div>`}
+   ${how}</div></div>`}
  function bind(root){const box=root.querySelector('.sup');if(!box)return;
   const nb=box.querySelector('.sup-notify');if(nb)nb.onclick=()=>{const t=nb.dataset.team;let L=[];try{L=JSON.parse(localStorage.getItem('rorr-boost-notify')||'[]')}catch(e){}if(!L.includes(t))L.push(t);try{localStorage.setItem('rorr-boost-notify',JSON.stringify(L))}catch(e){}nb.classList.add('on');nb.textContent=LX('✓ We\'ll let you know','✓ 열리면 알려드릴게요');toast(LX(`We'll tell you when ${t} opens Boost`,`${t} Boost가 열리면 알려드릴게요`))};
   if(box.classList.contains('off'))return;
   let amt=50,mid='',mt='';const go=box.querySelector('.sup-go'),ta=box.querySelector('textarea'),cnt=box.querySelector('.sup-msg em'),forEl=box.querySelector('.sup-for');
   const[kind0,id0]=go.dataset.sup.split('|');
-  const label=()=>{go.textContent=mid?LX(`Boost ⚡ ${amt} for this moment`,`이 순간에 ⚡ ${amt} Boost`):LX(`Boost ⚡ ${amt}`,`⚡ ${amt} Boost`)};
+  const label=()=>{go.textContent=mid?LX(`Boost ⚡ ${amt} for this moment`,`이 순간에 ⚡ ${amt} Boost`):LX(`Boost ${id0} ⚡ ${amt}`,`${id0}에 ⚡ ${amt} Boost`)};
   box.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{box.querySelectorAll('[data-amt]').forEach(x=>x.classList.toggle('on',x===b));amt=+b.dataset.amt;label()});
   box.querySelectorAll('.mom-go').forEach(b=>b.onclick=()=>{mid=b.dataset.mom;mt=b.dataset.mt;forEl.hidden=false;forEl.querySelector('b').textContent=mt;box.querySelectorAll('.mom').forEach(x=>x.classList.toggle('sel',x.contains(b)));ta.placeholder=LX(`Congrats on ${mt}!`,`${mt} 축하해요!`);label();forEl.scrollIntoView({behavior:'smooth',block:'center'})});
   forEl.querySelector('.sup-for-x').onclick=()=>{mid='';mt='';forEl.hidden=true;box.querySelectorAll('.mom').forEach(x=>x.classList.remove('sel'));ta.placeholder=LX(`Say something to ${id0}…`,`${id0}에게 한마디…`);label()};
   box.querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{box.querySelectorAll('[data-lb]').forEach(x=>x.classList.toggle('on',x===b));box.querySelector('.lb-box').innerHTML=board(kind0,id0,b.dataset.lb)});
   const an=box.querySelector('.lb-anon input');an.onchange=()=>{try{localStorage.setItem('rorr-boost-anon',an.checked?'1':'0')}catch(e){}const cur=box.querySelector('[data-lb].on');box.querySelector('.lb-box').innerHTML=board(kind0,id0,cur?cur.dataset.lb:'')};
-  ta.oninput=()=>{cnt.textContent=ta.value.length+'/80'};const mi=box.querySelector('.sup-muse');ta.onfocus=()=>{mi.src='assets/muse-thinking.webp'};ta.onblur=()=>{mi.src='assets/muse-waving.webp'};
+  ta.oninput=()=>{cnt.textContent=ta.value.length+'/80'};
   go.onclick=()=>{const kind=kind0,id=id0;const send=()=>{if(energy<amt){lowEnergy(amt);return}
     const msg=ta.value.trim().slice(0,80);if(/\b(trash|idiot|stupid|retire|ff)\b|못하|쓰레기|은퇴/i.test(msg)){toast(LX('Let\'s keep it kind · edit your message','따뜻하게 보내 주세요 · 메시지를 수정해 주세요'));return}
     if(!spend(amt,'Boost',id+(mt?` · ${mt}`:'')+(msg?` · "${msg}"`:'')))return;const d=load();const k=kind+':'+id;d[k]=d[k]||{t:0,m:[]};d[k].t+=amt;d[k].m.push({n:amt,msg,mid,at:Date.now()});save(d);
@@ -2232,58 +2333,182 @@ const SUP=(()=>{const key='rorr-support';
  return{html,bind,closeReward,moments,isPartner}})();
 
 /* ===== compare (two players / two teams) in the info panel ===== */
+/* ===== side panel v2 (design canvas: team / team compare / player / player compare) ===== */
+const PN={
+ sg:n=>(n>0?'+':n<0?'−':'')+Math.abs(Math.round(n)).toLocaleString('en-US'),
+ kk:n=>(n>=0?'+':'−')+(Math.abs(n)/1000).toFixed(1)+'k',
+ rk:n=>LX(`#${n}`,`${n}위`),
+ lgRk:n=>LX(`#${n} in league`,`리그 ${n}위`),
+ esc:s=>String(s).replace(/"/g,'&quot;'),
+ day:t=>localParts(t).d.slice(5),
+ ts(t){if(t._ts)return t._ts;const r=mkRnd(hashStr(t.team+'ts'));const q=t.wr;
+  return t._ts={g15:Math.round((q-.5)*1500+(r()-.5)*800),baron:Math.round(Math.min(98,Math.max(38,58+q*36+(r()-.5)*22))),drg:+(1.3+q*1.5+(r()-.5)*.7).toFixed(1),late:Math.round(Math.min(95,Math.max(18,28+q*58+(r()-.5)*30)))}},
+ trank(t,k){const L=DB.teams.filter(x=>x.lg===t.lg).slice().sort((a,b)=>PN.ts(b)[k]-PN.ts(a)[k]);return L.indexOf(t)+1},
+ games(p){const r=mkRnd(hashStr(p.name));const v=[];for(let i=0;i<10;i++)v.push(Math.round(p.ix+(r()-.5)*70));v[9]=p.ix;return v},
+ ps(p){if(p._ps)return p._ps;const r=mkRnd(hashStr(p.name+'ps'));const d=p.ix-100;const jg=p.role==='JG',sp=p.role==='SUP';
+  const prod=Math.round(2500+d*16+(sp?-700:0)+(r()-.5)*500),den=Math.round(800+d*7+(jg?500:0)+(sp?200:0)+(r()-.5)*400),loss=Math.max(250,Math.round(820-d*2.5+(sp?120:0)+(r()-.5)*300));
+  const v=PN.games(p);const m=v.reduce((a,b)=>a+b,0)/v.length;const sd=Math.sqrt(v.reduce((a,b)=>a+(b-m)**2,0)/v.length);
+  return p._ps={prod,den,loss,g15:Math.round(d*5+(r()-.5)*700),late:Math.round(d*1.2+(r()-.5)*60),cons:-sd,kda:+(2.2+d/40+(r()-.5)*1.2).toFixed(1),kp:Math.round(Math.min(85,Math.max(48,62+d/8+(r()-.5)*12)))}},
+ roleAvg(p){const L=DB.players.filter(x=>x.lg===p.lg&&x.role===p.role);const a=k=>L.reduce((s,x)=>s+PN.ps(x)[k],0)/L.length;return{prod:a('prod'),den:a('den'),loss:a('loss')}},
+ cumRange(p){const a=MX.seasonRank(p,75),b=MX.seasonRank(p,85);const lo=Math.min(a,b),hi=Math.max(a,b);
+  return lo===hi?LX(`Stays #${lo} for baselines 75–85`,`기준 75–85에서 ${lo}위 고정`):LX(`#${lo}–${hi} across baselines 75–85`,`기준 75–85에서 ${lo}–${hi}위`)},
+ live(team){return DB.sched.find(x=>x.st==='live'&&(x.a===team||x.b===team))},
+ recent(team,n){return DB.sched.filter(x=>(x.sc||x.st==='live')&&(x.a===team||x.b===team)).sort((a,b)=>b.at-a.at).slice(0,n)},
+ meet(a,b){return DB.sched.filter(m=>m.st!=='final'&&((m.a===a&&m.b===b)||(m.a===b&&m.b===a))).sort((x,y)=>x.at-y.at)[0]},
+ hh(title,note){return `<div class="p2-hh"><h3>${title}</h3>${note?`<span>${note}</span>`:''}</div>`},
+ asks(qs){return `<section class="p2-sec">${PN.hh(LX('Ask more','더 물어보기'))}${qs.map(q=>`<button type="button" class="p2-q" data-ask="${PN.esc(q)}">${q}</button>`).join('')}</section>`},
+ liveCard(team){const m=PN.live(team);if(!m)return '';const o=m.a===team?m.b:m.a;let g=0,dur=m.min||0;try{const G=gameModel(m);g=m.a===team?G.g:-G.g;dur=G.dur}catch(e){}
+  return `<button type="button" class="p2-live" data-m="${m.id}"><span class="p2-lv"><i></i>LIVE</span><span class="t">${LX(`Game ${m.game} ${dur}′ · vs <b>${o}</b> · Gold <b class="${g>=0?'ga':'gb'}">${PN.sg(g)}</b>`,`${m.game}세트 ${dur}′ · vs <b>${o}</b> · 골드 <b class="${g>=0?'ga':'gb'}">${PN.sg(g)}</b>`)}</span><span class="go">${LX('Watch →','경기 보기 →')}</span></button>`},
+ bars(vals,opts){/* vals:[{v,c,lab,labc}] */const hi=Math.max(...vals.map(x=>x.v),opts.ref||0)+10,lo=Math.min(60,...vals.map(x=>x.v))-10;const H=opts.h||96;const h=v=>Math.max(4,Math.round((v-lo)/(hi-lo)*H));
+  const ref=opts.ref!=null?`<span class="p2-ref" style="bottom:${h(opts.ref)}px"></span>`:'';
+  return `<div class="p2-bars" style="height:${H+30}px">${ref}${vals.map(x=>`<div><span>${x.v}</span><i class="${x.c}" style="height:${h(x.v)}px"></i></div>`).join('')}</div>${vals[0].lab!=null?`<div class="p2-barl">${vals.map(x=>`<span class="${x.labc||''}">${x.lab}</span>`).join('')}</div>`:''}`}
+};
+function favOn(kind,id){const P=window.PREFS||{};return((kind==='team'?P.tm:P.pl)||[]).includes(id)}
+function favToggle(kind,id){let p;try{p=JSON.parse(localStorage.getItem('rorr-prefs')||'null')}catch(e){}p=p||{lg:[],tm:[],pl:[]};const k=kind==='team'?'tm':'pl';p[k]=p[k]||[];
+ const i=p[k].indexOf(id);i<0?p[k].push(id):p[k].splice(i,1);try{localStorage.setItem('rorr-prefs',JSON.stringify(p))}catch(e){}window.PREFS=p;
+ try{renderTicker()}catch(e){}toast(i<0?LX(`${id} added to favorites`,`${id}을(를) 즐겨찾기에 추가했어요`):LX(`${id} removed from favorites`,`${id}을(를) 즐겨찾기에서 뺐어요`));return i<0}
+function setTop(label,fav){document.getElementById('ip-k').textContent=label;const b=document.getElementById('ip-fav');if(!b)return;
+ if(!fav){b.hidden=true;return}b.hidden=false;b.dataset.fav=fav;const on=favOn(...fav.split('|'));b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);b.setAttribute('aria-label',on?LX('Remove from favorites','즐겨찾기에서 빼기'):LX('Add to favorites','즐겨찾기에 추가'))}
+
+function teamHTML(t){const S=standings(t.lg);const rk=S.indexOf(t)+1;const st=PN.ts(t);const fw=[...t.form].filter(c=>c==='W').length;
+ const roster=DB.players.filter(p=>p.team===t.team).sort((a,b)=>ROLE_ORDER[a.role]-ROLE_ORDER[b.role]);
+ const r=mkRnd(hashStr(t.team+'bars'));const res=[...Array(5)].map(()=>r()<t.wr?'W':'L').concat([...t.form]);
+ const bars=res.map((c,i)=>{const v=i===9?t.ix:Math.round(c==='W'?t.ix+(r()-.35)*30:t.ix-12-r()*30);return{v,c:c==='W'?'w':'l',lab:c,labc:c==='W'?'w':''}});
+ const ace=roster.slice().sort((a,b)=>b.ix-a.ix)[0];const rg=PN.trank(t,'g15'),rb=PN.trank(t,'baron'),rd=PN.trank(t,'drg');
+ const early=rg<=3,late=rb<=3;
+ const read=early&&late?LX(`${t.team} lead early and finish cleanly: top three in the league at 15 minutes and after the first Baron.`,`${t.team}은(는) 초반에 앞서고 깔끔하게 끝내는 팀입니다. 15분 골드와 첫 바론 후 승률 모두 리그 3위 안입니다.`)
+  :early?LX(`${t.team} build their lead in the first 15 minutes (#${rg} in the league) but convert it less reliably after Baron (#${rb}).`,`${t.team}은(는) 15분까지 골드를 벌리는 팀입니다(리그 ${rg}위). 다만 첫 바론 이후 마무리는 리그 ${rb}위로 상대적으로 약합니다.`)
+  :late?LX(`Early gold is around league average (#${rg}), but ${t.team} are #${rb} in win rate after the first Baron. Fights decide their games.`,`초반 15분 골드는 리그 ${rg}위로 평균 수준이지만, 첫 바론 이후 승률은 리그 ${rb}위입니다. 교전에서 승부가 갈리는 팀입니다.`)
+  :LX(`${t.team} have no single edge yet: #${rg} at 15 minutes and #${rb} after Baron. Results lean on ${ace.name} (${MX.role(ace.role)}, LwRC+ ${ace.ix}).`,`${t.team}은(는) 아직 뚜렷한 강점이 없습니다. 15분 골드 리그 ${rg}위, 첫 바론 후 승률 ${rb}위입니다. 결과는 ${ace.name}(${MX.role(ace.role)}, LwRC+ ${ace.ix})에게 많이 기대고 있습니다.`);
+ const rec=PN.recent(t.team,4).map(m=>{const o=m.a===t.team?m.b:m.a;if(m.st==='live'){const[x,y]=m.series.split(':').map(Number);const us=m.a===t.team?x:y,th=m.a===t.team?y:x;return `<button type="button" class="p2-rrow" data-m="${m.id}"><span class="p2-wl lv">•</span><span>vs <b>${o}</b> · ${LX('Live','진행 중')} ${us} : ${th}</span><em>${LX('Today','오늘')}</em></button>`}
+  const[x,y]=m.sc.split(':').map(Number);const us=m.a===t.team?x:y,th=m.a===t.team?y:x;const w=us>th;return `<button type="button" class="p2-rrow" data-m="${m.id}"><span class="p2-wl ${w?'w':'l'}">${w?'W':'L'}</span><span>vs <b>${o}</b> · ${us} : ${th}</span><em>${PN.day(m.at)}</em></button>`}).join('');
+ return `<section class="p2-hero"><div class="p2-id"><div><h2 id="ip-name" class="p2-name">${t.team}</h2><span class="p2-sub">${t.lg} · 2026 ${LX('Regular season','정규시즌')}</span></div><div class="p2-ix"><span>${LX('Team','팀')} LwRC+ <button class="wtip" type="button" aria-label="What is LwRC+?">?</button></span><b>${t.ix}</b></div></div>
+  <div class="p2-kpi k4"><div><span>${LX('Standing','순위')}</span><b>${PN.rk(rk)}</b></div><div><span>${LX('Record','전적')}</span><b>${t.W}–${t.L}</b></div><div><span>${LX('Set ±','세트 득실')}</span><b class="${t.sd>0?'up':t.sd<0?'dn':''}">${t.sd>0?'+':''}${t.sd}</b></div><div><span>${LX('Last 5','최근 5')}</span><b>${fw}–${5-fw}</b></div></div>
+  <div class="p2-cta"><button type="button" class="p2-btn pri" data-cmp="team|${t.team}">${LX('Compare with another team','다른 팀과 비교')}</button><button type="button" class="p2-btn ai" data-ask="${PN.esc(LX(`How is ${t.team} playing this season?`,`이번 시즌 ${t.team}은(는) 어떻게 하고 있어?`))}">${LX(`Ask about ${t.team}`,`${t.team}에 대해 묻기`)}</button></div></section>
+ ${PN.liveCard(t.team)}
+ <section class="p2-sec">${PN.hh(LX('Season flow','시즌 흐름'),LX('Last 10 games · team LwRC+ per game','최근 10경기 · 경기별 팀 LwRC+'))}${PN.bars(bars,{h:84})}</section>
+ <section class="p2-sec">${PN.hh(LX('How to read this team','이 팀을 읽는 법'))}<p class="p2-p">${read}</p>
+  <div class="p2-stats"><div><span>${LX('Avg gold at 15 min','15분 평균 골드')}</span><b>${PN.sg(st.g15)} · ${PN.lgRk(rg)}</b></div><div><span>${LX('Win rate after first Baron','첫 바론 후 승률')}</span><b>${st.baron}% · ${PN.lgRk(rb)}</b></div><div><span>${LX('Dragons per game','경기당 드래곤')}</span><b>${st.drg} · ${PN.lgRk(rd)}</b></div></div></section>
+ <section class="p2-sec">${PN.hh(LX('Roster','로스터'),LX('LwRC+ · season contribution','LwRC+ · 누적 기여'))}<div class="p2-roster">${roster.map(p=>{const c=MX.cum(p);return `<button type="button" class="p2-pl" data-p="${p.name}"><span class="rl">${MX.role(p.role)}</span><b>${p.name}</b><span class="ix">${p.ix}</span><span class="c ${c>=0?'up':'dn'}">${PN.sg(c)}</span></button>`}).join('')}</div></section>
+ ${rec?`<section class="p2-sec">${PN.hh(LX('Recent matches','최근 경기'))}<div class="p2-list">${rec}</div></section>`:''}
+ ${SUP.html('team',t.team)}
+ ${PN.asks([LX(`What is ${t.team}'s biggest strength this season?`,`이번 시즌 ${t.team}의 가장 큰 강점은?`),LX(`Where is ${t.team} weakest right now?`,`지금 ${t.team}의 약점은 어디야?`)])}
+ <p class="ip-note">${LX('Sample figures for the preview.','수치는 미리보기용 샘플 데이터입니다.')}</p>`}
+
+function playerHTML(p){const lgP=DB.players.filter(x=>x.lg===p.lg);const roleP=lgP.filter(x=>x.role===p.role).sort((a,b)=>b.ix-a.ix);const rr=roleP.indexOf(p)+1;
+ const cum=MX.cum(p),crk=MX.seasonRank(p);const s=PN.ps(p),av=PN.roleAvg(p);const max=Math.max(s.prod,av.prod,s.den,av.den,s.loss,av.loss)*1.1;const w=v=>Math.round(v/max*100)+'%';
+ const parts=[[LX('Production','생산 기여'),LX('Resources your side created','우리 팀 자원 생산·확보'),s.prod,av.prod,'a',1],[LX('Denial','차단 기여'),LX('Resources kept from the enemy','상대 자원 획득 차단'),s.den,av.den,'b',1],[LX('Loss','손실'),LX('Given up through deaths and more','데스 등으로 내준 자원'),s.loss,av.loss,'c',-1]];
+ const strong=s.prod>av.prod*1.08,dstrong=s.den>av.den*1.08,lossy=s.loss>av.loss*1.08;
+ const read=[strong?LX(`Production is well above the ${MX.role(p.role)} average`,`생산 기여는 ${MX.role(p.role)} 평균보다 크게 높고`):LX(`Production is near the ${MX.role(p.role)} average`,`생산 기여는 ${MX.role(p.role)} 평균 수준이고`),
+  lossy?LX('and losses run higher than most.','손실은 평균보다 많은 편입니다.'):LX('and losses stay around average or better.','손실은 평균 이하로 관리되고 있습니다.'),
+  dstrong?LX(`Denial is a real strength: #${lgP.filter(x=>x.role===p.role).sort((a,b)=>PN.ps(b).den-PN.ps(a).den).indexOf(p)+1} among ${MX.role(p.role)} players.`,`상대 자원을 빼앗는 차단 기여는 ${MX.role(p.role)} ${lgP.filter(x=>x.role===p.role).sort((a,b)=>PN.ps(b).den-PN.ps(a).den).indexOf(p)+1}위입니다.`):''].join(' ');
+ const G=PN.games(p);const games=G.map(v=>({v,c:v>=p.ix?'w':'s'}));
+ const rec=PN.recent(p.team,4).map(m=>{const o=m.a===p.team?m.b:m.a;const r=mkRnd(hashStr(p.name+m.id));const ix=Math.round(p.ix+(r()-.45)*60);const k=Math.floor(r()*7),d=Math.floor(r()*5),a=Math.floor(3+r()*9);
+  return `<button type="button" class="p2-rrow pl" data-m="${m.id}"><span>vs <b>${o}</b> <em>· ${m.st==='live'?LX('Today · live','오늘 · 진행 중'):PN.day(m.at)}</em></span><b class="ix">${ix}</b><span class="kda">${k} / ${d} / ${a}</span></button>`}).join('');
+ const opp=oppOf(p.team);const oppP=opp&&DB.players.find(x=>x.team===opp&&x.role===p.role);
+ return `<section class="p2-hero"><div class="p2-id"><div><h2 id="ip-name" class="p2-name pl">${p.name}</h2><span class="p2-sub"><button class="ent" data-t="${p.team}">${p.team}</button> · ${MX.role(p.role)} · ${LX(`${p.g} sets`,`${p.g}세트 출전`)}</span></div></div>
+  <div class="p2-kpi k2"><div><span>LwRC+ · ${LX('level','수준')} <button class="wtip" type="button" aria-label="What is LwRC+?">?</button></span><b class="big">${p.ix}</b><em>${LX(`#${rr} ${MX.role(p.role)} · league avg 100`,`${MX.role(p.role)} ${rr}위 · 리그 평균 100`)}</em></div>
+   <div><span>${LX('Season contribution · vs replacement','누적 기여 · 대체선수 대비')}</span><b class="big ${cum>=0?'up':'dn'}">${PN.kk(cum)}</b><em>${LX(`#${crk} overall`,`전체 ${crk}위`)} · ${PN.cumRange(p)}</em></div></div>
+  <div class="p2-cta"><button type="button" class="p2-btn pri" data-cmp="player|${p.name}">${LX('Compare with another player','다른 선수와 비교')}</button><button type="button" class="p2-btn ai" data-ask="${PN.esc(LX(`How is ${p.name} (${p.team} ${p.role}) creating gold this season?`,`${p.name}(${p.team} ${MX.role(p.role)})은(는) 이번 시즌 어떻게 기여하고 있어?`))}">${LX(`Ask about ${p.name}`,`${p.name}에 대해 묻기`)}</button></div></section>
+ ${PN.liveCard(p.team)}
+ <section class="p2-sec">${PN.hh(LX('Where the contribution comes from','기여는 어디서 나왔나'),LX(`Gold per set · ┃ ${MX.role(p.role)} avg`,`세트당 골드 · ┃ ${MX.role(p.role)} 평균`))}
+  <div class="p2-parts">${parts.map(x=>`<div><div class="hd"><span>${x[0]} <em>${x[1]}</em></span><b class="${x[4]}">${x[5]<0?'−':'+'}${x[2].toLocaleString('en-US')}</b></div><div class="tr"><i class="${x[4]}" style="width:${w(x[2])}"></i><s style="left:${w(x[3])}" title="${LX('Role average','포지션 평균')}"></s></div></div>`).join('')}</div>
+  <p class="p2-p">${read}</p></section>
+ <section class="p2-sec">${PN.hh(LX('LwRC+ by game','경기별 LwRC+'),LX(`Last 10 sets · dashed = season ${p.ix}`,`최근 10세트 · 점선 = 시즌 ${p.ix}`))}${PN.bars(games,{h:96,ref:p.ix})}</section>
+ ${SUP.html('player',p.name)}
+ ${rec?`<section class="p2-sec">${PN.hh(LX('Recent matches','최근 경기'),LX('LwRC+ · K / D / A','LwRC+ · K / D / A'))}<div class="p2-list">${rec}</div></section>`:''}
+ ${PN.asks([LX(`When is ${p.name} at their best?`,`${p.name}은(는) 어떤 상황에서 가장 잘해?`),...(oppP?[LX(`${p.name} or ${oppP.name}: who has contributed more?`,`${p.name}와(과) ${oppP.name}, 누가 더 기여했어?`)]:[])])}
+ <p class="ip-note">${LX('Sample player name and figures for the preview. Season contribution is a provisional measure, not converted to wins.','선수명과 수치는 미리보기용 샘플 데이터입니다. 누적 기여는 승수로 환산하지 않은 잠정 지표입니다.')}</p>`}
+
+/* radar: axes [{l,a,b}] (percentiles) */
+function radarSVG(A,B,na,nb,note){let ax=A;if(B&&B.length&&A[0]&&A[0].v!=null)ax=A.map((d,i)=>({l:d.l,a:d.v,b:B[i].v}));
+ const n=ax.length,cx=160,cy=176,R=130;const pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/n;return[cx+Math.cos(a)*R*Math.max(.04,v/100),cy+Math.sin(a)*R*Math.max(.04,v/100)]};
+ const P=f=>ax.map((d,i)=>pt(i,f(d)).map(z=>z.toFixed(1)).join(',')).join(' ');
+ const rings=[100,66,33].map(l=>`<polygon class="rg" points="${P(()=>l)}"/>`).join('');const spokes=ax.map((d,i)=>{const[x,y]=pt(i,100);return `<line class="sp" x1="${cx}" y1="${cy}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/>`}).join('');
+ const labels=ax.map((d,i)=>{const[x,y]=pt(i,122);const c=Math.cos(-Math.PI/2+i*2*Math.PI/n);const anc=Math.abs(c)<.2?'middle':c>0?'start':'end';
+  return `<text class="lb" x="${x.toFixed(1)}" y="${(y-2).toFixed(1)}" text-anchor="${anc}">${d.l}</text><text class="vl" x="${x.toFixed(1)}" y="${(y+15).toFixed(1)}" text-anchor="${anc}"><tspan class="va">${d.a}</tspan><tspan class="dt"> · </tspan><tspan class="vb">${d.b}</tspan></text>`}).join('');
+ return `<figure class="p2-radar"><svg viewBox="-96 -24 512 400" role="img" aria-label="${PN.esc(na+' vs '+nb)}">${rings}${spokes}<polygon class="pb" points="${P(d=>d.b)}"/><polygon class="pa" points="${P(d=>d.a)}"/>${labels}</svg>
+  <figcaption><span class="la">${na}</span><span class="lb2">${nb}</span>${note?`<em>${note}</em>`:''}</figcaption></figure>`}
+function p2Row(k,a,b,fa,fb,lower){let na=+a,nb=+b;if(lower){na=-na;nb=-nb}const lo=Math.min(0,na,nb);const mx=Math.max(na-lo,nb-lo)||1;
+ const wa=Math.max(6,Math.round((na-lo)/mx*100)),wb=Math.max(6,Math.round((nb-lo)/mx*100));const aw=na>nb,bw=nb>na;
+ return `<div class="p2-dv"><b class="${aw?'win a':''}">${fa??a}</b><span class="bar l"><i class="${aw?'':'dim'}" style="width:${wa}%"></i></span><span class="k">${k}</span><span class="bar r"><i class="${bw?'':'dim'}" style="width:${wb}%"></i></span><b class="${bw?'win b':''}">${fb??b}</b></div>`}
 function oppOf(team){const m=DB.sched.filter(x=>x.st!=='final'&&(x.a===team||x.b===team)).sort((a,b)=>a.at-b.at)[0];return m?(m.a===team?m.b:m.a):null}
-function sparkPair(a,b){const ser=p=>{const r=mkRnd(hashStr(p.name));const v=[];for(let i=0;i<10;i++)v.push(Math.round(p.ix+(r()-.5)*70));v[9]=p.ix;return v};
- const va=ser(a),vb=ser(b);const lo=Math.min(60,...va,...vb),hi=Math.max(140,...va,...vb),W=300,H=70,x=i=>4+i*(W-8)/9,y=n=>H-6-(n-lo)/(hi-lo)*(H-12);
- const pl=v=>v.map((n,i)=>x(i)+','+y(n)).join(' ');
- return `<svg class="ip-spark cmp" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><line x1="0" x2="${W}" y1="${y(100)}" y2="${y(100)}" class="b"/><polyline class="pa" points="${pl(va)}"/><polyline class="pb" points="${pl(vb)}"/></svg>`}
-function cmpRow(label,va,vb,fa,fb,higherBetter=true,unit=''){let na=+va,nb=+vb;if(!higherBetter){const mn=Math.max(1,Math.min(na,nb));na=mn/Math.max(1,na)*100;nb=mn/Math.max(1,nb)*100}const mx=Math.max(Math.abs(na),Math.abs(nb),1);
- const wa=na>nb,wb=nb>na;
- return `<div class="cr"><div class="cv a ${wa?'win':''}"><b>${fa??va}${unit}</b><span class="cb"><i style="width:${Math.max(4,Math.abs(na)/mx*100)}%"></i></span></div><div class="cl">${label}</div><div class="cv b ${wb?'win':''}"><span class="cb"><i style="width:${Math.max(4,Math.abs(nb)/mx*100)}%"></i></span><b>${fb??vb}${unit}</b></div></div>`}
-function rankIn(arr,item){return arr.indexOf(item)+1}
-function cmpPlayersHTML(a,b){const rk=p=>rankIn(DB.players.filter(x=>x.lg===p.lg).sort((m,n)=>n.ix-m.ix),p);const sh=p=>Math.round(Math.max(0,p.pg)/Math.max(1,TEAM[p.team].pg)*100);
- const hdr=p=>`<button class="cmp-who" data-p="${p.name}"><span class="rl">${p.role}</span><b>${p.name}</b><span>${p.team} · ${p.lg}</span></button>`;
- return `<div class="cmp-head"><div class="ca">${hdr(a)}</div><span class="vs">VS</span><div class="cb2">${hdr(b)}</div></div>
- ${(()=>{const pool=a.lg===b.lg?DB.players.filter(x=>x.lg===a.lg):DB.players;return radarSVG(playerAxes(a,pool),playerAxes(b,pool),a.name,b.name)})()}<div class="cmp-rows">${cmpRow('<span class="m">LwRC+</span>',a.ix,b.ix)}${cmpRow('League rank',rk(a),rk(b),'#'+rk(a),'#'+rk(b),false)}${cmpRow('Gold +/G',a.pg,b.pg,(a.pg>0?'+':'')+a.pg,(b.pg>0?'+':'')+b.pg)}${cmpRow('Team share',sh(a),sh(b),null,null,true,'%')}${cmpRow('Games',a.g,b.g)}</div>
- <div class="ip-sec"><div class="ip-h">Last 10 games <span class="lg-a">${a.name}</span> <span class="lg-b">${b.name}</span></div>${sparkPair(a,b)}<div class="ip-cap"><span>100 = league average for the role</span></div></div>
- ${a.role!==b.role?'<p class="ip-note">Different roles: LwRC+ compares each player with their own role, so the numbers line up but the jobs differ.</p>':''}
- ${a.lg!==b.lg?'<p class="ip-note">Different leagues: each player is measured against their own league.</p>':''}`}
-function cmpTeamsHTML(a,b){const rk=t=>rankIn(standings(t.lg),t);
- const h2h=DB.sched.filter(m=>m.sc&&((m.a===a.team&&m.b===b.team)||(m.a===b.team&&m.b===a.team))).sort((x,y)=>y.at-x.at)[0];
- const nx=DB.sched.filter(m=>m.st==='up'&&((m.a===a.team&&m.b===b.team)||(m.a===b.team&&m.b===a.team))).sort((x,y)=>x.at-y.at)[0];
- const hdr=t=>`<button class="cmp-who" data-t="${t.team}"><b>${t.team}</b><span>${LGS[t.lg].r} · ${t.lg}</span></button>`;
- const form=t=>`<span class="frm">${[...t.form].map(c=>`<i class="${c==='W'?'w':''}">${c}</i>`).join('')}</span>`;
- const roles=['TOP','JG','MID','BOT','SUP'].map(r=>{const pa=DB.players.find(p=>p.team===a.team&&p.role===r),pb=DB.players.find(p=>p.team===b.team&&p.role===r);
-  return `<div class="rv"><button class="ent2" data-p="${pa.name}">${pa.name}</button><span class="ix ${pa.ix>pb.ix?'win':''}">${pa.ix}</span><span class="rr">${r}</span><span class="ix ${pb.ix>pa.ix?'win':''}">${pb.ix}</span><button class="ent2" data-p="${pb.name}">${pb.name}</button></div>`}).join('');
- let meet='';if(nx){const p=localParts(nx.at);meet=`<div class="ip-row"><span>Next meeting</span><b>${p.d} · ${p.t}</b></div>`}
- if(h2h){const[x,y]=h2h.sc.split(':').map(Number);const w=x>y?h2h.a:h2h.b;meet+=`<div class="ip-row"><span>Last meeting</span><b>${w} won ${Math.max(x,y)}:${Math.min(x,y)}</b></div>`}
- return `<div class="cmp-head"><div class="ca">${hdr(a)}</div><span class="vs">VS</span><div class="cb2">${hdr(b)}</div></div>
- ${(()=>{const pool=a.lg===b.lg?DB.teams.filter(x=>x.lg===a.lg):DB.teams;return radarSVG(teamAxes(a,pool),teamAxes(b,pool),a.team,b.team)})()}<div class="cmp-rows">${cmpRow('Standing',rk(a),rk(b),'#'+rk(a),'#'+rk(b),false)}${cmpRow('Win%',a.wr,b.wr,a.wr.toFixed(3).replace(/^0/,''),b.wr.toFixed(3).replace(/^0/,''))}${cmpRow('Set ±',a.sd,b.sd,(a.sd>0?'+':'')+a.sd,(b.sd>0?'+':'')+b.sd)}${cmpRow('Team <span class="m">LwRC+</span>',a.ix,b.ix)}</div>
- <div class="ip-sec"><div class="ip-h">Form</div><div class="cmp-form">${form(a)}<span>Last 5</span>${form(b)}</div></div>
- <div class="ip-sec"><div class="ip-h">Roster by role · <span class="m">LwRC+</span></div><div class="cmp-roles">${roles}</div></div>
- ${meet?`<div class="ip-sec">${meet}</div>`:''}
- ${a.lg!==b.lg?'<p class="ip-note">Different leagues: records come from separate seasons.</p>':''}`}
-function pickerHTML(kind,base,cur){
- if(kind==='player'){const p=PBY[base];const same=DB.players.filter(x=>x.lg===p.lg&&x.role===p.role&&x.name!==p.name).sort((m,n)=>n.ix-m.ix);
-  const opp=oppOf(p.team);const oppP=opp&&DB.players.find(x=>x.team===opp&&x.role===p.role);
-  const sug=[...new Set([oppP&&oppP.name,...same.slice(0,3).map(x=>x.name)].filter(Boolean))].slice(0,4);
-  const groups=LG_ORDER.map(lg=>`<optgroup label="${lg}">${DB.players.filter(x=>x.lg===lg&&x.name!==p.name).sort((m,n)=>m.team.localeCompare(n.team)||ROLE_ORDER[m.role]-ROLE_ORDER[n.role]).map(x=>`<option value="${x.name}" ${x.name===cur?'selected':''}>${x.name} · ${x.team} ${x.role}</option>`).join('')}</optgroup>`).join('');
-  return `<div class="cmp-pick"><span class="ip-h">Compare with</span><div class="cmp-sug">${sug.map(n=>`<button class="chipx ${n===cur?'on':''}" data-pick="${n}">${n}${oppP&&n===oppP.name?' <em>next opp.</em>':''}</button>`).join('')}</div><select class="cmp-sel" aria-label="Pick a player">${cur?'':'<option value="">More players…</option>'}${groups}</select></div>`}
- const t=TEAM[base];const opp=oppOf(t.team);const top=standings(t.lg).filter(x=>x.team!==t.team).slice(0,3).map(x=>x.team);
- const sug=[...new Set([opp,...top].filter(Boolean))].slice(0,4);
- const groups=LG_ORDER.map(lg=>`<optgroup label="${lg}">${standings(lg).filter(x=>x.team!==t.team).map(x=>`<option value="${x.team}" ${x.team===cur?'selected':''}>${x.team}</option>`).join('')}</optgroup>`).join('');
- return `<div class="cmp-pick"><span class="ip-h">Compare with</span><div class="cmp-sug">${sug.map(n=>`<button class="chipx ${n===cur?'on':''}" data-pick="${n}">${n}${n===opp?' <em>next opp.</em>':''}</button>`).join('')}</div><select class="cmp-sel" aria-label="Pick a team">${cur?'':'<option value="">More teams…</option>'}${groups}</select></div>`}
-function openCompare(kind,a,b){const body=document.getElementById('ip-body');
- if(!b){b=kind==='player'?(()=>{const p=PBY[a];const o=oppOf(p.team);const op=o&&DB.players.find(x=>x.team===o&&x.role===p.role);return op?op.name:DB.players.filter(x=>x.lg===p.lg&&x.role===p.role&&x.name!==a).sort((m,n)=>n.ix-m.ix)[0].name})():(oppOf(a)||standings(TEAM[a].lg).find(x=>x.team!==a).team)}
- const A=kind==='player'?PBY[a]:TEAM[a],B=kind==='player'?PBY[b]:TEAM[b];if(!A||!B)return;
- document.getElementById('ip-k').textContent=kind==='player'?'Compare players':'Compare teams';
- body.innerHTML=`<button class="cmp-back" data-back="${kind}/${a}">← ${a}</button>${pickerHTML(kind,a,b)}${kind==='player'?cmpPlayersHTML(A,B):cmpTeamsHTML(A,B)}
- <div class="ip-acts"><button class="pill" data-ask="${kind==='player'?`Compare ${a} and ${b}: who is creating more gold, and how?`:`${a} vs ${b}: who has the edge right now?`}">Ask RORR to compare</button><button class="pill ghost" data-swap="${kind}|${b}|${a}">Swap sides</button></div>
- <p class="ip-note">Sample figures for the preview.</p>`;
- ipKey=`compare/${kind}/${a}/${b}`;document.body.classList.add('ip-open','ip-cmp');document.getElementById('ip-body').scrollTop=0;
+function pickerHTML(kind,base,cur){const isP=kind==='player';const B=isP?PBY[base]:TEAM[base];const lg=B.lg;
+ const tabs=`<div class="p2-tabs" role="tablist" aria-label="${LX('League','리그')}">${LG_ORDER.map(l=>l===lg?`<button type="button" role="tab" aria-selected="true" class="on">${l}</button>`:`<button type="button" role="tab" aria-selected="false" disabled title="${LX('Opening soon','곧 열려요')}">${l}<em>${LX('Soon','곧')}</em></button>`).join('')}</div>`;
+ let sug,opts,oppN;
+ if(isP){const opp=oppOf(B.team);const op=opp&&DB.players.find(x=>x.team===opp&&x.role===B.role&&x.lg===lg);oppN=op&&op.name;
+  const same=DB.players.filter(x=>x.lg===lg&&x.role===B.role&&x.name!==base).sort((m,n)=>n.ix-m.ix);
+  sug=[...new Set([oppN,...same.slice(0,3).map(x=>x.name),cur].filter(Boolean))].slice(0,5).map(n=>({id:n,l:`${n} · ${PBY[n].team}`}));
+  opts=DB.players.filter(x=>x.lg===lg&&x.name!==base).sort((m,n)=>ROLE_ORDER[m.role]-ROLE_ORDER[n.role]||n.ix-m.ix).map(x=>`<option value="${x.name}" ${x.name===cur?'selected':''}>${x.name} · ${x.team} ${MX.role(x.role)}</option>`).join('')}
+ else{oppN=oppOf(base);if(oppN&&TEAM[oppN].lg!==lg)oppN=null;const top=standings(lg).filter(x=>x.team!==base).slice(0,3).map(x=>x.team);
+  sug=[...new Set([oppN,...top,cur].filter(Boolean))].slice(0,5).map(n=>({id:n,l:n}));
+  opts=standings(lg).filter(x=>x.team!==base).map(x=>`<option value="${x.team}" ${x.team===cur?'selected':''}>${x.team}</option>`).join('')}
+ return `<section class="p2-sec p2-pick"><div class="p2-hh sm"><span>${isP?LX('Compare with','비교할 선수'):LX('Compare with','비교할 팀')}</span><span>${LX(`Only ${lg} is open for now`,`지금은 ${lg}만 열려 있어요`)}</span></div>${tabs}
+  <div class="p2-chips">${sug.map(x=>`<button type="button" class="p2-chip ${x.id===cur?'on':''}" data-pick="${x.id}">${x.l}${x.id===oppN?` <em>· ${LX('next opponent','다음 상대')}</em>`:''}</button>`).join('')}<button type="button" class="p2-chip srch" data-srch>${LX(`Search ${lg}`,`${lg}에서 검색`)}</button></div>
+  <select class="cmp-sel" hidden aria-label="${isP?LX('Pick a player','선수 선택'):LX('Pick a team','팀 선택')}"><option value="">${LX('Choose…','선택…')}</option>${opts}</select>
+  <p class="p2-info">${isP?LX(`For now you can compare ${lg} players with each other. When other leagues open, their tabs switch on and a league-adjusted comparison arrives in beta.`,`지금은 ${lg} 선수끼리만 비교할 수 있어요. 다른 리그가 열리면 리그 탭이 활성화되고, 리그 수준 차이를 보정한 비교를 베타로 함께 제공합니다.`):LX(`For now you can compare ${lg} teams with each other. When other leagues open, their tabs switch on and a league-adjusted comparison arrives in beta.`,`지금은 ${lg} 팀끼리만 비교할 수 있어요. 다른 리그가 열리면 리그 탭이 활성화되고, 리그 수준 차이를 보정한 비교를 베타로 함께 제공합니다.`)}</p></section>`}
+function cmpCTA(a,b,ask,lab){const m=PN.meet(a,b);let pri='';if(m){const p=localParts(m.at);pri=`<button type="button" class="p2-btn pri lg" data-m="${m.id}">${m.st==='live'?LX('Watch the live meeting','진행 중인 맞대결 보기'):LX(`Next meeting · ${p.d.slice(5)} ${p.t}`,`다음 맞대결 보기 · ${p.d.slice(5)} ${p.t}`)}</button>`}
+ return `<section class="p2-sec p2-ctas">${pri}<button type="button" class="p2-btn ai lg" data-ask="${PN.esc(ask)}">${lab}</button></section>`}
+
+function cmpTeamsHTML(a,b){const S=standings(a.lg);const ra=S.indexOf(a)+1,rb=S.indexOf(b)+1;const sa=PN.ts(a),sb=PN.ts(b);const pool=DB.teams.filter(x=>x.lg===a.lg);
+ const pr=(fn,t)=>pctRank(pool.map(fn),fn(t));const AX=[[LX('Team LwRC+','팀 LwRC+'),x=>x.ix],[LX('Win%','승률'),x=>x.wr],[LX('Set ±','세트 득실'),x=>x.sd],[LX('Gold @15','15분 골드'),x=>PN.ts(x).g15],[LX('Late win%','후반 승률'),x=>PN.ts(x).late],[LX('Objectives','오브젝트'),x=>PN.ts(x).drg]];
+ const ax=AX.map(([l,fn])=>({l,a:pr(fn,a),b:pr(fn,b)}));
+ const sameRec=a.W===b.W;const ea=sa.g15>sb.g15?a:b,la=sa.baron>sb.baron?a:b;
+ const view=ea===la?LX(`${ea.team} have the edge on both ends: more gold at 15 minutes (${PN.sg(PN.ts(ea).g15)}) and a better close after the first Baron (${PN.ts(ea).baron}%). ${ea===a?b.team:a.team} need an early fight to swing it.`,`${ea.team}이(가) 초반과 후반 모두 앞섭니다. 15분 골드 ${PN.sg(PN.ts(ea).g15)}, 첫 바론 후 승률 ${PN.ts(ea).baron}%입니다. ${ea===a?b.team:a.team}은(는) 이른 교전으로 흐름을 바꿔야 합니다.`)
+  :LX(`${sameRec?'The records match, but they win in different ways.':'They win in different ways.'} ${ea.team} build a lead by 15 minutes and hold it; ${la.team} stay close early and turn it around in the first Baron fight. This one likely hinges on whether the 15-minute gap passes 1,500.`,`${sameRec?'전적은 같지만 이기는 방식이 다릅니다.':'두 팀은 이기는 방식이 다릅니다.'} ${ea.team}은(는) 15분까지 골드를 벌리고 그대로 굳히는 팀이고, ${la.team}은(는) 초반을 비슷하게 버틴 뒤 첫 바론 교전에서 뒤집는 팀입니다. 15분 시점 골드 격차가 1,500을 넘느냐에서 갈릴 가능성이 큽니다.`);
+ const rows=[p2Row(LX('Standing','순위'),ra,rb,PN.rk(ra),PN.rk(rb),true),p2Row(LX('Win%','승률'),a.wr,b.wr,Math.round(a.wr*100)+'%',Math.round(b.wr*100)+'%'),p2Row(LX('Set ±','세트 득실'),a.sd,b.sd,PN.sg(a.sd),PN.sg(b.sd)),p2Row(LX('Team LwRC+','팀 LwRC+'),a.ix,b.ix),
+  p2Row(LX('Gold @15','15분 골드'),sa.g15,sb.g15,PN.sg(sa.g15),PN.sg(sb.g15)),p2Row(LX('Win% after Baron','첫 바론 후 승률'),sa.baron,sb.baron,sa.baron+'%',sb.baron+'%'),p2Row(LX('Dragons / game','경기당 드래곤'),sa.drg,sb.drg)].join('');
+ const lanes=ROLES.map(r=>{const pa=MX.pl(a.team,r),pb=MX.pl(b.team,r);return `<div class="p2-lane"><button type="button" class="nm" data-p="${pa.name}">${pa.name}</button><b class="va ${pa.ix>pb.ix?'win':''}">${pa.ix}</b><span class="rl">${MX.role(r)}</span><b class="vb ${pb.ix>pa.ix?'win':''}">${pb.ix}</b><button type="button" class="nm r" data-p="${pb.name}">${pb.name}</button></div>`}).join('');
+ const H=MX.h2h({a:a.team,b:b.team,at:Date.now(),id:a.team+b.team});const aw=H.filter(x=>x.side==='a').length;const last=H[0];
+ const fm=t=>[...t.form].map(c=>`<i class="${c==='W'?'w':''}">${c}</i>`).join('');
+ return `<section class="p2-vs"><button type="button" class="p2-card a" data-t2="${a.team}"><b>${a.team}</b><span>${LX(`${a.W}W ${a.L}L · #${ra}`,`${a.W}승 ${a.L}패 · ${ra}위`)}</span></button><span class="vs">vs</span><button type="button" class="p2-card b" data-t2="${b.team}"><b>${b.team}</b><span>${LX(`${b.W}W ${b.L}L · #${rb}`,`${b.W}승 ${b.L}패 · ${rb}위`)}</span></button></section>
+ <section class="p2-sec">${PN.hh(LX('How RORR sees this matchup','RORR가 보는 이 매치업'))}<p class="p2-p lg">${view}</p></section>
+ <section class="p2-sec">${PN.hh(LX('At a glance','한눈에 보기'),LX('Percentile within the league · 100 = best','리그 내 백분위 · 100 = 최고'))}${radarSVG(ax,null,a.team,b.team)}</section>
+ <section class="p2-sec">${PN.hh(LX('Details','세부 지표'))}${rows}</section>
+ <section class="p2-sec">${PN.hh(LX('Lane by lane','라인별 맞대결'),'LwRC+')}${lanes}</section>
+ <section class="p2-two"><div><span class="p2c">${LX('Form · last 5','최근 5경기 폼')}</span><div class="p2-fm"><b class="p2a">${a.team}</b><span class="frm">${fm(a)}</span><b class="p2b">${b.team}</b><span class="frm">${fm(b)}</span></div></div>
+  <div><span class="p2c">${LX('Head-to-head · last 5','맞대결 최근 5경기')}</span><b class="p2-h2h"><span class="p2a">${a.team} ${aw}</span> <i>:</i> <span class="p2b">${5-aw} ${b.team}</span></b><span class="p2c">${LX(`Last ${last.d} · ${last.w} ${last.sc}`,`마지막 ${last.d} · ${last.w} ${last.sc}`)}</span></div></section>
+ ${cmpCTA(a.team,b.team,LX(`${a.team} vs ${b.team}: who has the edge right now?`,`${a.team} vs ${b.team}, 지금 누가 유리해?`),LX('Ask RORR about this matchup','이 매치업, RORR에 묻기'))}`}
+
+function cmpPlayersHTML(a,b){const sameRole=a.role===b.role;const pool=DB.players.filter(x=>x.lg===a.lg&&(!sameRole||x.role===a.role));const pr=(fn,p)=>pctRank(pool.map(fn),fn(p));
+ const AX=[[LX('Production','생산'),x=>PN.ps(x).prod],[LX('Denial','차단'),x=>PN.ps(x).den],[LX('Loss control','손실 관리'),x=>-PN.ps(x).loss],[LX('First 15 min','초반 15분'),x=>PN.ps(x).g15],[LX('Late fights','후반 교전'),x=>PN.ps(x).late],[LX('Consistency','일관성'),x=>PN.ps(x).cons]];
+ const ax=AX.map(([l,fn])=>({l,a:pr(fn,a),b:pr(fn,b)}));const sa=PN.ps(a),sb=PN.ps(b);const ca=MX.cum(a),cb=MX.cum(b);
+ const role=MX.role(a.role);const hi=a.ix>=b.ix?a:b,lo=hi===a?b:a;const cumHi=ca>=cb?a:b;const early=sa.g15>sb.g15?a:b;const late=early===a?b:a;
+ const view=LX(`${hi.name} plays at a ${Math.abs(a.ix-b.ix)<10?'slightly ':''}higher level when on the field${cumHi===hi?', and leads in season contribution too':`, but ${cumHi.name} has the bigger season contribution`}. The difference is style: ${early.name} builds gold through the first 15 minutes, while ${late.name} adds more in objective fights later on.`,
+  `출전했을 때의 수준은 ${hi.name}이(가) ${Math.abs(a.ix-b.ix)<10?'조금 ':''}높고, 시즌 누적 기여${cumHi===hi?'도 '+hi.name+'이(가) 앞섭니다':'는 '+cumHi.name+'이(가) 앞섭니다'}. 차이는 성향에서 납니다. ${early.name}은(는) 초반 15분에 골드를 벌리는 쪽이고, ${late.name}은(는) 후반 오브젝트 교전에서 기여를 쌓습니다.`);
+ const per=p=>Math.round(MX.cum(p)/Math.max(1,p.g));
+ const rows=[p2Row('LwRC+',a.ix,b.ix),p2Row(LX('Season contribution','누적 기여'),ca,cb,PN.kk(ca),PN.kk(cb)),p2Row(LX('Per set','세트당 기여'),per(a),per(b),PN.sg(per(a)),PN.sg(per(b))),p2Row(LX('Sets played','출전 세트'),a.g,b.g),
+  p2Row('KDA',sa.kda,sb.kda),p2Row(LX('Kill participation','킬 관여율'),sa.kp,sb.kp,sa.kp+'%',sb.kp+'%'),p2Row(LX('Gold diff @15','15분 골드 차'),sa.g15,sb.g15,PN.sg(sa.g15),PN.sg(sb.g15))].join('');
+ const mx=Math.max(sa.prod,sb.prod)*1.1;const w=v=>Math.round(v/mx*100)+'%';
+ const parts=[[LX('Production','생산 기여'),LX('Resources your side created','우리 팀 자원 생산·확보'),sa.prod,sb.prod,'+'],[LX('Denial','차단 기여'),LX('Resources kept from the enemy','상대 자원 획득 차단'),sa.den,sb.den,'+'],[LX('Loss','손실'),LX('Given up through deaths and more','데스 등으로 내준 자원'),sa.loss,sb.loss,'−']];
+ const partsH=parts.map(x=>`<div class="p2-pp"><span class="hd">${x[0]} <em>${x[1]}</em></span><div class="ln a"><span><i style="width:${w(x[2])}"></i></span><b>${x[4]}${x[2].toLocaleString('en-US')}</b></div><div class="ln b"><span><i style="width:${w(x[3])}"></i></span><b>${x[4]}${x[3].toLocaleString('en-US')}</b></div></div>`).join('');
+ let direct='';if(a.team!==b.team){const H=MX.h2h({a:a.team,b:b.team,at:Date.now(),id:a.team+b.team});const r=mkRnd(hashStr(a.name+b.name+'sets'));let win=0;
+  const sets=H.map(h=>{const sn=1+Math.floor(r()*h.sets);const aw=h.side==='a'?r()<.75:r()<.25;if(aw)win++;const va=Math.round(a.ix+(aw?10:-25)+(r()-.5)*40),vb=Math.round(b.ix+(aw?-25:10)+(r()-.5)*40);
+   return `<div class="p2-set"><span class="d">${h.d} · ${LX(`Game ${sn}`,`${sn}세트`)}</span><b class="va ${va>vb?'win':''}">${va}</b><span class="w ${aw?'p2a':'p2b'}">${LX(`${aw?a.team:b.team} won`,`${aw?a.team:b.team} 승`)}</span><b class="vb ${vb>va?'win':''}">${vb}</b></div>`}).join('');
+  direct=`<section class="p2-sec">${PN.hh(LX('Sets played head-to-head','직접 맞붙은 세트'))}<div class="p2-list">${sets}</div><span class="p2-cap">${LX(`LwRC+ per set · ${a.name}'s team went ${win}–${5-win} in the last 5 sets`,`세트별 LwRC+ · 최근 5세트에서 ${a.name} 쪽 팀 ${win}승 ${5-win}패`)}</span></section>`}
+ const card=(p,s)=>`<button type="button" class="p2-card ${s}" data-p="${p.name}"><b>${p.name}</b><span>${p.team} · ${MX.role(p.role)} · ${LX(`${p.g} sets`,`${p.g}세트`)}</span></button>`;
+ return `<section class="p2-vs">${card(a,'a')}<span class="vs">vs</span>${card(b,'b')}</section>
+ <section class="p2-sec">${PN.hh(sameRole?LX(`How RORR sees these two ${role} players`,`RORR가 보는 두 ${role}`):LX('How RORR sees these two','RORR가 보는 두 선수'))}<p class="p2-p lg">${view}</p>${sameRole?'':`<p class="p2-info">${LX('Different roles: LwRC+ compares each player with their own role, so the numbers line up but the jobs differ.','포지션이 달라요. LwRC+는 각자 포지션 평균과 비교한 값이라 숫자는 나란히 볼 수 있지만 역할은 다릅니다.')}</p>`}</section>
+ <section class="p2-sec">${PN.hh(LX('At a glance','한눈에 보기'),sameRole?LX(`Percentile among ${role} players · 100 = best`,`${role} 내 백분위 · 100 = 최고`):LX('Percentile within the league · 100 = best','리그 내 백분위 · 100 = 최고'))}${radarSVG(ax,null,a.name,b.name)}</section>
+ <section class="p2-sec">${PN.hh(LX('Details','세부 지표'))}${rows}</section>
+ <section class="p2-sec">${PN.hh(LX('Contribution mix','기여 구성 비교'),LX('Gold per set','세트당 골드'))}${partsH}<span class="p2-cap">${LX('For loss, shorter is better.','손실은 짧을수록 좋습니다.')}</span></section>
+ ${direct}
+ ${cmpCTA(a.team,b.team,LX(`Compare ${a.name} and ${b.name}: who is contributing more, and how?`,`${a.name}와(과) ${b.name}, 누가 어떻게 더 기여하고 있어?`),LX('Ask RORR about these two','두 선수, RORR에 묻기'))}`}
+
+function openCompare(kind,a,b){const body=document.getElementById('ip-body');const isP=kind==='player';const A0=isP?PBY[a]:TEAM[a];if(!A0)return;
+ if(!b||!(isP?PBY[b]:TEAM[b])){b=isP?(()=>{const o=oppOf(A0.team);const op=o&&DB.players.find(x=>x.team===o&&x.role===A0.role&&x.lg===A0.lg);return op?op.name:DB.players.filter(x=>x.lg===A0.lg&&x.role===A0.role&&x.name!==a).sort((m,n)=>n.ix-m.ix)[0].name})()
+  :(()=>{const o=oppOf(a);return o&&TEAM[o].lg===A0.lg?o:standings(A0.lg).find(x=>x.team!==a).team})()}
+ const A=A0,B=isP?PBY[b]:TEAM[b];
+ setTop(isP?LX('Compare players','선수 비교'):LX('Compare teams','팀 비교'),null);
+ body.innerHTML=`<button type="button" class="cmp-back p2-back" data-back="${kind}/${a}">← ${a}</button>${pickerHTML(kind,a,b)}${isP?cmpPlayersHTML(A,B):cmpTeamsHTML(A,B)}
+ <p class="ip-note">${LX('Sample figures for the preview. For lower-is-better measures (standing, loss) the bars are reversed.','수치는 미리보기용 샘플 데이터입니다. 낮을수록 좋은 지표(순위·손실)는 막대를 반대로 계산합니다.')}</p>`;
+ ipKey=`compare/${kind}/${a}/${b}`;document.body.classList.add('ip-open','ip-cmp');body.scrollTop=0;
  const bl=document.body.classList;if(!bl.contains('chatting')&&!bl.contains('pagev')&&!bl.contains('acct'))history.replaceState(null,'','#'+ipKey);
  const sel=body.querySelector('.cmp-sel');sel.onchange=()=>sel.value&&openCompare(kind,a,sel.value);
- body.querySelectorAll('[data-pick]').forEach(x=>x.onclick=e=>{e.stopPropagation();openCompare(kind,a,x.dataset.pick)})}
+ body.querySelector('[data-srch]').onclick=e=>{e.stopPropagation();sel.hidden=!sel.hidden;if(!sel.hidden){sel.focus();try{sel.showPicker()}catch(_){}}};
+ body.querySelectorAll('[data-pick]').forEach(x=>x.onclick=e=>{e.stopPropagation();openCompare(kind,a,x.dataset.pick)});
+ body.querySelectorAll('[data-t2]').forEach(x=>x.onclick=e=>{e.stopPropagation();document.body.classList.remove('ip-cmp');openTeam(x.dataset.t2)})}
+
 document.getElementById('ipanel').addEventListener('click',e=>{const t=e.target;
  const c=t.closest('[data-cmp]');if(c){e.stopImmediatePropagation();const[k,id]=c.dataset.cmp.split('|');openCompare(k,id);return}
  const s=t.closest('[data-swap]');if(s){e.stopImmediatePropagation();const[k,a,b]=s.dataset.swap.split('|');openCompare(k,a,b);return}
