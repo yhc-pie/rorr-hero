@@ -1769,6 +1769,22 @@ body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
 @media (hover:none){.bx-card.holo .in::before,.hx-holo>div::before{opacity:.22}.bx-card.holo,.hx-holo{animation:bxFoil 6s ease-in-out infinite alternate}}
 @media (prefers-reduced-motion:reduce){.bx-card,.hx-holo{transform:none!important;animation:none!important}}
 
+
+/* ===== idle glint & glow on moment cards ===== */
+.bx-card .in>.gl,.hx-holo>div>.gl{position:absolute;inset:-20% -60%;z-index:3;pointer-events:none;opacity:0;
+ background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.0) 44%,rgba(255,255,255,.38) 50%,rgba(255,255,255,0) 56%,transparent 60%);
+ transform:translateX(-60%);animation:bxGlint 9s ease-in-out var(--d,0s) infinite;mix-blend-mode:overlay}
+.bx-card.gold .in>.gl{background:linear-gradient(105deg,transparent 40%,rgba(255,226,150,0) 44%,rgba(255,226,150,.55) 50%,rgba(255,226,150,0) 56%,transparent 60%);mix-blend-mode:screen}
+.bx-card.holo .in>.gl,.hx-holo>div>.gl{background:linear-gradient(105deg,transparent 38%,rgba(138,92,255,.0) 42%,rgba(255,42,109,.28) 46%,rgba(255,209,102,.34) 50%,rgba(6,214,160,.28) 54%,rgba(17,138,178,0) 58%,transparent 62%);mix-blend-mode:screen}
+@keyframes bxGlint{0%,70%{opacity:0;transform:translateX(-60%)}74%{opacity:1}86%{opacity:1}90%,100%{opacity:0;transform:translateX(60%)}}
+.bx-card.holo,.hx-holo{animation:bxGlow 9s ease-in-out var(--d,0s) infinite}
+.bx-card.gold{animation:bxGlowG 9s ease-in-out var(--d,0s) infinite}
+@keyframes bxGlow{0%,70%,100%{box-shadow:0 0 0 rgba(138,92,255,0)}80%{box-shadow:0 0 22px rgba(138,92,255,.45),0 0 44px rgba(6,214,160,.18)}}
+@keyframes bxGlowG{0%,70%,100%{box-shadow:0 0 0 rgba(242,199,102,0)}80%{box-shadow:0 0 18px rgba(242,199,102,.38)}}
+.bx-card.tilt .in>.gl,.hx-holo.tilt>div>.gl{animation:none;opacity:0}
+.bx-card.tilt,.hx-holo.tilt{animation:none}
+@media (hover:none){.bx-card.holo,.hx-holo{animation:bxFoil 6s ease-in-out infinite alternate,bxGlow 9s ease-in-out var(--d,0s) infinite}}
+@media (prefers-reduced-motion:reduce){.bx-card .in>.gl,.hx-holo>div>.gl{display:none}.bx-card,.hx-holo{animation:none!important}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -2516,7 +2532,7 @@ const BX=(()=>{const K='rorr-bx';
  const decoOf=(cur,amt)=>cur==='spark'?1:amt>=CFG.deco.e3?3:amt>=CFG.deco.e2?2:1;
  const decoTxt=c=>`${c.cur==='spark'?'Spark':'Energy'} ${LX('Lv.'+c.deco,c.deco+'단계')}`;
  const subTxt=sub=>sub.replace('TODAY1',LX("Today's match 1",'오늘의 1경기')).replace(/ G(\d+) /,(m,g)=>' '+LX('G'+g,g+'세트')+' ');
- function cardHTML(c,o){o=o||{};return `<article class="bx-card ${c.tier}${o.sm?' sm':''}"><div class="in"><div class="hd"><span class="tr">${LX(...TIER[c.tier])}</span><span class="dc ${c.cur}">${decoTxt(c)}</span></div>
+ function cardHTML(c,o){o=o||{};return `<article class="bx-card ${c.tier}${o.sm?' sm':''}" style="--d:${((c.no||7)%9)*1.1}s"><div class="in"><i class="gl" aria-hidden="true"></i><div class="hd"><span class="tr">${LX(...TIER[c.tier])}</span><span class="dc ${c.cur}">${decoTxt(c)}</span></div>
   <span class="sbt">${esc(subTxt(c.sub))}</span><b class="tt">${esc(LX(c.t[0],c.t[1]))}</b>
   ${o.sm?'':`<div class="kv"><span>${LX('Win chance','승리확률')} <b>${c.w0}% → ${c.w1}%</b></span><span>${LX('Boosted with','함께 Boost')} <b>${c.fans.toLocaleString('en-US')}</b></span></div>`}
   ${o.owner?`<span class="ow">${o.owner}</span>`:''}${o.sm?'':`<span class="ft">#${String(c.no).padStart(5,'0')} · ${LX('Not tradeable','거래·양도 불가')}</span>`}</div></article>`}
@@ -3507,7 +3523,7 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
   <div class="hx-acts"><a class="hx-go pri" href="${WEBSTORE}" target="_blank" rel="noopener">${LX('Add to Chrome · Free','Chrome에 추가 · 무료')}</a><a class="hx-go gh" href="#muse" onclick="nav(event,'muse')">${LX('Try Muse · 30s','Muse 30초 체험')}</a></div>`}
  function paneHolo(){const S=DB.sched.filter(pick).filter(x=>x.st!=='up');let best=null;S.forEach(m=>{const G=gameModel(m);G.ev.forEach(e=>{const d=Math.abs(wp(e.g1)-wp(e.g0));if(!best||d>best.d)best={m,e,d,G}})});
   if(!best)return '';const{m,e}=best;const fans=1200+(hashStr(m.id)%5000);const T=e.side==='a'?m.a:m.b;const p=SUP.isPartner('team',T);const when=localParts(m.at).d;
-  return `<div class="hx-holo"><div><div class="tier"><span>${LX('Hologram · all-time moment','홀로그램 · 역대급 순간')}</span><em>${LX('Boost card','Boost 카드')}</em></div>
+  return `<div class="hx-holo" style="--d:2s"><div><i class="gl" aria-hidden="true"></i><div class="tier"><span>${LX('Hologram · all-time moment','홀로그램 · 역대급 순간')}</span><em>${LX('Boost card','Boost 카드')}</em></div>
    <h3>${p?evText(e,m):LX(`${kName[e.k]==='BARON'?'Baron':'Fight'} turnaround`,`${e.k==='baron'?'바론':'교전'} 역전`)}</h3>
    <span class="m">${p?`${m.a} vs ${m.b}`:LX("Today's match","오늘의 경기")} · ${when} · ${String(e.t).padStart(2,'0')}:${String(hashStr(m.id+e.t)%60).padStart(2,'0')}</span>
    <div class="k"><div>${LX('Win chance','승리확률')}<b>${wp(e.g0)}% → ${wp(e.g1)}%</b></div><div>${LX('Fans boosted','함께 Boost')}<b>${fans.toLocaleString('en-US')}</b></div><div>${LX('Card','카드')}<b>#${String(hashStr(m.id)%900+100).padStart(5,'0')}</b></div></div></div></div>
