@@ -2179,6 +2179,18 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 @media (max-width:640px){.ma-ban{grid-template-columns:minmax(0,1fr) auto auto;padding-left:76px}.ma-bm{width:72px}.ma-cd{display:none}.ma-ln{display:none}.ma-ban .ma-cd{display:none}}
 @media (prefers-reduced-motion:reduce){.ma-ban{transition:none}}
 .bx-mas{height:32px;border-radius:9px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:700 12.5px "Pretendard Variable",sans-serif;padding:0 8px}
+
+/* RORR moment card (draft): swing chart in the visual slot + RORR emblem as a faint backdrop */
+.bx-card.rm .in{isolation:isolate;overflow:hidden}
+.bx-card .in>.rm-bd{position:absolute;z-index:0;right:-44px;bottom:-36px;width:180px;height:auto;opacity:.11;filter:blur(1.5px) grayscale(.3);transform:rotate(-12deg);pointer-events:none}
+.bx-card.sm .in>.rm-bd,.bx-card.flc .in>.rm-bd{width:150px;right:-38px;bottom:-30px}
+.rm-sw{width:92px;height:62px;flex:none;align-self:end;margin-bottom:8px;overflow:visible}
+.rm-sw .mid{stroke:#3A4256;stroke-dasharray:3 4}.rm-sw .mk{stroke:#6A7086;stroke-dasharray:2 3}
+.rm-sw polyline{fill:none;stroke:#9CA3F1;stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.rm-sw circle{fill:#9CA3F1}
+.bx-card.rm.gold .rm-sw polyline{stroke:#F2C766}.bx-card.rm.gold .rm-sw circle{fill:#F2C766}
+.bx-card.rm.holo .rm-sw polyline{stroke:#C9B8FF}.bx-card.rm.holo .rm-sw circle{fill:#C9B8FF}
+.bx-card.sm .rm-sw{width:72px;height:50px}
+@media (max-width:520px){.bx-card.flc .rm-sw{width:64px;height:46px}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -2952,8 +2964,8 @@ const BX=(()=>{const K='rorr-bx';
    <div class="bb">${mid?`<button type="button" class="bx-rw" data-bxm="${mid}">${LX('Relive the moment','그 순간 다시 보기')}</button>`:''}${o.mine?`<button type="button" class="bx-rw gh" data-bxshare="${c.id}">${LX('Show off','자랑하기')}</button>`:''}</div></div>`}
  function peTop(c){const p=c.pl&&T1P[c.pl];return `<div class="pe-top"><span class="pe-ed"><img src="${T1LOGO}" alt="" width="16" height="16">${LX('T1 Partner Edition','T1 파트너 에디션')}</span><div class="pe-id">${p?`<b class="pe-nm">${c.pl}<em>${LX(p[0],p[2])}</em></b>`:`<b class="pe-nm">T1<em>${LX('Team moment','팀 모먼트')}</em></b>`}</div>${p?`<img class="pe-ph" src="assets/t1/web/${p[1]}.webp" alt="${c.pl}" loading="lazy">`:`<img class="pe-lg" src="${T1LOGO}" alt="T1" loading="lazy">`}</div>`}
  function rmTop(c){const d=Math.abs(c.w1-c.w0);const{v,k}=series(c);const W=96,H=64;const x=i=>Math.round(i/(v.length-1)*W),y=p=>Math.round(H-2-p/100*(H-4));
-  return `<div class="pe-top rm-top"><svg class="rm-g" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><polyline points="${v.map((p,i)=>x(i)+','+y(p)).join(' ')}"/><circle cx="${x(k)}" cy="${y(v[k])}" r="3"/></svg><span class="pe-ed rm-ed"><img src="${RORR_EM}" alt="" width="12" height="16">${LX('RORR moment','RORR 모먼트')}</span><div class="pe-id"><b class="pe-nm">${d?`+${d}%p<em>${LX('win-chance swing','승리확률 스윙')}</em>`:`${LX('Milestone','기념 순간')}<em>RORR</em>`}</b></div><img class="rm-em" src="${RORR_EM}" alt="RORR" loading="lazy"></div>`}
- function cardHTML(c,o){o=o||{};const flip=!o.noflip;return `<article class="bx-card ${c.tier}${o.sm?' sm':''}${c.pe==='T1'?' pe':' rm'}${o.fl?' flc':''}" style="--d:${((c.no||7)%9)*1.1}s"${flip?` tabindex="0" aria-pressed="false" aria-label="${esc(LX(c.t[0],c.t[1]))} · ${LX('flip card','카드 뒤집기')}"`:''}><div class="flip"><div class="in"><i class="gl" aria-hidden="true"></i><div class="hd"><span class="tr">${LX(...TIER[c.tier])}</span><span class="dc ${c.cur}">${decoTxt(c)}</span></div>${c.pe==='T1'?peTop(c):rmTop(c)}
+  return `<div class="pe-top rm-top"><span class="pe-ed rm-ed"><img src="${RORR_EM}" alt="" width="12" height="16">${LX('RORR moment','RORR 모먼트')}</span><div class="pe-id"><b class="pe-nm">${d?`+${d}%p<em>${LX('win-chance swing','승리확률 스윙')}</em>`:`${LX('Milestone','기념 순간')}<em>RORR</em>`}</b></div><svg class="rm-sw" viewBox="0 0 ${W} ${H}" aria-hidden="true"><line class="mid" x1="0" x2="${W}" y1="${H/2}" y2="${H/2}"/><line class="mk" x1="${x(k)}" x2="${x(k)}" y1="2" y2="${H-2}"/><polyline points="${v.map((p,i)=>x(i)+','+y(p)).join(' ')}"/><circle cx="${x(k)}" cy="${y(v[k])}" r="3.5"/></svg></div>`}
+ function cardHTML(c,o){o=o||{};const flip=!o.noflip;return `<article class="bx-card ${c.tier}${o.sm?' sm':''}${c.pe==='T1'?' pe':' rm'}${o.fl?' flc':''}" style="--d:${((c.no||7)%9)*1.1}s"${flip?` tabindex="0" aria-pressed="false" aria-label="${esc(LX(c.t[0],c.t[1]))} · ${LX('flip card','카드 뒤집기')}"`:''}><div class="flip"><div class="in"><i class="gl" aria-hidden="true"></i>${c.pe==='T1'?'':`<img class="rm-bd" src="${RORR_EM}" alt="" aria-hidden="true" loading="lazy">`}<div class="hd"><span class="tr">${LX(...TIER[c.tier])}</span><span class="dc ${c.cur}">${decoTxt(c)}</span></div>${c.pe==='T1'?peTop(c):rmTop(c)}
   <span class="sbt">${esc(subTxt(c.sub))}</span><b class="tt">${esc(LX(c.t[0],c.t[1]))}</b>
   ${o.sm?'':`<div class="kv"><span>${LX('Win chance','승리확률')} <b>${c.w0}% → ${c.w1}%</b></span><span>${LX('Boosted with','함께 Boost')} <b>${c.fans.toLocaleString('en-US')}</b></span></div>`}
   ${o.owner?`<span class="ow">${o.owner}</span>`:''}${o.sm?'':`<span class="ft">#${String(c.no).padStart(5,'0')} · ${LX('Not tradeable','거래·양도 불가')}</span>`}</div>${flip?backHTML(c,o):''}</div></article>`}
