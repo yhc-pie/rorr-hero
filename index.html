@@ -2212,6 +2212,14 @@ footer{padding:44px 0 120px}
 .ft-copy{font-size:12px;color:var(--mute)}
 @media (max-width:1099px){.ft-top{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}.ft-brand{grid-column:1/-1}}
 @media (max-width:759px){.ft-top{grid-template-columns:1fr 1fr;gap:22px 12px}.ft-bot{grid-template-columns:1fr}.ft-tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px}.ft-copy{order:3;flex-basis:100%}}
+
+/* ad wall status chip (was .tg, which collided with the toggle-switch style) */
+.aw-st{display:inline-flex;align-items:center;gap:6px;flex:none;font-size:12px;font-weight:800;padding:4px 10px;border-radius:9999px;white-space:nowrap}
+.aw-st i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.aw-st.live{color:#FF5C7A;background:color-mix(in srgb,#FF5C7A 14%,transparent)}.aw-st.live i{animation:lvp 1.4s ease-in-out infinite}
+.aw-st.ok{color:#3FD9BE;background:color-mix(in srgb,#3FD9BE 14%,transparent)}
+/* score ticker: drag with the mouse */
+.tk-track{cursor:grab;user-select:none;-webkit-user-select:none}.tk-track.drag{cursor:grabbing}.tk-track.drag *{pointer-events:none}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -3139,7 +3147,7 @@ const BX=(()=>{const K='rorr-bx';
    :state==='done'?`<div class="aw-play ok"><b>✦ +${CFG.sparkPerAd}</b><span>${LX('Spark added to your balance','Spark가 잔액에 들어왔어요')}</span></div>`
    :`<div class="aw-play idle">${LX('Rewarded video ad','보상형 영상 광고')}<small>${LX('Google Ad Manager web rewarded (planned)','Google Ad Manager 웹 보상형 (예정)')}</small></div>`;
   el.innerHTML=`<section class="rhero" style="padding-bottom:20px"><div class="k">SPARK</div><h1>${LX('Watch an ad, get Spark','광고 보고 Spark 받기')}</h1><p class="sub">${LX("Spark is a free currency you can only use for Boosts. It can't be exchanged for Energy or combined with it.",'Spark는 Boost에만 쓸 수 있는 무료 재화예요. Energy와 바꾸거나 합칠 수 없어요.')}</p></section>
-  <div class="aw-tm">${live?`<span class="tg">${LX('Match on','경기 중')}</span>${LX(`${live.a} vs ${live.b} is live. The ad wall never interrupts a moment: watch between games or after the match.`,`${live.a} 대 ${live.b} 경기가 진행 중이에요. 광고 월은 경기 중 순간을 끊지 않아요. 세트 사이나 경기 후에 이용해 주세요.`)}`:`<span class="tg">${LX('Good time','지금 보기 좋은 시간')}</span>${LX('No match is live right now.','지금은 진행 중인 경기가 없어요.')}`}</div>
+  <div class="aw-tm">${live?`<span class="aw-st live"><i></i>${LX('Match live','경기 진행 중')}</span>${LX(`${live.a} vs ${live.b} is live. The ad wall never interrupts a moment: watch between games or after the match.`,`${live.a} 대 ${live.b} 경기가 진행 중이에요. 광고 월은 경기 중 순간을 끊지 않아요. 세트 사이나 경기 후에 이용해 주세요.`)}`:`<span class="aw-st ok"><i></i>${LX('Good time to watch','지금 보기 좋은 시간')}</span>${LX('No match is live right now.','지금은 진행 중인 경기가 없어요.')}`}</div>
   <div class="aw-g"><div class="box aw-main">${stage}
     <p class="aw-n">${LX(`Watching one ad gives you ✦ ${CFG.sparkPerAd} Spark, which can't be transferred or cashed out. You can skip and keep using RORR as usual.`,`광고 1편 시청 시 양도·현금화 불가 Spark ${CFG.sparkPerAd}개 제공. 건너뛰어도 기본 이용 가능`)}</p>
     <div class="aw-b"><button type="button" class="p2-btn spk" data-aw="go" ${state==='play'||state==='verify'||left<=0?'disabled':''}>${left<=0?LX('Daily limit reached','오늘 한도 도달'):LX('Watch and get Spark','광고 보고 Spark 받기')}</button><button type="button" class="p2-btn" data-aw="skip">${LX('Skip','건너뛰기')}</button></div>
@@ -4269,6 +4277,15 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
   cell.insertAdjacentHTML('beforeend',`<span class="lchw"><em class="lchg ${up?'up':'dn'}" title="${LX('LwRC+ live change this game','이번 경기 LwRC+ 실시간 변화')}">${up?'▲':'▼'}${n}</em></span>`);const b=cell.querySelector('.lchg');setTimeout(()=>{b.classList.add('out');setTimeout(()=>b.parentNode.remove(),600)},4500)},9000,14000);
 })();
 
+
+/* score ticker: mouse drag-to-scroll (touch already scrolls natively); a drag never triggers a card click */
+(function(){const t=document.getElementById('tk-track');if(!t)return;let down=false,moved=false,x0=0,s0=0,id=null;
+ t.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;down=true;moved=false;x0=e.clientX;s0=t.scrollLeft;id=e.pointerId});
+ t.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-x0;if(!moved&&Math.abs(dx)>5){moved=true;t.classList.add('drag');try{t.setPointerCapture(id)}catch(_){}}if(moved){t.scrollLeft=s0-dx;e.preventDefault()}});
+ const end=()=>{if(!down)return;down=false;if(moved){t.classList.remove('drag');t.dispatchEvent(new Event('scroll'))}};
+ t.addEventListener('pointerup',end);t.addEventListener('pointercancel',end);t.addEventListener('lostpointercapture',end);
+ t.addEventListener('click',e=>{if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
+ t.addEventListener('dragstart',e=>e.preventDefault());})();
 (function(){const set=()=>{const h=document.getElementById('hdr');if(h)document.documentElement.style.setProperty('--hh',h.offsetHeight+'px')};set();addEventListener('resize',set)})();
 </script>
 </body>
