@@ -1840,6 +1840,9 @@ footer>.wrap{max-width:1320px}
 .lchg{display:inline-block;margin-left:6px;font:800 11px "Pretendard Variable",sans-serif;padding:1px 6px;border-radius:9999px;animation:lchIn .35s ease, lchBlink 1s ease-in-out .35s 3}
 .lchg.up{color:var(--energy);background:color-mix(in srgb,var(--energy) 14%,transparent)}.lchg.dn{color:var(--live);background:color-mix(in srgb,var(--live) 14%,transparent)}
 .lchg.out{opacity:0;transition:opacity .5s}
+/* live change sits in the player cell (absolute) so the LwRC+ column keeps its alignment */
+.lchw{position:relative;display:inline-block!important;width:0;height:1em;vertical-align:middle}.lchw .lchg{position:absolute;left:8px;top:50%;margin:0;transform:translateY(-50%);white-space:nowrap}
+.tb td.lchc .lchg.out{opacity:0}
 @keyframes lchIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}@keyframes lchBlink{50%{opacity:.35}}
 @media (prefers-reduced-motion:reduce){.fl-drop .dp,.lchg,[data-lc].bump{animation:none}}
 .bx-ext{margin:0;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--ds-primary) 10%,var(--bg2));border:1px solid color-mix(in srgb,var(--ds-primary) 30%,var(--line));font-size:12.5px;line-height:1.55;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}.bx-ext a{color:var(--cyan);font-weight:700;white-space:nowrap}.bx-ext.hxn{display:block;width:100%;max-width:600px;margin-top:10px;padding:0;background:none;border:0;font-size:12px;color:var(--mute)}.bx-ext.hxn a{white-space:normal}.box .bx-ext{margin-top:10px}.rw-cardslot .bx-ext{text-align:left}
@@ -4213,8 +4216,8 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
   setTimeout(()=>{const x=box.querySelector('.dp');if(x)x.classList.add('out')},5600)},4000,6000);
  /* LwRC+ live change badges on the home table */
  loop(()=>{if(!home())return;const m=live();if(!m)return;const rows=[...document.querySelectorAll('#tb-rank tr[data-p]')].filter(r=>{const p=PBY[r.dataset.p];return p&&(p.team===m.a||p.team===m.b)});if(!rows.length)return;
-  const r=rows[Math.floor(Math.random()*rows.length)];const cell=r.querySelector('td:nth-child(4)');if(!cell||cell.querySelector('.lchg'))return;const up=Math.random()<.6;const n=1+Math.floor(Math.random()*6);
-  cell.insertAdjacentHTML('beforeend',`<em class="lchg ${up?'up':'dn'}" title="${LX('Live change this game','이번 경기 실시간 변화')}">${up?'▲':'▼'}${n}</em>`);const b=cell.querySelector('.lchg');setTimeout(()=>{b.classList.add('out');setTimeout(()=>b.remove(),600)},4500)},9000,14000);
+  const r=rows[Math.floor(Math.random()*rows.length)];const cell=r.querySelector('td:nth-child(2)');if(!cell||cell.querySelector('.lchg'))return;cell.classList.add('lchc');const up=Math.random()<.6;const n=1+Math.floor(Math.random()*6);
+  cell.insertAdjacentHTML('beforeend',`<span class="lchw"><em class="lchg ${up?'up':'dn'}" title="${LX('LwRC+ live change this game','이번 경기 LwRC+ 실시간 변화')}">${up?'▲':'▼'}${n}</em></span>`);const b=cell.querySelector('.lchg');setTimeout(()=>{b.classList.add('out');setTimeout(()=>b.parentNode.remove(),600)},4500)},9000,14000);
 })();
 
 (function(){const set=()=>{const h=document.getElementById('hdr');if(h)document.documentElement.style.setProperty('--hh',h.offsetHeight+'px')};set();addEventListener('resize',set)})();
