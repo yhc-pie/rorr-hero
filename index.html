@@ -7,9 +7,7 @@
 <link rel="icon" type="image/png" href="assets/favicon-64.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta name="description" content="RORR is the AI built only for League of Legends esports: ask about live and past pro matches in the LCK, LwRC+ rankings and standings. Watch with Muse in the Chrome side panel.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Gothic+A1:wght@600;700;800&family=Chakra+Petch:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
 :root,[data-theme=dark]{color-scheme:dark;--bg:#0A0A0F;--bg2:#12121A;--bg3:#181822;--line:#24242F;--ink:#F2F2F5;--mute:#9A9AA8;--gold:var(--v-ui);--cyan:#B8A4FF;--cta:var(--v-solid);--on-cta:#FFFFFF;
  --gold-line:#3a1f66;--cyan-line:#3d1a73;--glass:rgba(10,10,15,.82);--shadow:rgba(0,0,0,.5);--glow-c:rgba(110,75,219,.14);--glow-g:rgba(166,77,255,.07);--dot:rgba(255,255,255,.05);
@@ -60,18 +58,18 @@ body.pagev .rpage.on{display:block}
 .md{display:grid;grid-template-columns:1fr 1.25fr .9fr;min-height:340px}
 .md>div{padding:14px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:8px}.md>div:last-child{border-right:0}
 .md .h{font:500 11px "Pretendard Variable",monospace;letter-spacing:.12em;color:var(--mute);display:flex;justify-content:space-between}
-.mq{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:13.5px;background:var(--bg);cursor:default}
+.mq{border:1px solid var(--line);border-radius:12px;padding:9px 11px;font-size:13.5px;background:var(--bg);cursor:default}
 .mq.sel{border-color:var(--cyan)}
 .mq .r{display:flex;justify-content:space-between;font:500 11px "Pretendard Variable",monospace;color:var(--mute);margin-bottom:3px}
 .mq .r b{font-weight:500;color:var(--gold)}
 .st{display:inline-block;font:500 10.5px "Pretendard Variable",monospace;border-radius:999px;padding:1px 7px;border:1px solid var(--line);color:var(--mute)}
 .st.new{color:var(--cyan);border-color:var(--cyan-line)}.st.ok{color:var(--gold);border-color:var(--gold-line)}
-.ev2{font-size:13.5px;line-height:1.5;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg)}
+.ev2{font-size:13.5px;line-height:1.5;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}
 .ev2 .nums{display:flex;gap:14px;margin-top:6px;font:500 12px "Pretendard Variable",monospace;color:var(--mute)}.ev2 .nums b{color:var(--ink);font-weight:500}
-.draft{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px;background:var(--bg)}
+.draft{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:13.5px;background:var(--bg)}
 .draft .ch{display:flex;gap:6px;margin-bottom:6px}.draft .ch span{font:500 11px "Pretendard Variable",monospace;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--mute)}.draft .ch span.on{color:var(--ink);border-color:var(--mute)}
 .appr{display:flex;gap:6px}.appr span{font-size:12.5px;border-radius:999px;padding:5px 12px;border:1px solid var(--line)}.appr span.y{background:var(--cta);color:var(--on-cta);border-color:var(--cta);font-weight:600}
-.camp{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);font-size:13.5px}
+.camp{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);font-size:13.5px}
 .camp .bar3{height:6px;border-radius:999px;background:var(--line);margin:8px 0 4px;overflow:hidden}.camp .bar3 i{display:block;height:100%;background:var(--cyan)}
 .camp .n{font:500 11.5px "Pretendard Variable",monospace;color:var(--mute);display:flex;justify-content:space-between}
 /* role page body */
@@ -97,14 +95,14 @@ body.pagev .rpage.on{display:block}
 .rules{max-width:720px;margin:0 auto;text-align:left;display:grid;gap:10px}
 .rules div{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg2);font-size:15px}
 .rules div::before{content:"✓";color:var(--cyan);font-weight:700}
-.form{max-width:560px;margin:0 auto;text-align:left;border:1px solid var(--line);border-radius:20px;padding:26px;background:var(--bg2);display:grid;gap:12px}
+.form{max-width:560px;margin:0 auto;text-align:left;border:1px solid var(--line);border-radius:16px;padding:26px;background:var(--bg2);display:grid;gap:12px}
 .form label{font-size:13px;color:var(--mute);display:grid;gap:6px}
 .form input,.form select{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:11px 14px;color:var(--ink);font:inherit;font-size:15px}
 .form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .form .pill{justify-self:start;margin-top:4px}
 .form .fine{margin-top:0}
 @media (max-width:860px){.cm{grid-template-columns:1fr}.cside{border-left:0;border-top:1px solid var(--line)}.md{grid-template-columns:1fr}.md>div{border-right:0;border-bottom:1px solid var(--line)}.md>div:nth-child(3){display:none}
- .g3,.steps,.metrics{grid-template-columns:1fr}.flow .fr{grid-template-columns:1fr;gap:4px}.flow .fr.h{display:none}.form .row2{grid-template-columns:1fr}.rhero{margin:76px 8px 0;border-radius:24px;padding-top:48px}}
+ .g3,.steps,.metrics{grid-template-columns:1fr}.flow .fr{grid-template-columns:1fr;gap:4px}.flow .fr.h{display:none}.form .row2{grid-template-columns:1fr}.rhero{margin:76px 8px 0;border-radius:16px;padding-top:48px}}
 
 /* ===== language ===== */
 .lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
@@ -118,7 +116,7 @@ html[lang=ko] .mode,html[lang=ko] .pill,html[lang=ko] nav{font-family:Pretendard
 html[lang=ko] .rhero .k,html[lang=ko] .md .h,html[lang=ko] .cside .h,html[lang=ko] .rail-h b,html[lang=ko] .box h4,html[lang=ko] .g3 .c .k,html[lang=ko] .way .k,html[lang=ko] .flow .fr.h,html[lang=ko] .tp .t,html[lang=ko] .mq .r,html[lang=ko] .st,html[lang=ko] .demo{font-family:Pretendard,sans-serif;letter-spacing:.02em}
 
 /* answer visuals (HyperFrames renders) */
-.viz{display:block;width:100%;max-width:600px;aspect-ratio:16/9;border-radius:14px;border:1px solid var(--line);margin-top:14px;background:#0E0F15;animation:in .4s}
+.viz{display:block;width:100%;max-width:600px;aspect-ratio:16/9;border-radius:16px;border:1px solid var(--line);margin-top:14px;background:#0E0F15;animation:in .4s}
 
 /* ---- v5 hero: Muse (emotion) left · Insight (data) right ---- */
 .scene{max-width:1000px!important;height:450px!important;margin:-26px auto 0!important}
@@ -154,13 +152,13 @@ html[lang=ko] .rhero .k,html[lang=ko] .md .h,html[lang=ko] .cside .h,html[lang=k
 .mlist{list-style:none;display:grid;gap:12px;margin-bottom:24px;max-width:460px}
 .mlist li{font-size:15.5px;color:var(--mute);padding-left:18px;position:relative}.mlist li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
 .mlist b{color:var(--ink);font-weight:600}
-.mmock{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--bg2);box-shadow:0 20px 50px var(--shadow)}
+.mmock{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--bg2);box-shadow:0 20px 50px var(--shadow)}
 .mm-bar{display:flex;gap:6px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);font:500 11.5px "Pretendard Variable",monospace;color:var(--mute)}
 .mm-bar i{width:9px;height:9px;border-radius:50%;background:var(--line)}.mm-bar span{margin-left:8px}
 .mm-body{display:grid;grid-template-columns:1fr 210px;height:340px}
-.mm-stream{position:relative;margin:12px;border-radius:10px;background:linear-gradient(135deg,#1E1A2A,#2a1f2f 60%,#1a1a24)}
+.mm-stream{position:relative;margin:12px;border-radius:12px;background:linear-gradient(135deg,#1E1A2A,#2a1f2f 60%,#1a1a24)}
 .mm-live{position:absolute;top:10px;left:10px;font:600 11px "Pretendard Variable";color:#fff;background:#d33;border-radius:4px;padding:2px 6px}
-.mm-sb{position:absolute;top:10px;left:50%;transform:translateX(-50%);font:500 11px "Pretendard Variable",monospace;color:#fff;background:rgba(0,0,0,.55);border-radius:6px;padding:3px 8px;white-space:nowrap}
+.mm-sb{position:absolute;top:10px;left:50%;transform:translateX(-50%);font:500 11px "Pretendard Variable",monospace;color:#fff;background:rgba(0,0,0,.55);border-radius:8px;padding:3px 8px;white-space:nowrap}
 .mm-panel{position:relative;border-left:1px solid var(--line);padding:12px;display:flex;flex-direction:column;gap:10px;overflow:hidden;background:var(--bg)}
 .mm-top{display:flex;gap:8px;align-items:center}.mm-top img{width:30px;height:30px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid var(--line)}
 .mm-top b{display:block;font-size:13.5px}.mm-top span{font-size:11.5px;color:var(--gold)}
@@ -205,7 +203,7 @@ header{background:var(--bg)!important;border-bottom:1px solid var(--line)}
 .pside{display:grid;gap:18px}
 .askbox .ask.sm{margin:14px;max-width:none;padding:6px 6px 6px 16px}.askbox .ask.sm input{font-size:15px}
 .qchips{display:flex;flex-direction:column;gap:6px;padding:0 14px 14px}
-.qchips button{text-align:left;font-size:13.5px;color:var(--mute);border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:var(--bg);cursor:pointer}
+.qchips button{text-align:left;font-size:13.5px;color:var(--mute);border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--bg);cursor:pointer}
 .qchips button:hover{color:var(--ink);border-color:var(--mute)}
 .promo{position:relative;padding:18px;min-height:250px;background:radial-gradient(260px 200px at 85% 90%,var(--glow-c),transparent 70%),var(--bg2)}
 .pm-img{position:absolute;right:-24px;bottom:-120px;height:280px;pointer-events:none}
@@ -308,7 +306,7 @@ nav .lk{text-decoration:none;color:var(--mute)}nav .lk:hover{color:var(--ink)}
 .menu .seg{display:flex;background:var(--bg);border-radius:999px;padding:3px;margin:8px 4px}
 .menu .seg button{flex:1;border:0;background:none;border-radius:999px;padding:6px;font-size:13px;color:var(--mute);cursor:pointer}
 .menu .seg button.on{background:var(--bg3);color:var(--ink)}
-.menu a{display:flex;justify-content:space-between;padding:9px 12px;border-radius:10px;text-decoration:none;font-size:15px}
+.menu a{display:flex;justify-content:space-between;padding:9px 12px;border-radius:12px;text-decoration:none;font-size:15px}
 .menu a:hover{background:var(--bg2)}.menu a small{color:var(--mute)}
 /* STAGE — boxed hero like america.gov */
 .stage{margin:0 16px;border-radius:32px;border:1px solid var(--line);overflow:hidden;position:relative;
@@ -404,7 +402,7 @@ body.chatting .dock{transform:translate(-50%,0)}
 body.chatting .adslot.on{display:flex}
 body.chatting .quota{display:block}
 .thread{max-width:720px;margin:0 auto;padding:0 20px;display:flex;flex-direction:column;gap:22px}
-.msg-u{align-self:flex-end;background:var(--bg2);border:1px solid var(--line);border-radius:18px;padding:10px 16px;max-width:80%;animation:in .35s}
+.msg-u{align-self:flex-end;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:10px 16px;max-width:80%;animation:in .35s}
 .msg-m{display:flex;gap:12px;align-items:flex-start;animation:in .35s}
 .msg-m .av{flex:none;width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:top;border:1px solid var(--line);background:var(--bg3)}
 .msg-m .body{flex:1}
@@ -438,7 +436,7 @@ body.acct .account{display:block}body.teamv .teampg{display:block}
 .side{position:sticky;top:96px;display:flex;flex-direction:column;gap:2px}
 .side .me{display:flex;gap:10px;align-items:center;padding:0 12px 16px;border-bottom:1px solid var(--line);margin-bottom:10px}
 .side .me b{display:block;font-size:15px}.side .me span{font-size:12.5px;color:var(--mute)}
-.side button{text-align:left;background:none;border:0;border-radius:10px;padding:10px 12px;color:var(--mute);cursor:pointer;font-size:15px;display:flex;justify-content:space-between}
+.side button{text-align:left;background:none;border:0;border-radius:12px;padding:10px 12px;color:var(--mute);cursor:pointer;font-size:15px;display:flex;justify-content:space-between}
 .side button.on,.side button:hover{background:var(--bg2);color:var(--ink)}
 .side button small{font:500 12px "Pretendard Variable",monospace;color:var(--cyan)}
 .tab{display:none}.tab.on{display:block;animation:in .3s}
@@ -483,7 +481,7 @@ table.t td .q{color:var(--mute);font-size:13.5px;display:block}
 @media (max-width:860px){.hub{grid-template-columns:1fr;gap:16px}.side{position:static;flex-direction:row;overflow-x:auto;gap:6px}.side .me{display:none}.side button{white-space:nowrap;border:1px solid var(--line);border-radius:999px;padding:8px 14px}
  .kpis,.packrow{grid-template-columns:1fr}.items{grid-template-columns:repeat(2,1fr)}.pop{right:12px;width:calc(100% - 24px)}.cmp{font-size:14px}}
 @media (prefers-reduced-motion:reduce){.slide,.slide img,.slide .panel{transition:none}}
-@media (max-width:860px){nav .lk{display:none}header .bar{padding:0 18px}.menu{right:18px}.stage{margin:0 8px;border-radius:24px}.rail,.cards3{grid-template-columns:1fr}.row{grid-template-columns:1fr;gap:28px;padding:56px 0}.ask{padding-left:18px}.energy span{display:none}
+@media (max-width:860px){nav .lk{display:none}header .bar{padding:0 18px}.menu{right:18px}.stage{margin:0 8px;border-radius:16px}.rail,.cards3{grid-template-columns:1fr}.row{grid-template-columns:1fr;gap:28px;padding:56px 0}.ask{padding-left:18px}.energy span{display:none}
  .scene{height:380px;margin-left:12px;margin-right:12px}.slide .panel{left:16px;top:44px;width:calc(100% - 32px)}.slide img{right:-30px;bottom:-200px;height:430px;opacity:.55}.signed-out .pill:not(.ghost){display:none}}
 /* ===== THEME: esports broadcast (lolesports-inspired, RORR-owned) ===== */
 :root,[data-theme=dark]{--bg:#0B0A10;--bg2:#13111C;--bg3:#1C1926;--line:#2A2633;--ink:#F0F2F4;--mute:#8FA3B0;--gold:var(--v-ui);--cyan:#B8A4FF;--cta:var(--v-solid);--on-cta:#FFFFFF;
@@ -565,14 +563,14 @@ html[lang=ko] h1,html[lang=ko] h2,html[lang=ko] h3{font-family:"Pretendard Varia
 .wg{max-width:1100px;margin:22px auto 90px}
 .wgt th,.wgt td{white-space:nowrap}
 .wg-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.wg-view,.wg-unit{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.wg-view,.wg-unit{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .wg-view button,.wg-unit button{background:none;border:0;color:var(--mute);font:700 12px "Pretendard Variable",sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:10px 16px;cursor:pointer}
 .wg-view button+button,.wg-unit button+button{border-left:1px solid var(--line)}
 .wg-view button.on{background:var(--cyan);color:#FFFFFF}
 .wg-unit .m{text-transform:none}.wg-unit button.on{background:var(--bg3);color:var(--ink)}
 .wg-f{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:flex-end;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--bg2);margin-bottom:14px}
 .wg-f label{display:grid;gap:4px;font:700 10.5px "Pretendard Variable",sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
-.wg-f select{font:500 14px "Pretendard Variable",sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-width:150px}
+.wg-f select{font:500 14px "Pretendard Variable",sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:150px}
 .wg-help{margin-left:auto;font-size:13.5px;color:var(--cyan);text-decoration:none;padding-bottom:8px}
 .wg[data-v=team] .f-role,.wg[data-v=team] .f-team,.wg[data-v=inteam] .f-role,.wg[data-v=inteam] .f-min{display:none}
 .wgt th.sort{cursor:pointer}.wgt th.sort:hover{color:var(--ink)}.wgt th.act{color:var(--cyan)}
@@ -666,7 +664,7 @@ body.ip-open .iscrim{opacity:1;pointer-events:auto}
 body.ip-open .ipanel{transform:none}
 .ip-top{display:flex;align-items:center;justify-content:space-between;height:56px;padding:0 16px 0 20px;border-bottom:1px solid var(--line);flex:none}
 .ip-k{font:700 11px "Pretendard Variable",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan)}
-.ip-x{background:none;border:1px solid var(--line);border-radius:6px;color:var(--ink);width:32px;height:32px;font-size:18px;cursor:pointer}.ip-x:hover{border-color:var(--cyan)}
+.ip-x{background:none;border:1px solid var(--line);border-radius:8px;color:var(--ink);width:32px;height:32px;font-size:18px;cursor:pointer}.ip-x:hover{border-color:var(--cyan)}
 .ip-body{overflow-y:auto;padding:20px 20px 28px;display:grid;gap:18px;align-content:start;grid-auto-rows:max-content;min-height:0}
 .ip-hero{display:flex;gap:14px;align-items:center}
 .ip-av{width:56px;height:56px;border-radius:12px;display:grid;place-items:center;font:700 13px "Pretendard Variable",sans-serif;letter-spacing:.06em;background:linear-gradient(135deg,var(--bg3),var(--bg));border:1px solid var(--line);color:var(--cyan);flex:none}
@@ -687,7 +685,7 @@ body.ip-open .ipanel{transform:none}
 .ip-form{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.ip-sd{font:600 13px "Pretendard Variable",monospace}
 .ip-row{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--mute)}.ip-row b{font:700 14px "Pretendard Variable",monospace;color:var(--ink)}.ip-row b.w{color:var(--cyan)}.ip-row .ent{color:var(--ink);font-weight:600}
 .ip-roster{display:grid;gap:6px}
-.ip-pl{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:9px 12px;color:var(--ink);font:500 14.5px "Pretendard Variable",sans-serif;cursor:pointer;text-align:left}
+.ip-pl{display:grid;grid-template-columns:48px 1fr auto;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 12px;color:var(--ink);font:500 14.5px "Pretendard Variable",sans-serif;cursor:pointer;text-align:left}
 .ip-pl:hover{border-color:var(--cyan)}.ip-pl .ix{font:700 14px "Pretendard Variable",monospace;color:var(--cyan)}
 .ip-acts{display:grid;gap:8px}.ip-acts .pill{width:100%;justify-content:center;text-align:center}
 .ip-note{font-size:11.5px;color:var(--mute)}
@@ -736,8 +734,8 @@ body.museing .askfab{opacity:0;pointer-events:none}
 .md-browser{border:1px solid #2c2836;border-radius:12px;overflow:hidden;background:#0d0b12;box-shadow:0 30px 80px rgba(0,0,0,.5);min-height:0;display:flex;flex-direction:column}
 .md-bar{display:flex;align-items:center;gap:12px;height:40px;padding:0 12px;background:#17141f;border-bottom:1px solid #2c2836}
 .md-dots{display:flex;gap:6px}.md-dots i{width:10px;height:10px;border-radius:50%;background:#3c3748}
-.md-url{flex:1;background:#0d0b12;border-radius:6px;padding:5px 12px;font:500 12px "Pretendard Variable",monospace;color:#8a93a3}
-.md-ext{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;background:rgba(110,75,219,.12);border:1px solid rgba(110,75,219,.5);position:relative}
+.md-url{flex:1;background:#0d0b12;border-radius:8px;padding:5px 12px;font:500 12px "Pretendard Variable",monospace;color:#8a93a3}
+.md-ext{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:rgba(110,75,219,.12);border:1px solid rgba(110,75,219,.5);position:relative}
 .md-ext img{width:20px;height:20px}
 .md-ext.ping::after{content:"";position:absolute;inset:-4px;border-radius:8px;border:2px solid var(--v-solid);animation:mdping .9s ease-out}
 @keyframes mdping{from{opacity:1;transform:scale(.9)}to{opacity:0;transform:scale(1.35)}}
@@ -796,7 +794,7 @@ body.museing .askfab{opacity:0;pointer-events:none}
 /* ===== login gate for typed questions ===== */
 .gate{display:flex;flex-direction:column;gap:10px}
 .gate-q{align-self:flex-end;max-width:80%;background:var(--bg3);border:1px dashed var(--line);border-radius:12px;padding:10px 14px;color:var(--mute);font-size:15px}
-.gate-c{border:1px solid var(--cyan);border-radius:10px;background:var(--bg2);padding:16px 18px}
+.gate-c{border:1px solid var(--cyan);border-radius:12px;background:var(--bg2);padding:16px 18px}
 .gate-c b{display:block;font-size:16px;margin-bottom:6px}.gate-c p{color:var(--mute);font-size:14px;margin-bottom:12px}
 .gate-a{display:flex;gap:8px;flex-wrap:wrap}
 body:not(.body-in) #dockin::placeholder{color:var(--cyan);opacity:.85}
@@ -842,7 +840,7 @@ body.ip-cmp .ipanel{width:min(560px,96vw)}
 .cmp-sug .chipx{background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--ink);font:600 13px "Pretendard Variable",sans-serif;cursor:pointer}
 .cmp-sug .chipx em{font-style:normal;font-size:10.5px;color:var(--cyan);margin-left:4px;letter-spacing:.04em}
 .cmp-sug .chipx:hover,.cmp-sug .chipx.on{border-color:var(--cyan);color:var(--cyan)}
-.cmp-sel{font:500 14px "Pretendard Variable",sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+.cmp-sel{font:500 14px "Pretendard Variable",sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
 .cmp-head{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px}
 .cmp-head .vs{font:700 13px "Pretendard Variable",monospace;color:var(--mute)}
 .cmp-who{width:100%;display:grid;gap:2px;justify-items:start;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--ink);cursor:pointer;text-align:left}
@@ -865,7 +863,7 @@ body.ip-cmp .ipanel{width:min(560px,96vw)}
 .lg-a,.lg-b{font-weight:700;text-transform:none;letter-spacing:0;margin-left:6px}.lg-a{color:var(--team-l)}.lg-b{color:var(--team-r)}
 .cmp-form{display:flex;align-items:center;justify-content:space-between;font-size:11.5px;color:var(--mute)}
 .cmp-roles{display:grid;gap:4px}
-.rv{display:grid;grid-template-columns:1fr 44px 44px 44px 1fr;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:7px 10px;font-size:14px}
+.rv{display:grid;grid-template-columns:1fr 44px 44px 44px 1fr;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:14px}
 .rv .ent2{background:none;border:0;color:var(--ink);font:600 14px "Pretendard Variable",sans-serif;cursor:pointer;padding:0;text-align:left}.rv .ent2:last-child{text-align:right}.rv .ent2:hover{color:var(--cyan)}
 .rv .rr{text-align:center;font:700 10.5px "Pretendard Variable",sans-serif;color:var(--mute)}
 .rv .ix{font:700 14px "Pretendard Variable",monospace;text-align:center;color:var(--mute)}.rv .ix.win{color:var(--ink)}
@@ -897,7 +895,7 @@ body.chatting .ticker{display:none}
 /* ===== match page ===== */
 .mt{max-width:1100px;margin:96px auto 90px}
 .mt .back2{display:inline-block;margin-bottom:14px}
-.mt-head{border:1px solid var(--line);border-radius:10px;background:var(--bg2);padding:18px 22px;margin-bottom:18px}
+.mt-head{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:18px 22px;margin-bottom:18px}
 .mt-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin-bottom:12px}.mt-meta .lgt{margin-left:0}
 .mt-st{margin-left:auto;font:600 12.5px "Pretendard Variable",monospace;display:inline-flex;align-items:center;gap:6px}
 .mt-st.live{color:var(--live);font-weight:700}.mt-st.live i{width:9px;height:9px;border-radius:50%;background:var(--live);animation:mdlive 1.2s infinite}
@@ -910,7 +908,7 @@ body.chatting .ticker{display:none}
 .mt-team span{font-size:13px;color:var(--mute)}.mt-team:hover span{color:var(--ink)}
 .mt-score{display:flex;align-items:center;gap:10px;font:700 44px "Pretendard Variable",monospace;color:var(--mute)}.mt-score .w{color:var(--ink)}.mt-score i{font-style:normal;font-size:28px}.mt-score .vs{font-size:20px}
 .mt-grid{display:grid;gap:18px}
-.mt-sec{border:1px solid var(--line);border-radius:10px;background:var(--bg2);padding:16px 18px}
+.mt-sec{border:1px solid var(--line);border-radius:12px;background:var(--bg2);padding:16px 18px}
 .mt-h{display:flex;align-items:center;gap:8px;margin-bottom:12px}.mt-h h2{font-size:22px}
 .mt-lead{margin-left:auto;font:700 14px "Pretendard Variable",monospace;color:var(--ink)}
 .mt-chart{width:100%;height:240px;display:block}
@@ -933,7 +931,7 @@ body.chatting .ticker{display:none}
 .sw-card .n{flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--bg);font:700 13px "Pretendard Variable",sans-serif}
 .sw-card b{display:block;font-size:14.5px;margin-bottom:4px}.sw-card span{font-size:12.5px;color:var(--mute);line-height:1.4}
 .mt-duel{display:grid;gap:6px}
-.du{display:grid;grid-template-columns:1fr 48px 1fr 46px 1fr 48px 1fr;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 12px}
+.du{display:grid;grid-template-columns:1fr 48px 1fr 46px 1fr 48px 1fr;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 12px}
 .du .nm{background:none;border:0;color:var(--ink);font:600 14.5px "Pretendard Variable",sans-serif;cursor:pointer;text-align:left;padding:0}.du .nm.r{text-align:right}.du .nm:hover{color:var(--cyan)}
 .du .v{font:700 15px "Pretendard Variable",monospace;text-align:center;color:var(--mute)}.du .v.win.a{color:var(--team-l)}.du .v.win.b{color:var(--team-r)}
 .du .br{height:6px;background:var(--bg3);border-radius:3px;position:relative;overflow:hidden}.du .br i{position:absolute;top:0;bottom:0;left:0;border-radius:3px}
@@ -941,7 +939,7 @@ body.chatting .ticker{display:none}
 .du .rl{text-align:center;font:700 10.5px "Pretendard Variable",sans-serif;color:var(--mute)}
 .mt-note{font-size:12px;color:var(--mute);margin-top:10px}
 .tl{list-style:none;display:grid;gap:4px}
-.tl li{display:grid;grid-template-columns:44px 52px 1fr auto auto;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;background:var(--bg);border:1px solid var(--line);border-left:3px solid var(--line)}
+.tl li{display:grid;grid-template-columns:44px 52px 1fr auto auto;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--line);border-left:3px solid var(--line)}
 .tl li.a{border-left-color:var(--team-l)}.tl li.b{border-left-color:var(--team-r)}
 .tl li.sw{background:linear-gradient(90deg,rgba(110,75,219,.06),transparent)}.tl li.b.sw{background:linear-gradient(90deg,rgba(166,77,255,.07),transparent)}
 .tl .t{font:600 13px "Pretendard Variable",monospace;color:var(--mute)}.tl .k{font:700 10px "Pretendard Variable",sans-serif;letter-spacing:.06em;color:var(--mute);border:1px solid var(--line);border-radius:3px;padding:2px 5px;text-align:center}
@@ -949,7 +947,7 @@ body.chatting .ticker{display:none}
 .tl li.hl{animation:tlhl 1.6s ease}@keyframes tlhl{0%,40%{box-shadow:0 0 0 2px var(--cyan)}100%{box-shadow:none}}
 .mt-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 .ip-live{display:flex;align-items:center;gap:12px;width:100%;background:var(--bg);border:1px solid rgba(255,77,94,.5);border-radius:8px;padding:10px 12px;color:var(--ink);font:500 14px "Pretendard Variable",sans-serif;cursor:pointer}.ip-live .go{margin-left:auto;color:var(--cyan);font-weight:700;font-size:12.5px}
-.ip-next[data-m]{cursor:pointer;border-radius:6px}.ip-next[data-m]:hover{color:var(--cyan)}
+.ip-next[data-m]{cursor:pointer;border-radius:8px}.ip-next[data-m]:hover{color:var(--cyan)}
 @media (max-width:860px){.sw-list{grid-template-columns:1fr}.du{grid-template-columns:1fr 40px 46px 40px 1fr;}.du .br{display:none}.mt{margin-top:84px}.mt-score{font-size:32px}.tl li{grid-template-columns:38px 46px 1fr auto}.tl em{display:none}.mt-chart{height:180px}}
 @media (min-width:1220px) and (max-width:1519px){body.pagev:has(#pg-match.on) .mt{max-width:calc(100vw - 432px)}}
 
@@ -968,7 +966,7 @@ body.pagev .siderail{top:150px!important}
 /* ===== auth modal ===== */
 .auth{position:fixed;inset:0;z-index:110;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(3,5,8,.7);backdrop-filter:blur(6px)}
 body.authing{overflow:hidden}body.authing .auth{display:flex;animation:fadeIn .2s ease}
-.au-card{position:relative;width:min(420px,100%);max-height:100%;overflow:auto;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:28px 28px 20px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.au-card{position:relative;width:min(420px,100%);max-height:100%;overflow:auto;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:28px 28px 20px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
 .au-x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:none;color:var(--ink);font-size:20px;cursor:pointer}
 .au-logo{height:40px;margin-bottom:12px}
 .au-card h2{font-size:26px;margin-bottom:6px}.au-sub{color:var(--mute);font-size:14px;margin-bottom:18px}
@@ -993,7 +991,7 @@ body.authing{overflow:hidden}body.authing .auth{display:flex;animation:fadeIn .2
 .au-terms{font-size:11.5px;color:var(--mute);margin-top:8px}
 .au-demo{font-size:11px;color:var(--mute);margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
 /* ===== settings: password + advanced ===== */
-.pwform{display:grid;gap:10px;padding:14px;margin:4px 0 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.pwform{display:grid;gap:10px;padding:14px;margin:4px 0 10px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
 .pw-rules{list-style:none;display:grid;gap:3px;font-size:12.5px;color:var(--mute)}
 .pw-rules li::before{content:"○ ";}.pw-rules li.ok{color:var(--cyan)}.pw-rules li.ok::before{content:"● "}
 .chk{display:flex!important;align-items:center;gap:8px;font:500 13.5px "Pretendard Variable",sans-serif!important;color:var(--ink)!important}
@@ -1002,7 +1000,7 @@ body.authing{overflow:hidden}body.authing .auth{display:flex;animation:fadeIn .2
 details.adv{margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
 details.adv summary{cursor:pointer;color:var(--mute);font:600 13px "Pretendard Variable",sans-serif;list-style:none}details.adv summary::-webkit-details-marker{display:none}
 details.adv summary::after{content:" ▸"}details.adv[open] summary::after{content:" ▾"}
-.del-step{display:grid;gap:10px;padding:14px;border:1px solid var(--err-line);border-radius:10px;margin-top:8px}
+.del-step{display:grid;gap:10px;padding:14px;border:1px solid var(--err-line);border-radius:12px;margin-top:8px}
 .del-step p{font-size:13.5px;color:var(--mute)}.del-step b{color:var(--err)}
 .pill:disabled{opacity:.45;cursor:not-allowed}
 .del-done{font-size:13.5px;color:var(--mute);padding:12px 0}
@@ -1042,12 +1040,12 @@ details.adv summary::after{content:" ▸"}details.adv[open] summary::after{conte
 /* ===== onboarding ===== */
 .onb{position:fixed;inset:0;z-index:115;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(3,5,8,.75);backdrop-filter:blur(6px)}
 body.onboarding{overflow:hidden}body.onboarding .onb{display:flex;animation:fadeIn .2s ease}
-.ob-card{width:min(720px,100%);max-height:100%;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:24px 26px 18px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.ob-card{width:min(720px,100%);max-height:100%;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:24px 26px 18px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
 .ob-top{display:flex;justify-content:space-between;font:700 11px "Pretendard Variable",sans-serif;letter-spacing:.14em;color:var(--mute)}.ob-k{color:var(--cyan)}
 .ob-prog{height:4px;border-radius:2px;background:var(--bg3);margin:10px 0 18px;overflow:hidden}.ob-prog i{display:block;height:100%;background:linear-gradient(90deg,var(--team-l),var(--v-solid));transition:width .3s}
 .ob-card h2{font-size:28px;margin-bottom:6px}.ob-s{color:var(--mute);font-size:14.5px;margin-bottom:16px}
 .ob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;overflow-y:auto;min-height:0;padding:2px}
-.ob-chip{display:grid;gap:2px;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);cursor:pointer;position:relative}
+.ob-chip{display:grid;gap:2px;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;color:var(--ink);cursor:pointer;position:relative}
 .ob-chip b{font-size:15px}.ob-chip span{font-size:12px;color:var(--mute)}
 .ob-chip:hover{border-color:var(--cyan)}
 .ob-chip.on{border-color:var(--v-solid);background:linear-gradient(135deg,rgba(110,75,219,.16),rgba(110,75,219,.06))}
@@ -1057,7 +1055,7 @@ body.onboarding{overflow:hidden}body.onboarding .onb{display:flex;animation:fade
 @media (max-width:600px){.ob-card{padding:18px}.ob-card h2{font-size:22px}.ob-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* ===== radar ===== */
-.radar{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:10px 10px 8px}
+.radar{border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:10px 10px 8px}
 .radar svg{width:100%;max-width:380px;display:block;margin:0 auto}
 .radar .rg{fill:none;stroke:var(--line);stroke-width:1}.radar .sp{stroke:var(--line);stroke-width:1}
 .radar .pa{fill:rgba(110,75,219,.22);stroke:var(--team-l);stroke-width:2;stroke-linejoin:round}
@@ -1068,7 +1066,7 @@ body.onboarding{overflow:hidden}body.onboarding .onb{display:flex;animation:fade
 .rd-leg .la,.rd-leg .lb{font-weight:700;display:inline-flex;align-items:center;gap:6px}.rd-leg .la::before,.rd-leg .lb::before{content:"";width:12px;height:4px;border-radius:2px}
 .rd-leg .la::before{background:var(--team-l)}.rd-leg .lb::before{background:var(--team-r)}.rd-n{margin-left:auto;color:var(--mute);font-size:11px}
 /* ===== support ===== */
-.sup-card{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,rgba(110,75,219,.16),rgba(110,75,219,.08));border:1px solid rgba(110,75,219,.35);border-radius:10px;padding:10px 12px 0 6px;overflow:hidden}
+.sup-card{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg,rgba(110,75,219,.16),rgba(110,75,219,.08));border:1px solid rgba(110,75,219,.35);border-radius:12px;padding:10px 12px 0 6px;overflow:hidden}
 .sup-muse{width:92px;align-self:flex-end;flex:none}
 .sup-card b{display:block;font-size:15px}.sup-card p{font-size:12.5px;color:var(--mute);margin:3px 0 8px}
 .sup-stat{display:flex;flex-wrap:wrap;gap:8px;font:600 11.5px "Pretendard Variable",monospace;color:var(--mute);margin-bottom:10px}.sup-me{color:var(--v-ui)}
@@ -1084,9 +1082,9 @@ body.onboarding{overflow:hidden}body.onboarding .onb{display:flex;animation:fade
 /* ===== reward overlay ===== */
 .reward{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 45%,rgba(110,75,219,.35),rgba(3,5,8,.85) 60%);backdrop-filter:blur(4px)}
 .reward.on{display:flex;animation:fadeIn .25s ease}
-.rw-card{position:relative;width:min(380px,90vw);text-align:center;background:var(--bg2);border:1px solid rgba(110,75,219,.6);border-radius:18px;padding:0 22px 22px;box-shadow:0 0 60px rgba(110,75,219,.45);animation:rwpop .55s cubic-bezier(.2,1.5,.4,1)}
+.rw-card{position:relative;width:min(380px,90vw);text-align:center;background:var(--bg2);border:1px solid rgba(110,75,219,.6);border-radius:16px;padding:0 22px 22px;box-shadow:0 0 60px rgba(110,75,219,.45);animation:rwpop .55s cubic-bezier(.2,1.5,.4,1)}
 @keyframes rwpop{0%{transform:scale(.6);opacity:0}100%{transform:none;opacity:1}}
-.rw-glow{position:absolute;inset:-2px;border-radius:18px;background:conic-gradient(from 0deg,var(--team-l),var(--v-solid),var(--team-l));z-index:-1;filter:blur(18px);opacity:.55;animation:rwspin 4s linear infinite}
+.rw-glow{position:absolute;inset:-2px;border-radius:16px;background:conic-gradient(from 0deg,var(--team-l),var(--v-solid),var(--team-l));z-index:-1;filter:blur(18px);opacity:.55;animation:rwspin 4s linear infinite}
 @keyframes rwspin{to{transform:rotate(360deg)}}
 .rw-muse{width:240px;margin:-110px auto 0;display:block;filter:drop-shadow(0 12px 30px rgba(0,0,0,.5));animation:rwmuse .9s cubic-bezier(.3,1.6,.5,1) .1s both}
 .reward[data-tier="4"] .rw-muse{width:280px;margin-top:-80px}
@@ -1094,7 +1092,7 @@ body.onboarding{overflow:hidden}body.onboarding .onb{display:flex;animation:fade
 .rw-amt{font:700 44px "Pretendard Variable",sans-serif;background:linear-gradient(90deg,var(--team-l),var(--v-ui));-webkit-background-clip:text;background-clip:text;color:transparent;margin-top:4px}
 .rw-to{font:700 12px "Pretendard Variable",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .rw-line{font-size:17px;font-weight:600;margin:10px 0 8px;color:var(--ink)}
-.rw-msg{font-size:14px;color:var(--mute);font-style:italic;background:var(--bg);border:1px dashed var(--line);border-radius:10px;padding:8px 12px;margin-bottom:10px}
+.rw-msg{font-size:14px;color:var(--mute);font-style:italic;background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:8px 12px;margin-bottom:10px}
 .rw-lv{display:inline-block;font:700 12px "Pretendard Variable",sans-serif;color:#FFFFFF;background:linear-gradient(90deg,var(--team-l),var(--v-ui));border-radius:999px;padding:5px 12px;margin-bottom:12px;animation:rwlv 1s ease .5s both}
 @keyframes rwlv{0%{transform:scale(0)}70%{transform:scale(1.15)}100%{transform:none}}
 .rw-ok{width:100%;justify-content:center}
@@ -1427,7 +1425,7 @@ body.ip-cmp .p2-hh h3{font-size:18px}
 .p2-list>:last-child{border-bottom:0}
 .p2-rrow em{font-style:normal;color:var(--mute);font-size:13px}
 .p2-rrow.pl{grid-template-columns:minmax(0,1fr) 48px 84px}.p2-rrow.pl .ix{text-align:right;font-weight:800}.p2-rrow.pl .kda{text-align:right;color:var(--mute);font-size:13px}
-.p2-wl{width:24px;height:24px;border-radius:6px;display:grid;place-items:center;font-size:11px;font-weight:800;border:1px solid var(--line);color:var(--mute)}
+.p2-wl{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:11px;font-weight:800;border:1px solid var(--line);color:var(--mute)}
 .p2-wl.w{background:var(--team-l);border-color:var(--team-l);color:#fff}.p2-wl.lv{background:var(--live);border-color:var(--live);color:#fff}
 .p2-q{min-height:44px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--ink);font:500 14px "Pretendard Variable",sans-serif;text-align:left;cursor:pointer}
 .p2-parts{display:grid;gap:12px}.p2-parts .hd{display:flex;justify-content:space-between;gap:8px;font-size:14px;margin-bottom:6px}.p2-parts .hd em,.p2-pp .hd em{font-style:normal;color:var(--mute);font-size:12px}
@@ -1446,8 +1444,8 @@ body.ip-cmp .p2-hh h3{font-size:18px}
 .p2-chip em{font-style:normal;font-weight:600;color:var(--mute)}
 .p2-chip.on{border-color:var(--team-r);background:color-mix(in srgb,var(--team-r) 14%,transparent)}
 .p2-chip.srch{border-style:dashed;color:var(--mute)}
-.p2-pick .cmp-sel{height:40px;border-radius:10px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);padding:0 10px;font:500 14px "Pretendard Variable",sans-serif}
-.p2-info{margin:0;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--ds-primary) 12%,var(--bg2));font-size:13px;line-height:1.6;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}
+.p2-pick .cmp-sel{height:40px;border-radius:12px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);padding:0 10px;font:500 14px "Pretendard Variable",sans-serif}
+.p2-info{margin:0;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--ds-primary) 12%,var(--bg2));font-size:13px;line-height:1.6;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}
 .p2-vs{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center}.p2-vs .vs{font-size:14px;font-weight:700;color:var(--mute)}
 .p2-card{display:grid;gap:4px;padding:16px;border-radius:12px;background:var(--bg3);border:1px solid transparent;cursor:pointer;text-align:left;color:var(--ink);font-family:inherit;min-width:0}
 .p2-card.b{justify-items:end;text-align:right}
@@ -1462,13 +1460,13 @@ body.ip-cmp .p2-card b{font-size:clamp(24px,6vw,36px)}
 .p2-radar .lb{fill:var(--ink);font-size:14px;font-weight:700}.p2-radar .vl{font-size:13px;font-weight:800}.p2-radar .va{fill:var(--team-l)}.p2-radar .vb{fill:var(--team-r)}.p2-radar .dt{fill:var(--mute)}
 .p2-radar figcaption{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--mute)}
 .p2-radar figcaption span::before{content:"";display:inline-block;width:12px;height:3px;margin-right:6px;vertical-align:middle;background:var(--team-l)}.p2-radar figcaption .lb2::before{background:var(--team-r)}
-.p2-dv{display:grid;grid-template-columns:64px minmax(0,1fr) 112px minmax(0,1fr) 64px;gap:10px;align-items:center;padding:11px 12px;border-radius:10px;background:var(--bg3)}
+.p2-dv{display:grid;grid-template-columns:64px minmax(0,1fr) 112px minmax(0,1fr) 64px;gap:10px;align-items:center;padding:11px 12px;border-radius:12px;background:var(--bg3)}
 .p2-dv>b{font-size:15px;font-weight:600;color:color-mix(in srgb,var(--ink) 75%,var(--mute))}.p2-dv>b:last-child{text-align:right}
 .p2-dv>b.win{font-weight:800}.p2-dv>b.win.a{color:var(--team-l)}.p2-dv>b.win.b{color:var(--team-r)}
 .p2-dv .k{font-size:12.5px;color:var(--mute);text-align:center}
 .p2-dv .bar{height:6px;border-radius:9999px;background:color-mix(in srgb,var(--line) 70%,var(--bg3));position:relative;overflow:hidden}
 .p2-dv .bar i{position:absolute;top:0;bottom:0;border-radius:9999px}.p2-dv .bar.l i{right:0;background:var(--team-l)}.p2-dv .bar.r i{left:0;background:var(--team-r)}.p2-dv .bar i.dim{opacity:.45}
-.p2-lane{display:grid;grid-template-columns:minmax(0,1fr) 44px 56px 44px minmax(0,1fr);gap:8px;align-items:center;padding:11px 14px;border-radius:10px;background:var(--bg3);font-size:14.5px}
+.p2-lane{display:grid;grid-template-columns:minmax(0,1fr) 44px 56px 44px minmax(0,1fr);gap:8px;align-items:center;padding:11px 14px;border-radius:12px;background:var(--bg3);font-size:14.5px}
 .p2-lane .nm{background:none;border:0;padding:0;color:var(--ink);font:700 14.5px "Pretendard Variable",sans-serif;text-align:left;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.p2-lane .nm.r{text-align:right}.p2-lane .nm:hover{color:var(--cyan)}
 .p2-lane .va{color:var(--team-l);text-align:right;font-weight:500}.p2-lane .vb{color:var(--team-r);font-weight:500}.p2-lane .win{font-weight:800}
 .p2-lane .rl{font-size:12px;font-weight:700;color:var(--mute);text-align:center}
@@ -1478,7 +1476,7 @@ body.ip-cmp .p2-card b{font-size:clamp(24px,6vw,36px)}
 .p2-fm .frm{display:flex;gap:3px}.p2-fm .frm i{font-style:normal;font-weight:800;font-size:11px;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;border:1px solid var(--line);color:var(--mute)}.p2-fm .frm i.w{background:var(--team-l);border-color:var(--team-l);color:#fff}
 .p2a{color:var(--team-l)}.p2b{color:var(--team-r)}
 .p2-h2h{font-size:22px;font-weight:800}.p2-h2h i{font-style:normal;font-weight:400;color:var(--mute)}
-.p2-pp{display:grid;gap:6px;padding:12px;border-radius:10px;background:var(--bg3)}.p2-pp .hd{font-size:14px}
+.p2-pp{display:grid;gap:6px;padding:12px;border-radius:12px;background:var(--bg3)}.p2-pp .hd{font-size:14px}
 .p2-pp .ln{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:10px;align-items:center}.p2-pp .ln>span{height:8px;border-radius:9999px;background:color-mix(in srgb,var(--line) 70%,var(--bg3));position:relative;overflow:hidden}
 .p2-pp .ln i{position:absolute;left:0;top:0;bottom:0;border-radius:9999px}.p2-pp .ln.a i{background:var(--team-l)}.p2-pp .ln.b i{background:var(--team-r)}
 .p2-pp .ln b{text-align:right;font-size:13.5px}.p2-pp .ln.a b{color:var(--team-l)}.p2-pp .ln.b b{color:var(--team-r)}
@@ -1543,7 +1541,7 @@ body:not(.hx-run) .hx-bg *{animation-play-state:paused!important}
 .hx-r{position:relative;padding-top:4px}
 .hx-pane{animation:hxIn .45s ease}
 @keyframes hxIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
-.hx-card{border-radius:24px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;gap:18px}
+.hx-card{border-radius:16px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;gap:18px}
 .hx-card.live{border-color:color-mix(in srgb,var(--upcoming) 60%,var(--line));box-shadow:var(--sh-live)}
 .hx-top{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--mute)}
 .hx-lv{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:9999px;background:var(--live);color:#fff;font:800 12.5px "Pretendard Variable",sans-serif}
@@ -1571,15 +1569,15 @@ body:not(.hx-run) .hx-bg *{animation-play-state:paused!important}
 .hx-frm{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:13px;color:var(--mute)}
 .hx-frm .f{display:flex;gap:3px}.hx-frm .f.r{justify-content:flex-end}.hx-frm i{font-style:normal;width:20px;height:20px;border-radius:5px;display:grid;place-items:center;font-size:11px;font-weight:800;border:1px solid var(--line)}
 .hx-frm i.w{background:var(--team-l);border-color:var(--team-l);color:#fff}
-.hx-mu{position:relative;border-radius:24px;background:#ECEBFF;overflow:hidden;height:420px}
+.hx-mu{position:relative;border-radius:16px;background:#ECEBFF;overflow:hidden;height:420px}
 .hx-mu img{position:absolute;left:20px;bottom:0;width:460px;max-width:80%;height:auto}
 .hx-mu .bs{position:absolute;right:20px;top:24px;width:270px;display:grid;gap:10px}
 .hx-mu .bs span{justify-self:end;padding:11px 15px;border-radius:18px 18px 4px 18px;background:#fff;color:#191F28;font:600 14.5px/1.45 "Pretendard Variable",sans-serif;box-shadow:0 2px 6px rgba(25,31,40,.12)}
 .hx-mu .bs span.p{background:#6F4CFF;color:#fff;font-weight:800;font-size:16px}
-.hx-mu .bs span.d{background:#191F28;color:#F0F2F5;font-size:13px;font-weight:700;border-radius:14px}
+.hx-mu .bs span.d{background:#191F28;color:#F0F2F5;font-size:13px;font-weight:700;border-radius:16px}
 .hx-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.hx-holo{padding:4px;border-radius:24px;background:linear-gradient(135deg,#6F4CFF,#2F9CFC,#00B395,#F2C766,#FE2054)}
-.hx-holo>div{border-radius:20px;background:var(--bg2);padding:24px;display:grid;gap:14px}
+.hx-holo{padding:4px;border-radius:16px;background:linear-gradient(135deg,#6F4CFF,#2F9CFC,#00B395,#F2C766,#FE2054)}
+.hx-holo>div{border-radius:16px;background:var(--bg2);padding:24px;display:grid;gap:14px}
 .hx-holo .tier{display:flex;justify-content:space-between;font-size:12.5px;font-weight:800;color:#C9B8FF}
 .hx-holo .tier em{font-style:normal;color:var(--energy-h,#26BEA5);border:1px solid currentColor;border-radius:9999px;padding:2px 9px;font-size:11.5px}
 .hx-holo h3{margin:0;font:800 24px/1.3 "Pretendard Variable",sans-serif;text-transform:none;letter-spacing:-.01em}
@@ -1587,7 +1585,7 @@ body:not(.hx-run) .hx-bg *{animation-play-state:paused!important}
 .hx-holo .k{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border-radius:12px;overflow:hidden;background:var(--line)}
 .hx-holo .k div{background:var(--bg3);padding:10px 12px;display:grid;gap:2px;font-size:12px;color:var(--mute)}.hx-holo .k b{font-size:17px;color:var(--ink)}
 .hx-rank{display:grid;gap:8px}
-.hx-rank button{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;border-radius:14px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);text-align:left;cursor:pointer;font-family:inherit}
+.hx-rank button{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--bg3);color:var(--ink);text-align:left;cursor:pointer;font-family:inherit}
 .hx-rank button:hover{border-color:var(--cyan)}
 .hx-rank .n{font:800 18px "Pretendard Variable",sans-serif;color:#E7B84A}.hx-rank button:nth-child(2) .n{color:#AEB6C4}.hx-rank button:nth-child(3) .n{color:#C98B5A}
 .hx-rank b{font-size:16px}.hx-rank small{color:var(--mute);margin-left:6px}.hx-rank em{font:800 22px "Pretendard Variable",sans-serif;font-style:normal}
@@ -1605,7 +1603,7 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
 @media (max-width:1100px){.hx-in{grid-template-columns:1fr;gap:28px;padding:40px 24px 16px}.hx-r{max-width:640px}.hx-tabs{padding:8px 24px 22px}}
 @media (max-width:760px){.hx{min-height:0}.hx-bg *{animation:none!important}.hx-in{padding:24px 16px 12px;gap:18px}.hx-sub{font-size:15.5px}.hx-box{height:54px;padding:0 6px 0 16px}.hx-box button{height:44px;padding:0 16px}
  .hx-chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.hx-chips button{flex:none}
- .hx-card{padding:16px;gap:12px;border-radius:20px}.hx-vs .t b{font-size:30px}.hx-vs .c b{font-size:26px}.hx-wp svg{height:80px}
+ .hx-card{padding:16px;gap:12px;border-radius:16px}.hx-vs .t b{font-size:30px}.hx-vs .c b{font-size:26px}.hx-wp svg{height:80px}
  .hx-muse{grid-template-columns:44px minmax(0,1fr)}.hx-muse img{width:44px;height:44px}.hx-muse .hx-go{grid-column:1/-1;justify-content:center}
  .hx-mu{height:320px}.hx-mu .bs{width:210px;right:12px}.hx-mu .bs span{font-size:13px}
  .hx-tabs{gap:8px;padding:4px 16px 18px}.hx-tabs b{font-size:12px;font-weight:600}.hx-tabs .n{display:none}}
@@ -1619,10 +1617,10 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
 .spark b{font-weight:700}
 @media (max-width:760px){.spark span{display:none}}
 /* cards */
-.bx-card{padding:3px;border-radius:18px;background:linear-gradient(135deg,#8C93A3,#D5DAE3,#8C93A3)}
+.bx-card{padding:3px;border-radius:16px;background:linear-gradient(135deg,#8C93A3,#D5DAE3,#8C93A3)}
 .bx-card.gold{background:linear-gradient(135deg,#A8782A,#F2C766,#A8782A)}
 .bx-card.holo{background:linear-gradient(135deg,#6F4CFF,#2F9CFC,#00B395,#F2C766,#FE2054)}
-.bx-card .in{border-radius:15px;background:var(--bg2);padding:16px;display:grid;gap:8px;height:100%;box-sizing:border-box;align-content:start}
+.bx-card .in{border-radius:16px;background:var(--bg2);padding:16px;display:grid;gap:8px;height:100%;box-sizing:border-box;align-content:start}
 .bx-card .hd{display:flex;justify-content:space-between;align-items:center;gap:6px}
 .bx-card .tr{font:800 11.5px "Pretendard Variable",sans-serif;color:var(--mute)}.bx-card.gold .tr{color:#C9972E}.bx-card.holo .tr{color:#9B7BFF}
 :root:not([data-theme=light]) .bx-card.gold .tr{color:#F2C766}:root:not([data-theme=light]) .bx-card.holo .tr{color:#C9B8FF}
@@ -1635,7 +1633,7 @@ body.hx-run .hx-tabs button[aria-selected=true] .bar i{width:0;animation:hxBar v
 .fl{max-width:1320px;margin:32px auto 48px;padding:0 20px;box-sizing:border-box}
 @media (max-width:760px){.fl{margin:20px auto 32px;padding:0 12px}}
 .fl>.fl-in,.fl{display:grid;gap:16px}
-.fl-wrap{border-radius:20px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;gap:18px}
+.fl-wrap{border-radius:16px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;gap:18px}
 body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
 .fl-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px}.fl-h>div{display:flex;align-items:baseline;gap:10px}
 .fl-h h2{margin:0;font:800 22px "Pretendard Variable",sans-serif;text-transform:none;letter-spacing:-.01em}.fl-h .nw{font-size:12px;font-weight:700;color:var(--cyan);padding:2px 8px;border-radius:9999px;background:color-mix(in srgb,var(--ds-primary) 18%,transparent)}.fl-h>span{font-size:13px;color:var(--mute)}
@@ -1644,7 +1642,7 @@ body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
 .fl-me .who{display:flex;align-items:center;gap:12px}.fl-me .av{width:44px;height:44px;border-radius:9999px;display:grid;place-items:center;font-weight:800;background:var(--bg2);box-shadow:0 0 0 3px var(--ds-primary)}
 .fl-me .who>div{display:grid;gap:2px}.fl-me .who span{font-size:12.5px;color:var(--mute)}
 .fl-me .rk{display:flex;align-items:baseline;gap:8px}.fl-me .rk b{font:800 34px "Pretendard Variable",sans-serif;letter-spacing:-.02em}.fl-me .rk span{font-size:13.5px;color:var(--energy)}
-.fl-me .k3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border-radius:10px;overflow:hidden;background:var(--line)}.fl-me .k3 div{background:var(--bg2);padding:10px;display:grid;gap:2px;font-size:12px;color:var(--mute)}.fl-me .k3 b{font-size:15px;color:var(--ink)}
+.fl-me .k3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border-radius:12px;overflow:hidden;background:var(--line)}.fl-me .k3 div{background:var(--bg2);padding:10px;display:grid;gap:2px;font-size:12px;color:var(--mute)}.fl-me .k3 b{font-size:15px;color:var(--ink)}
 .fl-me.out p{margin:0;font-size:14px;line-height:1.6;color:var(--mute)}
 .fl-rare{flex:999 1 620px;min-width:0;display:grid;gap:12px;align-content:start}
 .fl-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
@@ -1662,7 +1660,7 @@ body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
 .pan.sparkc{padding:18px;display:grid;gap:8px}.sparkc b{display:flex;align-items:center;gap:6px;font-size:15px}.sparkc span{font-size:13px;color:var(--mute);line-height:1.55}.sparkc a{font-size:13.5px;font-weight:700;color:var(--cyan)}
 /* side panel boost */
 .bx-notice{margin:0;padding:14px 16px;border-radius:12px;background:var(--bg3);border:1px solid var(--line);font-size:13.5px;line-height:1.65;color:color-mix(in srgb,var(--ink) 80%,var(--mute))}
-.bx-now{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:16px;border-radius:14px;background:var(--bg3);border:1px solid var(--line);color:var(--ink);text-align:left;cursor:pointer;font-family:inherit;width:100%}
+.bx-now{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:16px;border-radius:16px;background:var(--bg3);border:1px solid var(--line);color:var(--ink);text-align:left;cursor:pointer;font-family:inherit;width:100%}
 .ipanel .sup:not(.off) .bx-now{background:color-mix(in srgb,var(--upcoming) 22%,var(--bg2));border-color:color-mix(in srgb,var(--upcoming) 55%,var(--line));box-shadow:var(--sh-live)}
 .bx-now.sel{outline:2px solid var(--energy);outline-offset:2px}.sup.off .bx-now.sel{outline-color:var(--spark)}
 .bx-now .tx{display:grid;gap:3px}.bx-now b{font-size:15.5px}.bx-now em{font-style:normal;font-size:12.5px;color:var(--mute)}
@@ -1685,9 +1683,9 @@ body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
 .bx-dist .lg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:color-mix(in srgb,var(--ink) 80%,var(--mute))}
 .bx-dist.off span{color:var(--mute);line-height:1.55}
 .bx-wait{margin:0;padding:14px;border-radius:12px;border:1px dashed var(--line);font-size:13.5px;color:var(--mute)}
-.bx-ntf{display:grid;gap:10px;padding:18px;border-radius:14px;border:1px dashed var(--line)}.bx-ntf span{font-size:13px;color:var(--mute);line-height:1.6}.bx-ntf .p2-btn{justify-self:start;height:40px}.bx-ntf .p2-btn.on{border-color:var(--energy);color:var(--energy)}
+.bx-ntf{display:grid;gap:10px;padding:18px;border-radius:16px;border:1px dashed var(--line)}.bx-ntf span{font-size:13px;color:var(--mute);line-height:1.6}.bx-ntf .p2-btn{justify-self:start;height:40px}.bx-ntf .p2-btn.on{border-color:var(--energy);color:var(--energy)}
 .bx-lb{list-style:none;margin:0;padding:0;display:grid;gap:5px}
-.bx-lb li{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg3);font-size:14px}
+.bx-lb li{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--bg3);font-size:14px}
 .bx-lb li em{font-style:normal;font-size:12px;color:var(--mute)}.bx-lb .r1{color:#E7B84A}.bx-lb .r2{color:#AEB6C4}.bx-lb .r3{color:#C98B5A}.bx-lb li b:first-child{color:var(--mute)}
 .bx-lb li.me{background:color-mix(in srgb,var(--ds-primary) 18%,var(--bg2))}.bx-lb li.me b:first-child{color:var(--cyan)}
 .bx-lbt{display:inline-flex}.bx-lbt button{cursor:pointer!important;color:var(--mute)!important}.bx-lbt button.on{color:var(--bg)!important}
@@ -1700,7 +1698,7 @@ body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
 .rw-amt .bx-i{width:22px;height:22px;vertical-align:-3px}
 /* my boost */
 .bx-bal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.bx-bal>div{padding:18px;border-radius:14px;background:var(--bg2);border:1px solid var(--line);display:grid;gap:6px;align-content:start}
+.bx-bal>div{padding:18px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);display:grid;gap:6px;align-content:start}
 .bx-bal .e{border-color:color-mix(in srgb,var(--energy) 45%,var(--line))}.bx-bal .s{border-color:color-mix(in srgb,var(--spark) 45%,var(--line))}
 .bx-bal>div>span{font-size:13.5px;color:var(--mute);display:flex;align-items:center;gap:6px}
 .bx-bal>div b{font:800 30px "Pretendard Variable",sans-serif}.bx-bal em{font-style:normal;font-size:12.5px;color:var(--mute)}.bx-bal em a{color:var(--cyan)}
@@ -1716,11 +1714,11 @@ body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
 @media (max-width:860px){.bx-bal,.bx-two{grid-template-columns:1fr}}
 /* spark ad wall */
 #pg-spark .wrap{max-width:1100px}
-.aw-tm{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 18px;border-radius:14px;background:var(--bg3);border:1px solid var(--line);font-size:14px;margin-bottom:16px}
+.aw-tm{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 18px;border-radius:16px;background:var(--bg3);border:1px solid var(--line);font-size:14px;margin-bottom:16px}
 .aw-tm .tg{font-size:12px;font-weight:800;padding:4px 10px;border-radius:9999px;background:var(--upcoming);color:#fff}
 .aw-g{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:16px;align-items:start}
 .aw-main{display:grid;gap:14px;margin:0}
-.aw-play{aspect-ratio:16/9;border-radius:14px;background:#10141C;border:1px dashed var(--line);display:grid;place-items:center;align-content:center;gap:10px;text-align:center;color:#9AA1B5;font-size:14px}
+.aw-play{aspect-ratio:16/9;border-radius:16px;background:#10141C;border:1px dashed var(--line);display:grid;place-items:center;align-content:center;gap:10px;text-align:center;color:#9AA1B5;font-size:14px}
 .aw-play small{display:block;font-size:12px;margin-top:6px}.aw-play b{font:800 44px "Pretendard Variable",sans-serif;color:#F0F2F5}.aw-play.ok b{color:var(--spark)}
 .aw-play .pb{width:60%;height:6px;border-radius:9999px;background:#262D40;position:relative;overflow:hidden}.aw-play .pb i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--spark);transition:width 1s linear}
 .aw-n{margin:0;padding:14px 16px;border-radius:12px;background:color-mix(in srgb,var(--spark) 10%,transparent);border:1px solid color-mix(in srgb,var(--spark) 40%,transparent);font-size:14.5px;line-height:1.6}
@@ -1731,9 +1729,9 @@ body.pagev .fl,body.chatting .fl,body.acct .fl{display:none}
 /* share modal */
 .bx-modal{position:fixed;inset:0;z-index:200;background:rgba(10,12,18,.72);display:none;place-items:center;padding:16px;overflow-y:auto}
 .bx-modal.on{display:grid}
-.bx-sheet{position:relative;width:min(860px,100%);border-radius:20px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;grid-template-columns:400px minmax(0,1fr);gap:24px;box-shadow:var(--sh-float)}
+.bx-sheet{position:relative;width:min(860px,100%);border-radius:16px;background:var(--bg2);border:1px solid var(--line);padding:24px;display:grid;grid-template-columns:400px minmax(0,1fr);gap:24px;box-shadow:var(--sh-float)}
 .bx-x{position:absolute;right:14px;top:14px;width:36px;height:36px;border-radius:9999px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:20px;cursor:pointer}
-.bx-prev{aspect-ratio:4/5;border-radius:18px;background:#10141C;color:#F0F2F5;padding:24px;display:grid;grid-template-rows:auto auto 1fr auto;gap:14px;box-sizing:border-box;overflow:hidden}
+.bx-prev{aspect-ratio:4/5;border-radius:16px;background:#10141C;color:#F0F2F5;padding:24px;display:grid;grid-template-rows:auto auto 1fr auto;gap:14px;box-sizing:border-box;overflow:hidden}
 .bx-prev .hd{display:flex;justify-content:space-between}.bx-prev .hd span{font-size:12px;color:#9AA1B5}
 .bx-prev .who{display:grid;gap:4px}.bx-prev .who span{font-size:13px;color:#9AA1B5}.bx-prev .who b{font:800 21px/1.3 "Pretendard Variable",sans-serif}
 .bx-prev .bx-card{align-self:start}.bx-prev .bx-card .in{background:#1D2333;color:#F0F2F5}
@@ -1808,10 +1806,10 @@ footer>.wrap{max-width:1320px}
 /* ===== card flip ===== */
 .bx-card{cursor:pointer}.bx-prev .bx-card{cursor:default}
 .bx-card:focus-visible{outline:2px solid var(--ds-selected);outline-offset:3px}
-.bx-card .flip{display:grid;height:100%;transform-style:preserve-3d;transform:perspective(1100px) rotateY(0deg);transition:transform .65s cubic-bezier(.2,.8,.2,1);border-radius:15px}
+.bx-card .flip{display:grid;height:100%;transform-style:preserve-3d;transform:perspective(1100px) rotateY(0deg);transition:transform .65s cubic-bezier(.2,.8,.2,1);border-radius:16px}
 .bx-card.flipped .flip{transform:perspective(1100px) rotateY(180deg)}
 .bx-card .flip>.in,.bx-card .flip>.bk{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.bx-card .bk{transform:rotateY(180deg);border-radius:15px;background:var(--bg2);padding:16px;display:grid;gap:8px;align-content:start;overflow:hidden;box-sizing:border-box;height:100%}
+.bx-card .bk{transform:rotateY(180deg);border-radius:16px;background:var(--bg2);padding:16px;display:grid;gap:8px;align-content:start;overflow:hidden;box-sizing:border-box;height:100%}
 .bx-card.sm .bk{padding:12px;gap:6px}
 .bx-card .bk .hd{display:flex;justify-content:space-between;align-items:center}.bx-card .bk .tr{font:800 11.5px "Pretendard Variable",sans-serif;color:var(--cyan)}.bx-card .bk .ft{font-size:11px;color:var(--mute)}
 .bx-card .bk .ds{margin:0;font-size:12.5px;line-height:1.5;color:color-mix(in srgb,var(--ink) 85%,var(--mute))}
@@ -1830,7 +1828,7 @@ footer>.wrap{max-width:1320px}
 [data-lc]{display:inline-block;font-variant-numeric:tabular-nums;transition:color .3s}[data-lc].bump{animation:lcBump .5s ease}
 @keyframes lcBump{0%{transform:translateY(0)}35%{transform:translateY(-3px);color:var(--energy)}100%{transform:none}}
 .fl-drop{min-height:0;height:0;overflow:visible;position:relative}
-.fl-drop .dp{position:absolute;left:0;right:0;top:-6px;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:10px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--sh-float);font-size:13px;z-index:5;animation:dpIn .5s cubic-bezier(.2,.8,.2,1)}
+.fl-drop .dp{position:absolute;left:0;right:0;top:-6px;display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--sh-float);font-size:13px;z-index:5;animation:dpIn .5s cubic-bezier(.2,.8,.2,1)}
 .fl-drop .dp.out{animation:dpOut .45s ease forwards}
 .fl-drop .dp .t{font:800 11px "Pretendard Variable",sans-serif;padding:2px 8px;border-radius:9999px;border:1px solid currentColor}.fl-drop .dp .t.holo{color:#9B7BFF}.fl-drop .dp .t.gold{color:#C9972E}.fl-drop .dp em{font-style:normal;color:var(--mute);margin-left:auto;font-size:12px}
 @keyframes dpIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}@keyframes dpOut{to{opacity:0;transform:translateY(-8px)}}
@@ -1845,7 +1843,7 @@ footer>.wrap{max-width:1320px}
 .tb td.lchc .lchg.out{opacity:0}
 @keyframes lchIn{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}@keyframes lchBlink{50%{opacity:.35}}
 @media (prefers-reduced-motion:reduce){.fl-drop .dp,.lchg,[data-lc].bump{animation:none}}
-.bx-ext{margin:0;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--ds-primary) 10%,var(--bg2));border:1px solid color-mix(in srgb,var(--ds-primary) 30%,var(--line));font-size:12.5px;line-height:1.55;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}.bx-ext a{color:var(--cyan);font-weight:700;white-space:nowrap}.bx-ext.hxn{display:block;width:100%;max-width:600px;margin-top:10px;padding:0;background:none;border:0;font-size:12px;color:var(--mute)}.bx-ext.hxn a{white-space:normal}.box .bx-ext{margin-top:10px}.rw-cardslot .bx-ext{text-align:left}
+.bx-ext{margin:0;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--ds-primary) 10%,var(--bg2));border:1px solid color-mix(in srgb,var(--ds-primary) 30%,var(--line));font-size:12.5px;line-height:1.55;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}.bx-ext a{color:var(--cyan);font-weight:700;white-space:nowrap}.bx-ext.hxn{display:block;width:100%;max-width:600px;margin-top:10px;padding:0;background:none;border:0;font-size:12px;color:var(--mute)}.bx-ext.hxn a{white-space:normal}.box .bx-ext{margin-top:10px}.rw-cardslot .bx-ext{text-align:left}
 
 .post-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0 6px}.post-cards .bx-card .tt{font-size:15px}.post-cap{font-size:12.5px!important;color:var(--mute)!important;margin-top:4px!important;text-align:center}
 @media (max-width:640px){.post-cards{grid-template-columns:1fr}}
@@ -1880,7 +1878,7 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .rk-tm{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 14px;border-radius:9999px;border:1px solid var(--line);background:var(--bg2);color:var(--mute);font:700 14px "Pretendard Variable",sans-serif}
 .rk-tm img{width:20px;height:20px;object-fit:contain}.rk-tm.on{border-color:#E2012D;background:#2A0A12;color:#F5F2F3}.rk-tm.off{font-size:12.5px;border-style:dashed}
 :root[data-theme=light] .rk-tm.on{background:#FFE9ED;color:#7A0016}
-.rk-ban{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:24px;align-items:center;padding:22px 26px;border-radius:20px;background:linear-gradient(120deg,#3A0A16 0%,#1E0A10 45%,#191F28 100%);border:1px solid #5A1424;color:#F5F2F3;margin-bottom:26px}
+.rk-ban{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:24px;align-items:center;padding:22px 26px;border-radius:16px;background:linear-gradient(120deg,#3A0A16 0%,#1E0A10 45%,#191F28 100%);border:1px solid #5A1424;color:#F5F2F3;margin-bottom:26px}
 .rk-ban>img{width:64px;height:64px;object-fit:contain}
 .rk-bi{display:grid;gap:10px;min-width:0}.rk-bt{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:14px;color:#C9B6BB}.rk-bt b{font-size:21px;color:#fff}
 .rk-pt{font-size:11.5px;font-weight:800;color:#FF5C7A;padding:3px 8px;border-radius:9999px;background:#2A0A12;border:1px solid #5A1424}
@@ -1892,11 +1890,11 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .rk-ctl{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .rk-seg{display:flex;gap:4px;padding:4px;border-radius:12px;background:var(--bg3)}
 .rk-seg button,.rk-chips button{font:700 13.5px "Pretendard Variable",sans-serif;cursor:pointer}
-.rk-seg button{height:34px;padding:0 14px;border:0;border-radius:9px;background:transparent;color:var(--mute)}.rk-seg button.on{background:var(--bg2);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.rk-seg button{height:34px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:var(--mute)}.rk-seg button.on{background:var(--bg2);color:var(--ink);box-shadow:0 1px 0 var(--line)}
 .rk-chips{display:flex;gap:6px;flex-wrap:wrap}.rk-chips button{height:34px;padding:0 14px;border-radius:9999px;border:1px solid var(--line);background:transparent;color:var(--mute)}
 .rk-chips button.on{border-color:#E2012D;color:#FF8FA3;background:rgba(226,1,45,.12)}:root[data-theme=light] .rk-chips button.on{color:#B0002A}
 .rk-pods{display:grid;grid-template-columns:1fr 1.12fr 1fr;gap:14px;align-items:end}
-.rk-pod{display:grid;justify-items:center;gap:8px;padding:22px 14px 18px;border-radius:18px;background:var(--bg2);border:1px solid var(--line);text-align:center;min-width:0}
+.rk-pod{display:grid;justify-items:center;gap:8px;padding:22px 14px 18px;border-radius:16px;background:var(--bg2);border:1px solid var(--line);text-align:center;min-width:0}
 .rk-pod.p1{padding-bottom:26px;border-color:#A8782A;background:linear-gradient(180deg,rgba(242,199,102,.16) 0%,var(--bg2) 70%)}
 .rk-md{font-size:12.5px;font-weight:800;color:#AEB6C4}.rk-pod.p1 .rk-md{color:#E7B84A}.rk-pod.p3 .rk-md{color:#C98B5A}
 .rk-pod .rk-av{width:58px;height:58px;font-size:22px;border:3px solid #AEB6C4}.rk-pod.p1 .rk-av{width:74px;height:74px;border-color:#E7B84A}.rk-pod.p3 .rk-av{border-color:#C98B5A}
@@ -1906,7 +1904,7 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .rk-av{display:inline-grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;font:800 13px "Pretendard Variable",sans-serif;color:#fff;background:hsl(var(--h,240) 38% 34%)}
 .rk-av[data-i]::before{content:attr(data-i)}.rk-av.me{background:#6F4CFF;font-size:11px}
 .rk-an{color:var(--mute)}
-.rk-tbl{border-radius:18px;background:var(--bg2);border:1px solid var(--line);overflow:clip}
+.rk-tbl{border-radius:16px;background:var(--bg2);border:1px solid var(--line);overflow:clip}
 .rk-row{display:grid;grid-template-columns:52px 50px minmax(0,1fr) repeat(var(--nc,3),minmax(74px,auto));gap:12px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);font-size:14px}
 .rk-tbl:has(.rk-hd>span:nth-child(7)) .rk-row{--nc:4}
 .rk-row .r{text-align:right;color:var(--mute);white-space:nowrap}.rk-row .r.on{color:var(--ink);font-weight:800}
@@ -1928,7 +1926,7 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .rk-pl>span{display:grid;gap:2px;min-width:0}.rk-pl>span>b{font-size:14px}.rk-pl>span>b em{font-style:normal;font-size:11px;color:var(--mute);font-weight:600}.rk-pl>span>span{font-size:13px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rk-pl .v{font-size:13px;color:#E7B84A}
 .rk-rules ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:13px;color:var(--mute);line-height:1.5}
-.rk-soon{display:grid;gap:6px;padding:16px 18px;border-radius:14px;border:1px dashed var(--line);font-size:13px;color:var(--mute);line-height:1.55}.rk-soon b{color:var(--ink);font-size:14px}
+.rk-soon{display:grid;gap:6px;padding:16px 18px;border-radius:16px;border:1px dashed var(--line);font-size:13px;color:var(--mute);line-height:1.55}.rk-soon b{color:var(--ink);font-size:14px}
 @media (max-width:980px){.rk-g{grid-template-columns:1fr}.rk-ban{grid-template-columns:auto minmax(0,1fr)}.rk-ban>.rk-my,.rk-ban>.p2-btn{grid-column:1/-1;text-align:left;justify-self:start}}
 @media (max-width:640px){.rk-pods{grid-template-columns:1fr;align-items:stretch}.rk-pod.p1{order:-1}
  .rk-row{grid-template-columns:40px 40px minmax(0,1fr) auto;padding:10px 12px;gap:8px;font-size:13.5px}.rk-row>.r:not(.on){display:none}
@@ -1957,9 +1955,9 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .fl-ms .ms-like.on{color:#FFC56B;background:rgba(255,197,107,.12)}
 .fl-ms .ms-more{padding:0 6px;font-size:14px;letter-spacing:.05em;opacity:.7}
 .fl-ms .ms-mw{position:relative;margin-left:auto}
-.fl-ms .ms-menu{display:none;position:absolute;right:0;bottom:calc(100% + 4px);z-index:5;padding:4px;border-radius:10px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
+.fl-ms .ms-menu{display:none;position:absolute;right:0;bottom:calc(100% + 4px);z-index:5;padding:4px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 10px 24px -10px rgba(0,0,0,.5)}
 .fl-ms .ms-mw.open .ms-menu{display:block}
-.fl-ms .ms-menu button{display:block;white-space:nowrap;height:30px;padding:0 12px;border:0;border-radius:7px;background:transparent;color:var(--ink);font:600 12.5px "Pretendard Variable",sans-serif;cursor:pointer}.fl-ms .ms-menu button:hover{background:var(--bg3)}
+.fl-ms .ms-menu button{display:block;white-space:nowrap;height:30px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--ink);font:600 12.5px "Pretendard Variable",sans-serif;cursor:pointer}.fl-ms .ms-menu button:hover{background:var(--bg3)}
 .fl-ms .ms-chips{display:flex;gap:6px;flex-wrap:wrap;padding-top:2px}.fl-ms .ms-chips[hidden]{display:none}
 .fl-ms .ms-chips button{height:26px;padding:0 10px;border-radius:9999px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:600 12px "Pretendard Variable",sans-serif;cursor:pointer}.fl-ms .ms-chips button:hover{border-color:var(--cyan)}
 .fl-ms .ms-rpl{font-size:12px;color:var(--mute);padding-left:4px}.fl-ms .ms-rpl b{color:var(--ink)}
@@ -2015,7 +2013,7 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .fl-top3{margin-top:auto;display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
 .fl-top3 .t3c{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--mute)}.fl-top3 .t3c i{width:6px;height:6px;border-radius:50%;background:var(--live)}
 .fl-top3 ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}
-.fl-top3 li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;background:var(--bg2);font-size:13px}
+.fl-top3 li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:var(--bg2);font-size:13px}
 .fl-top3 .r1{color:#E7B84A}.fl-top3 .r2{color:#AEB6C4}.fl-top3 .r3{color:#C98B5A}
 .fl-ms{height:262px}
 /* RORR moment edition (non-partner cards): same frame as the partner edition, RORR emblem instead of team marks */
@@ -2032,7 +2030,7 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .bx-card.rm.gold .rm-g polyline{stroke:#F2C766}.bx-card.rm.holo .rm-g polyline{stroke:#C9B8FF}
 .bx-card.sm .rm-em{width:36px;max-height:48px}
 .sup-tg{font-style:normal;font-size:11.5px;font-weight:800;color:#3FD9BE;padding:2px 8px;border-radius:9999px;background:rgba(63,217,190,.12);vertical-align:middle;margin-left:4px}
-.bx-tms{display:grid;gap:6px;margin:4px 0 6px}.bx-tms>div{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:8px 10px;border-radius:10px;background:var(--bg3);font-size:13px}
+.bx-tms{display:grid;gap:6px;margin:4px 0 6px}.bx-tms>div{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:8px 10px;border-radius:12px;background:var(--bg3);font-size:13px}
 .bx-tms>div span{display:flex;align-items:center;gap:6px;font-weight:700}.bx-tms img{width:16px;height:16px;object-fit:contain}.bx-tms em{font-style:normal;color:var(--mute);font-size:12px}.bx-tms .np b{color:var(--mute);font-weight:600;font-size:12px}
 .bx-tms small{font-size:11.5px;color:var(--mute)}
 @media (max-width:1100px){.fl-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -2088,12 +2086,12 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 
 /* ===== ⑧ ranking redesign ===== */
 .rk-top{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;margin:6px 0 16px;align-items:stretch}
-.rk-head{display:grid;gap:10px;align-content:start;padding:22px 24px;border-radius:18px;background:linear-gradient(120deg,#3A0A16 0%,#1E0A10 50%,#191F28 100%);border:1px solid #5A1424;color:#F5F2F3}
+.rk-head{display:grid;gap:10px;align-content:start;padding:22px 24px;border-radius:16px;background:linear-gradient(120deg,#3A0A16 0%,#1E0A10 50%,#191F28 100%);border:1px solid #5A1424;color:#F5F2F3}
 .rk-head .k{font:800 11.5px "Pretendard Variable",sans-serif;letter-spacing:.14em;color:#FF8FA3}
 .rk-ht{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.rk-ht img{width:44px;height:44px;object-fit:contain}.rk-ht h1{margin:0;font-size:26px;letter-spacing:-.02em;color:#fff}
 .rk-tsel{margin-left:auto;font:700 13px "Pretendard Variable",sans-serif;padding:6px 12px;border-radius:9999px;border:1px solid #5A1424;color:#C9B6BB;cursor:default}
 .rk-hs{margin:0;font-size:13.5px;color:#C9B6BB}.rk-hs b{color:#fff}
-.rk-mc{display:grid;gap:10px;align-content:start;padding:20px 22px;border-radius:18px;background:color-mix(in srgb,#6F4CFF 14%,var(--bg2));border:1px solid color-mix(in srgb,#6F4CFF 55%,var(--line))}
+.rk-mc{display:grid;gap:10px;align-content:start;padding:20px 22px;border-radius:16px;background:color-mix(in srgb,#6F4CFF 14%,var(--bg2));border:1px solid color-mix(in srgb,#6F4CFF 55%,var(--line))}
 .rk-mk{font-size:12.5px;font-weight:700;color:var(--mute)}
 .rk-mr{display:flex;align-items:baseline;gap:10px}.rk-mr b{font:800 34px "Pretendard Variable",sans-serif;letter-spacing:-.02em;color:var(--ink)}.rk-mr em{font-style:normal;font-size:13px;font-weight:700;color:#3FD9BE}
 .rk-mp{display:grid;gap:6px}.rk-mp>div{display:flex;justify-content:space-between;font-size:12.5px;color:var(--mute)}.rk-mp>div b{color:var(--ink)}
@@ -2101,20 +2099,20 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .rk-mp small,.rk-mh{font-size:12.5px;color:var(--mute);margin:0;line-height:1.5}
 .rk-mb{display:flex;gap:8px;flex-wrap:wrap}.rk-mb button{height:34px;padding:0 14px;border-radius:9999px;font:700 13px "Pretendard Variable",sans-serif;cursor:pointer}
 .rk-ptb{border:1px solid var(--line);background:transparent;color:var(--ink)}
-.rk-ptx{margin:0 0 18px;padding:18px 20px;border-radius:18px;background:var(--bg2);border:1px solid var(--line)}.rk-ptx[hidden]{display:none}
+.rk-ptx{margin:0 0 18px;padding:18px 20px;border-radius:16px;background:var(--bg2);border:1px solid var(--line)}.rk-ptx[hidden]{display:none}
 .rk-pth{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:14px}.rk-pth>b{font-size:16px}.rk-pth span{font-size:13px;color:var(--mute)}.rk-pth span b{color:var(--ink)}
 .rk-pth button{margin-left:auto;border:0;background:none;color:var(--mute);font-size:20px;cursor:pointer;line-height:1}
 .rk-ptg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.rk-px{display:grid;gap:4px;align-content:start;padding:14px;border-radius:14px;background:var(--bg3);border:1px solid var(--line)}
+.rk-px{display:grid;gap:4px;align-content:start;padding:14px;border-radius:16px;background:var(--bg3);border:1px solid var(--line)}
 .rk-px>span{font-size:12px;color:var(--mute)}.rk-px>span em{font-style:normal;color:#3FD9BE;font-weight:800}
 .rk-px>b{font:800 22px "Pretendard Variable",sans-serif;color:#9B7BFF}.rk-px.z>b{color:var(--mute)}
 .rk-px>strong{font-size:14px;color:var(--ink)}.rk-px>p{margin:0;font-size:12.5px;line-height:1.5;color:var(--mute)}
 .rk-ctl{align-items:center}
 .rk-crs{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--mute);font-weight:700}
-.rk-crs select{height:34px;padding:0 30px 0 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:700 13.5px "Pretendard Variable",sans-serif}
+.rk-crs select{height:34px;padding:0 30px 0 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:700 13.5px "Pretendard Variable",sans-serif}
 .rk-upd{margin-left:auto;font-size:12px;color:var(--mute)}
 .rk-podl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.rk-pi{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line)}
+.rk-pi{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--bg2);border:1px solid var(--line)}
 .rk-pi.p1{border-color:#A8782A;background:linear-gradient(90deg,rgba(242,199,102,.14),var(--bg2) 70%)}
 .rk-pi .rk-md{font-size:12px}.rk-pi.p1 .rk-md{color:#E7B84A}.rk-pi.p3 .rk-md{color:#C98B5A}
 .rk-pi .rk-av{width:32px;height:32px;border:2px solid #AEB6C4}.rk-pi.p1 .rk-av{border-color:#E7B84A}.rk-pi.p3 .rk-av{border-color:#C98B5A}
@@ -2123,7 +2121,7 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .rk-row .rk-av{width:26px;height:26px;font-size:11.5px}
 .rk-tf{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 18px;font-size:12px;color:var(--mute);background:var(--bg3)}
 .rk-tf button,.rk-sf a{border:0;background:none;color:var(--cyan);font:700 12.5px "Pretendard Variable",sans-serif;cursor:pointer;text-decoration:none}
-.rk-rules{padding:16px 18px;border-radius:14px;border:1px dashed var(--line);display:grid;gap:10px}.rk-rules[hidden]{display:none}
+.rk-rules{padding:16px 18px;border-radius:16px;border:1px dashed var(--line);display:grid;gap:10px}.rk-rules[hidden]{display:none}
 .rk-pls{display:grid}
 .rk-pl{grid-template-columns:28px minmax(0,1fr) auto;gap:10px;min-height:40px;border-bottom:1px solid var(--line)}.rk-pl:last-child{border-bottom:0}
 .rk-pl img{width:28px;height:28px;border-radius:8px}
@@ -2178,7 +2176,7 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .ma-ext{margin:10px 0 0;font-size:12px;color:var(--mute)}.ma-ext button{border:0;background:none;padding:0;color:var(--cyan);font:700 12px "Pretendard Variable",sans-serif;cursor:pointer}
 @media (max-width:640px){.ma-ban{grid-template-columns:minmax(0,1fr) auto auto;padding-left:76px}.ma-bm{width:72px}.ma-cd{display:none}.ma-ln{display:none}.ma-ban .ma-cd{display:none}}
 @media (prefers-reduced-motion:reduce){.ma-ban{transition:none}}
-.bx-mas{height:32px;border-radius:9px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:700 12.5px "Pretendard Variable",sans-serif;padding:0 8px}
+.bx-mas{height:32px;border-radius:8px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font:700 12.5px "Pretendard Variable",sans-serif;padding:0 8px}
 
 /* RORR moment card (draft): swing chart in the visual slot + RORR emblem as a faint backdrop */
 .bx-card.rm .in{isolation:isolate;overflow:hidden}
@@ -2236,10 +2234,114 @@ footer{padding:44px 0 120px}
 .pm-list.fl-ms{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none;justify-content:flex-start;gap:8px}
 .pm-list.fl-ms .ms{max-height:none;padding:11px 12px;border-radius:12px;background:var(--bg3);border:1px solid var(--line)}
 .pm-empty{margin:0;padding:16px;border-radius:12px;border:1px dashed var(--line);font-size:13px;color:var(--mute);text-align:center}
-.pm-more{width:100%;margin-top:8px;height:38px;border:0;border-radius:10px;background:none;color:var(--cyan);font:700 13px "Pretendard Variable",sans-serif;cursor:pointer}.pm-more:hover{background:var(--bg3)}
+.pm-more{width:100%;margin-top:8px;height:38px;border:0;border-radius:12px;background:none;color:var(--cyan);font:700 13px "Pretendard Variable",sans-serif;cursor:pointer}.pm-more:hover{background:var(--bg3)}
 .pm-note{margin:8px 0 0;font-size:11.5px;color:var(--mute)}
 .sup-rk1{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,#6F4CFF 14%,var(--bg3));border:1px solid color-mix(in srgb,#6F4CFF 40%,var(--line));font-size:13px;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}
 .sup-rk1 b{color:var(--ink)}.sup-rk1 a{color:#C9B8FF;font-weight:800;text-decoration:none;white-space:nowrap}:root[data-theme=light] .sup-rk1 a{color:#5A3FD6}
+
+/* ===== Design v2 (2026-10-16) · official DS realignment: color roles, 4 radii, focus ring ===== */
+:root,[data-theme=dark]{--bg:#14181F;--bg2:#191F28;--bg3:#1D2333;--line:#2A3040;--spark:#FF6F00;--spark-ink:#1A0D00;--t1:#E4002B}
+:root[data-theme=light]{--bg:#F0F2F5;--bg2:#FFFFFF;--bg3:#E9EEF4;--line:#CED6E6;--spark:#B84E00;--spark-ink:#FFFFFF;--t1:#C8102E}
+/* focus ring on every control */
+html body :is(a,button,select,summary,[tabindex],[role=tab]):focus-visible{outline:2px solid var(--v-ui)!important;outline-offset:2px!important}
+html body :is(input,textarea):focus-visible{outline:none}
+/* small caps labels: sentence case */
+nav .lk,.pill,.tb th,.more h3,.lgk,.ip-k,.ip-h,.cb-t,.md-name,.rw-to,.sday,.stabs button,.wg-view button,.wg-unit button,.wg-f label,.sm-row .go,.cl,.hask,.ra-b h3,.aibadge,.ins-h,.tagx,.pmeta,.rail-h b{text-transform:none!important;letter-spacing:0!important}
+/* currency colour only on icon + number */
+nav .spark,nav .energy{color:var(--ink)!important;border-color:var(--line)!important;background:transparent!important}
+nav .spark b{color:var(--spark)}nav .energy .eb{color:var(--energy)!important}
+nav .spark:hover,nav .energy:hover{border-color:color-mix(in srgb,var(--ink) 30%,var(--line))!important}
+.bx-bal .e,.bx-bal .s{border-color:var(--line)!important}
+.bx-bal .e b{color:var(--energy)}.bx-bal .s b{color:var(--spark)}
+.aw-n{background:var(--bg3)!important;border:0!important}
+.p2-btn.spk{background:var(--ds-primary)!important;border-color:var(--ds-primary)!important;color:#fff!important}
+/* red is for LIVE only */
+.rk-ch.dn,:root[data-theme=light] .rk-ch.dn{color:var(--mute)!important}
+.fl-ms .ms-tm,:root[data-theme=light] .fl-ms .ms-tm{background:var(--bg3)!important;color:var(--ink)!important}
+/* tactile feedback */
+button:not(:disabled):active,.p2-btn:active,.hx-go:active{transform:translateY(1px)}
+
+/* v2 hero */
+.hx-l{gap:20px}
+.hx h1{font-size:clamp(34px,3.6vw,52px)!important;line-height:1.14!important}
+.hx-field{display:grid;border-radius:16px;background:var(--bg2);border:1px solid color-mix(in srgb,var(--ds-primary) 70%,var(--line));box-shadow:0 0 0 4px color-mix(in srgb,var(--ds-primary) 14%,transparent);transition:box-shadow .2s,border-color .2s}
+.hx-field:focus-within{border-color:var(--ds-primary);box-shadow:0 0 0 4px color-mix(in srgb,var(--ds-primary) 30%,transparent)}
+.hx-field .hx-box{height:60px;border:0!important;box-shadow:none!important;background:transparent!important;border-radius:16px;padding:0 8px 0 20px}
+.hx-field .hx-chips{padding:12px 14px 14px;border-top:1px solid var(--line)}
+.hx-chips button{border:0!important;background:var(--bg3)!important;color:var(--ink)!important;transition:background .2s}
+.hx-chips button:hover{background:color-mix(in srgb,var(--ds-primary) 22%,var(--bg3))!important}
+.hx-rc{display:grid;gap:14px;min-width:0}
+.hx-card,.hx-card.live{border-radius:16px;border-color:var(--line);box-shadow:none}
+.hx-wp{border-radius:12px}
+.hx-wp .h b{color:var(--ink)!important;font-size:20px}
+.hx-plot{position:relative;padding-left:34px}
+.hx-plot .ax{position:absolute;left:0;font-size:11px;color:var(--mute)}.hx-plot .ax.t{top:0}.hx-plot .ax.b{bottom:2px}
+.hx-wp .ln{stroke:var(--team-l)!important}.hx-wp .ar{fill:color-mix(in srgb,var(--team-l) 14%,transparent);stroke:none}
+.hx-wp .mk{fill:var(--bg2)!important;stroke:var(--ink)!important}.hx-wp .mkl{stroke:var(--v-ui);stroke-dasharray:3 3}
+.hx-wp .end{fill:var(--team-l)!important}
+.hx-mtag.r{transform:translateX(calc(-100% - 10px))}.hx-mtag{position:absolute;transform:translateX(-50%);white-space:nowrap;padding:3px 9px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);font-size:11.5px;font-weight:700;color:var(--ink);pointer-events:none}
+.hx-tabs{position:static!important;max-width:none!important;margin:0!important;padding:0!important;display:flex!important;flex-wrap:wrap;gap:6px!important}
+.hx-tabs button{display:inline-flex!important;flex-direction:column;gap:5px!important;padding:8px 14px!important;border-radius:999px;background:transparent!important;color:var(--mute)}
+.hx-tabs button[aria-selected=true]{background:var(--bg2)!important;color:var(--ink)}
+.hx-tabs b{font-size:13px!important;font-weight:600}
+.hx-tabs .bar{height:2px}
+@media (max-width:760px){.hx h1{font-size:30px!important}.hx-field .hx-box{height:54px;padding:0 6px 0 14px}.hx-field .hx-chips{padding:10px 12px 12px}.hx-tabs{gap:4px!important}.hx-tabs button{padding:7px 11px!important}.hx-tabs b{font-size:12px!important}}
+
+/* v2 fandom live: one container, summary strip, cards + messages */
+.fl-wrap{gap:20px;padding:26px 28px}
+.fl-now{background:transparent!important;border:0!important;padding:0!important}
+.fl-sum{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.fs-me{display:grid;gap:2px}.fs-me span{font-size:12.5px;color:var(--mute)}.fs-me b{font:800 30px/1.1 "Pretendard Variable",sans-serif;letter-spacing:-.02em}.fs-me em{font-style:normal;font-size:14px;font-weight:600;color:var(--mute)}
+.fs-kv{display:grid;gap:2px}.fs-kv span{font-size:12.5px;color:var(--mute)}.fs-kv b{font-size:18px}
+.fs-gl{flex:1 1 220px;min-width:200px;display:grid;gap:6px}.fs-gl>span:first-child{font-size:12.5px;color:var(--mute)}.fs-gl b{color:var(--ink)}
+.fs-gl .pb{height:6px;border-radius:999px;background:var(--line);position:relative;overflow:hidden;display:block}.fs-gl .pb i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:var(--ds-primary)}
+.fs-gl .fl-rem{justify-self:start;background:none;border:0;padding:0;color:var(--v-ui);font-size:12.5px;font-weight:700;cursor:pointer}
+.fs-act{display:flex;gap:8px;flex-wrap:wrap}
+.fs-np{flex:1 1 260px;font-size:13px;color:var(--mute);line-height:1.55}
+.p2-btn.gh{background:transparent;border:1px solid var(--line);color:var(--ink)}
+.fl-row.fl-v2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:start}
+.fl-v2 .fl-rare,.fl-v2 .fl-msb{padding:0;background:transparent;border:0}
+.fl-v2 .fl-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+.fl-v2 .fl-msb{display:grid;gap:10px}
+.bx-card.flc .ow,.bx-card.flc .in .ft,.bx-card.flc .in .kv{display:none}
+.bx-card.flc .bk .ow{display:block;font-size:12px;color:var(--mute)}
+@media (max-width:980px){.fl-row.fl-v2{grid-template-columns:1fr}}
+@media (max-width:640px){.fl-wrap{padding:18px 16px}.fl-v2 .fl-cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:72%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.fl-v2 .fl-cw{scroll-snap-align:start}.fl-sum{gap:12px 20px}.fs-me b{font-size:26px}}
+
+/* v2 ranking: neutral header with a team band, wide podium */
+.rk-top{grid-template-columns:1fr!important}
+.rk-head{background:var(--bg2)!important;border:0!important;border-top:4px solid var(--t1)!important;color:var(--ink)!important}
+.rk-ht h1{color:var(--ink)!important}.rk-hs,.rk-tsel{color:var(--mute)!important}.rk-hs b{color:var(--ink)!important}.rk-tsel{border-color:var(--line)!important}
+.rk-gl .pb i{background:var(--ds-primary)!important}.rk-gl span{color:var(--mute)!important}.rk-gl b{color:var(--ink)!important}.rk-gl{color:var(--mute)}.rk-gl b{color:var(--ink)}
+.rk-podl{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)!important;gap:12px}
+.rk-p1{display:grid;gap:8px;align-content:start;padding:20px 22px;border-radius:16px;background:var(--bg2)}
+.rk-p1 .rk-md{font-size:12.5px;font-weight:700;color:#E7B84A}
+.rk-p1n{display:flex;align-items:center;gap:12px;min-width:0}.rk-p1n .rk-av{width:44px;height:44px;border:2px solid #E7B84A;flex:none}.rk-p1n .rk-pn{font-size:22px;overflow-wrap:anywhere}
+.rk-ht h1{font-size:28px!important;line-height:1.2!important}.rk-p1 .rk-pv{color:var(--ink)!important;font:800 30px "Pretendard Variable",sans-serif;letter-spacing:-.02em}.rk-p1s{font-size:12.5px;color:var(--mute)}
+.rk-p23{display:grid;gap:8px;align-content:start}
+.rk-p23 .rk-pi{grid-template-columns:auto minmax(0,1fr) auto!important;background:var(--bg2)!important;border:0!important;padding:12px 16px}
+.rk-p23 .rk-pn{display:flex;align-items:center;gap:10px;min-width:0;font-size:15px}.rk-p23 .rk-pn b{overflow-wrap:anywhere}
+.rk-p23 .rk-pv{font-size:15px;color:var(--ink)!important}.rk-pi.p2 .rk-md{color:#C8CDD8}
+.rk-pi.pme{background:transparent!important;border:1px solid var(--ds-primary)!important}
+.rk-pi.pme .rk-md{color:var(--v-ui);font-weight:800}.rk-pi.pme .rk-pn{display:grid;gap:2px;font-size:14px}.rk-pi.pme small{font-size:12px;color:var(--mute)}
+.rk-pi.pme button{height:32px;padding:0 12px;border-radius:999px;border:0;background:transparent;color:var(--v-ui);font:700 13px "Pretendard Variable",sans-serif;cursor:pointer}
+.rk-hl{display:grid}.rk-hl>div{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:8px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}.rk-hl>div:last-child{border-bottom:0}
+.rk-hl span{color:var(--mute)}.rk-hl b{overflow-wrap:anywhere}.rk-hl em{font-style:normal;font-weight:800}
+.rk-ctl .rk-ptb{height:34px;padding:0 14px;border-radius:999px;font:700 13px "Pretendard Variable",sans-serif;cursor:pointer}
+@media (max-width:760px){.rk-podl{grid-template-columns:1fr!important}}
+
+/* v2 misc */
+.siderail.r .ra-img{transform:none!important;object-fit:contain;object-position:center bottom}
+.ra-k,.ab-k{text-transform:none!important;letter-spacing:0!important}
+@media (max-width:760px){.askfab{width:52px;height:52px;padding:0!important;justify-content:center;border-radius:50%!important}.askfab .af-t,.askfab kbd{display:none}.askfab .af-i{font-size:20px}}
+.bx-tg input[type=checkbox]{-webkit-appearance:none;appearance:none;width:40px!important;height:24px!important;margin:0;border-radius:999px;background:var(--line);position:relative;cursor:pointer;transition:background .2s;flex:none}
+.bx-tg input[type=checkbox]::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
+.bx-tg input[type=checkbox]:checked{background:var(--ds-primary)}.bx-tg input[type=checkbox]:checked::after{transform:translateX(16px)}
+div.me>button.avatar{width:44px;height:44px;border-radius:50%;background:var(--bg3);border:1px solid var(--line);color:var(--ink);font-weight:800;display:grid;place-items:center;flex:none}
+.rhero h1{font-size:clamp(30px,3.4vw,44px)!important;line-height:1.2!important}
+#pg-spark .rhero .k{display:none}
+a.p2-btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+@media (prefers-reduced-motion:reduce){.hx-field,.bx-tg input,.hx-chips button{transition:none}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -2306,9 +2408,8 @@ footer{padding:44px 0 120px}
  <svg class="hx-bg" id="hx-bg" viewBox="0 0 1440 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
  <div class="hx-in">
   <div class="hx-l" id="hx-l"></div>
-  <div class="hx-r" id="hx-r" aria-live="polite"></div>
+  <div class="hx-rc"><div class="hx-r" id="hx-r" aria-live="polite"></div><div class="hx-tabs" id="hx-tabs" role="tablist" aria-label="Highlights"></div></div>
  </div>
- <div class="hx-tabs" id="hx-tabs" role="tablist" aria-label="Highlights"></div>
 </section>
 <section class="fl" aria-label="Fandom live"><div class="fl-wrap" id="fl"></div></section>
 <div class="lgbar" aria-label="League"><div class="lgbar-in"><span class="lgk">League</span><div class="lgchips" id="lgchips" role="tablist"></div><span class="lgr" id="lgregion"></span></div></div>
@@ -3020,7 +3121,7 @@ const BX=(()=>{const K='rorr-bx';
   return `<div class="bk"><div class="hd"><span class="tr">${LX('The moment','그 순간')}</span><span class="ft">#${String(c.no).padStart(5,'0')}</span></div>
    <p class="ds">${ds}</p>
    <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${LX('Win chance around the moment','순간 전후 승리확률')}"><line x1="0" x2="${W}" y1="${y(50)}" y2="${y(50)}" class="b"/><line x1="${x(k)}" x2="${x(k)}" y1="2" y2="${H-2}" class="m"/><polyline points="${v.map((p,i)=>x(i)+','+y(p)).join(' ')}" style="stroke:${col}"/><circle cx="${x(k)}" cy="${y(v[k])}" r="3.5" style="fill:${col}"/></svg>
-   ${o.sm?'':`<div class="kv"><span>${LX('Boosted with','함께 Boost')} <b>${c.fans.toLocaleString('en-US')}</b></span>${o.mine&&tm?`<span>${LX('My Boost','내 Boost')} <b>${tm}</b></span>`:''}</div>`}
+   ${o.owner?`<span class="ow">${o.owner}</span>`:''}${o.sm?'':`<div class="kv"><span>${LX('Boosted with','함께 Boost')} <b>${c.fans.toLocaleString('en-US')}</b></span>${o.mine&&tm?`<span>${LX('My Boost','내 Boost')} <b>${tm}</b></span>`:''}</div>`}
    ${c.pe==='T1'?`<span class="pe-bk">${(()=>{const d=c.d||(/\d{4}-\d\d-\d\d/.exec(c.sub)||[''])[0];return LX(`T1 Partner Edition · issued ${d} during the partnership`,`T1 파트너 에디션 · ${d} 발급 (협약 기간 중 제작)`)})()}</span>`:''}
    <div class="bb">${mid?`<button type="button" class="bx-rw" data-bxm="${mid}">${LX('Relive the moment','그 순간 다시 보기')}</button>`:''}${o.mine?`<button type="button" class="bx-rw gh" data-bxshare="${c.id}">${LX('Show off','자랑하기')}</button>`:''}</div></div>`}
  function peTop(c){const p=c.pl&&T1P[c.pl];return `<div class="pe-top"><span class="pe-ed"><img src="${T1LOGO}" alt="" width="16" height="16">${LX('T1 Partner Edition','T1 파트너 에디션')}</span><div class="pe-id">${p?`<b class="pe-nm">${c.pl}<em>${LX(p[0],p[2])}</em></b>`:`<b class="pe-nm">T1<em>${LX('Team moment','팀 모먼트')}</em></b>`}</div>${p?`<img class="pe-ph" src="assets/t1/web/${p[1]}.webp" alt="${c.pl}" loading="lazy">`:`<img class="pe-lg" src="${T1LOGO}" alt="T1" loading="lazy">`}</div>`}
@@ -3139,31 +3240,23 @@ const BX=(()=>{const K='rorr-bx';
   const others=DB.teams.filter(t=>t.lg==='LCK'&&!SUP.isPartner('team',t.team)).length;
   const nextT1=DB.sched.filter(x=>x.st==='up'&&(x.a==='T1'||x.b==='T1')).sort((p,q)=>p.at-q.at)[0];
   const chips=favs.length>1?`<span class="fl-tms" role="group" aria-label="${LX('My teams','내 응원 팀')}">${favs.map(t=>`<button type="button" data-flt="${esc(t)}" class="${t===T?'on':''}${PARTNER_T.includes(t)?'':' np'}" aria-pressed="${t===T}" title="${PARTNER_T.includes(t)?LX('Partner team','파트너 팀'):LX('Awaiting partnership','파트너 준비 중')}">${PARTNER_T.includes(t)?`<img src="${T1LOGO}" alt="" width="16" height="16">`:''}${esc(t)}${t===favs[0]?`<em>${LX('main','대표')}</em>`:''}</button>`).join('')}</span>`:'';
-  const goalB=`<div class="fl-goal"><div class="p2-hh"><h3>${LX('T1 fandom season goal','T1 팬덤 시즌 목표')}</h3><span class="pt">${LX('Partner team','파트너 팀')}</span></div><div class="gl"><b id="fl-goal">${(goal+goalX).toLocaleString('en-US')}</b><span>/ 1,000,000 P</span></div><span class="pb"><i id="fl-goalbar" style="width:${Math.min(100,(goal+goalX)/10000)}%"></i></span>
-    ${nextT1?`<div class="fl-next"><span>${LX('Boost in the next match to add to the goal','다음 경기에서 Boost하면 목표에 보태져요')}</span><b>${LX(`Next T1 match · ${fmtWhen(nextT1)} vs ${nextT1.a==='T1'?nextT1.b:nextT1.a}`,`다음 T1 경기 · ${fmtWhen(nextT1)} vs ${nextT1.a==='T1'?nextT1.b:nextT1.a}`)}</b><button type="button" class="fl-rem${remSet(nextT1.id)?' on':''}" data-flrem="${nextT1.id}">${remSet(nextT1.id)?LX('✓ Reminder on','✓ 시작 알림 설정됨'):LX('🔔 Remind me at start','🔔 시작 알림 받기')}</button></div>`:''}
-    <span class="nt">${LX(`Fandoms awaiting partnership (${others}): ${(312400).toLocaleString('en-US')} P combined · names and ranks not shown`,`파트너 준비 중 팬덤 ${others}곳 합산 ${(312400).toLocaleString('en-US')} P · 이름·순위 비공개`)}</span></div>`;
+  const remB=nextT1&&!lv?`<button type="button" class="fl-rem${remSet(nextT1.id)?' on':''}" data-flrem="${nextT1.id}">${remSet(nextT1.id)?LX('✓ Reminder on','✓ 시작 알림 설정됨'):LX(`Remind me · ${fmtWhen(nextT1)}`,`시작 알림 받기 · ${fmtWhen(nextT1)}`)}</button>`:'';
+  const goalB=`<div class="fs-gl"><span>${LX('T1 season goal','T1 시즌 목표')} · <b id="fl-goal">${(goal+goalX).toLocaleString('en-US')}</b> / 1,000,000 P</span><span class="pb"><i id="fl-goalbar" style="width:${Math.min(100,(goal+goalX)/10000)}%"></i></span>${remB}</div>`;
   const myCards=S.cards.filter(c=>isP?c.pe===T:c.tm===T).length;
-  const me=!inn?`<div class="fl-me out fl-goalonly">${isP?goalB:''}</div>`
-   :isP?`<div class="fl-me"><div class="who"><span class="av">${ME[0]}</span><div><b>${S.anon?LX('Anonymous supporter','익명 서포터'):ME}</b><span>${LX('T1 fandom supporter','T1 팬덤 서포터')}${T===favs[0]&&favs.length>1?LX(' · main team',' · 대표 팀'):''}</span></div></div>
-    <div class="rk"><b>${LX('#'+rank(),rank()+'위')}</b><span>${LX(`Top ${pct()}%`,`상위 ${pct()}%`)}</span></div>
-    <div class="k3"><div><span>${LX('Points','포인트')}</span><b>${(S.tp.T1||S.pts).toLocaleString('en-US')} P</b></div><div><span>${LX('Streak','연속 응원')}</span><b>${LX(S.streak+' games',S.streak+'경기')}</b></div><div><span>${LX('Cards','카드')}</span><b>${LX(myCards+'',myCards+'장')}</b></div></div>
-    <div class="fl-mb"><button type="button" class="p2-btn pri" data-bxshare="">${LX('Show off my rank & cards','내 순위·카드 자랑하기')}</button><a class="p2-btn" href="#rank" onclick="nav(event,'rank')">${LX('Full ranking','전체 순위')}</a></div>${goalB}</div>`
-   :`<div class="fl-me"><div class="who"><span class="av">${ME[0]}</span><div><b>${S.anon?LX('Anonymous supporter','익명 서포터'):ME}</b><span>${LX(`Cheering ${esc(T)}`,`${esc(T)} 응원 중`)}</span></div></div>
-    <div class="k3"><div><span>${LX('Points','포인트')}</span><b>${(S.tp[T]||0).toLocaleString('en-US')} P</b></div><div><span>${LX('Currency','재화')}</span><b>Spark</b></div><div><span>${LX('Cards','카드')}</span><b>${LX(myCards+'',myCards+'장')}</b></div></div>
-    <p class="fl-np">${LX(`${esc(T)} is not a partner yet. Fandom ranks and goals open only for partner teams, and your points here are kept for you.`,`${esc(T)}은(는) 아직 파트너가 아니에요. 팬덤 순위와 목표는 파트너 팀만 공개되고, 이 팀에 쌓은 포인트는 내 기록으로 남아요.`)}</p>
-    <div class="fl-mb"><button type="button" class="p2-btn" onclick="ONB.open()">${LX('Edit my teams','응원 팀 설정')}</button></div></div>`;
+  const kv=(k,v)=>`<div class="fs-kv"><span>${k}</span><b>${v}</b></div>`;
+  const me=!inn?`<div class="fl-sum out">${isP?goalB:''}<span class="fs-np">${LX('Log in and your rank and moment cards build up here.','로그인하면 내 순위와 모먼트 카드가 여기 쌓여요.')}</span><button type="button" class="p2-btn pri" onclick="openAuth('login')">${LX('Log in to see my rank','로그인하고 내 순위 보기')}</button></div>`
+   :isP?`<div class="fl-sum"><div class="fs-me"><span>${S.anon?LX('Anonymous supporter','익명 서포터'):ME} · ${LX('T1 supporter','T1 서포터')}</span><b>${LX('#'+rank(),rank()+'위')} <em>${LX(`top ${pct()}%`,`상위 ${pct()}%`)}</em></b></div>
+    ${kv(LX('Cheer points','응원 포인트'),`${(S.tp.T1||S.pts).toLocaleString('en-US')} P`)}${kv(LX('Streak','연속 응원'),LX(S.streak+' games',S.streak+'경기'))}${kv(LX('Moment cards','모먼트 카드'),LX(myCards+'',myCards+'장'))}
+    ${goalB}<div class="fs-act"><button type="button" class="p2-btn pri" data-bxshare="">${LX('Show off my rank','내 순위 자랑하기')}</button><a class="p2-btn gh" href="#rank" onclick="nav(event,'rank')">${LX('Full ranking','전체 순위')}</a></div></div>`
+   :`<div class="fl-sum"><div class="fs-me"><span>${S.anon?LX('Anonymous supporter','익명 서포터'):ME}</span><b>${LX(`Cheering ${esc(T)}`,`${esc(T)} 응원 중`)}</b></div>
+    ${kv(LX('Cheer points','응원 포인트'),`${(S.tp[T]||0).toLocaleString('en-US')} P`)}${kv(LX('Moment cards','모먼트 카드'),LX(myCards+'',myCards+'장'))}
+    <span class="fs-np">${LX(`${esc(T)} is not a partner yet. Ranks and goals open for partner teams; your points are kept.`,`${esc(T)}은(는) 아직 파트너가 아니에요. 순위·목표는 파트너 팀만 공개되고, 포인트는 내 기록으로 남아요.`)}</span>
+    <div class="fs-act"><button type="button" class="p2-btn gh" onclick="ONB.open()">${LX('Edit my teams','응원 팀 설정')}</button></div></div>`;
   const cards=isP?RARE:npCards(T);
-  const hl=[[LX('Most cards this week','카드 최다'),'minji_07',LX('41 cards','41장')],[LX('Longest streak','최장 연속 응원'),LX('Anonymous supporter','익명 서포터'),LX('23 games','23경기')],[LX('Most big moments','큰 순간 참여'),'ZedMain',LX('9 times','9회')]];
-  const top3=[['oner_route','1,868'],[LX('Anonymous supporter','익명 서포터'),'1,584'],['ZedMain','1,234']];
-  const lvT1=lv&&(lv.a==='T1'||lv.b==='T1');
-  const hlBox=isP?`<div class="fl-b fl-hlb"><div class="p2-hh"><h3>${LX('Supporter highlights','서포터 하이라이트')}</h3><span>${LX('T1 · this week','T1 · 이번 주')}</span></div>${hl.map(h=>`<div class="hl"><span><em>${h[0]}</em> · <b>${h[1]}</b></span><b>${h[2]}</b></div>`).join('')}
-     ${lvT1?`<div class="fl-top3"><span class="t3c"><i></i>${LX(`This match · ${lv.a} vs ${lv.b}`,`이번 경기 TOP 3 · ${lv.a} 대 ${lv.b}`)}</span><ol>${top3.map((x,i)=>`<li><b class="r${i+1}">${i+1}</b><span>${esc(x[0])}</span><b>${x[1]} P</b></li>`).join('')}</ol></div>`:''}<a class="fl-all fl-br" href="#rank" onclick="nav(event,'rank')">${LX('T1 supporter ranking →','T1 서포터 순위 →')}</a></div>`
-   :`<div class="fl-b fl-hlb"><div class="p2-hh"><h3>${LX('Supporter highlights','서포터 하이라이트')}</h3></div><p class="fl-np">${LX('Supporter highlights and rankings are shown for partner teams only. Teams awaiting partnership are not named or ranked.','서포터 하이라이트와 순위는 파트너 팀만 공개해요. 파트너 준비 중 팀은 팬덤 이름과 순위를 표시하지 않아요.')}</p><a class="fl-all" href="#rank" onclick="nav(event,'rank')">${LX('How supporter rankings work →','서포터 순위 안내 →')}</a></div>`;
   const both=lv&&favs.includes(lv.a)&&favs.includes(lv.b);const one=lv&&(favs.includes(lv.a)||favs.includes(lv.b));
-  el.innerHTML=`<div class="fl-h"><div><h2>${LX('Fandom live','팬덤 라이브')}</h2><span class="nw">${LX('New','신규')}</span>${chips}</div><span>${LX('Ranked by cheering · payments never shown','응원 참여 기준 순위 · 결제액 비공개')}</span></div>${lv?`<div class="fl-now"><a class="fl-nl" href="#match/${lv.id}" data-m="${lv.id}"><span class="lvd"><i></i>LIVE</span><span>${lv.a} ${LX('vs','대')} ${lv.b}</span>${both?`<span class="fl-mt">${LX('Both my teams','내 응원 팀 2팀 경기')}</span>`:one?`<span class="fl-mt">${LX('My team','내 팀 경기')}</span>`:''}<span class="fl-cnt">${LX('Boosting together','지금 함께 Boost 중')} <b data-lc="${1400+hashStr(lv.id)%1600}">${(1400+hashStr(lv.id)%1600).toLocaleString('en-US')}</b>${LX('','명')}</span></a><span class="fl-drop" id="fl-drop" aria-live="polite"></span><a class="fl-go" href="#match/${lv.id}" data-m="${lv.id}">${LX('Watch →','경기 보기 →')}</a></div>`:''}
-   <div class="fl-row">${me}<div class="fl-rare"><div class="p2-hh"><h3>${LX('Moment cards this week','이번 주 모먼트 카드')} <details class="fl-how"><summary>${LX('ⓘ How to get them','ⓘ 얻는 방법')}</summary><div class="pop">${BX_EXT()}</div></details></h3><span>${LX('Border = size of the moment · badge = Boost level','테두리 = 순간의 크기 · 배지 = Boost 단계')}</span></div>
-    <div class="fl-cards">${cards.map((c,k)=>`<div class="fl-cw">${cardHTML(c,{fl:1,owner:LX('Owner · ','소유 · ')+(c.own||LX('Anonymous supporter','익명 서포터'))})}<span class="fl-cta">${k===1&&inn?LX('Get one like it next match','다음 경기에서 같은 카드 받기'):LX(`${c.fans.toLocaleString('en-US')} fans shared this moment · flip`,`${c.fans.toLocaleString('en-US')}명이 함께한 순간 · 뒤집어 보기`)}</span></div>`).join('')}</div></div>${!inn?`<div class="fl-login"><span>${LX('Log in and your rank and moment cards build up here.','로그인하면 내 순위와 모먼트 카드가 여기 쌓여요.')}</span><button type="button" class="p2-btn pri" onclick="openAuth('login')">${LX('Log in to see my rank','로그인하고 내 순위 보기')}</button></div>`:''}</div>
-   <div class="fl-row2">${hlBox}
+  el.innerHTML=`<div class="fl-h"><div><h2>${LX('Fandom live','팬덤 라이브')}</h2>${chips}</div><span>${LX('Ranked by cheering · payments never shown','응원 참여 기준 순위 · 결제액 비공개')}</span></div>${lv?`<div class="fl-now"><a class="fl-nl" href="#match/${lv.id}" data-m="${lv.id}"><span class="lvd"><i></i>LIVE</span><span>${lv.a} ${LX('vs','대')} ${lv.b}</span>${both?`<span class="fl-mt">${LX('Both my teams','내 응원 팀 2팀 경기')}</span>`:one?`<span class="fl-mt">${LX('My team','내 팀 경기')}</span>`:''}<span class="fl-cnt">${LX('Boosting together','지금 함께 Boost 중')} <b data-lc="${1400+hashStr(lv.id)%1600}">${(1400+hashStr(lv.id)%1600).toLocaleString('en-US')}</b>${LX('','명')}</span></a><span class="fl-drop" id="fl-drop" aria-live="polite"></span><a class="fl-go" href="#match/${lv.id}" data-m="${lv.id}">${LX('Watch →','경기 보기 →')}</a></div>`:''}
+   ${me}<div class="fl-row fl-v2"><div class="fl-rare"><div class="p2-hh"><h3>${LX('Moment cards this week','이번 주 모먼트 카드')} <details class="fl-how"><summary>${LX('ⓘ How to get them','ⓘ 얻는 방법')}</summary><div class="pop">${BX_EXT()}</div></details></h3><span>${LX('Border = size of the moment · badge = Boost level','테두리 = 순간의 크기 · 배지 = Boost 단계')}</span></div>
+    <div class="fl-cards">${cards.slice(0,3).map((c,k)=>`<div class="fl-cw">${cardHTML(c,{fl:1,owner:LX('Owner · ','소유 · ')+(c.own||LX('Anonymous supporter','익명 서포터'))})}<span class="fl-cta">${k===1&&inn?LX('Get one like it next match','다음 경기에서 같은 카드 받기'):LX(`${c.fans.toLocaleString('en-US')} fans shared it`,`${c.fans.toLocaleString('en-US')}명이 함께한 순간`)}</span></div>`).join('')}</div></div>
     <div class="fl-b fl-msb"><div class="p2-hh"><h3>${LX('Fan messages','응원 메시지')} <span class="fl-live"><i></i>LIVE</span></h3><span class="ms-f" role="group" aria-label="${LX('Filter messages','메시지 필터')}"><button type="button" data-bxmf="mine" class="${mf==='mine'?'on':''}">${favs.length>1?LX('My teams','내 응원 팀'):esc(favs[0])}</button><button type="button" data-bxmf="all" class="${mf==='all'?'on':''}">${LX('All matches','전체 경기')}</button></span></div><div class="fl-ms" id="fl-ms"></div><span class="ms-note">${LX('Messages are sent with a Boost · filtered and reviewed','Boost와 함께 보낸 메시지 · 욕설 필터·검수 후 노출')}</span></div></div>`;
   el.querySelectorAll('[data-flt]').forEach(b=>b.onclick=()=>{flT=b.dataset.flt;renderFL()});
   msSeed();msDraw();if(!ft&&!matchMedia('(prefers-reduced-motion: reduce)').matches)ft=setTimeout(msTick,2500)}
@@ -3180,7 +3273,7 @@ const BX=(()=>{const K='rorr-bx';
     ${bd.map(x=>`<div class="bx-ln"><span>${x[0]}</span><b>${x[1].toLocaleString('en-US')} P</b></div>`).join('')}<div class="bx-ln tot"><b>${LX('Total points','응원 포인트 합계')}</b><b>${S.pts.toLocaleString('en-US')} P</b></div>
     <div class="fl-mb"><button type="button" class="p2-btn pri" data-bxshare="">${LX('Show off my rank','내 순위 자랑하기')}</button><a class="p2-btn" href="#rank" onclick="nav(event,'rank')">${LX('Full ranking','전체 순위')}</a></div></div>
    <div class="box"><div class="p2-hh"><h3>${LX('Privacy','공개 설정')}</h3></div>
-    ${[['anon',LX('Show me as anonymous in rankings','순위에 익명으로 표시'),LX('Applies to the home page, matches and rankings','메인·경기·순위 페이지 모두 적용')],['hl',LX('Show me in home page highlights','메인 하이라이트에 노출'),LX('Off by default for users under 19','만 19세 미만은 기본 꺼짐')],['msgOn',LX('Make my messages public','응원 메시지 공개'),LX('Shown on the fan wall after review','검토 후 팬 월에 노출')]].map(x=>`<label class="bx-tg"><span><b>${x[1]}</b><em>${x[2]}</em></span><input type="checkbox" data-bxset="${x[0]}" ${S[x[0]]?'checked':''}></label>`).join('')}
+    ${[['anon',LX('Show me as anonymous in rankings','순위에 익명으로 표시'),LX('Applies to the home page, matches and rankings','메인·경기·순위 페이지 모두 적용')],['hl',LX('Show me in supporter highlights','서포터 하이라이트에 노출'),LX('Off by default for users under 19','만 19세 미만은 기본 꺼짐')],['msgOn',LX('Make my messages public','응원 메시지 공개'),LX('Shown on the fan wall after review','검토 후 팬 월에 노출')]].map(x=>`<label class="bx-tg"><span><b>${x[1]}</b><em>${x[2]}</em></span><input type="checkbox" data-bxset="${x[0]}" ${S[x[0]]?'checked':''}></label>`).join('')}
     <label class="bx-tg"><span><b>${LX('Muse big-moment alerts','Muse 큰 순간 알림')}</b><em>${LX('Shown on any page while RORR is open · no push notifications','RORR를 열어 둔 동안 어느 페이지에서든 표시 · 푸시 알림 없음')}</em></span><select data-maset class="bx-mas">${[['all',LX('Gold + hologram','골드 + 홀로그램')],['holo',LX('Hologram only','홀로그램만')],['off',LX('Off','끄기')]].map(o=>`<option value="${o[0]}"${(typeof MA!=='undefined'?MA.get():'all')===o[0]?' selected':''}>${o[1]}</option>`).join('')}</select></label></div></div>
   <div class="box"><div class="p2-hh"><h3>${LX('Card collection','카드 컬렉션')} <small>${S.cards.length}</small></h3><div class="p2-tabs bx-f">${[['all',LX('All','전체')],['holo',LX('Hologram','홀로그램')+' '+cnt('holo')],['gold',LX('Gold','골드')+' '+cnt('gold')],['silver',LX('Silver','실버')+' '+cnt('silver')]].map(x=>`<button type="button" class="${f===x[0]?'on':''}" data-bxf="${x[0]}">${x[1]}</button>`).join('')}</div></div>
    <p class="bx-ext">${BX_EXT()}</p><p class="fine" style="margin:8px 0 0">${LX('Click a card to flip it and see the moment.','카드를 누르면 뒤집혀서 그 순간을 볼 수 있어요.')}</p>${list.length?`<div class="bx-stw${el.dataset.g==='1'?' grid':''}"><button type="button" class="bx-sa l" data-bxsa="-1" aria-label="${LX('Previous','이전')}">‹</button><div class="bx-grid bx-strip">${list.map(c=>`<div class="bx-cw">${cardHTML(c,{sm:1,mine:1})}</div>`).join('')}</div><button type="button" class="bx-sa r" data-bxsa="1" aria-label="${LX('Next','다음')}">›</button></div><div class="bx-sf"><span class="bx-sp"><i></i></span><span class="bx-sn">${list.length}${LX(' cards','장')}</span><button type="button" data-bxg>${el.dataset.g==='1'?LX('Show as a strip','한 줄로 보기'):LX('View all (grid)','전체 보기 (그리드)')}</button></div>`:`<p class="fine">${LX('No cards yet.','아직 카드가 없어요.')}</p>`}</div>
@@ -3397,26 +3490,25 @@ const RK=(()=>{const N=18402;let st={per:'s',cr:'pts',near:false,ptx:false,rules
   const kst=new Date(Date.now()+9*3600e3);kst.setUTCMinutes(kst.getUTCMinutes()-kst.getUTCMinutes()%5);const upd=kst.toISOString().slice(0,16).replace('T',' ');
   const nx=Math.max(1,me.nxt),prog=Math.max(6,Math.min(96,Math.round(me.v.pts/(me.v.pts+nx)*100)));
   const hint=st.cr!=='pts'?LX('Keep cheering to climb','응원을 이어가면 올라가요'):nx<=30?LX('One silver moment Boost is enough','실버 순간 Boost 1번이면 넘어설 수 있어요'):nx<=50?LX('One gold moment next match is enough','다음 경기에서 골드 순간 1번이면 넘어설 수 있어요'):nx<=80?LX('One hologram moment is enough','홀로그램 순간 1번이면 넘어설 수 있어요'):LX(`About ${Math.ceil(nx/50)} gold moments to go`,`골드 순간 약 ${Math.ceil(nx/50)}번이면 넘어설 수 있어요`);
-  const podl=[0,1,2].map(i=>{const x=R[i];return `<div class="rk-pi p${i+1}"><span class="rk-md">${med[i]}</span>${av(x.n,i)}<b class="rk-pn">${nm(x.n)}</b><b class="rk-pv">${cell(st.cr,x.v[st.cr])}</b></div>`}).join('');
+  const p1=R[0];const pme=inn?`<div class="rk-pi pme"><span class="rk-md">${LX('Me','나')}</span><span class="rk-pn"><b>${LX('#'+fmt(me.r),fmt(me.r)+'위')} · ${st.cr==='pts'?LX(`${fmt(nx)} P to #${fmt(Math.max(1,me.r-1))}`,`${fmt(Math.max(1,me.r-1))}위까지 ${fmt(nx)} P`):LX(`top ${me.pct}%`,`상위 ${me.pct}%`)}</b><small>${hint}</small></span><button type="button" class="rk-nearb${st.near?' on':''}" aria-pressed="${st.near}" data-rknear="${st.near?0:1}">${st.near?LX('Back to top','상위로'):LX('Find me','표에서 보기')}</button></div>`
+   :`<div class="rk-pi pme"><span class="rk-md">${LX('Me','나')}</span><span class="rk-pn">${LX('Log in to see your rank','로그인하면 내 순위가 보여요')}</span><button type="button" class="rk-nearb" onclick="openAuth('login')">${LX('Log in','로그인')}</button></div>`;
+  const podl=`<article class="rk-p1"><span class="rk-md">${med[0]} · ${LX(`Top supporter, ${PER[st.per][1].toLowerCase()}`,`${PER[st.per][2]} 최고 서포터`)}</span><div class="rk-p1n">${av(p1.n,0)}<b class="rk-pn">${nm(p1.n)}</b></div><b class="rk-pv">${cell(st.cr,p1.v[st.cr])}</b><span class="rk-p1s">${LX('Cards','카드')} ${p1.v.cards} · ${LX('Streak','연속')} ${cell('streak',p1.v.streak)}</span></article><div class="rk-p23">${[1,2].map(i=>{const x=R[i];return `<div class="rk-pi p${i+1}"><span class="rk-md">${med[i]}</span><span class="rk-pn">${av(x.n,i)}<b>${nm(x.n)}</b></span><b class="rk-pv">${cell(st.cr,x.v[st.cr])}</b></div>`}).join('')}${pme}</div>`;
   const PTX=[['⚡ Energy · ✦ Spark',LX('same','동일'),'+20 P',LX('One Boost on a moment','순간에 Boost 1번'),LX('Same points whatever the currency or amount. Several Boosts on the same moment count once.','어떤 재화로, 얼마를 보내든 같은 포인트예요. 같은 순간에 여러 번 보내도 1번만 쳐요.')],
    [LX('Same as the card frame','카드 테두리와 같은 기준'),'','+10 / +30 / +60',LX('Moment size bonus','순간의 크기 보너스'),LX('Silver, gold and hologram moments. The bigger the moments you share, the more you earn.','실버 · 골드 · 홀로그램 순간. 큰 순간을 함께할수록 더 쌓여요.')],
    [LX('Cheer match after match','경기를 이어서 응원하면'),'',LX('+10 per match','경기당 +10'),LX('Streak bonus','연속 응원 보너스'),LX('Added for each consecutive match (up to +100). Miss a match and it starts again.','연속 경기마다 더해져요(최대 +100). 한 경기 쉬면 다시 시작해요.')],
    [LX('Not counted in rankings','순위에 반영되지 않는 것'),'','0 P',LX('Amount paid · ads watched','결제 수량 · 광고 수'),LX('Spending more Energy or watching more ads gives the same points. Amounts only show as the card badge level.','Energy를 더 많이 써도, 광고를 더 봐도 포인트는 같아요. 수량은 카드 배지 단계에만 표시돼요.')]];
   const PLF=[['Faker','minji_07',14072],['Oner','oner_route',8911],['Keria',null,7418],['Doran','sol_kr',6204],['Peyz','bluebuff',5330]];
-  el.innerHTML=`<section class="rk-top"><div class="rk-head"><div class="k">BOOST · ${LX('SUPPORTER RANKING','서포터 순위')}</div>
-    <div class="rk-ht"><img src="${T1LOGO}" alt="" width="44" height="44"><h1>${LX('T1 supporter ranking','T1 서포터 순위')}</h1><span class="rk-pt">${LX('Partner','파트너')}</span><span class="rk-tsel" title="${LX(`${others} fandoms awaiting partnership`,`파트너 준비 중 팬덤 ${others}곳`)}">T1 ▾</span></div>
+  el.innerHTML=`<section class="rk-top"><div class="rk-head">
+    <div class="rk-ht"><img src="${T1LOGO}" alt="" width="44" height="44"><h1>${LX('T1 supporter ranking','T1 서포터 순위')}</h1><span class="rk-tsel" title="${LX(`${others} fandoms awaiting partnership`,`파트너 준비 중 팬덤 ${others}곳`)}">T1 ▾</span></div>
     <p class="rk-hs">${LX(`<b>${fmt(N)}</b> supporters this season · ranked by cheer points · payments never shown`,`이번 시즌 참여 팬 <b>${fmt(N)}</b>명 · 응원 포인트 기준 · 결제액 비공개`)}</p>
     <div class="rk-gl"><div><span>${LX('Fandom season goal','팬덤 시즌 응원 목표')}</span><span><b>${Math.min(100,Math.round(goal/10000))}%</b> · ${fmt(goal)} / 1,000,000 P</span></div><span class="pb"><i style="width:${Math.min(100,goal/10000)}%"></i></span></div></div>
-   <div class="rk-mc">${inn?`<span class="rk-mk">${LX('My rank','나의 순위')}</span><div class="rk-mr"><b>${LX('#'+fmt(me.r),fmt(me.r)+'위')}</b><em>▲12 · ${LX(`top ${me.pct}%`,`상위 ${me.pct}%`)}</em></div>
-     ${st.cr==='pts'?`<div class="rk-mp"><div><span>${LX(`To #${fmt(Math.max(1,me.r-1))}`,`${fmt(Math.max(1,me.r-1))}위까지`)}</span><b>${fmt(nx)} P</b></div><span class="pb"><i style="width:${prog}%"></i></span><small>${hint}</small></div>`:`<small class="rk-mh">${hint}</small>`}
-     <div class="rk-mb"><button type="button" class="rk-nearb${st.near?' on':''}" aria-pressed="${st.near}" data-rknear="${st.near?0:1}">📍 ${st.near?LX('Back to top ranks','상위 순위로'):LX('Find me in the table','표에서 내 위치 보기')}</button><button type="button" class="rk-ptb" data-rkptx aria-expanded="${!!st.ptx}">${LX('How points work ⓘ','포인트 계산법 ⓘ')}</button></div>`
-    :`<span class="rk-mk">${LX('My rank','나의 순위')}</span><p class="rk-mh">${LX('Log in to see where you rank among T1 supporters.','로그인하면 T1 서포터 중 내 순위를 볼 수 있어요.')}</p><div class="rk-mb"><button type="button" class="p2-btn pri" onclick="openAuth('login')">${LX('Log in to see my rank','로그인하고 내 순위 보기')}</button><button type="button" class="rk-ptb" data-rkptx aria-expanded="${!!st.ptx}">${LX('How points work ⓘ','포인트 계산법 ⓘ')}</button></div>`}</div></section>
+</section>
   <section class="rk-ptx"${st.ptx?'':' hidden'}><div class="rk-pth"><b>${LX('How cheer points add up','응원 포인트는 이렇게 쌓여요')}</b><span>${LX('e.g. Boost on a gold moment = 20 + 30 = <b>50 P</b>','예: 골드 순간에 Boost = 20 + 30 = <b>50 P</b>')}</span><button type="button" data-rkptx aria-label="${LX('Close','닫기')}">×</button></div>
    <div class="rk-ptg">${PTX.map((x,i)=>`<div class="rk-px${i===3?' z':''}"><span>${x[0]}${x[1]?` <em>${x[1]}</em>`:''}</span><b>${x[2]}</b><strong>${x[3]}</strong><p>${x[4]}</p></div>`).join('')}</div></section>
   <div class="rk-g"><div class="rk-main">
     <div class="rk-ctl"><div class="rk-seg" role="tablist">${Object.keys(PER).map(k=>`<button type="button" role="tab" aria-selected="${k===st.per}" class="${k===st.per?'on':''}" data-rkp="${k}">${LX(PER[k][1],PER[k][2])}</button>`).join('')}</div>
      <label class="rk-crs"><span>${LX('Ranked by','기준')}</span><select data-rkcs>${Object.keys(CR).map(k=>`<option value="${k}"${k===st.cr?' selected':''}>${LX(...CR[k])}</option>`).join('')}</select></label>
-     <span class="rk-upd">${LX(`Updated ${upd} KST · every 5 min`,`${upd} 집계 · 5분마다 갱신`)}</span></div>
+     <button type="button" class="rk-ptb" data-rkptx aria-expanded="${!!st.ptx}">${LX('How points work','포인트 계산법')}</button><span class="rk-upd">${LX(`Updated ${upd} KST · every 5 min`,`${upd} 집계 · 5분마다 갱신`)}</span></div>
     ${st.per==='g'&&!lv?`<p class="rk-nt">${LX('No T1 match is live right now. Showing the most recent match.','지금 진행 중인 T1 경기가 없어요. 가장 최근 경기 기준이에요.')}</p>`:''}
     <div class="rk-podl">${podl}</div>
     <div class="rk-tbl">${head}${list}${st.near&&inn?'':meRow}<div class="rk-tf"><span>${LX("Your row stays pinned at the bottom · anonymous fans show as 'Anonymous supporter' · sample data","내 줄은 스크롤해도 표 하단에 고정 · 익명 팬은 '익명 서포터' · 샘플 데이터")}</span><button type="button" data-rkrules aria-expanded="${!!st.rules}">${LX('Ranking rules ⓘ','순위 운영 원칙 ⓘ')}</button></div></div>
@@ -3428,6 +3520,7 @@ const RK=(()=>{const N=18402;let st={per:'s',cr:'pts',near:false,ptx:false,rules
      <li>${LX('Rankings reset at season end; your final rank is kept as a season badge. Fandom-vs-fandom opens once three or more teams are partners.','순위는 시즌 종료 시 초기화되고 최종 순위는 시즌 배지로 남아요. 팀별 팬덤 비교는 파트너 팀이 3곳 이상이 되면 열려요.')}</li></ul>
      <a class="lnk" href="#blog/how-boost-works" onclick="nav(event,'blog/how-boost-works')">${LX('Boost guide →','Boost 안내 →')}</a></section></div>
    <aside class="rk-side">
+    <section class="box rk-sb"><div class="p2-hh"><h3>${LX('Supporter highlights','서포터 하이라이트')}</h3><span>${LX('T1 · this week','T1 · 이번 주')}</span></div><div class="rk-hl">${[[LX('Most cards','카드 최다'),'minji_07',LX('41 cards','41장')],[LX('Longest streak','최장 연속 응원'),null,LX('23 games','23경기')],[LX('Most big moments','큰 순간 참여'),'ZedMain',LX('9 times','9회')]].map(h=>`<div><span>${h[0]}</span><b>${nm(h[1])}</b><em>${h[2]}</em></div>`).join('')}</div></section>
     <section class="box rk-sb"><div class="p2-hh"><h3>${LX('This match · top 5','이번 경기 TOP 5')}</h3>${lv?`<a class="rk-lv" href="#match/${lv.id}" onclick="nav(event,'match/${lv.id}')"><i></i>LIVE · ${lv.a} vs ${lv.b}</a>`:''}</div>${lv?`<ol class="bx-lb">${mt}</ol>`:`<p class="rk-nt">${LX('Shown during T1 matches.','T1 경기 중에 표시돼요.')}</p>`}</section>
     <section class="box rk-sb"><div class="p2-hh"><h3>${LX('Top supporter by player','선수별 대표 서포터')}</h3></div><p class="rk-nt" style="margin:0">${LX("Fan who cheered most for that player's moments · this season",'그 선수의 순간에 가장 많이 응원한 팬 · 이번 시즌')}</p>
      <div class="rk-pls">${PLF.map(([p,n,v])=>`<div class="rk-pl"><img src="assets/t1/web/${T1P[p][1]}.webp" alt="" loading="lazy"><span><b>${p}</b> · ${nm(n)}</span><b class="v">${fmt(v)} P</b></div>`).join('')}</div>
@@ -4053,7 +4146,7 @@ function openMuse(e){e&&e.preventDefault&&e.preventDefault();MD.open()}
 (()=>{const h=location.hash.slice(1);if(h==='muse'){setTimeout(()=>MD.open(true),0);return}if(/^(player|team|compare)\//.test(h))openEntity(h,true);else if(/^(wrc|wge|blog|about|match|rank)/.test(h))route_(h)})();
 
 /* ===== side rails + LwRC+ bubble ===== */
-(()=>{const src=document.querySelector('.pm-img');document.querySelectorAll('.ra-img').forEach(i=>{if(src)i.src=src.src})})();
+(()=>{const src=document.querySelector('.pm-img');document.querySelectorAll('.ra-img').forEach(i=>{if(i.closest('.siderail.r'))i.src='assets/muse-waving.webp';else if(src)i.src=src.src})})();
 (()=>{const pop=document.getElementById('wpop');let cur=null,pinned=false,t=0;
  function show(btn){cur=btn;document.querySelectorAll('.wtip.on').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
   const r=btn.getBoundingClientRect(),w=270;let x=Math.min(Math.max(12,r.left+r.width/2-w/2),innerWidth-w-12);
@@ -4227,27 +4320,26 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
  const curMatch_=()=>{const S=DB.sched.filter(pick);return S.find(x=>x.st==='live')||S.filter(x=>x.st==='up').sort((a,b)=>a.at-b.at)[0]};
  const wp=g=>Math.round(100/(1+Math.exp(-g/2600)));
  const kName={fb:'FIRST BLOOD',drg:'DRAGON',her:'HERALD',fight:'FIGHT',baron:'BARON',push:'PUSH'};
- function left_(){$('hx-l').innerHTML=`<span class="hx-eb">${LX('LoL esports AI','LoL e스포츠 전용 AI')} · ${LG==='ALL'?'LCK':LG} 2026</span>
-  <h1>${LX('The match is moving.<br><span class="acc">RORR knows why</span><br>it turns.','경기는 지금 흐르고,<br><span class="acc">RORR는 그 이유를</span><br>알고 있어요.')}</h1>
-  <p class="hx-sub">${LX("General AI knows yesterday's League. RORR reads live data to explain the flow and the turning points of this match.",'범용 AI는 어제의 롤을 압니다. RORR는 라이브 데이터로 지금 이 경기의 흐름과 승부처를 설명해요.')}</p>
-  <form class="hx-ask" id="hx-ask"><label class="hx-box"><input id="hx-q" autocomplete="off" aria-label="${LX('Ask about a match','경기에 대해 질문')}" placeholder="${LX('Why did that fight go wrong?','방금 그 한타, 왜 진 거야?')}"><button type="submit">${LX('Ask','질문하기')}</button></label>
-   <div class="hx-chips" id="hx-chips"></div>
-   <span class="hx-note">${LX('Suggested questions are free. Typing your own needs a login and uses ⚡1.','추천 질문은 무료예요. 직접 입력한 질문은 로그인 후 ⚡1이 들어요.')}</span></form>`}
+ function left_(){$('hx-l').innerHTML=`<h1>${LX('The match is moving.<br><span class="acc">RORR knows why.</span>','경기는 지금 흐르고,<br><span class="acc">RORR는 그 이유를 알아요.</span>')}</h1>
+  <p class="hx-sub">${LX('Live data explains the flow and the turning points of this match.','라이브 데이터로 지금 이 경기의 흐름과 승부처를 설명해요.')}</p>
+  <form class="hx-ask" id="hx-ask"><div class="hx-field"><label class="hx-box"><input id="hx-q" autocomplete="off" aria-label="${LX('Ask about a match','경기에 대해 질문')}" placeholder="${LX('Why did that fight go wrong?','방금 그 한타, 왜 진 거야?')}"><button type="submit">${LX('Ask','질문하기')}</button></label>
+   <div class="hx-chips" id="hx-chips" role="group" aria-label="${LX('Suggested questions','추천 질문')}"></div></div>
+   <span class="hx-note">${LX('Suggested questions are free. Your own question needs a login and ⚡1.','추천 질문은 무료. 직접 질문은 로그인 후 ⚡1.')}</span></form>`}
  function paneMatch(){const m=curMatch_();if(!m)return `<div class="hx-card"><p>${LX('No matches scheduled.','예정된 경기가 없어요.')}</p></div>`;const A=TEAM[m.a],B=TEAM[m.b];const S=standings(m.lg);
   const sub=T=>LX(`${T.W}W ${T.L}L · #${S.indexOf(T)+1}`,`${T.W}승 ${T.L}패 · ${S.indexOf(T)+1}위`);
   const teams=c=>`<div class="hx-vs"><button type="button" class="t a" data-tm="${m.a}"><b>${m.a}</b><span>${sub(A)}</span></button>${c}<button type="button" class="t b" data-tm="${m.b}"><b>${m.b}</b><span>${sub(B)}</span></button></div>`;
-  if(m.st==='live'){const G=gameModel(m);const[sa,sb]=m.series.split(':');const pts=G.pts;const n=pts.length-1||1;const W=520,H=110;const x=k=>Math.round(k/n*(W-12)+4),y=v=>Math.round(H-6-(v/100)*(H-12));
+  if(m.st==='live'){const G=gameModel(m);const[sa,sb]=m.series.split(':');const pts=G.pts;const n=pts.length-1||1;const W=520,H=110;const vs=pts.map(p=>wp(p.g));let lo=Math.floor((Math.min(...vs)-3)/5)*5,hi=Math.ceil((Math.max(...vs)+3)/5)*5;if(hi-lo<20){const c=(hi+lo)/2;lo=Math.max(0,Math.round((c-10)/5)*5);hi=lo+20}const x=k=>Math.round(k/n*(W-12)+4),y=v=>Math.round(H-6-((v-lo)/(hi-lo))*(H-12));
    const line=pts.map((p,k)=>`${x(k)},${y(wp(p.g))}`).join(' ');const sw=G.sw.filter(e=>e.t<=pts.length-1).sort((a,b)=>b.t-a.t)[0]||G.ev[G.ev.length-1];
    const now=wp(G.g);const lead=G.g>=0?m.a:m.b;const pa=Math.max(now,100-now);
-   let mk='',cap=LX(`${G.dur} minutes in. ${lead} lead by ${Math.abs(G.g).toLocaleString('en-US')} gold.`,`${G.dur}분 진행. ${lead}가 골드 ${Math.abs(G.g).toLocaleString('en-US')} 앞서 있어요.`),muse=LX(`${lead} are ahead. Stay with me!`,`${lead}가 앞서고 있어요. 끝까지 같이 봐요!`);
+   let mk='',mkTag='',cap=LX(`${G.dur} minutes in. ${lead} lead by ${Math.abs(G.g).toLocaleString('en-US')} gold.`,`${G.dur}분 진행. ${lead}가 골드 ${Math.abs(G.g).toLocaleString('en-US')} 앞서 있어요.`),muse=LX(`${lead} are ahead. Stay with me!`,`${lead}가 앞서고 있어요. 끝까지 같이 봐요!`);
    const evs=G.ev.filter(e=>e.t<=pts.length-1&&Math.abs(e.d)>900).slice(-5);
    const evq=e=>{const T=e.side==='a'?m.a:m.b;const mm=String(e.t).padStart(2,'0');return LX(`${mm}:00 ${kName[e.k]||'moment'} — why did ${T} win it?`,`${e.t}분 ${({fb:'퍼스트 블러드',drg:'드래곤',her:'전령',fight:'한타',baron:'바론',push:'푸시'})[e.k]||'순간'}, ${T}가 어떻게 가져간 거야?`)};
    mk=evs.filter(e=>e!==sw).map(e=>`<circle class="evp" cx="${x(e.t)}" cy="${y(wp(e.g1))}" r="5" data-hxq="${esc(evq(e))}"><title>${esc(evq(e))}</title></circle>`).join('');
-   if(sw){const b0=wp(sw.g0),b1=wp(sw.g1);mk+=`<circle class="mk evp" cx="${x(sw.t)}" cy="${y(b1)}" r="6" data-hxq="${esc(evq(sw))}"><title>${esc(evq(sw))}</title></circle><text class="mkt" x="${x(sw.t)}" y="${Math.max(14,y(b1)-12)}" text-anchor="middle">${kName[sw.k]||''}</text>`;
+   if(sw){const b0=wp(sw.g0),b1=wp(sw.g1);const KN={fb:['First blood','퍼스트 블러드'],drg:['Dragon','드래곤'],her:['Herald','전령'],fight:['Fight','한타'],baron:['Baron','바론'],push:['Push','푸시']}[sw.k]||['Moment','순간'];const dd=b1-b0;mk+=`<line class="mkl" x1="${x(sw.t)}" x2="${x(sw.t)}" y1="${y(b1)}" y2="${H}"/><circle class="mk evp" cx="${x(sw.t)}" cy="${y(b1)}" r="6" data-hxq="${esc(evq(sw))}"><title>${esc(evq(sw))}</title></circle>`;const fx=x(sw.t)/W;mkTag=`<span class="hx-mtag${fx>.7?' r':''}" style="left:calc(34px + (100% - 34px) * ${fx.toFixed(3)});top:${Math.max(0,(y(b1)-30)/H*100).toFixed(1)}%">${LX(KN[0],KN[1])} ${dd>=0?'+':''}${dd}%p</span>`;
     cap=`${evText(sw,m)} · ${m.a} ${b0}% → ${b1}%`;muse=sw.k==='baron'?LX('Did you see that Baron?!','방금 그 바론 봤어요?!'):sw.k==='fight'?LX('What a fight!','와, 방금 한타!'):LX('That changes things!','이걸로 흐름이 바뀌어요!')}
    return `<article class="hx-card live hx-click" data-m="${m.id}" title="${LX('Open the match','경기 페이지로 이동')}"><div class="hx-top"><span class="hx-lv"><i></i>LIVE · ${LX('Game','')} ${m.game}${LX('','세트')} ${G.dur}′</span><span><em class="hx-lg">${m.lg}</em> 2026 · ${LX('Best of 3','3판 2선승')}</span></div>
     ${teams(`<div class="c"><b>${sa} : ${sb}</b><span>${LX('Gold','골드')} ${goldStr(G.g)}</span></div>`)}
-    <div class="hx-wp"><div class="h"><span>${m.a} ${LX('win chance','승리확률')}</span><b>${now}%</b></div><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${LX('Win chance over time','승리확률 추이')}"><line class="base" x1="0" x2="${W}" y1="${y(50)}" y2="${y(50)}"/><polyline class="ln" points="${line}"/>${mk}<circle class="end" cx="${x(n)}" cy="${y(now)}" r="6"/></svg><p>${cap} <span class="hx-tip">${LX('· tap a dot to ask about that moment','· 점을 누르면 그 순간을 질문해요')}</span></p></div>
+    <div class="hx-wp"><div class="h"><span>${m.a} ${LX('win chance','승리확률')}</span><b>${now}%</b></div><div class="hx-plot"><span class="ax t">${hi}%</span><span class="ax b">${lo}%</span><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${LX(`${m.a} win chance over time, axis ${lo} to ${hi}%`,`${m.a} 승리확률 추이, 세로축 ${lo}~${hi}%`)}">${lo<50&&hi>50?`<line class="base" x1="0" x2="${W}" y1="${y(50)}" y2="${y(50)}"/>`:''}<polygon class="ar" points="${x(0)},${H} ${line} ${x(n)},${H}"/><polyline class="ln" points="${line}"/>${mk}<circle class="end" cx="${x(n)}" cy="${y(now)}" r="5"/></svg>${mkTag}</div><p>${cap} <span class="hx-tip">${LX('· tap a dot to ask about that moment','· 점을 누르면 그 순간을 질문해요')}</span></p></div>
     <div class="hx-muse"><img src="assets/muse-excited.webp" alt="Muse"><span class="hx-mw"><em>${LX('Muse · AI cheer mate','Muse · AI 응원 메이트')}</em><span class="hx-bub">${muse}</span></span><a class="hx-go" href="#match/${m.id}" data-m="${m.id}">${LX('Watch →','경기 보기 →')}</a></div></article>`}
   const fm=T=>[...T.form].map(c=>`<i class="${c==='W'?'w':''}">${c}</i>`).join('');
   return `<article class="hx-card"><div class="hx-top"><span class="hx-lv up">${fmtWhen(m)} (${tzLabel()})</span><span>${m.lg} 2026 · ${LX('Best of 3','3판 2선승')}</span></div>
@@ -4268,7 +4360,7 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
    <div class="hx-rank">${P.map((x,k)=>`<button type="button" data-hxp="${x.name}"><span class="n">${k+1}</span><span><b>${x.name}</b><small>${x.team} · ${MX.role(x.role)}</small></span><em>${x.ix}</em></button>`).join('')}</div>
    <div class="hx-acts" style="margin-top:0"><a class="hx-go pri" href="#wrc" onclick="nav(event,'wrc')">${LX('See LwRC+ rankings','LwRC+ 순위 보기')}</a><a class="hx-go gh" href="#blog/what-is-wrc" onclick="nav(event,'blog/what-is-wrc')">${LX('What is LwRC+?','LwRC+란?')}</a></div></div>`}
  const PANES=[paneMatch,paneMuse,paneRank];
- function tabs(){const T=TABS();const m=curMatch_();$('hx-tabs').innerHTML=T.map((x,k)=>`<button type="button" role="tab" id="hx-t${k}" aria-controls="hx-r" aria-selected="${k===i}"><span class="bar"><i></i></span><span class="n">0${k+1}</span><b>${k===0?(m&&m.st==='live'?x[0]:x[1]):x[0]}</b></button>`).join('');
+ function tabs(){const T=TABS();const m=curMatch_();$('hx-tabs').innerHTML=T.map((x,k)=>`<button type="button" role="tab" id="hx-t${k}" aria-controls="hx-r" aria-selected="${k===i}"><span class="bar"><i></i></span><b>${k===0?(m&&m.st==='live'?x[0]:x[1]):x[0]}</b></button>`).join('');
   $('hx-tabs').style.setProperty('--hx-dur',DUR+'ms');$('hx-tabs').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>go(k,1))}
  function pane(anim){const r=$('hx-r');r.innerHTML=`<div class="hx-pane"${anim?'':' style="animation:none"'}>${PANES[i]()}</div>`;r.setAttribute('aria-labelledby','hx-t'+i)}
  function go(n,user){i=(n+PANES.length)%PANES.length;tabs();pane(true);restart()}
@@ -4291,7 +4383,7 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
    cap=LX(`● LIVE · ${m.lg} ${m.a} vs ${m.b} · G${m.game} ${G.dur}′ — suggested questions`,`● LIVE · ${m.lg} ${m.a} 대 ${m.b} ${m.game}세트 ${G.dur}분 기준 추천 질문`);
    Q=[e?LX(`That ${KK[e.k][0]} just now, why did it go that way?`,`방금 ${KK[e.k][1]}, 왜 그렇게 된 거야?`):LX('What matters right now?','지금 뭐가 중요해?'),LX(`How much is ${lead} ahead right now?`,`${lead} 지금 몇 % 유리해?`),LX('Who built the gold lead?','골드 리드는 누가 만든 거야?')]}
   else Q=[LX("I'm new to LoL. What matters right now?",'롤 잘 모르는데, 지금 뭐가 중요해?'),LX('Who built the gold lead?','골드 리드는 누가 만든 거야?'),LX('Is this a comeback?','이거 역전각이야?')];
-  box.innerHTML=(cap?`<span class="hx-ccap">${cap}</span>`:'')+Q.map(q=>`<button type="button" data-hxq="${q.replace(/"/g,'&quot;')}">${q}</button>`).join('')}
+  box.innerHTML=Q.map(q=>`<button type="button" data-hxq="${q.replace(/"/g,'&quot;')}">${q}</button>`).join('')}
  let lastKey='';function render(){const key=LANG+LG;if(key!==lastKey){left_();lastKey=key}chips();tabs();pane(false);if(!t&&!RM)restart()}
  return{render,go}})();
 
