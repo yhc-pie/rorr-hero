@@ -2050,6 +2050,12 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .tb tr.top3 .rk{color:var(--cyan);font-weight:800}
 .tb td.vp{color:var(--energy)}.tb td.vn{color:var(--mute)}
 .st-ix{font-weight:800}
+
+.rk-nearb{border-color:#6F7CF7!important;color:#C9CEFF!important;background:rgba(111,124,247,.12)!important;font-weight:800!important}.rk-nearb.on{background:#6F7CF7!important;color:#fff!important}
+:root[data-theme=light] .rk-nearb{color:#3B3FB6!important}
+.rk-nearcap{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 18px;font-size:12.5px;font-weight:700;color:var(--mute);background:var(--bg3);border-bottom:1px solid var(--line)}
+.rk-nearcap button{border:0;background:none;color:var(--cyan);font:700 12.5px "Pretendard Variable",sans-serif;cursor:pointer}
+.rk-me.rk-mein{position:static;border-top:0;box-shadow:inset 3px 0 0 #6F4CFF}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -3114,7 +3120,7 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
  return{html,bind,closeReward,moments,isPartner,liveMoment}})();
 
 /* ===== supporter ranking: fans ranked within a partner team (policy: points, not money) ===== */
-const RK=(()=>{const N=18402;let st={per:'s',cr:'pts'};
+const RK=(()=>{const N=18402;let st={per:'s',cr:'pts',near:false};
  const PER={s:[1,'This season','이번 시즌'],m:[.24,'This month','이번 달'],g:[.032,'This match','이번 경기']};
  const CR={pts:['Cheer points','응원 포인트'],cards:['Cards','모은 카드'],streak:['Streak','연속 응원'],big:['Big moments','큰 순간']};
  const NAMES=['minji_07',null,'ZedMain','lck_dad','dragonsoul','yuna.gg','hanbit','sol_kr','bluebuff',null,'nori','rift_mom','sejin','midgap','faker_fan_99','redwave',null,'oner_route','gumayusi_ok','t1_forever','hlnight','bot_diff'];
@@ -3146,9 +3152,12 @@ const RK=(()=>{const N=18402;let st={per:'s',cr:'pts'};
   const pod=order.map(i=>{const x=R[i];return `<article class="rk-pod p${i+1}"><span class="rk-md">${med[i]}${i===0?` · ${LX(`Top supporter, ${PER[st.per][1].toLowerCase()}`,`${PER[st.per][2]} 최고 서포터`)}`:''}</span>${av(x.n,i)}<b class="rk-pn">${nm(x.n)}</b><div class="rk-ps"><span>${LX('Cards','카드')} <b>${x.v.cards}</b></span><span>${LX('Streak','연속')} <b>${cell('streak',x.v.streak)}</b></span></div><b class="rk-pv">${cell(st.cr,x.v[st.cr])}</b></article>`}).join('');
   const cols=['cards','streak','pts'];if(st.cr==='big')cols.splice(2,0,'big');
   const head=`<div class="rk-row rk-hd"><span>${LX('Rank','순위')}</span><span></span><span>${LX('Supporter','서포터')}</span>${cols.map(k=>`<span class="r${k===st.cr?' on':''}">${LX(...CR[k])}</span>`).join('')}</div>`;
-  const list=R.slice(3).map(x=>`<div class="rk-row"><b class="rk-n">${x.r}</b>${chg(x)}<span class="rk-who">${av(x.n)}<span class="rk-nm">${nm(x.n)}</span>${x.holo?`<span class="rk-hb">${LX('Hologram','홀로그램')}</span>`:''}</span>${cols.map(k=>`<span class="r${k===st.cr?' on':''}">${cell(k,x.v[k])}</span>`).join('')}</div>`).join('');
+  const nearRows=()=>{const f=PER[st.per][0];const P2=['redwave',null,'sol_kr','bluebuff','rift_mom',null,'midgap','hanbit'];const out=[];for(let d=-3;d<=3;d++){const r=me.r+d;if(r<1)continue;if(d===0){out.push('ME');continue}const g=mkRnd(hashStr('nr'+r+st.per+st.cr));const n=P2[(r+7)%P2.length];const v=st.cr==='pts'?ptsAt(r,f):Math.max(1,me.v[st.cr]+(d<0?1:0)-Math.floor(d/2));const dd=g();out.push({r,n,v:{pts:st.cr==='pts'?v:ptsAt(r,f),cards:st.cr==='cards'?v:Math.max(1,me.v.cards+Math.round((g()-.5)*4)),streak:st.cr==='streak'?v:Math.max(1,me.v.streak+Math.round((g()-.5)*4)),big:st.cr==='big'?v:Math.max(0,me.v.big+Math.round((g()-.5)*2))},holo:0,ch:dd<.4?'up':dd<.75?'dn':'eq',chn:1+Math.floor(g()*4)})}return out};
+  const rowH=x=>`<div class="rk-row"><b class="rk-n">${fmt(x.r)}</b>${chg(x)}<span class="rk-who">${av(x.n)}<span class="rk-nm">${nm(x.n)}</span>${x.holo?`<span class="rk-hb">${LX('Hologram','홀로그램')}</span>`:''}</span>${cols.map(k=>`<span class="r${k===st.cr?' on':''}">${cell(k,x.v[k])}</span>`).join('')}</div>`;
+  const list0=R.slice(3).map(x=>`<div class="rk-row"><b class="rk-n">${x.r}</b>${chg(x)}<span class="rk-who">${av(x.n)}<span class="rk-nm">${nm(x.n)}</span>${x.holo?`<span class="rk-hb">${LX('Hologram','홀로그램')}</span>`:''}</span>${cols.map(k=>`<span class="r${k===st.cr?' on':''}">${cell(k,x.v[k])}</span>`).join('')}</div>`).join('');
   const meRow=inn?`<div class="rk-row rk-me"><b class="rk-n">${fmt(me.r)}</b><span class="rk-ch up">▲12</span><span class="rk-who"><span class="rk-av me">${LX('Me','나')}</span><span class="rk-nm"><b>${S.anon?LX('You (anonymous)','나 (익명)'):LX('You','나')}</b> · ${LX(`top ${me.pct}%`,`상위 ${me.pct}%`)}</span><em>${st.cr==='pts'?LX(`${fmt(me.nxt)} P to the next rank`,`다음 순위까지 ${fmt(me.nxt)} P`):LX('Keep cheering to climb','응원을 이어가면 올라가요')}</em></span>${cols.map(k=>`<span class="r${k===st.cr?' on':''}">${cell(k,me.v[k])}</span>`).join('')}</div>`
    :`<div class="rk-row rk-me out"><span>${LX('Log in to see where you rank among T1 supporters.','로그인하면 T1 서포터 중 내 순위를 볼 수 있어요.')}</span><button type="button" class="p2-btn pri" onclick="openAuth('login')">${LX('Log in','로그인')}</button></div>`;
+  const meIn=meRow.replace('rk-row rk-me','rk-row rk-me rk-mein');const list=st.near&&inn?`<div class="rk-nearcap"><span>${LX(`Around your rank · #${fmt(Math.max(1,me.r-3))}–#${fmt(me.r+3)}`,`내 주변 순위 · ${fmt(Math.max(1,me.r-3))}–${fmt(me.r+3)}위`)}</span><button type="button" data-rknear="0">${LX('Back to top ranks ↑','상위 순위로 ↑')}</button></div>`+nearRows().map(x=>x==='ME'?meIn:rowH(x)).join(''):list0;
   const mt=lv?(()=>{const rr=mkRnd(hashStr('rkm'+lv.id));const L=['oner_route',null,'ZedMain','yuna.gg','minji_07'];return L.map((n,i)=>`<li><b class="r${i+1}">${i+1}</b><span>${nm(n)}</span><b>${fmt(Math.round(1840*Math.pow(.84,i)*(.95+rr()*.1)/2)*2)} P</b></li>`).join('')})():'';
   const PLF=[['Doran','sol_kr',6204],['Oner','oner_route',8911],['Faker','minji_07',14072],['Peyz','bluebuff',5330],['Keria',null,7418]];
   el.innerHTML=`<section class="rhero rk-hero"><div class="k">BOOST · ${LX('RANKING','순위')}</div><h1>${LX('Supporter ranking','서포터 순위')}</h1><p class="sub">${LX('Fans ranked within the team they cheer for. Points come from cheering, and payment amounts are never shown.','같은 팀을 응원하는 팬끼리의 순위예요. 포인트는 응원 활동으로 쌓이고, 결제 금액은 어디에도 표시되지 않아요.')}</p>
@@ -3158,10 +3167,10 @@ const RK=(()=>{const N=18402;let st={per:'s',cr:'pts'};
     ${inn?`<div class="rk-my"><span>${LX('My rank','나의 순위')}</span><b>${LX('#'+fmt(me.r),fmt(me.r)+'위')}</b><em>${LX(`Top ${me.pct}%`,`상위 ${me.pct}%`)}</em></div>`:`<button type="button" class="p2-btn pri" onclick="openAuth('login')">${LX('Log in to see my rank','로그인하고 내 순위 보기')}</button>`}</section>
   <div class="rk-g"><div class="rk-main">
     <div class="rk-ctl"><div class="rk-seg" role="tablist">${Object.keys(PER).map(k=>`<button type="button" role="tab" aria-selected="${k===st.per}" class="${k===st.per?'on':''}" data-rkp="${k}">${LX(PER[k][1],PER[k][2])}</button>`).join('')}</div>
-     <div class="rk-chips">${Object.keys(CR).map(k=>`<button type="button" class="${k===st.cr?'on':''}" aria-pressed="${k===st.cr}" data-rkc="${k}">${LX(...CR[k])}</button>`).join('')}</div></div>
+     <div class="rk-chips">${inn?`<button type="button" class="rk-nearb${st.near?' on':''}" aria-pressed="${st.near}" data-rknear="${st.near?0:1}">📍 ${LX('Jump to my rank','내 순위로 이동')}</button>`:''}${Object.keys(CR).map(k=>`<button type="button" class="${k===st.cr?'on':''}" aria-pressed="${k===st.cr}" data-rkc="${k}">${LX(...CR[k])}</button>`).join('')}</div></div>
     ${st.per==='g'&&!lv?`<p class="rk-nt">${LX('No T1 match is live right now. Showing the most recent match.','지금 진행 중인 T1 경기가 없어요. 가장 최근 경기 기준이에요.')}</p>`:''}
     <div class="rk-pods">${pod}</div>
-    <div class="rk-tbl">${head}${list}${meRow}</div>
+    <div class="rk-tbl">${head}${list}${st.near&&inn?'':meRow}</div>
     <p class="rk-nt">${LX("Anonymous supporters appear as 'Anonymous supporter'. Rankings reset at season end and your final rank is kept as a season badge. Names and figures are sample data.","익명 참여 팬은 '익명 서포터'로 표시돼요. 순위는 시즌이 끝나면 초기화되고 최종 순위는 시즌 배지로 남아요. 닉네임과 수치는 샘플 데이터예요.")}</p></div>
    <aside class="rk-side">
     <section class="box rk-sb"><div class="p2-hh"><h3>${LX('This match · top 5','이번 경기 TOP 5')}</h3>${lv?`<a class="rk-lv" href="#match/${lv.id}" onclick="nav(event,'match/${lv.id}')"><i></i>LIVE · ${lv.a} vs ${lv.b}</a>`:''}</div>${lv?`<ol class="bx-lb">${mt}</ol>`:`<p class="rk-nt">${LX('Shown during T1 matches.','T1 경기 중에 표시돼요.')}</p>`}</section>
@@ -3177,6 +3186,7 @@ const RK=(()=>{const N=18402;let st={per:'s',cr:'pts'};
    </aside></div>`;
   el.querySelectorAll('[data-rkp]').forEach(b=>b.onclick=()=>{st.per=b.dataset.rkp;render()});
   el.querySelectorAll('[data-rkc]').forEach(b=>b.onclick=()=>{st.cr=b.dataset.rkc;render()});
+  el.querySelectorAll('[data-rknear]').forEach(b=>b.onclick=()=>{st.near=b.dataset.rknear==='1';render();const t=el.querySelector(st.near?'.rk-mein':'.rk-pods');if(t)t.scrollIntoView({behavior:'smooth',block:'center'})});
   }
  return{render}})();
 
