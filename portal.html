@@ -1992,6 +1992,9 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .fl-how summary::-webkit-details-marker{display:none}.fl-how[open] summary{border-color:var(--cyan)}
 .fl-how .pop{position:absolute;left:0;top:34px;z-index:20;width:min(380px,80vw);padding:14px 16px;border-radius:12px;background:var(--bg2);border:1px solid var(--line);box-shadow:0 16px 32px -12px rgba(0,0,0,.55);font:500 13px/1.6 "Pretendard Variable",sans-serif;color:var(--mute);letter-spacing:0}
 .fl-how .pop a{color:var(--cyan);font-weight:700}
+/* header .pop (display:none) collided with this popover */
+.fl-how .pop{display:none;right:auto;width:min(380px,80vw)}.fl-how[open] .pop{display:block}
+@media (max-width:640px){.fl-rare .p2-hh{position:relative}.fl-how{position:static}.fl-how .pop{left:0;right:0;width:auto;top:calc(100% + 6px)}}
 .fl-row{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;align-items:stretch}
 .fl-me{gap:12px;padding:18px}
 .fl-goal{display:grid;gap:8px;padding-top:14px;border-top:1px solid var(--line)}
@@ -3338,6 +3341,7 @@ const RK=(()=>{const N=18402;let st={per:'s',cr:'pts',near:false,ptx:false,rules
   }
  return{render}})();
 
+document.addEventListener('click',e=>{document.querySelectorAll('details.fl-how[open]').forEach(d=>{if(!d.contains(e.target))d.open=false})});document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('details.fl-how[open]').forEach(d=>d.open=false)});
 /* ===== ⑪ Muse alerts: big-moment heads-up while the site is open (no web push) =====
    gold → top banner · hologram → centre popup (Boost-complete style) · tab title signal
    caps: banner ≤1 per 3 min, popup ≤1 per match, never over another modal · setting: rorr-ma = all | holo | off */
