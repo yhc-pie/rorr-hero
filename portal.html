@@ -2220,6 +2220,26 @@ footer{padding:44px 0 120px}
 .aw-st.ok{color:#3FD9BE;background:color-mix(in srgb,#3FD9BE 14%,transparent)}
 /* score ticker: drag with the mouse */
 .tk-track{cursor:grab;user-select:none;-webkit-user-select:none}.tk-track.drag{cursor:grabbing}.tk-track.drag *{pointer-events:none}
+
+/* ===== side panel v3: Stats / Cheer tabs + cheer message history ===== */
+.p2-tabsx{position:sticky;top:-24px;z-index:4;display:grid;grid-template-columns:1fr 1fr;margin:0 -20px -10px;padding:0 20px;background:var(--bg2);border-bottom:1px solid var(--line)}
+.p2-tabsx button{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:46px;border:0;border-bottom:2px solid transparent;background:none;color:var(--mute);font:700 14.5px "Pretendard Variable",sans-serif;cursor:pointer}
+.p2-tabsx button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--ink);font-weight:800}
+.p2-tabsx .lv{width:7px;height:7px;border-radius:50%;background:#FF5C7A;animation:lvp 1.4s ease-in-out infinite}
+.p2-tabsx em{font-style:normal;font-size:11.5px;font-weight:700;color:var(--mute)}
+.p2-pane{display:grid;gap:28px;align-content:start;min-width:0}.p2-pane[hidden]{display:none}
+.p2-pane>.ip-sec.sup{gap:22px}
+.pm .p2-hh h3 small{font-size:12px;color:var(--mute);font-weight:600;margin-left:4px}
+.pm-chips{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:2px 0 10px}.pm-chips::-webkit-scrollbar{display:none}
+.pm-chips button{flex:none;height:30px;padding:0 12px;border-radius:9999px;border:1px solid var(--line);background:transparent;color:var(--mute);font:700 12.5px "Pretendard Variable",sans-serif;cursor:pointer}
+.pm-chips button.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.pm-list.fl-ms{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none;justify-content:flex-start;gap:8px}
+.pm-list.fl-ms .ms{max-height:none;padding:11px 12px;border-radius:12px;background:var(--bg3);border:1px solid var(--line)}
+.pm-empty{margin:0;padding:16px;border-radius:12px;border:1px dashed var(--line);font-size:13px;color:var(--mute);text-align:center}
+.pm-more{width:100%;margin-top:8px;height:38px;border:0;border-radius:10px;background:none;color:var(--cyan);font:700 13px "Pretendard Variable",sans-serif;cursor:pointer}.pm-more:hover{background:var(--bg3)}
+.pm-note{margin:8px 0 0;font-size:11.5px;color:var(--mute)}
+.sup-rk1{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,#6F4CFF 14%,var(--bg3));border:1px solid color-mix(in srgb,#6F4CFF 40%,var(--line));font-size:13px;color:color-mix(in srgb,var(--ink) 82%,var(--mute))}
+.sup-rk1 b{color:var(--ink)}.sup-rk1 a{color:#C9B8FF;font-weight:800;text-decoration:none;white-space:nowrap}:root[data-theme=light] .sup-rk1 a{color:#5A3FD6}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -3039,7 +3059,7 @@ const BX=(()=>{const K='rorr-bx';
  const RPL=[['GG','GG'],['See you next match!','다음 경기도 같이!'],['Best moment','이 순간 최고'],['To the end','끝까지 간다']];
  let fq=[],fi=0,ft=null,ftyping=null,mf='mine';const liked={},replied={};
  const nmOf=n=>n||LX('Anonymous supporter','익명 서포터');
- const ago=t=>{const s=Math.max(1,Math.round((Date.now()-t)/1000));return s<10?LX('just now','방금'):s<60?LX(`${s}s ago`,`${s}초 전`):LX(`${Math.round(s/60)}m ago`,`${Math.round(s/60)}분 전`)};
+ const ago=t=>{const s=Math.max(1,Math.round((Date.now()-t)/1000));if(s<10)return LX('just now','방금');if(s<60)return LX(`${s}s ago`,`${s}초 전`);const m=Math.round(s/60);if(m<60)return LX(`${m}m ago`,`${m}분 전`);const h=Math.round(m/60);if(h<24)return LX(`${h}h ago`,`${h}시간 전`);const d=Math.round(h/24);return LX(`${d}d ago`,`${d}일 전`)};
  const liveT1=()=>DB.sched.find(x=>x.st==='live'&&(x.a==='T1'||x.b==='T1'));
  function ctxOf(key,salt){const c=Object.assign({},MC[key]||MC.baron);if(!c.np)c.tm='T1';if(c.live){const lv=liveT1();if(!lv)return Object.assign({},MC.baron,{tm:'T1'});if(c.side==='b')c.tm=lv.a==='T1'?lv.b:lv.a;const r=hashStr(key+salt);const mm=8+r%26,ss=String(r%60).padStart(2,'0');c.sub=`${lv.a} vs ${lv.b} · ${localParts(lv.at).d} · G${lv.game} ${mm}:${ss}`;c.mid=lv.id;c.now=1}else c.mid=cardMatch({sub:c.sub});return c}
  function ctxHTML(c){if(!c)return'';const g=(/ G(\d+) /.exec(c.sub)||[])[1],tm=(/(\d\d:\d\d)\s*$/.exec(c.sub)||[])[1];const when=g&&tm?LX(`G${g} ${tm}`,`${g}세트 ${tm}`):'';
@@ -3066,16 +3086,45 @@ const BX=(()=>{const K='rorr-bx';
    setTimeout(()=>{ftyping=null;msPush({id:'m'+fi,n:p[0],t:p[1],c:ctxOf(p[2],fi),at:Date.now()})},1100+Math.random()*700)}
   ft=setTimeout(msTick,3600+Math.random()*2800)}
  setInterval(()=>{document.querySelectorAll('#fl-ms .ms[data-at]').forEach(r=>{const e=r.querySelector('.ms-a em');if(e)e.textContent=ago(+r.dataset.at)})},10000);
+
+ /* ----- side panel: cheer messages sent with Boosts to a team / player (team panel also shows its players') ----- */
+ const PM={},PMS={};
+ const PT_TEAM=[['Proud of this roster','이 로스터 정말 자랑스러워요'],['Win or lose, see you next match','이기든 지든 다음 경기도 같이 봐요'],['That teamfight was a movie','방금 한타는 영화였다'],['Drink water and keep cheering everyone','다들 물 마시면서 응원해요'],['Clean objective control today','오늘 오브젝트 관리 깔끔하다'],['To the end, together','끝까지 같이 갑니다'],['That comeback gave me chills','역전하는 거 보고 소름 돋았어요']];
+ const PT_PL=[['{p}, that play was unreal','{p}, 방금 플레이 미쳤다'],['{p} carried that fight','{p}가 한타를 캐리했다'],['Always believing in {p}','{p} 항상 믿어요'],['{p} stays calm in every fight','{p}는 한타마다 침착해요'],['Happy to Boost {p} today','오늘 {p}에게 Boost했어요'],['{p}, best form of the season','{p}, 시즌 최고 폼이에요']];
+ const PM_MO={TOP:[['Top solo kill','탑 솔로킬'],['Teleport flank','순간이동 합류']],JG:[['Baron steal','바론 스틸'],['Dragon secure','드래곤 확보']],MID:[['Mid solo kill','미드 솔로킬'],['Roam to bot','바텀 로밍']],BOT:[['Bot lane 2-for-0','바텀 2:0 교전'],['Late-game carry','후반 캐리']],SUP:[['Engage that flipped the fight','한타를 뒤집은 이니시'],['Vision control','시야 장악']],T:[['Teamfight win','한타 승리'],['Elder fight turnaround','장로 교전 역전'],['Clean siege','깔끔한 공성']]};
+ const PM_N=['minji_07',null,'ZedMain','lck_dad','yuna.gg','hanbit','sol_kr','bluebuff','nori','rift_mom','sejin','midgap','dragonsoul'];
+ function pmList(team,pl){const key=team+'|'+(pl||'');const partner=PARTNER_T.includes(team);
+  if(!PMS[team]){const ms=DB.sched.filter(x=>(x.a===team||x.b===team)&&x.st!=='up').sort((p,q)=>q.at-p.at).slice(0,3);const roster=DB.players.filter(x=>x.team===team);const out=[];const now=Date.now();
+   for(let i=0;i<24;i++){const r=mkRnd(hashStr(team+'pm'+i)*7919+i*104729+13);r();r();r();const m=ms[i<6?0:i%Math.max(1,ms.length)];if(!m)break;const p=partner&&i%3!==0?roster[(i*2+1)%roster.length]:null;
+    const w=p?PM_MO[p.role][Math.floor(r()*2)]:PM_MO.T[Math.floor(r()*3)];const tier=r()<.15?'holo':r()<.5?'gold':'silver';const g=m.st==='live'?Math.max(1,(m.game||2)-(i%2)):1+Math.floor(r()*3),mm=String(8+Math.floor(r()*28)).padStart(2,'0'),ss=String(Math.floor(r()*60)).padStart(2,'0');
+    const tx=p?PT_PL[Math.floor(r()*PT_PL.length)].map(x=>x.replace('{p}',p.name)):PT_TEAM[Math.floor(r()*PT_TEAM.length)];const live=m.st==='live';
+    const mins=live?(i*4+2+Math.floor(r()*3)):(i*95+180);
+    out.push({id:'pm-'+team+'-'+i,n:PM_N[Math.floor(r()*PM_N.length)],t:tx,at:now-mins*60000,c:{sub:`${m.a} vs ${m.b} · ${localParts(m.at).d} · G${g} ${mm}:${ss}`,w,tier,pl:p?p.name:null,tm:team,mid:m.id,now:live?1:0,np:partner?0:1,live:partner?0:1}})}
+   PMS[team]=out}
+  const mine=(S.msgs||[]).filter(x=>x.c&&x.c.tm===team).map(x=>({id:'pm-me-'+x.at,me:1,t:[x.t,x.t],at:x.at,c:Object.assign({},x.c,partner?{}:{live:1})}));
+  const L=mine.concat(PMS[team]).filter(m=>!pl||(m.c&&m.c.pl===pl)).sort((a,b)=>b.at-a.at);L.forEach(m=>PM[m.id]=m);return L}
+ function pmCount(team,pl){if(pl&&!PARTNER_T.includes(team))return 0;return pmList(team,pl).length}
+ function pmHTML(team,pl,f,n){const partner=PARTNER_T.includes(team);if(pl&&!partner)return'';f=f||'all';n=n||6;
+  const all=pmList(team,pl);const L=all.filter(m=>pl||f==='all'||(f==='team'?!m.c.pl:m.c.pl===f));
+  const roster=!pl&&partner?DB.players.filter(x=>x.team===team).sort((a,b)=>ROLE_ORDER[a.role]-ROLE_ORDER[b.role]):[];
+  const chips=roster.length?`<div class="pm-chips" role="group" aria-label="${LX('Filter','필터')}">${[['all',LX('All','전체')],['team',LX('Team','팀')]].concat(roster.map(p=>[p.name,p.name])).map(([k,l])=>`<button type="button" class="${k===f?'on':''}" aria-pressed="${k===f}" data-pmf="${esc(k)}">${esc(l)}</button>`).join('')}</div>`:'';
+  return `<section class="p2-sec pm" data-pmt="${esc(team)}" data-pmp="${esc(pl||'')}" data-pmf0="${esc(f)}" data-pmn="${n}"><div class="p2-hh"><h3>${pl?LX(`Cheers for ${pl}`,`${pl}에게 온 응원`):LX(`Cheers for ${team}`,`${team}에 온 응원`)} <small>${all.length}</small></h3><span>${LX('Sent with Boosts','Boost와 함께 보낸 메시지')}</span></div>${chips}
+   <div class="fl-ms pm-list">${L.slice(0,n).map(m=>msRow(m)).join('')||`<p class="pm-empty">${LX('No messages yet. Send the first one with a Boost.','아직 메시지가 없어요. Boost와 함께 첫 응원을 보내 보세요.')}</p>`}</div>
+   ${L.length>n?`<button type="button" class="pm-more" data-pmmore>${LX(`Show more (${L.length-n})`,`이전 메시지 더 보기 (${L.length-n})`)}</button>`:''}
+   <p class="pm-note">${partner?LX("React with 'Me too' or a preset reply · report via ⋯",'반응은 ‘나도 응원’, 답장은 정해진 문구로 · 신고는 ⋯ 메뉴'):LX('Teams without a partnership show the team name only, no player names.','파트너가 아닌 팀은 선수 이름 없이 팀 단위로만 보여요.')}</p></section>`}
+ document.addEventListener('click',e=>{const t=e.target;const sec=t.closest('.pm[data-pmt]');if(!sec)return;
+  const fb=t.closest('[data-pmf]'),mb=t.closest('[data-pmmore]');if(!fb&&!mb)return;
+  const f=fb?fb.dataset.pmf:sec.dataset.pmf0,n=mb?(+sec.dataset.pmn+6):6;sec.outerHTML=pmHTML(sec.dataset.pmt,sec.dataset.pmp||null,f,n)});
  function msMine(t,c){if(!S.msgOn)return;msPush({id:'me'+Date.now(),me:1,t:[t,t],c:c||null,at:Date.now()})}
- const msFind=el=>{const r=el.closest('.ms[data-id]');return r?{r,m:fq.find(x=>x.id===r.dataset.id)}:{}};
+ const msFind=el=>{const r=el.closest('.ms[data-id]');return r?{r,m:fq.find(x=>x.id===r.dataset.id)||PM[r.dataset.id]}:{}};
  document.addEventListener('click',e=>{const t=e.target;
   if(!t.closest('.ms-mw'))document.querySelectorAll('.ms-mw.open').forEach(x=>x.classList.remove('open'));
   const mf_=t.closest('[data-bxmf]');if(mf_){mf=mf_.dataset.bxmf;msDraw();return}
   const mm=t.closest('[data-bxmm]');if(mm){nav(null,'match/'+mm.dataset.bxmm);return}
-  if(!t.closest('#fl-ms'))return;
+  if(!t.closest('#fl-ms,.pm-list'))return;
   const inn=document.body.classList.contains('body-in');
   if(t.closest('[data-bxlike]')){if(!inn){openAuth('login');return}const{r,m}=msFind(t);if(!m)return;liked[m.id]=!liked[m.id];r.outerHTML=msRow(m);return}
-  if(t.closest('[data-bxreply]')){if(!inn){openAuth('login');return}const{r}=msFind(t);if(!r)return;const c=r.querySelector('.ms-chips');const op=c.hidden;document.querySelectorAll('#fl-ms .ms.open').forEach(x=>{x.classList.remove('open');x.querySelector('.ms-chips').hidden=true});c.hidden=!op;r.classList.toggle('open',op);t.closest('[data-bxreply]').setAttribute('aria-expanded',op);return}
+  if(t.closest('[data-bxreply]')){if(!inn){openAuth('login');return}const{r}=msFind(t);if(!r)return;const c=r.querySelector('.ms-chips');const op=c.hidden;document.querySelectorAll('.ms.open').forEach(x=>{x.classList.remove('open');x.querySelector('.ms-chips').hidden=true});c.hidden=!op;r.classList.toggle('open',op);t.closest('[data-bxreply]').setAttribute('aria-expanded',op);return}
   const rp=t.closest('[data-bxrp]');if(rp){const{r,m}=msFind(t);if(!m)return;replied[m.id]=+rp.dataset.bxrp;r.outerHTML=msRow(m);toast(LX('Reply sent','답장을 보냈어요'));return}
   const mo=t.closest('[data-bxmore]');if(mo){const w=mo.closest('.ms-mw');const o=!w.classList.contains('open');document.querySelectorAll('.ms-mw.open').forEach(x=>x.classList.remove('open'));w.classList.toggle('open',o);return}
   if(t.closest('[data-bxreport]'))t.closest('.ms-mw').classList.remove('open')});
@@ -3200,7 +3249,7 @@ const BX=(()=>{const K='rorr-bx';
  const _rm=renderMy;renderMy=function(f){_rm(f);requestAnimationFrame(stripProg)};
  document.addEventListener('change',e=>{const t=e.target.closest('[data-bxset]');if(t){S[t.dataset.bxset]=t.checked;save();renderFL()}});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'){const el=document.getElementById('bx-share');if(el&&el.classList.contains('on')){el.classList.remove('on');document.body.classList.remove('bx-modal-on')}}});
- return{goalAdd:n=>{goalX+=n},S:()=>S,CFG,IC,TIER,tierOf,decoOf,decoTxt,cardHTML,spendSpark,addBoost,renderFL,renderMy,renderWall,share,setUI,rank,pct,save}})();
+ return{goalAdd:n=>{goalX+=n},S:()=>S,CFG,IC,TIER,tierOf,decoOf,decoTxt,cardHTML,spendSpark,addBoost,renderFL,renderMy,renderWall,share,setUI,rank,pct,save,pmHTML,pmCount}})();
 
 /* ===== Boost in the side panel (policy v1.0) ===== */
 const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknames & IP */
@@ -3248,10 +3297,10 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
      :`<p class="bx-wait">${LX('Spark Boosts open during big moments of a live match.','Spark 응원은 경기 중 큰 순간에 열려요.')}</p>`}
      <div class="bx-dist off"><b>${LX('Not shared with any team','팀에 분배되지 않음')}</b><span>${LX('Boosts in this match are not paid to any team. There are no paid items for sale either.','이 경기에서 보낸 Boost는 어느 팀에도 지급되지 않아요. 판매 상품과 유료 장식도 없어요.')}</span></div>
      <a class="lnk" href="#spark" onclick="nav(event,'spark')">${LX('Get Spark (website ad wall) →','Spark 받기 (웹사이트 광고 월) →')}</a></section>
-    <section class="p2-sec bx-mine"><div class="p2-hh"><h3>${LX('Fandom ranking','팬덤 순위')}</h3></div><p class="bx-cap">${LX('Fandoms awaiting partnership have no ranking table. They are shown combined on the home page.','파트너 준비 중 팬덤은 순위표를 따로 만들지 않고, 메인에서 합산 포인트로만 보여 줘요.')}</p></section>
+    ${BX.pmHTML(tm,kind==='player'?id:null)}
     <section class="bx-ntf"><b>${LX('Want to know when Energy Boosts open?','Energy 응원이 열리면 알려드릴까요?')}</b><span>${LX('Energy Boosts, team sharing and fandom rankings open once a partnership is signed. We cannot promise when.','팀과 제휴가 맺어지면 Energy Boost, 팀 배분, 팬덤 순위가 열려요. 시점은 약속드릴 수 없어요.')}</span>
      <button type="button" class="p2-btn sup-notify ${nt?'on':''}" data-team="${tm}">${nt?LX('✓ We\'ll let you know','✓ 열리면 알려드릴게요'):LX('Notify me when it opens','열리면 알림 받기')}</button></section>
-    ${how()}</div>`}
+    </div>`}
   const target=lm&&!lm.none?'now':(M.find(m=>m.st!=='past')?'':'');
   return `<div class="ip-sec sup" data-kind="${kind}" data-id="${esc(id)}" data-team="${tm}">${nowCard}${mom}
    <section class="sup-box"><div class="p2-hh"><h3>${LX('Send a Boost','Boost 보내기')}</h3><span class="sup-pt">${LX('Partner team','파트너 팀')} · ${tm}</span></div>
@@ -3262,10 +3311,9 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
     <button class="sup-go" type="button"></button><span class="bx-ded"></span>
     <div class="bx-dist"></div>
     <a class="lnk" href="#spark" onclick="nav(event,'spark')">${LX('Get Spark (website ad wall · before, between or after games) →','Spark 받기 (웹사이트 광고 월 · 경기 전·세트 사이·경기 후) →')}</a></section>
-   ${lm&&!lm.none?`<section class="p2-sec"><div class="p2-hh"><h3>${LX('Fandom goal for this match','이 경기 팬덤 목표')}</h3><span>${LX(`${tm} fandom`,`${tm} 팬덤`)}</span></div><div class="bx-gl"><b>${(30000+hashStr(lm.m.id)%15000).toLocaleString('en-US')}</b><span>/ 50,000 P</span></div><span class="bx-pb"><i style="width:${(30000+hashStr(lm.m.id)%15000)/500}%"></i></span><span class="bx-cap">${LX('Points come from Boosts, streaks and big moments, counted the same for Energy and Spark.','포인트는 Boost 횟수·연속 응원·큰 순간 참여로 쌓여요. Energy·Spark 모두 같은 기준이에요.')}</span></section>`:''}
-   <section class="p2-sec sup-rank"><div class="p2-hh"><h3>${LX('Supporter ranking','서포터 순위')}</h3><span class="p2-tabs bx-lbt">${lm&&!lm.none?`<button type="button" class="on" data-lb="m">${LX('This match','이 경기')}</button>`:''}<button type="button" class="${lm&&!lm.none?'':'on'}" data-lb="s">${LX('This season','이번 시즌')}</button></span></div><div class="lb-box">${board(lm&&!lm.none?'m':'s')}</div>${on?`<a class="lnk" href="#rank" onclick="nav(event,'rank')">${LX(`Full ${tm} supporter ranking →`,`${tm} 서포터 전체 순위 →`)}</a>`:''}
-    <label class="bx-tg sm"><span><b>${LX('Show me as anonymous','순위에 익명으로 표시')}</b></span><input type="checkbox" data-bxset="anon" ${S.anon?'checked':''}></label><span class="bx-cap">${LX('Ranked by cheering points, not money.','금액 대신 응원 포인트로 순위를 매겨요.')}</span></section>
-   ${how()}</div>`}
+   ${BX.pmHTML(tm,kind==='player'?id:null)}
+   <section class="sup-rk1">${document.body.classList.contains('body-in')?`<span>${LX(`My ${tm} rank`,`내 ${tm} 순위`)} <b>${LX('#'+BX.rank(),BX.rank()+'위')}</b> · ${LX(`top ${BX.pct()}%`,`상위 ${BX.pct()}%`)}</span>`:`<span>${LX('Log in to see your rank','로그인하면 내 순위를 볼 수 있어요')}</span>`}<a href="#rank" onclick="nav(event,'rank')">${LX('Supporter ranking →','서포터 순위 →')}</a></section>
+   </div>`}
  function bind(root){const box=root.querySelector('.sup');if(!box)return;const kind=box.dataset.kind,id=box.dataset.id,tm=box.dataset.team,on=!box.classList.contains('off');
   const nb=box.querySelector('.sup-notify');if(nb)nb.onclick=()=>{let L=[];try{L=JSON.parse(localStorage.getItem('rorr-boost-notify')||'[]')}catch(e){}if(!L.includes(tm))L.push(tm);try{localStorage.setItem('rorr-boost-notify',JSON.stringify(L))}catch(e){}nb.classList.add('on');nb.textContent=LX('✓ We\'ll let you know','✓ 열리면 알려드릴게요');toast(LX('We\'ll tell you when it opens','열리면 알려드릴게요'))};
   box.querySelectorAll('[data-lb]').forEach(b=>b.onclick=()=>{box.querySelectorAll('[data-lb]').forEach(x=>x.classList.toggle('on',x===b));box.querySelector('.lb-box').innerHTML=board(b.dataset.lb)});
@@ -3405,7 +3453,7 @@ const MA=(()=>{const K='rorr-ma';const get=()=>{try{return localStorage.getItem(
  const fmtS=n=>`0:${String(Math.max(0,n)).padStart(2,'0')}`;
  function title(on,k){document.title=on?`(⚡ ${k==='holo'?LX('Elder soon','장로 임박'):LX('Baron soon','바론 임박')}) ${t0}`:t0;let f=document.querySelector('link[rel=icon]');if(f){if(on){f.dataset.o=f.dataset.o||f.href;const c=document.createElement('canvas');c.width=c.height=32;const x=c.getContext('2d');const im=new Image();im.onload=()=>{x.drawImage(im,0,0,32,32);x.fillStyle='#FFB020';x.beginPath();x.arc(25,7,6,0,7);x.fill();try{f.href=c.toDataURL()}catch(e){}};im.src=f.dataset.o}else if(f.dataset.o)f.href=f.dataset.o}}
  function close(){clearInterval(tmr);tmr=null;['ma-ban','ma-pop'].forEach(id=>{const e=document.getElementById(id);if(e)e.classList.remove('on')});document.body.classList.remove('ma-on');title(false)}
- function go(m){close();const tm=m?(PARTNER_T.includes(m.a)?m.a:PARTNER_T.includes(m.b)?m.b:m.a):'T1';openTeam(tm);setTimeout(()=>{const s=document.querySelector('#ip-body .sup');if(s)s.scrollIntoView({behavior:'smooth',block:'start'})},250)}
+ function go(m){close();const tm=m?(PARTNER_T.includes(m.a)?m.a:PARTNER_T.includes(m.b)?m.b:m.a):'T1';PTAB['team/'+tm]='cheer';openTeam(tm);setTimeout(()=>{const s=document.querySelector('#ip-body .sup');if(s)s.scrollIntoView({behavior:'smooth',block:'start'})},250)}
  function el(id,html){let e=document.getElementById(id);if(!e){e=document.createElement('div');e.id=id;document.body.appendChild(e)}e.innerHTML=html;return e}
  function show(k,force){const pref=get();if(!force&&(pref==='off'||(pref==='holo'&&k==='gold')))return false;if(!force&&busy())return false;const m=liveFav();if(!m&&!force)return false;
   const now=Date.now();if(!force&&k==='gold'&&now-last<180e3)return false;const key=k+(m?m.id:'');if(!force&&k==='holo'&&shown.has(key))return false;shown.add(key);last=now;close();
@@ -3462,6 +3510,13 @@ function favToggle(kind,id){let p;try{p=JSON.parse(localStorage.getItem('rorr-pr
 function setTop(label,fav){document.getElementById('ip-k').textContent=label;const b=document.getElementById('ip-fav');if(!b)return;
  if(!fav){b.hidden=true;return}b.hidden=false;b.dataset.fav=fav;const on=favOn(...fav.split('|'));b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);b.setAttribute('aria-label',on?LX('Remove from favorites','즐겨찾기에서 빼기'):LX('Add to favorites','즐겨찾기에 추가'))}
 
+
+const PTAB={};
+function ptabs(key,team,pl){const live=DB.sched.some(x=>x.st==='live'&&(x.a===team||x.b===team));const tab=PTAB[key]||(live?'cheer':'rec');const n=BX.pmCount(team,pl);
+ return {tab,bar:`<div class="p2-tabsx" role="tablist" data-ptkey="${PN.esc(key)}"><button type="button" role="tab" data-ptab="rec" aria-selected="${tab==='rec'}">${LX('Stats','기록')}</button><button type="button" role="tab" data-ptab="cheer" aria-selected="${tab==='cheer'}">${LX('Cheer','응원')}${live?'<i class="lv" aria-label="LIVE"></i>':''}${n?`<em>${LX(`${n} messages`,`메시지 ${n}`)}</em>`:''}</button></div>`}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-ptab]');if(!b)return;const bar=b.closest('.p2-tabsx');const key=bar.dataset.ptkey;const tab=b.dataset.ptab;PTAB[key]=tab;
+ bar.querySelectorAll('[data-ptab]').forEach(x=>x.setAttribute('aria-selected',x===b));const body=bar.parentElement;body.querySelectorAll('.p2-pane').forEach(p=>p.hidden=p.dataset.pane!==tab);
+ const ip=document.getElementById('ip-body');if(ip&&bar.offsetTop<ip.scrollTop)ip.scrollTop=bar.offsetTop});
 function teamHTML(t){const S=standings(t.lg);const rk=S.indexOf(t)+1;const st=PN.ts(t);const fw=[...t.form].filter(c=>c==='W').length;
  const roster=DB.players.filter(p=>p.team===t.team).sort((a,b)=>ROLE_ORDER[a.role]-ROLE_ORDER[b.role]);
  const r=mkRnd(hashStr(t.team+'bars'));const res=[...Array(5)].map(()=>r()<t.wr?'W':'L').concat([...t.form]);
@@ -3477,14 +3532,15 @@ function teamHTML(t){const S=standings(t.lg);const rk=S.indexOf(t)+1;const st=PN
  return `<section class="p2-hero"><div class="p2-id"><div><h2 id="ip-name" class="p2-name">${t.team}</h2><span class="p2-sub">${t.lg} · 2026 ${LX('Regular season','정규시즌')}</span></div><div class="p2-ix"><span>${LX('Team','팀')} LwRC+ <button class="wtip" type="button" aria-label="What is LwRC+?">?</button></span><b>${t.ix}</b></div></div>
   <div class="p2-kpi k4"><div><span>${LX('Standing','순위')}</span><b>${PN.rk(rk)}</b></div><div><span>${LX('Record','전적')}</span><b>${t.W}–${t.L}</b></div><div><span>${LX('Set ±','세트 득실')}</span><b class="${t.sd>0?'up':t.sd<0?'dn':''}">${t.sd>0?'+':''}${t.sd}</b></div><div><span>${LX('Last 5','최근 5')}</span><b>${fw}–${5-fw}</b></div></div>
   <div class="p2-cta"><button type="button" class="p2-btn pri" data-cmp="team|${t.team}">${LX('Compare with another team','다른 팀과 비교')}</button><button type="button" class="p2-btn ai" data-ask="${PN.esc(LX(`How is ${t.team} playing this season?`,`이번 시즌 ${t.team}은(는) 어떻게 하고 있어?`))}">${LX(`Ask about ${t.team}`,`${t.team}에 대해 묻기`)}</button></div></section>
+ ${(()=>{const T=ptabs('team/'+t.team,t.team,null);return T.bar+`<div class="p2-pane" data-pane="rec"${T.tab==='rec'?'':' hidden'}>`})()}
  ${PN.liveCard(t.team)}
  <section class="p2-sec">${PN.hh(LX('Season flow','시즌 흐름'),LX('Last 10 games · team LwRC+ per game','최근 10경기 · 경기별 팀 LwRC+'))}${PN.bars(bars,{h:84})}</section>
  <section class="p2-sec">${PN.hh(LX('How to read this team','이 팀을 읽는 법'))}<p class="p2-p">${read}</p>
   <div class="p2-stats"><div><span>${LX('Avg gold at 15 min','15분 평균 골드')}</span><b>${PN.sg(st.g15)} · ${PN.lgRk(rg)}</b></div><div><span>${LX('Win rate after first Baron','첫 바론 후 승률')}</span><b>${st.baron}% · ${PN.lgRk(rb)}</b></div><div><span>${LX('Dragons per game','경기당 드래곤')}</span><b>${st.drg} · ${PN.lgRk(rd)}</b></div></div></section>
  <section class="p2-sec">${PN.hh(LX('Roster','로스터'),LX('LwRC+ · season contribution','LwRC+ · 누적 기여'))}<div class="p2-roster">${roster.map(p=>{const c=MX.cum(p);return `<button type="button" class="p2-pl" data-p="${p.name}"><span class="rl">${MX.role(p.role)}</span><b>${p.name}</b><span class="ix">${p.ix}</span><span class="c ${c>=0?'up':'dn'}">${PN.sg(c)}</span></button>`}).join('')}</div></section>
  ${rec?`<section class="p2-sec">${PN.hh(LX('Recent matches','최근 경기'))}<div class="p2-list">${rec}</div></section>`:''}
- ${SUP.html('team',t.team)}
  ${PN.asks([LX(`What is ${t.team}'s biggest strength this season?`,`이번 시즌 ${t.team}의 가장 큰 강점은?`),LX(`Where is ${t.team} weakest right now?`,`지금 ${t.team}의 약점은 어디야?`)])}
+ </div><div class="p2-pane" data-pane="cheer"${(PTAB['team/'+t.team]||(DB.sched.some(x=>x.st==='live'&&(x.a===t.team||x.b===t.team))?'cheer':'rec'))==='cheer'?'':' hidden'}>${SUP.html('team',t.team)}</div>
  <p class="ip-note">${LX('Sample figures for the preview.','수치는 미리보기용 샘플 데이터입니다.')}</p>`}
 
 function playerHTML(p){const lgP=DB.players.filter(x=>x.lg===p.lg);const roleP=lgP.filter(x=>x.role===p.role).sort((a,b)=>b.ix-a.ix);const rr=roleP.indexOf(p)+1;
@@ -3502,14 +3558,15 @@ function playerHTML(p){const lgP=DB.players.filter(x=>x.lg===p.lg);const roleP=l
   <div class="p2-kpi k2"><div><span>LwRC+ · ${LX('level','수준')} <button class="wtip" type="button" aria-label="What is LwRC+?">?</button></span><b class="big">${p.ix}</b><em>${LX(`#${rr} ${MX.role(p.role)} · league avg 100`,`${MX.role(p.role)} ${rr}위 · 리그 평균 100`)}</em></div>
    <div><span>${LX('Season contribution · vs replacement','누적 기여 · 대체선수 대비')}</span><b class="big ${cum>=0?'up':'dn'}">${PN.kk(cum)}</b><em>${LX(`#${crk} overall`,`전체 ${crk}위`)} · ${PN.cumRange(p)}</em></div></div>
   <div class="p2-cta"><button type="button" class="p2-btn pri" data-cmp="player|${p.name}">${LX('Compare with another player','다른 선수와 비교')}</button><button type="button" class="p2-btn ai" data-ask="${PN.esc(LX(`How is ${p.name} (${p.team} ${p.role}) creating gold this season?`,`${p.name}(${p.team} ${MX.role(p.role)})은(는) 이번 시즌 어떻게 기여하고 있어?`))}">${LX(`Ask about ${p.name}`,`${p.name}에 대해 묻기`)}</button></div></section>
+ ${(()=>{const T=ptabs('player/'+p.name,p.team,p.name);return T.bar+`<div class="p2-pane" data-pane="rec"${T.tab==='rec'?'':' hidden'}>`})()}
  ${PN.liveCard(p.team)}
  <section class="p2-sec">${PN.hh(LX('Where the contribution comes from','기여는 어디서 나왔나'),LX(`Gold per set · ┃ ${MX.role(p.role)} avg`,`세트당 골드 · ┃ ${MX.role(p.role)} 평균`))}
   <div class="p2-parts">${parts.map(x=>`<div><div class="hd"><span>${x[0]} <em>${x[1]}</em></span><b class="${x[4]}">${x[5]<0?'−':'+'}${x[2].toLocaleString('en-US')}</b></div><div class="tr"><i class="${x[4]}" style="width:${w(x[2])}"></i><s style="left:${w(x[3])}" title="${LX('Role average','포지션 평균')}"></s></div></div>`).join('')}</div>
   <p class="p2-p">${read}</p></section>
  <section class="p2-sec">${PN.hh(LX('LwRC+ by game','경기별 LwRC+'),LX(`Last 10 sets · dashed = season ${p.ix}`,`최근 10세트 · 점선 = 시즌 ${p.ix}`))}${PN.bars(games,{h:96,ref:p.ix})}</section>
- ${SUP.html('player',p.name)}
  ${rec?`<section class="p2-sec">${PN.hh(LX('Recent matches','최근 경기'),LX('LwRC+ · K / D / A','LwRC+ · K / D / A'))}<div class="p2-list">${rec}</div></section>`:''}
  ${PN.asks([LX(`When is ${p.name} at their best?`,`${p.name}은(는) 어떤 상황에서 가장 잘해?`),...(oppP?[LX(`${p.name} or ${oppP.name}: who has contributed more?`,`${p.name}와(과) ${oppP.name}, 누가 더 기여했어?`)]:[])])}
+ </div><div class="p2-pane" data-pane="cheer"${(PTAB['player/'+p.name]||(DB.sched.some(x=>x.st==='live'&&(x.a===p.team||x.b===p.team))?'cheer':'rec'))==='cheer'?'':' hidden'}>${SUP.html('player',p.name)}</div>
  <p class="ip-note">${LX('Sample player name and figures for the preview. Season contribution is a provisional measure, not converted to wins.','선수명과 수치는 미리보기용 샘플 데이터입니다. 누적 기여는 승수로 환산하지 않은 잠정 지표입니다.')}</p>`}
 
 /* radar: axes [{l,a,b}] (percentiles) */
