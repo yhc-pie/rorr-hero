@@ -2919,6 +2919,21 @@ button.rk-pl:focus-visible{outline:2px solid var(--v-ui);outline-offset:1px}
 .sup-lv{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px;margin-top:-4px;font-size:12.5px;color:var(--mute);text-align:center}
 .sup-lv a{color:var(--cyan);font-weight:700;text-decoration:none}.sup-lv a:hover{text-decoration:underline}
 .sup-box .sup-stp .sup-go>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sup-box .sup-stp .sup-go .bx-i{flex:none}
+
+/* about: spacing rhythm (2026-10-16) - section 72/56, heading->content 20, card padding 24/20, grid gap 16 */
+body.pagev #pg-about .ab.wrap{gap:72px}
+body.pagev #pg-about .rhero.sub-h{margin-bottom:0!important}
+#pg-about .ab-s h2{margin-bottom:20px}
+#pg-about .ab-g3,#pg-about .ab-g4{gap:16px}
+#pg-about .ab-c,#pg-about .ab-p,#pg-about .ab-ct{padding:24px}
+#pg-about .ab-demo+*{margin-top:28px}
+#pg-about .ab-rules{gap:0}
+#pg-about .ab-rules li{padding:18px 0}
+#pg-about .ab-rules li:first-child{border-top:1px solid var(--line)}
+#pg-about .ab-two{align-items:center;gap:32px}
+#pg-about .ab-two h2{margin-bottom:12px}
+@media (min-width:1024px){body.pagev #pg-about .ab-g4{grid-template-columns:repeat(4,minmax(0,1fr))!important}}
+@media (max-width:760px){body.pagev #pg-about .ab.wrap{gap:56px}#pg-about .ab-c,#pg-about .ab-p,#pg-about .ab-ct{padding:20px}#pg-about .ab-g3,#pg-about .ab-g4{gap:12px}#pg-about .ab-two{gap:20px}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
