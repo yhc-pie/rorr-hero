@@ -1299,7 +1299,7 @@ body:not(.ip-open) .ipanel{box-shadow:none!important}
 .mx-cd{display:grid;justify-items:center;gap:4px;text-align:center}.mx-cd span{font-size:13px;color:var(--mute)}.mx-cd b{font-size:36px;font-weight:700;letter-spacing:-.02em}
 .mx-cd .mx-k,.mx-cd .mx-big{font-size:48px;font-weight:800;line-height:1}.mx-cd .mx-big{font-size:64px}.mx-cd i{font-style:normal;color:var(--mute);font-weight:400}.mx-cd s{text-decoration:none;color:var(--mute)}
 .mx-sets{display:flex;flex-wrap:wrap;gap:6px}.mx-sets span{padding:6px 12px;border-radius:9999px;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--mute)}.mx-sets span.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}.mx-sets span.nx{border-style:dashed}
-.mx-objs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;border-radius:12px;overflow:hidden;background:var(--line)}.mx-objs.two{grid-template-columns:1fr 1fr}
+.mx-objs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:1px;border-radius:12px;overflow:hidden;background:var(--line)}.mx-objs.two{grid-template-columns:1fr 1fr}
 .mx-objs>div{background:var(--bg2);padding:12px 14px;display:grid;gap:3px}.mx-objs span{font-size:12.5px;color:var(--mute)}.mx-objs b{font-size:18px;font-weight:700}.mx-objs i{font-style:normal}.mx-objs s{text-decoration:none;color:var(--mute);font-weight:400}
 .mx-objs i.a,b.ta,.mx-stat i.a{color:var(--team-l)}.mx-objs i.b,b.tb,.mx-stat i.b{color:var(--team-r)}
 .mx-setcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}.mx-setcards div{padding:12px 16px;border-radius:12px;background:var(--bg3);display:grid;gap:3px}.mx-setcards span{font-size:13px;color:var(--mute)}.mx-setcards b{font-size:16px}.mx-setcards b.a{color:var(--team-l)}.mx-setcards b.b{color:var(--team-r)}
@@ -2515,6 +2515,18 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
 .rk-np .rk-head{border-top-color:var(--line)!important}
 .rk-pi.pme .rk-pn,.rk-pi.pme .rk-pn b,.rk-pi.pme small{white-space:normal!important;overflow:visible!important;text-overflow:clip!important}
 .rk-npn{margin:0;font-size:13px;line-height:1.55;color:var(--mute)!important;max-width:720px}
+
+/* match page v5 (2026-10-16) */
+.mx-mb{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;margin:14px 0 12px}
+.mx-mb .mx-boost{width:auto;margin:0;padding:0 18px;min-height:44px}
+.mx-mb small{flex-basis:100%;font-size:12.5px;color:var(--mute)}
+.mx-mfeed{display:none}
+.mx-mfeed details>summary{cursor:pointer;list-style:none;font-size:13.5px;font-weight:700;color:var(--v-ui);padding:10px 0 2px;min-height:40px;display:flex;align-items:center}
+.mx-mfeed details>summary::-webkit-details-marker{display:none}
+@media (max-width:760px){.mx-mfeed{display:block;margin-bottom:20px}.mx-dfeed{display:none}.mx-objs{grid-auto-flow:row;grid-template-columns:repeat(3,minmax(0,1fr))!important}.mx-objs.two{grid-template-columns:1fr 1fr!important}.mx-tbl th,.mx-tbl td{padding-left:8px!important;padding-right:8px!important}}
+.mx-mb .bx-tc{display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:9999px;font-size:12px;font-weight:700;border:1px solid var(--line);color:var(--mute)}
+.mx-mb .bx-tc.gold{color:#C9A227;border-color:color-mix(in srgb,#C9A227 50%,var(--line))}.mx-mb .bx-tc.holo{color:var(--v-ui);border-color:color-mix(in srgb,var(--v-ui) 50%,var(--line))}
+.mx-tbl table{min-width:0}
 /* ===== Stats hub (2026-10-16) ===== */
 .wg-ftg{display:none}
 .wg-view button:first-child,.wg-unit button:first-child{border-radius:7px 0 0 7px}.wg-view button:last-child,.wg-unit button:last-child{border-radius:0 7px 7px 0}
@@ -2529,9 +2541,10 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
  .wg:not(.fopen) .wg-f{display:none}
 }
 
-.hub-h{padding-bottom:6px!important}
+#pg-stats .wg .hub-h{margin:0 0 20px!important;padding:0!important;max-width:none!important;text-align:left}
 .hub-h h1{margin-bottom:8px}
-#pg-stats .wg{margin-top:18px}
+#pg-stats .wg{margin-top:48px}
+@media (max-width:760px){#pg-stats .wg{margin-top:28px}}
 .hub-q{position:relative;display:flex;align-items:center;margin-bottom:14px}
 .hub-q svg{position:absolute;left:16px;width:18px;height:18px;fill:none;stroke:var(--mute);stroke-width:2;stroke-linecap:round;pointer-events:none}
 .hub-q input{width:100%;height:48px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);color:var(--ink);font:500 15px "Pretendard Variable",sans-serif;padding:0 44px 0 44px;outline:0}
@@ -2815,11 +2828,12 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
 <!-- ============ BLOG ============ -->
 <div class="rpage" id="pg-match" data-r="match"><div class="mt wrap" id="mt"></div></div>
 <div class="rpage" id="pg-stats" data-r="stats">
- <section class="rhero hub-h">
+ 
+ <div class="wg wrap">
+  <section class="rhero hub-h">
   <h1>Stats</h1>
   <p class="sub">Player and team rankings by LwRC+ and season contribution. Tap a name for details.</p>
  </section>
- <div class="wg wrap">
   <div class="hub-q"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="wf-q" type="search" placeholder="Search a player or team" aria-label="Search a player or team" autocomplete="off" spellcheck="false"><button type="button" class="hub-qx" id="wf-qx" aria-label="Clear search" hidden>×</button></div>
   <div class="wg-bar">
    <div class="wg-view" role="tablist" aria-label="View"><button type="button" role="tab" data-v="player" class="on">Players</button><button type="button" role="tab" data-v="team">Teams</button><button type="button" role="tab" data-v="inteam">Within team</button></div>
@@ -4088,7 +4102,7 @@ function gameModel(m){const r=mkRnd(hashStr(m.id));const dur=m.st==='live'?m.min
    const d=Math.round((side==='a'?1:-1)*(350+r()*1900*big));const g0=g;g+=d;ev.push({t,k,side,d,g0,g1:g});ei++}
   pts.push({t,g})}
  if(m.st==='final'&&(aWins?g<1500:g>-1500)){const fix=(aWins?1:-1)*(Math.abs(g)+2200);pts.forEach((p,i)=>p.g+=Math.round(fix*i/pts.length));ev.forEach(e=>{const f=Math.round(fix*e.t/(pts.length));e.g0+=f;e.g1+=f});g=pts[pts.length-1].g}
- const sw=ev.slice().sort((x,y)=>Math.abs(y.d)-Math.abs(x.d)).slice(0,3);sw.forEach((e,i)=>e.sw=i+1);
+ const pool=m.st==='final'?ev.filter(e=>(e.side==='a')===aWins):ev;const sw=(pool.length>=3?pool:ev).slice().sort((x,y)=>Math.abs(y.d)-Math.abs(x.d)).slice(0,3);sw.forEach((e,i)=>e.sw=i+1);
  const duel=ROLES.map(role=>{const pa=DB.players.find(p=>p.team===m.a&&p.role===role),pb=DB.players.find(p=>p.team===m.b&&p.role===role);
   const lead=dur?g/Math.max(dur,1):0;const na=Math.round(pa.ix+(dur?lead*.12:0)+(r()-.5)*36),nb=Math.round(pb.ix-(dur?lead*.12:0)+(r()-.5)*36);return{role,pa,pb,na,nb}});
  return{dur,ev,pts,g,sw,duel,aWins}}
@@ -4127,7 +4141,7 @@ const MX={
    out.push({d:localParts(d).d,w:aw?m.a:m.b,side:aw?'a':'b',sc:three?'2 : 1':'2 : 0',sets:three?3:2,note:LX(n[0],n[1])})}
   return out},
  countdown(m){const ms=Math.max(0,m.at-Date.now());const d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),mi=Math.floor(ms%36e5/6e4);
-  return (d?LX(`${d}d `,`${d}일 `):'')+String(h).padStart(2,'0')+':'+String(mi).padStart(2,'0')},
+  return d?LX(`${d}d ${h}h`,`${d}일 ${h}시간`):h?LX(`${h}h ${mi}m`,`${h}시간 ${mi}분`):LX(`${Math.max(1,mi)} min`,`${Math.max(1,mi)}분`)},
  chip(win,side){return `<span class="mx-chip ${win?'w '+side:'l'}">${win?'W':'L'}</span>`},
  sets(m){const[sa,sb]=(m.st==='final'?m.sc:m.series).split(':').map(Number);const r=mkRnd(hashStr(m.id+'sets'));
   const arr=[...Array(sa).fill('a'),...Array(sb).fill('b')];for(let i=arr.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}
@@ -4148,7 +4162,7 @@ function mxHead(m,G,A,B,st){const lgStand=standings(m.lg);const ra=lgStand.index
  let mid='';
  if(m.st==='up')mid=`<div class="mx-cd"><span>${LX('Starts in','경기 시작까지')}</span><b>${MX.countdown(m)}</b></div>`;
  else{const[sa,sb]=(m.st==='final'?m.sc:m.series).split(':');
-  mid=m.st==='live'?`<div class="mx-cd"><b class="mx-k">${st.ka} <i>:</i> ${st.kb}</b><span>${LX('Kills','킬')} · ${LX('Sets','세트')} ${sa}–${sb}</span></div>`:`<div class="mx-cd"><b class="mx-big">${sa} <i>:</i> <s>${sb}</s></b></div>`}
+  mid=m.st==='live'?`<div class="mx-cd"><b class="mx-big">${sa} <i>:</i> ${sb}</b><span>${LX(`Series · game ${m.game} live`,`세트 스코어 · ${m.game}세트 진행 중`)}</span></div>`:`<div class="mx-cd"><b class="mx-big">${sa} <i>:</i> <s>${sb}</s></b></div>`}
  const team=(t,side)=>`<button class="mx-team ${side}" data-tm="${t}"><b>${t}</b><span>${sub(t)}</span></button>`;
  return `${meta}<div class="mx-teams">${team(m.a,'a')}${mid}${team(m.b,'b')}</div>`}
 function mxSec(title,note,body,cls){return `<section class="mx-sec ${cls||''}"><div class="mx-h"><h2>${title}</h2>${note?`<span>${note}</span>`:''}</div>${body}</section>`}
@@ -4162,7 +4176,7 @@ function mxBoostCard(m,phase){const x=mxMoment(m);if(!x)return '';const r=mkRnd(
  const body=phase==='post'?LX(`${Math.round(tot/17).toLocaleString('en-US')} fans celebrated, earning ${tot.toLocaleString('en-US')} P together.`,`팬 ${Math.round(tot/17).toLocaleString('en-US')}명이 함께 축하해 ${tot.toLocaleString('en-US')} P를 모았어요.`):LX(`${x.p.name} · ${x.mm.t}. Boosts sent during the match count toward this moment's ranking.`,`${x.p.name} · ${x.mm.t}. 경기 중에 보낸 Boost는 이 순간의 순위에 반영돼요.`);
  const top=[['minji_07',.32],['ZedMain',.22],['lck_dad',.16]];
  return `<section class="mx-card"><h3>${title}</h3><p>${body}</p>${phase!=='pre'?`<ol class="mx-lb">${top.map((t,i)=>`<li><span><b class="rk${i+1}">${i+1}</b>${t[0]}</span><em>${Math.round(tot*t[1]/10)*10} P</em></li>`).join('')}</ol>`:`<div class="mx-row2"><span>${LX('So far','지금까지')} ${tot.toLocaleString('en-US')} P</span><span>${LX(`${Math.round(tot/6)} supporters`,`서포터 ${Math.round(tot/6)}명`)}</span></div>`}
-  <button class="mx-boost" type="button" data-pl="${x.p.name}">${phase==='post'?LX('Send a congrats Boost','축하 Boost 보내기'):phase==='live'?LX('Boost now','지금 Boost 보내기'):LX('Send a celebration Boost','기념 Boost 보내기')}</button>
+  <button class="mx-boost" type="button" data-pl="${x.p.name}">${phase==='post'?LX('Send a congrats Boost','축하 Boost 보내기'):phase==='live'?LX('Send a celebration Boost','기념 Boost 보내기'):LX('Send a celebration Boost','기념 Boost 보내기')}</button>
   <small>${LX(`${x.p.team} partner team · Energy Boosts are partly shared with the team, Spark Boosts are not`,`${x.p.team} 파트너 팀 · Energy Boost 일부는 팀에 배분, Spark Boost는 배분 없음`)}</small></section>`}
 function mxAsk(qs){return `<div class="mx-asks">${qs.map(q=>`<button type="button" data-askm="${q.replace(/"/g,'&quot;')}">${q}</button>`).join('')}</div>`}
 function mxPre(m,G,A,B){const H=MX.h2h(m);const L=ROLES.map(r=>({r,a:MX.pl(m.a,r),b:MX.pl(m.b,r)}));
@@ -4181,9 +4195,6 @@ function mxPre(m,G,A,B){const H=MX.h2h(m);const L=ROLES.map(r=>({r,a:MX.pl(m.a,r
  const side=`<section class="mx-card"><h3>${LX('Fan prediction','팬 예측')}</h3><div class="mx-split"><i class="a" style="width:${pa}%"></i><i class="b" style="width:${100-pa}%"></i></div>
   <div class="mx-row2"><span><b class="ta">${m.a}</b> ${pa}%</span><span>${LX(`${(cnt+(my?1:0)).toLocaleString('en-US')} fans`,`${(cnt+(my?1:0)).toLocaleString('en-US')}명 참여`)}</span><span>${100-pa}% <b class="tb">${m.b}</b></span></div>
   <div class="mx-vote"><button type="button" class="a ${my==='a'?'on':''}" data-vote="a">${LX(`${m.a} win`,`${m.a} 승리`)}</button><button type="button" class="b ${my==='b'?'on':''}" data-vote="b">${LX(`${m.b} win`,`${m.b} 승리`)}</button></div>${my?`<small>${LX('Your pick is saved. You can change it until the match starts.','예측이 저장됐어요. 경기 시작 전까지 바꿀 수 있어요.')}</small>`:''}</section>
-  <section class="mx-card"><div class="mx-h3"><h3>${LX('Last 5 meetings','맞대결 최근 5경기')}</h3><span>${LX('Newest first','최신 → 과거')}</span></div>
-  <div class="mx-form"><b class="ta">${m.a}</b><div>${H.map(h=>MX.chip(h.side==='a','a')).join('')}</div><b class="tb">${m.b}</b><div>${H.map(h=>MX.chip(h.side==='b','b')).join('')}</div></div>
-  <p>${LX(`${m.a} ${aw}–${5-aw} · last met ${H[0].d}, ${H[0].w} won`,`${m.a} ${aw}승 ${5-aw}패 · 마지막 맞대결 ${H[0].d} ${H[0].w} 승`)}</p></section>
   ${mxBoostCard(m,'pre')}
   <section class="mx-card"><h3>${LX('Where to watch','어디서 보나요')}</h3><a href="https://chzzk.naver.com" target="_blank" rel="noopener">${LX('CHZZK LCK channel →','치지직 LCK 채널 →')}</a><a href="https://www.sooplive.co.kr" target="_blank" rel="noopener">${LX('SOOP LCK channel →','SOOP LCK 채널 →')}</a><a href="https://www.youtube.com/@LCK" target="_blank" rel="noopener">YouTube LCK →</a><small>${LX('Whichever stream you pick, Muse watches with you in the Chrome side panel.','어느 채널이든 크롬 사이드 패널에서 Muse가 함께 봐요.')}</small></section>`;
  const acts=`<div class="mx-acts"><button class="pill ${notif?'ghost':''}" type="button" data-mnotify>${notif?LX('✓ We\'ll remind you','✓ 알림 예약됨'):LX('Remind me when it starts','경기 시작 알림 받기')}</button><a class="pill ghost" href="#muse">${LX('Watch with Muse','Muse와 함께 보기')}</a><button class="pill ghost" type="button" data-cmpm="${m.a}|${m.b}">${LX('Compare the teams','두 팀 비교')}</button></div>`;
@@ -4193,27 +4204,30 @@ function mxLiveStats(m,G){const r=mkRnd(hashStr(m.id+'k'));let ka=Math.floor(G.d
  return{ka,kb,ga:base+G.g/2,gb:base-G.g/2,ta:Math.floor(G.dur/7)+cnt('her','a')+cnt('push','a')*2+(G.g>2000?1:0),tb:Math.floor(G.dur/8)+cnt('her','b')+cnt('push','b')*2+(G.g<-2000?1:0),da:cnt('drg','a'),db:cnt('drg','b'),ha:cnt('her','a'),hb:cnt('her','b'),ba:cnt('baron','a'),bb:cnt('baron','b')}}
 function mxLive(m,G,A,B,st){const seq=MX.sets(m);
  const tabs=`<nav class="mx-sets" aria-label="${LX('Games','세트')}">${seq.map((s,i)=>`<span>${LX(`Game ${i+1}`,`${i+1}세트`)} · ${s.w==='a'?m.a:m.b} ${LX('won','승')}</span>`).join('')}<span class="on" aria-current="true">${LX(`Game ${m.game}`,`${m.game}세트`)} · ${LX('live','진행 중')}</span>${m.game<3?`<span class="nx">${LX(`Game ${m.game+1}`,`${m.game+1}세트`)}</span>`:''}</nav>`;
- const objs=[[LX('Gold','골드'),MX.k(st.ga),MX.k(st.gb)],[LX('Towers','포탑'),st.ta,st.tb],[LX('Dragons','드래곤'),st.da,st.db],[LX('Herald','전령'),st.ha,st.hb],[LX('Baron','바론'),st.ba,st.bb]];
+ const objs=[[LX('Kills','킬'),st.ka,st.kb],[LX('Gold','골드'),MX.k(st.ga),MX.k(st.gb)],[LX('Towers','포탑'),st.ta,st.tb],[LX('Dragons','드래곤'),st.da,st.db],[LX('Herald','전령'),st.ha,st.hb],[LX('Baron','바론'),st.ba,st.bb]];
  const strip=`<div class="mx-objs">${objs.map(o=>`<div><span>${o[0]}</span><b><i class="a">${o[1]}</i> <s>:</s> <i class="b">${o[2]}</i></b></div>`).join('')}</div>`;
  const lead=G.g,leader=lead>=0?m.a:m.b;const recent=G.ev.filter(e=>Math.abs(e.d)>700).slice(-1)[0]||G.sw[0];
  const p=Math.round(100/(1+Math.exp(-G.g/2300)));const before=recent?Math.round(100/(1+Math.exp(-recent.g0/2300))):50;
  const chart=mxSec(LX('Gold flow','골드 흐름'),LX(`Gold difference, ${m.a} view`,`${m.a} 기준 골드 차이`),`<div class="mx-chartwrap"><b class="mx-lead ${lead>=0?'a':'b'}">${leader} +${Math.abs(lead).toLocaleString('en-US')}</b>${chartSVG(m,G)}</div><div class="mt-legend"><span class="sw">1</span>${LX('Swing points: the moments that moved the gold most','스윙 포인트: 골드를 가장 크게 움직인 순간')}</div>`);
  const callout=recent?`<section class="mx-call"><div><h2>${recent.t}′ · ${evText(recent,m)}</h2><span class="mx-sub">${LX(`Gold swing ${Math.abs(recent.d).toLocaleString('en-US')} · ${G.dur-recent.t} min ago`,`골드 스윙 ${Math.abs(recent.d).toLocaleString('en-US')} · ${G.dur-recent.t}분 전`)}</span>
   <p>${LX(`Before this, ${recent.g0>=0?m.a:m.b} led by ${Math.abs(recent.g0).toLocaleString('en-US')}. Now ${leader} lead by ${Math.abs(lead).toLocaleString('en-US')}.`,`이 장면 전까지 ${recent.g0>=0?m.a:m.b}가 ${Math.abs(recent.g0).toLocaleString('en-US')} 앞서 있었고, 지금은 ${leader}가 ${Math.abs(lead).toLocaleString('en-US')} 앞서 있습니다.`)}</p>
+  ${(()=>{const tr=BX.tierOf(Math.abs(p-before));const fav=(typeof favTeams==='function'?favTeams():[]);const bt=fav.includes(m.a)?m.a:fav.includes(m.b)?m.b:(recent.side==='a'?m.a:m.b);return `<div class="mx-mb"><button type="button" class="mx-boost" data-mboost="${bt}">${LX(`Boost this moment · ${bt}`,`이 순간 Boost · ${bt}`)}</button><span class="bx-tc ${tr}">${LX(...BX.TIER[tr])}</span><small>${LX('A moment card comes with this Boost','Boost하면 모먼트 카드를 받아요')}</small></div>`})()}
   ${mxAsk([LX('Who contributed most in that fight?','이 교전에서 누가 가장 기여했어?'),LX(`When can ${lead>=0?m.b:m.a} turn it around?`,`${lead>=0?m.b:m.a}가 뒤집을 수 있는 타이밍은?`)])}</div>
   <div class="mx-wp"><span>${LX('RORR win estimate · beta','RORR 승리 추정 · 베타')}</span><b class="${p>=50?'a':'b'}">${p>=50?m.a:m.b} ${p>=50?p:100-p}%</b><div class="mx-split"><i class="a" style="width:${p}%"></i><i class="b" style="width:${100-p}%"></i></div><small>${LX(`${before}% before the swing → ${p}% now (${m.a})`,`스윙 전 ${before}% → 지금 ${p}% (${m.a})`)}</small></div></section>`:'';
- const main=chart+callout+mxSec(LX('Player LwRC+ this game','이번 세트 선수 LwRC+'),LX('Live estimate · final after the game · ▲▼ vs season','실시간 잠정치 · 세트 종료 후 확정 · ▲▼ 시즌 대비'),mxLanes(m,true,G));
- const feed=G.ev.slice().reverse().slice(0,8).map(e=>`<article class="mx-feed ${e.side}"><span class="t">${e.t}′</span><div><b><i></i>${evText(e,m)}</b><p>${MX.feedLine(e,m)}</p></div></article>`).join('');
- const side=`<section class="mx-card"><div class="mx-h3"><h3>${LX('Live commentary','실시간 해설')}</h3><span>${LX('Auto-updating','자동 갱신')}</span></div>${feed}</section>${mxBoostCard(m,'live')}
-  <section class="mx-card mx-muse"><div><b>${LX('Watch with Muse','Muse와 같이 보기')}</b><p>${LX('She reacts to every fight with you, right beside the stream.','스트림 옆 사이드 패널에서 교전마다 같이 반응해요.')}</p></div><a class="pill" href="#" data-install>${LX('Add to Chrome','크롬에 추가')}</a></section>`;
+ const feedRows=G.ev.slice().reverse().slice(0,8);const fRow=e=>`<article class="mx-feed ${e.side}"><span class="t">${e.t}′</span><div><b><i></i>${evText(e,m)}</b><p>${MX.feedLine(e,m)}</p></div></article>`;
+ const mfeed=`<section class="mx-card mx-mfeed"><div class="mx-h3"><h3>${LX('Live commentary','실시간 해설')}</h3><span>${LX('Auto-updating','자동 갱신')}</span></div>${feedRows.slice(0,3).map(fRow).join('')}${feedRows.length>3?`<details><summary>${LX('Show more commentary','해설 더 보기')}</summary>${feedRows.slice(3).map(fRow).join('')}</details>`:''}</section>`;
+ const main=mfeed+chart+callout+mxSec(LX('Player LwRC+ this game','이번 세트 선수 LwRC+'),LX('Live estimate · final after the game · ▲▼ vs season','실시간 잠정치 · 세트 종료 후 확정 · ▲▼ 시즌 대비'),mxLanes(m,true,G));
+ const feed=feedRows.map(e=>`<article class="mx-feed ${e.side}"><span class="t">${e.t}′</span><div><b><i></i>${evText(e,m)}</b><p>${MX.feedLine(e,m)}</p></div></article>`).join('');
+ const side=`<section class="mx-card mx-dfeed"><div class="mx-h3"><h3>${LX('Live commentary','실시간 해설')}</h3><span>${LX('Auto-updating','자동 갱신')}</span></div>${feed}</section>${mxBoostCard(m,'live')}
+  <section class="mx-card mx-muse"><div><b>${LX('Watch with Muse','Muse와 같이 보기')}</b><p>${LX('She reacts to every fight with you, right beside the stream.','스트림 옆 사이드 패널에서 교전마다 같이 반응해요.')}</p></div><a class="pill ghost" href="#" data-install>${LX('Add to Chrome','크롬에 추가')}</a></section>`;
  const acts=`<div class="mx-acts"><button class="pill" data-askm="${`What just swung ${m.a} vs ${m.b}?`}">${LX('Ask RORR about this moment','지금 이 순간 RORR에게 묻기')}</button><button class="pill ghost" data-cmpm="${m.a}|${m.b}">${LX('Compare the teams','두 팀 비교')}</button></div>`;
  return{tabs,strip,main,side,acts}}
 function mxPost(m,G,A,B){const seq=MX.sets(m);const[sa,sb]=m.sc.split(':').map(Number);const W=sa>sb?m.a:m.b,Lz=sa>sb?m.b:m.a;const n=seq.length;
  const cards=`<div class="mx-setcards">${seq.map((s,i)=>`<div><span>${LX(`Game ${i+1}`,`${i+1}세트`)} · ${s.len}${LX(' min','분')}</span><b class="${s.w}">${s.w==='a'?m.a:m.b} ${LX('won','승리')}</b></div>`).join('')}</div>`;
  const sw=G.sw.slice().sort((x,y)=>x.sw-y.sw);const big=sw[0];
  const P=[];ROLES.forEach((r,i)=>{const d=G.duel[i];P.push({p:d.pa,ix:d.na,side:'a'},{p:d.pb,ix:d.nb,side:'b'})});
- const rr=mkRnd(hashStr(m.id+'kda'));P.forEach(x=>{x.c=Math.round((x.ix-80)*30*n);const win=(x.side==='a')===(sa>sb);const k=x.p.role==='SUP'?Math.floor(rr()*3):Math.floor(4+rr()*(win?14:9));x.kda=`${k} / ${Math.floor(2+rr()*(win?6:11))} / ${Math.floor(5+rr()*(x.p.role==='SUP'?28:16))}`});
- P.sort((a,b)=>b.ix-a.ix);const mvp=P[0];
+ const rr=mkRnd(hashStr(m.id+'kda'));P.forEach(x=>{const win=(x.side==='a')===(sa>sb);x.win=win;x.ix=Math.round(x.ix*.55+45+(win?16:-16));x.c=Math.round((x.ix-80)*30*n);const k=x.p.role==='SUP'?Math.floor(rr()*3):Math.floor(4+rr()*(win?14:9));x.kda=`${k} / ${Math.floor(2+rr()*(win?6:11))} / ${Math.floor(5+rr()*(x.p.role==='SUP'?28:16))}`});
+ P.sort((a,b)=>b.ix-a.ix);const mvp=P.find(x=>x.win)||P[0];
  const head=n===3?LX(`${W} edge ${Lz} in a three-game series`,`${W}, ${Lz}와 3세트 접전 끝에 승리`):LX(`${W} sweep ${Lz} 2–0`,`${W}, ${Lz}에 2:0 완승`);
  const stand=big?LX(`The biggest moment came at ${big.t}′ in the final game: ${evText(big,m)}, a swing of ${Math.abs(big.d).toLocaleString('en-US')} gold.`,`승부를 가른 장면은 마지막 세트 ${big.t}분, ${evText(big,m)}. 골드 ${Math.abs(big.d).toLocaleString('en-US')}가 한 번에 움직였습니다.`):'';
  const paras=seq.map((s,i)=>{const T=s.w==='a'?m.a:m.b,O=s.w==='a'?m.b:m.a;return LX(`Game ${i+1} went to ${T} in ${s.len} minutes.${i===n-1&&big?` ${T} turned the ${big.t}-minute fight into the series.`:i===0?` ${O} kept it close until the second dragon.`:` ${O} found answers in the mid game but could not hold the map.`}`,`${i+1}세트는 ${s.len}분 만에 ${T}가 가져갔습니다.${i===n-1&&big?` ${big.t}분 교전 승리가 그대로 시리즈 승리로 이어졌습니다.`:i===0?` ${O}는 두 번째 드래곤까지 팽팽하게 버텼습니다.`:` ${O}는 중반에 해법을 찾았지만 맵 장악을 지키지 못했습니다.`}`)});
@@ -4221,7 +4235,7 @@ function mxPost(m,G,A,B){const seq=MX.sets(m);const[sa,sb]=m.sc.split(':').map(N
  const article=`<article class="mx-article"><h1>${head}</h1><span class="mx-sub">${LX('RORR match report · auto-generated from match data · 3 min read','RORR 경기 리포트 · 경기 데이터로 자동 작성 · 3분 읽기')}</span><p class="lede">${stand}</p>${paras.map(t=>`<p>${t}</p>`).join('')}</article>`;
  const turns=mxSec(LX('The moments that decided it','승부를 가른 장면'),'',`<div class="mx-list">${sw.map(e=>`<button class="mx-turn" data-ev="${G.ev.indexOf(e)}" type="button"><span class="m"><small>${LX(`Game ${n}`,`${n}세트`)}</small><b>${e.t}′</b></span><span class="d"><b>${evText(e,m)}</b><small>${LX(`Lead ${goldStr(e.g0)} → ${goldStr(e.g1)} (${m.a} view)`,`리드 ${goldStr(e.g0)} → ${goldStr(e.g1)} (${m.a} 기준)`)}</small></span><span class="g ${e.side}">${e.side==='a'?m.a:m.b} +${Math.abs(e.d).toLocaleString('en-US')}</span></button>`).join('')}</div>`);
  const chart=mxSec(LX(`Gold flow · game ${n}`,`골드 흐름 · ${n}세트`),'',`<div class="mx-chartwrap">${chartSVG(m,G)}</div>`);
- const table=mxSec(LX('Player contribution','선수별 기여'),LX('Series LwRC+ · contribution vs replacement level in gold (provisional baseline 80)','시리즈 LwRC+ · 누적 기여는 대체선수 대비 골드(잠정 기준 80)'),`<div class="mx-tbl"><table><thead><tr><th>${LX('Player','선수')}</th><th>${LX('Role','포지션')}</th><th class="r">LwRC+</th><th class="r">${LX('Contribution','누적 기여')}</th><th class="r">K / D / A</th><th class="r">${LX('Season rank','시즌 누적 순위')}</th></tr></thead><tbody>${P.map((x,i)=>`<tr class="${i===0?'top':''}"><td><button class="nm" data-pl="${x.p.name}"><i class="${x.side}"></i>${x.p.name}</button><span class="tm">${x.p.team}</span></td><td>${MX.role(x.p.role)}</td><td class="r b">${x.ix}</td><td class="r ${x.c>=0?'mxp':'mxn'}">${goldStr(x.c)}</td><td class="r">${x.kda}</td><td class="r">${LX(`#${MX.seasonRank(x.p,80)}`,`${MX.seasonRank(x.p,80)}위`)}</td></tr>`).join('')}</tbody></table></div><a class="mx-more" href="#stats" onclick="nav(event,'stats')">${LX('See full season contribution stats →','시즌 기여 통계 전체 보기 →')}</a>`);
+ const table=mxSec(LX('Player contribution','선수별 기여'),LX('Series LwRC+ · contribution vs replacement level in gold (provisional baseline 80)','시리즈 LwRC+ · 누적 기여는 대체선수 대비 골드(잠정 기준 80)'),`<div class="mx-tbl"><table><thead><tr><th>${LX('Player','선수')}</th><th>${LX('Role','포지션')}</th><th class="r">LwRC+</th><th class="r">${LX('Contribution','누적 기여')}</th><th class="r">K / D / A</th></tr></thead><tbody>${P.map((x,i)=>`<tr class="${i===0?'top':''}"><td><button class="nm" data-pl="${x.p.name}"><i class="${x.side}"></i>${x.p.name}</button><span class="tm">${x.p.team} · ${LX(`season #${MX.seasonRank(x.p,80)}`,`시즌 ${MX.seasonRank(x.p,80)}위`)}</span></td><td>${MX.role(x.p.role)}</td><td class="r b">${x.ix}</td><td class="r ${x.c>=0?'mxp':'mxn'}">${goldStr(x.c)}</td><td class="r">${x.kda}</td></tr>`).join('')}</tbody></table></div><a class="mx-more" href="#stats" onclick="nav(event,'stats')">${LX('See full season contribution stats →','시즌 기여 통계 전체 보기 →')}</a>`);
  const nxt=t=>DB.sched.filter(x=>x.st==='up'&&(x.a===t||x.b===t)).sort((a,b)=>a.at-b.at)[0];
  const nx=[m.a,m.b].map(t=>{const x=nxt(t);if(!x)return '';const o=x.a===t?x.b:x.a;return `<a class="mx-next" href="#match/${x.id}" data-m="${x.id}"><span><b class="${t===m.a?'ta':'tb'}">${t}</b> vs ${o}</span><span>${fmtWhen(x)}</span></a>`}).join('');
  const side=`<section class="mx-card"><h3>${LX('Series MVP · by LwRC+','시리즈 MVP · LwRC+ 기준')}</h3><div class="mx-mvp"><b>${mvp.p.name}</b><span>${mvp.p.team} · ${MX.role(mvp.p.role)} · ${LX(`${n} games`,`${n}세트`)}</span></div>
@@ -4238,7 +4252,7 @@ function renderMatch(id){const m=DB.sched.find(x=>x.id===id);const box=document.
  if(m.st==='up'){const x=mxPre(m,G,A,B);main=x.main;side=x.side;acts=x.acts}
  else if(m.st==='live'){const x=mxLive(m,G,A,B,st);extra=x.tabs+x.strip;main=x.main;side=x.side;acts=x.acts}
  else{const x=mxPost(m,G,A,B);extra=x.cards;main=x.main;side=x.side;acts=x.acts}
- box.innerHTML=`<a class="back2" href="#" data-back-home>← ${LX('Scores','스코어')}</a><div class="mx-hero ${m.st}">${hero}${extra}${acts}</div>
+ box.innerHTML=`<a class="back2" href="#" data-back-home>← ${LX('Back','뒤로')}</a><div class="mx-hero ${m.st}">${hero}${extra}${acts}</div>
   <div class="mx-grid"><div class="mx-main">${main}</div><aside class="mx-side">${side}</aside></div>
   <p class="mt-note">${LX('Player names and figures are sample data for the preview. Contribution is not converted to wins yet.','선수명과 수치는 미리보기용 샘플 데이터입니다. 누적 기여는 아직 승수로 환산하지 않은 잠정 지표입니다.')}</p>`}
 
@@ -4282,7 +4296,8 @@ document.addEventListener('click',e=>{const box=e.target.closest('#mt');if(!box)
  const tm=e.target.closest('[data-tm]');if(tm){openTeam(tm.dataset.tm);return}
  const ak=e.target.closest('[data-askm]');if(ak){enterChat(ak.dataset.askm);return}
  const cm=e.target.closest('[data-cmpm]');if(cm){const[a,b]=cm.dataset.cmpm.split('|');openCompare('team',a,b);return}
- if(e.target.closest('[data-back-home]')){e.preventDefault();goHome(e)}});
+ const mb=e.target.closest('[data-mboost]');if(mb){const t=mb.dataset.mboost;PTAB['team/'+t]='cheer';openTeam(t);setTimeout(()=>{const s=document.querySelector('#ip-body .sup');if(s)s.scrollIntoView({behavior:'smooth',block:'start'})},250);return}
+ if(e.target.closest('[data-back-home]')){e.preventDefault();if(history.state&&history.state.r&&history.length>1)history.back();else goHome(e)}});
 setTimeout(()=>{renderTicker();ONB.apply()},0);
 
 /* ===== onboarding: favourite leagues / teams / players ===== */
