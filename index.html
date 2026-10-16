@@ -2477,8 +2477,12 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
 .hx-go:not(.pri):not(.gh){background:transparent!important;color:var(--ink)!important;border:1px solid var(--line)!important}
 .hx-go:not(.pri):not(.gh):hover{border-color:color-mix(in srgb,var(--ink) 35%,var(--line))!important}
 /* home messages */
-#fl-ms{height:auto!important;min-height:0;overflow:visible;-webkit-mask-image:none!important;mask-image:none!important;justify-content:flex-start!important}
-#fl-ms .ms.out{display:none}
+/* fan messages: chat order, newest at bottom (2026-10-16) */
+#fl-ms{height:var(--msh,248px)!important;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end!important;-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 28px)!important;mask-image:linear-gradient(to bottom,transparent 0,#000 28px)!important}
+#fl-ms:has(.ms.open),#fl-ms:has(.ms-mw.open){height:auto!important;-webkit-mask-image:none!important;mask-image:none!important}
+#fl-ms .ms{flex:none}
+#fl-ms .ms-empty{margin-top:auto}
+@media (max-width:760px){#fl-ms{--msh:268px}}
 /* fandom summary spark link */
 .fs-lnk{align-self:center;font-size:13px;font-weight:700;color:var(--v-ui);text-decoration:none;white-space:nowrap}
 .fs-lnk:hover{text-decoration:underline}
@@ -3571,14 +3575,14 @@ const BX=(()=>{const K='rorr-bx';
    <div class="ms-chips" hidden>${RPL.map((x,i)=>`<button type="button" data-bxrp="${i+1}">${LX(x[0],x[1])}</button>`).join('')}</div></div>`}
  const fits=m=>mf==='all'||m.me||!m.c||favTeams().includes(m.c.tm);
  function nextPool(){for(let k=0;k<POOL.length;k++){const p=POOL[fi++%POOL.length];if(mf==='all')return p;const c=MC[p[2]]||{};let t=c.np?c.tm:'T1';if(c.side==='b'){const lv=liveT1();t=lv?(lv.a==='T1'?lv.b:lv.a):null}if(favTeams().includes(t))return p}return POOL[0]}
- function msDraw(){const box=document.getElementById('fl-ms');if(!box)return;box.innerHTML=(ftyping?`<div class="ms typing"><div class="ms-h"><b>${esc(nmOf(ftyping))}</b> <i class="dots"><i></i><i></i><i></i></i></div></div>`:'')+(fq.filter(fits).length||ftyping?'':`<p class="ms-empty">${LX('No cheer messages yet. Leave one when you Boost a moment.','아직 응원 메시지가 없어요. 순간에 Boost할 때 한마디를 남겨 보세요.')}</p>`)+fq.filter(fits).slice(-3).reverse().map(m=>msRow(m)).join('')+(false?`<div class="ms typing"><div class="ms-h"><b>${esc(nmOf(ftyping))}</b> <i class="dots"><i></i><i></i><i></i></i></div></div>`:'');
+ function msDraw(){const box=document.getElementById('fl-ms');if(!box)return;box.innerHTML=(fq.filter(fits).length||ftyping?'':`<p class="ms-empty">${LX('No cheer messages yet. Leave one when you Boost a moment.','아직 응원 메시지가 없어요. 순간에 Boost할 때 한마디를 남겨 보세요.')}</p>`)+fq.filter(fits).slice(-3).map(m=>msRow(m)).join('')+(ftyping?`<div class="ms typing"><div class="ms-h"><b>${esc(nmOf(ftyping))}</b> <i class="dots"><i></i><i></i><i></i></i></div></div>`:'');
   document.querySelectorAll('[data-bxmf]').forEach(b=>{b.classList.toggle('on',b.dataset.bxmf===mf);b.setAttribute('aria-pressed',b.dataset.bxmf===mf)})}
  function msPush(m){fq.push(m);if(fq.length>12)fq.shift();if(!fits(m))return;const box=document.getElementById('fl-ms');if(!box)return;box.querySelectorAll('.ms.typing').forEach(x=>x.remove());
-  box.insertAdjacentHTML('afterbegin',msRow(m,'in'));const rows=box.querySelectorAll('.ms:not(.typing)');if(rows.length>3){const old=rows[rows.length-1];old.classList.add('out');setTimeout(()=>old.remove(),450)}}
+  box.insertAdjacentHTML('beforeend',msRow(m,'in'));const rows=box.querySelectorAll('.ms:not(.typing):not(.out)');if(rows.length>3){const old=rows[0];old.classList.add('out');setTimeout(()=>old.remove(),450)}}
  function msSeed(){if(fq.length)return;const now=Date.now();for(let k=0;k<5;k++){const p=POOL[fi++%POOL.length];fq.push({id:'m'+fi,n:p[0],t:p[1],c:ctxOf(p[2],fi),at:now-(5-k)*21000})}}
  function msTick(){const b=document.body.classList;const box=document.getElementById('fl-ms');
   const idle=document.hidden||b.contains('pagev')||b.contains('chatting')||b.contains('acct')||!box||box.matches(':hover')||box.querySelector('.ms.open,.ms-mw.open');
-  if(!idle){const p=nextPool();ftyping=p[0]||'';box.insertAdjacentHTML('afterbegin',`<div class="ms typing"><div class="ms-h"><b>${esc(nmOf(p[0]))}</b> <i class="dots"><i></i><i></i><i></i></i></div></div>`);
+  if(!idle){const p=nextPool();ftyping=p[0]||'';box.insertAdjacentHTML('beforeend',`<div class="ms typing"><div class="ms-h"><b>${esc(nmOf(p[0]))}</b> <i class="dots"><i></i><i></i><i></i></i></div></div>`);
    setTimeout(()=>{ftyping=null;msPush({id:'m'+fi,n:p[0],t:p[1],c:ctxOf(p[2],fi),at:Date.now()})},1100+Math.random()*700)}
   ft=setTimeout(msTick,3600+Math.random()*2800)}
  setInterval(()=>{document.querySelectorAll('#fl-ms .ms[data-at]').forEach(r=>{const e=r.querySelector('.ms-a em');if(e)e.textContent=ago(+r.dataset.at)})},10000);
