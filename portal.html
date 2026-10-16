@@ -1227,6 +1227,37 @@ body.onboarding{overflow:hidden}body.onboarding .onb{display:flex;animation:fade
 .lg-f button{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--ink);font:700 13.5px "Pretendard Variable",sans-serif;cursor:pointer}
 @media print{header,footer,.ticker,.siderail,.askfab,.lg-toc,.lg-tocm,.lg-docs,.lg-f button,.notice{display:none!important}.lg{margin:0}.lg-doc{max-width:none;color:#000}.lg-g{display:block}}
 
+/* reward v3 variety (2026-10-17): team edge, currency overlay, moment-kind particles, badge stamp */
+.rc-band{box-shadow:inset 0 6px 0 var(--rc-team,#6F4CFF),inset 0 -6px 0 var(--rc-team,#6F4CFF),0 0 0 2px var(--rc-edge),0 0 90px var(--rc-glow)!important}
+.rc-cur{position:absolute;inset:0;pointer-events:none}
+#reward[data-cur=energy] .rc-cur{color:#3DF5D2}
+.rc-cur .bolt{position:absolute;width:clamp(90px,12vw,160px);height:auto;filter:drop-shadow(0 0 6px #3DF5D2) drop-shadow(0 0 14px rgba(61,245,210,.6));opacity:0;animation:rcBolt .5s steps(1) var(--d) 2}
+@keyframes rcBolt{0%{opacity:1;transform:translateX(0)}30%{opacity:0}55%{opacity:.85;transform:translateX(18px)}80%,100%{opacity:0}}
+.rc-cur i{position:absolute;bottom:4%;width:var(--s,4px);height:var(--s,4px);border-radius:50%;background:#FFC86B;box-shadow:0 0 8px #FFB547,0 0 16px rgba(255,181,71,.6);opacity:0;animation:rcDust 1.1s ease-out calc(.2s + var(--d)) forwards}
+@keyframes rcDust{0%{opacity:0;transform:translateY(0) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translateY(-260px) scale(1.1)}}
+#reward[data-cur=energy] .rc-amt span{color:#3DF5D2;text-shadow:0 0 12px rgba(61,245,210,.8)}
+#reward[data-cur=spark] .rc-amt span{color:#FFC86B;text-shadow:0 0 12px rgba(255,181,71,.85)}
+.rw-fx i.k-drg{width:12px;height:10px;border-radius:50% 50% 50% 0/60% 60% 40% 40%;clip-path:none}
+.rw-fx i.k-eld{width:10px;height:14px;border-radius:50% 50% 50% 50%/70% 70% 30% 30%;clip-path:none}
+.rw-fx i.k-brn{width:12px;height:14px;border-radius:0;clip-path:polygon(50% 0,100% 40%,75% 100%,25% 100%,0 40%)}
+.rw-fx i.k-tf{width:3px;height:28px;border-radius:2px;clip-path:none}
+.rw-fx i.k-sg{width:12px;height:12px;border-radius:0;clip-path:polygon(0 20%,60% 0,100% 45%,70% 100%,10% 80%)}
+.rw-fx i.k-ms{width:6px;height:16px;border-radius:2px;clip-path:none}
+.rw-fx i.k-gen{width:9px;height:14px;border-radius:2px}
+.rw-fx i.st{width:12px;height:12px;border-radius:0;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+.rw-stamp{position:absolute;right:-10px;top:-14px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:7px 12px 7px 10px;border-radius:12px;transform:rotate(-8deg);font:900 15px "Pretendard Variable",sans-serif;letter-spacing:-.01em;box-shadow:0 6px 18px rgba(0,0,0,.35);opacity:0;pointer-events:none}
+.rw-stamp.energy{background:#0B2E28;color:#3DF5D2;border:2px solid #3DF5D2}
+.rw-stamp.spark{background:#2E1F06;color:#FFC86B;border:2px solid #FFB547}
+.rw-stamp .bx-i{width:16px;height:16px}
+.reward.settle .rw-stamp{animation:rwStamp .42s cubic-bezier(.3,1.6,.5,1) .95s forwards}
+@keyframes rwStamp{0%{opacity:0;transform:rotate(-8deg) scale(2.4)}60%{opacity:1;transform:rotate(-8deg) scale(.92)}100%{opacity:1;transform:rotate(-8deg) scale(1)}}
+.rw-stamp::after{content:"";position:absolute;inset:-6px;border-radius:16px;border:2px solid currentColor;opacity:0}
+.reward.settle .rw-stamp::after{animation:rwStampRing .5s ease-out 1.2s}
+@keyframes rwStampRing{0%{opacity:.9;transform:scale(.8)}100%{opacity:0;transform:scale(1.5)}}
+.rw-next{display:block;text-align:center;font-size:12.5px;color:var(--mute);margin-top:-2px}
+.reward.settle .rw-next{animation:rcUp .3s ease 1.15s both}
+@media (prefers-reduced-motion:reduce){.rw-stamp{opacity:1}}
+
 /* league bar: coming-soon leagues */
 .lgchips button.soon{opacity:.55;border-style:dashed;display:inline-flex;align-items:center;gap:6px}
 .lgchips button.soon em{font-style:normal;font-size:9.5px;letter-spacing:.06em;border:1px solid var(--line);border-radius:3px;padding:0 4px;color:var(--mute)}
@@ -3653,7 +3684,7 @@ body.msv-on{overflow:hidden}
 </div>
 <div class="reward" id="reward" role="dialog" aria-modal="true" aria-label="Boost sent">
  <div class="rw-ring" aria-hidden="true"></div><div class="rw-flash" aria-hidden="true"></div>
- <div class="rw-cut" aria-hidden="true"><div class="rc-band"><div class="rc-lines"></div><div class="rc-shade"></div></div><div class="rc-dots"></div><img class="rc-muse" alt=""><div class="rc-txt"><span class="rc-k"></span><b class="rc-line"></b><span class="rc-amt"></span></div><span class="rc-skip"></span></div>
+ <div class="rw-cut" aria-hidden="true"><div class="rc-band"><div class="rc-lines"></div><div class="rc-shade"></div><div class="rc-cur"></div></div><div class="rc-dots"></div><img class="rc-muse" alt=""><div class="rc-txt"><span class="rc-k"></span><b class="rc-line"></b><span class="rc-amt"></span></div><span class="rc-skip"></span></div>
  <div class="rw-fx"></div>
  <div class="rw-card"><div class="rw-glow"></div><img class="rw-muse" alt="Muse">
   <div class="rw-amt"></div><div class="rw-to"></div><p class="rw-line"></p><div class="rw-msg"></div><div class="rw-lv" hidden></div>
@@ -4517,27 +4548,38 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
   /* v2 (2026-10-17): Muse cut-in. Intensity follows the moment tier (silver/gold/holo, commemorative), never the amount spent. */
   const c=r.card||(r.up&&r.up.card)||r.dc||null;const mt=c?(c.ed==='ms'?'ms':(c.tier||'silver')):'silver';const light=!r.card;
   const IMG={silver:'muse-smile',gold:'muse-excited',holo:'muse-surprised',ms:'muse-waving'};const img=light?'muse-waving':IMG[mt];
-  const LINES={silver:[`${to} got your cheer!`,`${to}에 응원이 닿았어요!`],gold:['Right on the turning point!','승부처에 딱 맞췄어요!'],holo:["That's one for the history books!",'역사에 남을 순간이에요!'],ms:[`Celebrating ${c&&c.pl||to} together!`,`${c&&c.pl||to}, 같이 축하해요!`]};
-  const line=light?(r.up?LX('Your badge just went up!','배지가 한 단계 올랐어요!'):c?LX('One more cheer!','한 번 더 응원!'):LX(`${to} got your cheer!`,`${to}에 응원이 닿았어요!`)):LX(...LINES[mt]);
-  const el=document.getElementById('reward');el.dataset.mt=mt;el.dataset.tier=1;el.classList.toggle('lite',light);
+  const LINES={silver:[[`${to} got your cheer!`,`${to}에 응원이 닿았어요!`],['Every cheer counts!','이 응원도 다 닿아요!'],['Nice timing!','타이밍 좋았어요!']],
+   gold:[['Right on the turning point!','승부처에 딱 맞췄어요!'],['That was the moment!','바로 그 순간이었어요!'],['You called it!','제대로 짚었어요!']],
+   holo:[["That's one for the history books!",'역사에 남을 순간이에요!'],['You were there for this!','이 장면을 같이 봤어요!'],['Nobody forgets this one!','다들 오래 기억할 거예요!']],
+   ms:[[`Celebrating ${c&&c.pl||to} together!`,`${c&&c.pl||to}, 같이 축하해요!`],[`Here's to ${c&&c.pl||to}!`,`${c&&c.pl||to}, 축하해요!`],['What a milestone!','정말 대단한 기록이에요!']]};
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  const line=light?(r.up?LX('Your badge just went up!','배지가 한 단계 올랐어요!'):c?LX(...pick([['One more cheer!','한 번 더 응원!'],['Still with you!','계속 같이 가요!'],['Louder!','더 크게!']])):LX(`${to} got your cheer!`,`${to}에 응원이 닿았어요!`)):LX(...pick(LINES[mt]));
+  /* deterministic variety (2026-10-17): moment kind → particle shapes, team → band edge, currency → overlay. Never amount- or random-driven results. */
+  const ten=c&&c.t?String(c.t[0]||''):'';const kind=mt==='ms'?'ms':/baron/i.test(ten)?'brn':/elder/i.test(ten)?'eld':/dragon|drake/i.test(ten)?'drg':/fight|4-for|ace|teamfight|carry/i.test(ten)?'tf':/siege|tower|nexus|push|inhib/i.test(ten)?'sg':'gen';
+  const TEAMC={T1:'#E2012D'};const tmc=(c&&c.pe&&TEAMC[c.pe])||'#6F4CFF';
+  const el=document.getElementById('reward');el.dataset.mt=mt;el.dataset.tier=1;el.dataset.cur=cur;el.dataset.kind=kind;el.style.setProperty('--rc-team',tmc);el.classList.toggle('lite',light);
   el.querySelector('.rw-muse').src='assets/'+img+'.webp';el.querySelector('.rw-amt').innerHTML=(cur==='spark'?BX.IC.s:BX.IC.e)+' '+amt;el.querySelector('.rw-line').textContent=line;
   const mb=el.querySelector('.rw-msg');mb.textContent=msg?`“${msg}”`:'';mb.hidden=!msg;el.querySelector('.rw-to').textContent=r.up&&!r.ptsAdd?LX(`Badge up · ${r.tot} on this moment · points already counted`,`배지 상승 · 이 순간 누적 ${r.tot} · 포인트는 이미 반영됐어요`):r.ptsAdd?LX(`Boost sent · +${r.ptsAdd} P`,`Boost 전송 · +${r.ptsAdd} P`):LX('Boost sent · points for this moment already counted','Boost 전송 · 이 순간 포인트는 이미 반영됐어요');
   let slot=el.querySelector('.rw-cardslot');if(!slot){slot=document.createElement('div');slot.className='rw-cardslot';el.querySelector('.rw-lv').before(slot)}
-  slot.innerHTML=r.card?`<span class="rw-new">${r.card.ed==='ms'?LX('New commemorative edition','새 기념 에디션'):LX('New moment card','새 모먼트 카드')}</span><div class="rw-cwrap">${BX.cardHTML(r.card,{mine:1})}</div><button type="button" class="p2-btn" data-bxshare="${r.card.id}">${LX('Show it off','자랑하기')}</button>`:r.up?`<span class="rw-up">${LX(`${r.up.cur==='spark'?'Spark':'Energy'} badge Lv.${r.up.to}`,`${r.up.cur==='spark'?'Spark':'Energy'} 배지 ${r.up.to}단계로`)}</span><div class="rw-cwrap">${BX.cardHTML(r.up.card,{mine:1})}</div>`:`<p class="bx-ext">${BX_EXT()}</p>`;
+  const stampLv=r.up?r.up.to:(r.card&&r.card.deco>=2?r.card.deco:0);const nxt=c&&r.tot?BX.decoNext(cur,r.tot):0;
+  const stamp=stampLv?`<span class="rw-stamp ${cur}" aria-hidden="true">${cur==='spark'?BX.IC.s:BX.IC.e}<b>${LX('Lv.'+stampLv,stampLv+'단계')}</b></span>`:'';
+  const hint=c&&r.tot?`<span class="rw-next">${nxt?LX(`${(nxt-r.tot).toLocaleString('en-US')} more ${cur==='spark'?'Spark':'Energy'} on this moment for the next badge`,`이 순간에 ${cur==='spark'?'Spark':'Energy'} ${(nxt-r.tot).toLocaleString('en-US')} 더 보내면 다음 단계`):LX('Top badge reached on this moment','이 순간 최고 단계예요')}</span>`:'';
+  slot.innerHTML=r.card?`<span class="rw-new">${r.card.ed==='ms'?LX('New commemorative edition','새 기념 에디션'):LX('New moment card','새 모먼트 카드')}</span><div class="rw-cwrap">${BX.cardHTML(r.card,{mine:1})}${stamp}</div>${hint}<button type="button" class="p2-btn" data-bxshare="${r.card.id}">${LX('Show it off','자랑하기')}</button>`:r.up?`<span class="rw-up">${LX(`${r.up.cur==='spark'?'Spark':'Energy'} badge Lv.${r.up.to}`,`${r.up.cur==='spark'?'Spark':'Energy'} 배지 ${r.up.to}단계로`)}</span><div class="rw-cwrap">${BX.cardHTML(r.up.card,{mine:1})}${stamp}</div>${hint}`:`<p class="bx-ext">${BX_EXT()}</p>`;
   el.querySelector('.rw-lv').hidden=true;
   /* cut-in content */
   const TK={silver:['Silver moment','실버 모먼트'],gold:['Gold moment','골드 모먼트'],holo:['Hologram moment','홀로그램 모먼트'],ms:['Commemorative edition','기념 에디션']};
   el.querySelector('.rc-k').textContent=(light&&!c?LX('Boost sent','Boost 전송'):LX(...TK[mt]))+(r.ptsAdd?` · +${r.ptsAdd} P`:r.tot&&c?LX(` · ${r.tot} on this moment`,` · 이 순간 누적 ${r.tot}`):'');
   {let k=0;el.querySelector('.rc-line').innerHTML=line.split(' ').map(wd=>`<span class="w">${[...wd].map(ch=>`<i style="--i:${k++}">${esc(ch)}</i>`).join('')}</span>`).join(' ')}
   const am=el.querySelector('.rc-amt');am.innerHTML=`${cur==='spark'?BX.IC.s:BX.IC.e}<span>0</span><small>${cur==='spark'?'Spark':'Energy'}</small>`;
-  el.querySelector('.rc-muse').src='assets/'+img+'.webp';el.querySelector('.rc-skip').textContent=LX('Tap to skip','눌러서 건너뛰기');
+  el.querySelector('.rc-muse').src='assets/'+img+'.webp';
+  {const ov=el.querySelector('.rc-cur');if(cur==='spark'){ov.innerHTML=Array.from({length:26},(_,k)=>`<i style="left:${(k*3.9+(k%3)*1.3)%100}%;--d:${(k%7)*.06}s;--s:${3+(k%4)}px"></i>`).join('')}else{ov.innerHTML=[[6,18],[30,62],[52,10],[74,55],[90,22]].map(([x,y],k)=>`<svg class="bolt" style="left:${x}%;top:${y}%;--d:${.12+k*.07}s" viewBox="0 0 120 40" aria-hidden="true"><polyline points="0,22 22,14 34,26 56,8 70,24 92,12 120,18" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></svg>`).join('')}}el.querySelector('.rc-skip').textContent=LX('Tap to skip','눌러서 건너뛰기');
   const OUT=light?0.85:{silver:1.0,gold:1.3,holo:1.55,ms:1.45}[mt];el.style.setProperty('--rc-out',OUT+'s');
   if(rwLast){el.style.setProperty('--rx',rwLast[0]+'px');el.style.setProperty('--ry',rwLast[1]+'px')}else{el.style.removeProperty('--rx');el.style.removeProperty('--ry')}
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* particles: count by moment tier */
-  const PAL={silver:['#E8EEF6','#AFC2D6','#FFFFFF'],gold:['#F5C46A','#FFE7A3','#FFFFFF','#E09A1E'],holo:['#2F9CFC','#9B7BFF','#FE2054','#F2C766','#FFFFFF'],ms:['#F8E7B8','#E9C57A','#FFFFFF']}[mt].concat(cur==='spark'?['#A64DFF']:['#00C2A8']);
+  const KACC={drg:'#F28C38',brn:'#9B7BFF',eld:'#7FE3FF',tf:'#FFFFFF',sg:'#C9B8FF',ms:'#F8E7B8',gen:null}[kind];const PAL={silver:['#E8EEF6','#AFC2D6','#FFFFFF'],gold:['#F5C46A','#FFE7A3','#FFFFFF','#E09A1E'],holo:['#2F9CFC','#9B7BFF','#FE2054','#F2C766','#FFFFFF'],ms:['#F8E7B8','#E9C57A','#FFFFFF']}[mt].concat(cur==='spark'?['#A64DFF']:['#00C2A8']);
   const fx=el.querySelector('.rw-fx');fx.innerHTML='';const n=reduce?0:light?12:{silver:16,gold:28,holo:44,ms:32}[mt];
-  const burst=(cx,cy,cnt,dl)=>{for(let k=0;k<cnt;k++){const q=document.createElement('i');q.className=k%3===0?'st':k%3===1?'sh':'';q.style.left=cx+'%';q.style.setProperty('--fy',cy+'%');const ang=Math.random()*Math.PI*2,d=180+Math.random()*420;q.style.setProperty('--dx',Math.cos(ang)*d+'px');q.style.setProperty('--dy',(Math.sin(ang)*d-260)+'px');q.style.setProperty('--r',(Math.random()*720-360)+'deg');q.style.background=PAL[k%PAL.length];q.style.animationDelay=(dl+Math.random()*.2)+'s';fx.appendChild(q)}};
+  const burst=(cx,cy,cnt,dl)=>{for(let k=0;k<cnt;k++){const q=document.createElement('i');q.className='k-'+kind+(k%4===3?' st':'');q.style.left=cx+'%';q.style.setProperty('--fy',cy+'%');const ang=Math.random()*Math.PI*2,d=180+Math.random()*420;q.style.setProperty('--dx',Math.cos(ang)*d+'px');q.style.setProperty('--dy',(Math.sin(ang)*d-260)+'px');q.style.setProperty('--r',(Math.random()*720-360)+'deg');q.style.background=(KACC&&k%3===0)?KACC:PAL[k%PAL.length];q.style.animationDelay=(dl+Math.random()*.2)+'s';fx.appendChild(q)}};
   clearTimeout(el._t1);clearTimeout(el._t2);clearInterval(el._ti);
   el.classList.remove('on','cut','settle');void el.offsetWidth;el.classList.add('on');document.body.classList.add('rewarding');
   const settle=()=>{clearTimeout(el._t1);clearInterval(el._ti);if(!el.classList.contains('on'))return;el.classList.remove('cut');el.classList.add('settle');const ok=el.querySelector('.rw-ok');ok&&ok.focus({preventScroll:true})};
