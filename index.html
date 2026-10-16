@@ -4437,20 +4437,63 @@ const BX=(()=>{const K='rorr-bx';
    if(e.target.closest('[data-bxcopy]')){try{navigator.clipboard.writeText(url)}catch(_){}toast(LX('Link copied','링크를 복사했어요'));return}
    if(e.target.closest('[data-bxx-share]')){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(txt)+'&url='+encodeURIComponent(url),'_blank','noopener');return}
    if(e.target.closest('[data-bxsave]'))saveImg(c,o)}}
- function saveImg(c,o){const cv=document.createElement('canvas');cv.width=1080;cv.height=1350;const x=cv.getContext('2d');const F='"Pretendard Variable",Pretendard,sans-serif';
-  x.fillStyle='#10141C';x.fillRect(0,0,1080,1350);x.fillStyle='#F0F2F5';x.font=`800 44px ${F}`;x.fillText('RORR',72,110);x.fillStyle='#9AA1B5';x.font=`500 30px ${F}`;x.textAlign='right';x.fillText(today(),1008,110);x.textAlign='left';
-  const nm=o.anon?LX('Anonymous supporter','익명 서포터'):ME;x.fillStyle='#9AA1B5';x.font=`500 32px ${F}`;x.fillText(LX(`${nm}'s moment`,`${nm}의 순간`),72,220);
-  if(o.rank){x.fillStyle='#F0F2F5';x.font=`800 60px ${F}`;x.fillText(LX(`T1 fandom #${rank()}`,`T1 팬덤 서포터 ${rank()}위`),72,300);x.font=`700 40px ${F}`;x.fillStyle='#26BEA5';x.fillText(LX(`Top ${pct()}%`,`상위 ${pct()}%`),72,360)}
-  if(o.card&&c){const y0=430,h=560;const g=x.createLinearGradient(72,y0,1008,y0+h);(c.tier==='holo'?['#6F4CFF','#2F9CFC','#00B395','#F2C766','#FE2054']:c.tier==='gold'?['#A8782A','#F2C766','#A8782A']:['#8C93A3','#D5DAE3','#8C93A3']).forEach((s,i,a)=>g.addColorStop(i/(a.length-1),s));
-   const rr=(X,Y,W,H,R,f)=>{x.beginPath();x.moveTo(X+R,Y);x.arcTo(X+W,Y,X+W,Y+H,R);x.arcTo(X+W,Y+H,X,Y+H,R);x.arcTo(X,Y+H,X,Y,R);x.arcTo(X,Y,X+W,Y,R);x.closePath();x.fillStyle=f;x.fill()};
-   rr(72,y0,936,h,40,g);rr(80,y0+8,920,h-16,34,'#1D2333');x.fillStyle=c.tier==='holo'?'#C9B8FF':c.tier==='gold'?'#F2C766':'#C9CEDA';x.font=`800 30px ${F}`;x.fillText(LX(...TIER[c.tier]),124,y0+76);
-   x.fillStyle='#9AA1B5';x.font=`500 30px ${F}`;x.fillText(subTxt(c.sub),124,y0+140);x.fillStyle='#F0F2F5';x.font=`800 50px ${F}`;
-   const words=LX(c.t[0],c.t[1]);let line='',yy=y0+220;for(const ch of words.split(/(\s+)/)){const t=line+ch;if(x.measureText(t).width>830&&line){x.fillText(line.trim(),124,yy);line=ch;yy+=64}else line=t}x.fillText(line.trim(),124,yy);
-   x.fillStyle='#C9CEDA';x.font=`600 32px ${F}`;x.fillText(`${LX('Win chance','승리확률')} ${c.w0}% → ${c.w1}%  ·  ${LX('Boosted with','함께 Boost')} ${c.fans.toLocaleString('en-US')}`,124,y0+h-120);
-   x.fillStyle=c.cur==='spark'?'#FFB547':'#00B395';x.font=`700 28px ${F}`;x.fillText(decoTxt(c)+'  ·  #'+String(c.no).padStart(5,'0'),124,y0+h-64)}
-  x.fillStyle='#9AA1B5';x.font=`500 24px ${F}`;const ft=[LX(`Rank: 2026 season cheering points (participation) · as of ${today()} · source RORR`,`순위 기준: 2026 시즌 응원 포인트(참여 기반) · ${today()} 집계 · 출처 RORR`),LX("Win chance is RORR's own estimate. An independent fan companion. Not endorsed by Riot Games.",'승리확률은 RORR 자체 추정치 · An independent fan companion. Not endorsed by Riot Games.')];
-  ft.forEach((t,i)=>x.fillText(t,72,1220+i*40));
-  const a=document.createElement('a');a.download=`rorr-${today()}.png`;a.href=cv.toDataURL('image/png');a.click();toast(LX('Image saved','이미지를 저장했어요'))}
+ /* saved image draws the same card the screen shows (2026-10-17): partner / RORR moment / commemorative layouts */
+ function loadImg(src){return new Promise(r=>{if(!src)return r(null);const im=new Image();im.onload=()=>r(im);im.onerror=()=>r(null);im.src=src})}
+ async function saveImg(c,o){const p=c&&c.pl&&T1P[c.pl];const kind=!c?'':c.ed==='ms'?'ms':c.pe==='T1'?'pe':'rm';
+  const [ph,lg,em]=await Promise.all([loadImg(p?`assets/t1/web/${p[1]}.webp`:null),loadImg(kind==='pe'?T1LOGO:null),loadImg(kind==='rm'?RORR_EM:null)]);
+  let url;try{url=paint(c,o,kind,{ph,lg,em}).toDataURL('image/png')}catch(e){url=paint(c,o,kind,{}).toDataURL('image/png')}
+  const a=document.createElement('a');a.download=`rorr-${today()}.png`;a.href=url;a.click();toast(LX('Image saved','이미지를 저장했어요'))}
+ function paint(c,o,kind,I){const p=c&&c.pl&&T1P[c.pl];const cv=document.createElement('canvas');cv.width=1080;cv.height=1350;const x=cv.getContext('2d');const F='"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif';
+  const rr=(X,Y,W,H,R)=>{x.beginPath();x.moveTo(X+R,Y);x.arcTo(X+W,Y,X+W,Y+H,R);x.arcTo(X+W,Y+H,X,Y+H,R);x.arcTo(X,Y+H,X,Y,R);x.arcTo(X,Y,X+W,Y,R);x.closePath()};
+  const font=(w,sz)=>x.font=`${w} ${sz}px ${F}`;const T=(t,X,Y,col,w,sz,al)=>{font(w,sz);x.fillStyle=col;x.textAlign=al||'left';x.fillText(t,X,Y);x.textAlign='left'};
+  const wrap=(t,X,Y,maxW,lh)=>{const ws=String(t).split(/(\s+)/);let line='',yy=Y;for(const w of ws){const tt=line+w;if(x.measureText(tt).width>maxW&&line.trim()){x.fillText(line.trim(),X,yy);line=w.trimStart();yy+=lh}else line=tt}x.fillText(line.trim(),X,yy);return yy};
+  const tierCol={silver:'#C9CEDA',gold:'#F2C766',holo:'#C9B8FF',ms:'#F5C46A'};
+  /* page */
+  x.fillStyle='#10141C';x.fillRect(0,0,1080,1350);if(c){const gl=x.createRadialGradient(540,640,40,540,640,620);gl.addColorStop(0,(c.tier==='holo'?'rgba(111,76,255,.28)':c.tier==='gold'||kind==='ms'?'rgba(242,199,102,.18)':'rgba(200,210,230,.12)'));gl.addColorStop(1,'rgba(16,20,28,0)');x.fillStyle=gl;x.fillRect(0,0,1080,1350)}
+  T('RORR',72,110,'#F0F2F5',800,44);T(today(),1008,110,'#9AA1B5',500,30,'right');
+  const nm=o.anon?LX('Anonymous supporter','익명 서포터'):ME;T(LX(`${nm}'s moment`,`${nm}의 순간`),72,196,'#9AA1B5',500,32);
+  let Y0=250;if(o.rank){T(LX(`T1 fandom #${rank()}`,`T1 팬덤 서포터 ${rank()}위`),72,270,'#F0F2F5',800,56);T(LX(`Top ${pct()}%`,`상위 ${pct()}%`),72,326,'#26BEA5',700,36);Y0=372}
+  if(o.card&&c){const k=2.6,W=340;x.save();x.translate((1080-W*k)/2,Y0);x.scale(k,k);
+   /* height pre-pass */
+   font(800,13.5);const tt=LX(c.t[0],c.t[1]);const lines=(()=>{let n=1,line='';for(const w of String(tt).split(/(\s+)/)){const t2=line+w;if(x.measureText(t2).width>302&&line.trim()){n++;line=w.trimStart()}else line=t2}return n})();
+   const H=kind==='ms'?248:(kind==='pe'?282:270)+(lines-1)*18;
+   /* frame */
+   const g=x.createLinearGradient(0,0,W,H);(kind==='ms'?['#7A5A1E','#F5D58A','#A8782A','#F8E7B8','#8C6A26']:c.tier==='holo'?['#6F4CFF','#2F9CFC','#00B395','#F2C766','#FE2054']:c.tier==='gold'?['#A8782A','#F2C766','#A8782A']:['#8C93A3','#D5DAE3','#8C93A3']).forEach((s,i,a)=>g.addColorStop(i/(a.length-1),s));
+   rr(0,0,W,H,16);x.fillStyle=g;x.fill();
+   let bg;if(kind==='ms'){bg=x.createRadialGradient(170,0,10,170,0,300);bg.addColorStop(0,'#2A2416');bg.addColorStop(.7,'#15130F');bg.addColorStop(1,'#15130F')}else{bg=x.createLinearGradient(3,3,200,H);(kind==='pe'?[['#3A0A16',0],['#1E0A10',.52],['#121016',1]]:[['#262D50',0],['#1A1F36',.52],['#121521',1]]).forEach(([c2,t])=>bg.addColorStop(t,c2))}
+   rr(3,3,W-6,H-6,14);x.fillStyle=bg;x.fill();
+   x.save();rr(3,3,W-6,H-6,14);x.clip();
+   if(kind==='rm'&&I.em){x.save();x.globalAlpha=.11;x.translate(290,H-40);x.rotate(-12*Math.PI/180);const eh=150*I.em.height/I.em.width;x.drawImage(I.em,-75,-eh/2,150,eh);x.restore()}
+   /* header */
+   T(kind==='ms'?LX('Commemorative edition','기념 에디션'):LX(...TIER[c.tier]),19,32,tierCol[kind==='ms'?'ms':c.tier],800,11.5);
+   {const lv=Object.assign({},c.lv||{},{[c.cur]:c.deco});const ks=[c.cur].concat(['energy','spark'].filter(q=>q!==c.cur&&lv[q]));let xr=321;font(700,11);
+    ks.slice().reverse().forEach(q=>{const t=`${q==='spark'?'Spark':'Energy'} ${LX('Lv.'+lv[q],lv[q]+'단계')}`;const w=x.measureText(t).width+16;const col=q==='spark'?'#FFB547':'#00B395';rr(xr-w,18,w,20,5);x.strokeStyle=col+'B0';x.lineWidth=1;x.stroke();x.fillStyle=col;x.textAlign='left';x.fillText(t,xr-w+8,32);xr-=w+4})}
+   if(kind==='ms'){const q=MSU[c.msk]||MSU.g;
+    x.save();x.beginPath();x.arc(39,80,20,0,Math.PI*2);x.closePath();x.fillStyle='#2A2416';x.fill();if(I.ph){x.clip();const iw=40,ih=40*I.ph.height/I.ph.width;x.drawImage(I.ph,19,60,iw,ih)}x.restore();x.beginPath();x.arc(39,80,20,0,Math.PI*2);x.strokeStyle='#F5C46A';x.lineWidth=2;x.stroke();
+    T(c.pl||'',69,78,'#F3EBDD',800,17);T(p?LX(`T1 · ${p[0]}`,`T1 · ${p[2]}`):'',69,96,'#B9AE98',500,11);
+    const big=msBig(c);const gg=x.createLinearGradient(0,112,0,152);gg.addColorStop(0,'#FFE7A3');gg.addColorStop(1,'#E0A43A');T(big,170,152,gg,900,40,'center');T(LX(...q),170,172,'#F3EBDD',800,12,'center');
+    x.setLineDash([3,3]);x.strokeStyle='rgba(245,196,106,.45)';x.beginPath();x.moveTo(19,186);x.lineTo(321,186);x.stroke();x.setLineDash([]);
+    T(c.d||'',19,206,'#F5C46A',800,12);T(LX(`Celebrant #${Number(c.nth||c.fans).toLocaleString('en-US')}`,`${Number(c.nth||c.fans).toLocaleString('en-US')}번째 축하`),321,206,'#F5C46A',800,12,'right');
+    T(LX('Not sold · not tradeable','판매·거래 불가'),19,230,'#9A907E',500,11)}
+   else{let yb;
+    if(kind==='pe'){if(I.lg)x.drawImage(I.lg,19,50,16,16);T(LX('T1 Partner Edition','T1 파트너 에디션'),39,63,'#FF5C7A',800,11);
+     if(p&&I.ph){const ih=92,iw=ih*I.ph.width/I.ph.height;x.drawImage(I.ph,321-iw,158-ih,iw,ih)}else if(!p&&I.lg){x.drawImage(I.lg,281,112,40,40)}
+     font(800,22);x.fillStyle='#FFFFFF';const who=p?c.pl:'T1';x.fillText(who,19,146);const ww=x.measureText(who).width;T(p?LX(p[0][0]+p[0].slice(1).toLowerCase(),p[2]):LX('Team moment','팀 모먼트'),19+ww+6,146,'#C9B6BB',700,11);
+     x.strokeStyle='rgba(255,92,122,.45)';x.lineWidth=1;x.beginPath();x.moveTo(19,158);x.lineTo(321,158);x.stroke();yb=178}
+    else{if(I.em)x.drawImage(I.em,19,50,16,16*I.em.height/I.em.width);T(LX('RORR Moment','RORR 모먼트'),39,63,'#AFB4FF',800,11);
+     const d=c.w1-c.w0;font(800,22);x.fillStyle='#FFFFFF';const big=(d>=0?'+':'')+d+'%p';x.fillText(big,19,118);T(LX('win chance swing','승리확률 스윙'),19+x.measureText(big).width+6,118,'#AEB4C8',600,10);
+     const {v,k:kk}=series(c);const X0=241,Y1=72,Wc=80,Hc=46;x.strokeStyle='#E7B84A';x.lineWidth=1.6;x.beginPath();v.forEach((q,i)=>{const px=X0+i/(v.length-1)*Wc,py=Y1+Hc-q/100*Hc;i?x.lineTo(px,py):x.moveTo(px,py)});x.stroke();
+     x.setLineDash([2,2]);x.strokeStyle='rgba(200,210,240,.35)';x.beginPath();x.moveTo(X0+kk/(v.length-1)*Wc,Y1);x.lineTo(X0+kk/(v.length-1)*Wc,Y1+Hc);x.stroke();x.setLineDash([]);
+     x.strokeStyle='rgba(156,163,241,.35)';x.lineWidth=1;x.beginPath();x.moveTo(19,132);x.lineTo(321,132);x.stroke();yb=152}
+    T(subTxt(c.sub),19,yb,kind==='pe'?'#C9B6BB':'#AEB4C8',500,11);
+    font(800,13.5);x.fillStyle='#FFFFFF';const ye=wrap(tt,19,yb+24,302,18);
+    x.strokeStyle='rgba(255,255,255,.14)';x.beginPath();x.moveTo(19,ye+12);x.lineTo(321,ye+12);x.stroke();
+    const kv=ye+34;font(500,11);x.fillStyle='#B8B2BA';const l1=LX('Win chance ','승리확률 ');x.fillText(l1,19,kv);T(`${c.w0}% → ${c.w1}%`,19+x.measureText(l1).width,kv,'#FFFFFF',800,11);
+    font(800,11);const fv=c.fans.toLocaleString('en-US');const fw=x.measureText(fv).width;T(fv,321,kv,'#FFFFFF',800,11,'right');font(500,11);x.fillStyle='#B8B2BA';x.textAlign='right';x.fillText(LX('Boosted with ','함께 Boost '),321-fw,kv);x.textAlign='left';
+    T(`#${String(c.no).padStart(5,'0')} · ${LX('Not tradeable','거래·양도 불가')}`,19,kv+24,'#9E97A0',500,11)}
+   x.restore();x.restore()}
+  const ft=[LX(`Rank: 2026 season cheering points (participation) · as of ${today()} · source RORR`,`순위 기준: 2026 시즌 응원 포인트(참여 기반) · ${today()} 집계 · 출처 RORR`),LX("Win chance is RORR's own estimate. An independent fan companion. Not endorsed by Riot Games.",'승리확률은 RORR 자체 추정치 · An independent fan companion. Not endorsed by Riot Games.')];
+  font(500,22);x.fillStyle='#9AA1B5';let fy=1236;ft.forEach(t=>{fy=wrap(t,72,fy,936,32)+36});return cv}
  document.addEventListener('click',e=>{const sh=e.target.closest('[data-bxshare]');if(sh){e.preventDefault();share(sh.dataset.bxshare||null);return}
   if(e.target.closest('[data-bxreport]')){toast(LX('Thanks. We will review this message.','신고가 접수됐어요. 검토 후 조치할게요.'));return}
   const f=e.target.closest('[data-bxf]');if(f){renderMy(f.dataset.bxf);return}
