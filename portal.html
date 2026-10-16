@@ -2431,6 +2431,21 @@ a.p2-btn{text-decoration:none;display:inline-flex;align-items:center;justify-con
 .mx-lane .dn,.mx .dn,#mt .dn{color:var(--mute)!important}
 /* role chips */
 .rl{text-transform:none!important;letter-spacing:0!important}
+
+/* hero: equal-height right column, tabs pinned, left column centred */
+.hx-in{align-items:center!important}
+.hx-l{align-self:center;padding-top:0!important}
+.hx-r{display:flex!important;flex-direction:column;padding-top:0!important}
+.hx-pane{flex:1;display:flex;flex-direction:column}
+.hx-pane>.hx-card,.hx-pane>.hx-mucard{flex:1;display:flex!important;flex-direction:column}
+.hx-pane>.hx-card>:last-child{margin-top:auto}
+.hx-pane>.hx-card:not(.hx-mucard)>.hx-acts{margin-top:auto!important}
+.hx-mucard{gap:16px;padding:16px!important}
+.hx-mucard .hx-mu{flex:1;height:auto!important;min-height:300px;border-radius:12px}
+.hx-mucard .hx-acts{margin-top:0!important}
+.hx-rank{gap:6px}.hx-rank button{padding:10px 14px}
+.hx-tabs button{min-height:44px}
+@media (max-width:760px){.hx-mucard .hx-mu{min-height:260px}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -4397,11 +4412,11 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
    const at=(c,r)=>P[r*(cols+1)+c];let d='';const L=(p,q)=>{d+=`M${p[0]} ${p[1]}L${q[0]} ${q[1]}`};
    for(let r=0;r<=rows;r++)for(let c=0;c<=cols;c++){const p=at(c,r);if(c<cols)L(p,at(c+1,r));if(r<rows)L(p,at(c,r+1));if(c<cols&&r<rows){if((c+r)%2)L(p,at(c+1,r+1));else L(at(c+1,r),at(c,r+1))}}return{d,P}};
   const A=mesh(14,6,1680,760,-120,-60,70),B=mesh(6,3,900,720,620,-40,120);
-  const hot=[3,9,14,20,24].map((k,j)=>`<circle class="hot" cx="${B.P[k][0]}" cy="${B.P[k][1]}" r="4" fill="${j%2?'#26BEA5':'#C9B8FF'}" style="animation-delay:${(j*.7).toFixed(1)}s"/>`).join('');
+  const hot=[3,9,14,20,24].filter(k=>B.P[k][0]>=760).map((k,j)=>`<circle class="hot" cx="${B.P[k][0]}" cy="${B.P[k][1]}" r="4" fill="${j%2?'#26BEA5':'#C9B8FF'}" style="animation-delay:${(j*.7).toFixed(1)}s"/>`).join('');
   svg.innerHTML=`<defs><linearGradient id="hxf" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".25"/><stop offset=".45" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff"/></linearGradient><mask id="hxm"><rect width="1440" height="640" fill="url(#hxf)"/></mask>
    <linearGradient id="hxs" x1="0" x2="1"><stop offset="0" stop-color="#6F4CFF" stop-opacity="0"/><stop offset=".5" stop-color="#6F4CFF" stop-opacity=".16"/><stop offset="1" stop-color="#6F4CFF" stop-opacity="0"/></linearGradient></defs>
    <g mask="url(#hxm)"><g class="ga"><path class="ma" d="${A.d}"/>${A.P.map(p=>`<circle class="na" cx="${p[0]}" cy="${p[1]}" r="2"/>`).join('')}</g>
-   <g class="gb"><path class="mb" d="${B.d}"/>${B.P.map(p=>`<circle class="nb" cx="${p[0]}" cy="${p[1]}" r="3"/>`).join('')}${hot}</g>
+   <g class="gb"><path class="mb" d="${B.d}"/>${B.P.filter(p=>p[0]>=760).map(p=>`<circle class="nb" cx="${p[0]}" cy="${p[1]}" r="3"/>`).join('')}${hot}</g>
    <g transform="skewX(-18)"><rect class="sw" width="520" height="640" fill="url(#hxs)"/></g></g>`;
   /* only animate while the hero is on screen */
   new IntersectionObserver(([en])=>document.body.classList.toggle('hx-run',en.isIntersecting&&!RM)).observe(root)})();
@@ -4436,8 +4451,8 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
    ${teams(`<div class="hx-cd"><span>${LX('Starts in','시작까지')}</span><b>${MX.countdown(m)}</b></div>`)}
    <div class="hx-wp"><div class="h"><span>${LX('Last 5','최근 5경기')}</span><span>Team LwRC+ ${A.ix} · ${B.ix}</span></div><div class="hx-frm"><span class="f">${fm(A)}</span><span></span><span class="f r">${fm(B)}</span></div><p>${LX(`${A.ix>=B.ix?m.a:m.b} come in with the higher team LwRC+. Check the lane matchups before it starts.`,`팀 LwRC+는 ${A.ix>=B.ix?m.a:m.b}가 앞서요. 시작 전에 라인별 매치업을 확인해 보세요.`)}</p></div>
    <div class="hx-muse"><img src="assets/muse-excited.webp" alt="Muse"><span class="hx-bub">${LX('I will ping you when it starts!','시작하면 바로 알려 드릴게요!')}</span><a class="hx-go" href="#match/${m.id}" data-m="${m.id}">${LX('Preview →','미리보기 →')}</a></div></article>`}
- function paneMuse(){return `<div class="hx-mu"><img src="assets/muse-waving.webp" alt="${LX('Muse waving','손을 흔드는 Muse')}"><div class="bs"><span>${LX('Vision fight before dragon. See the jungler?','드래곤 앞 시야 싸움 시작이에요. 정글 위치 보여요?')}</span><span class="p">${LX("Baron steal!! We're back in it!",'와 바론 스틸!! 우리 다시 앞서요!')}</span><span class="d">${LX('Beside YouTube, CHZZK, SOOP and Twitch','YouTube·치지직·SOOP·Twitch 옆에서')}</span></div></div>
-  <div class="hx-acts"><a class="hx-go pri" href="${WEBSTORE}" target="_blank" rel="noopener">${LX('Add to Chrome · Free','Chrome에 추가 · 무료')}</a><a class="hx-go gh" href="#muse" onclick="nav(event,'muse')">${LX('Try Muse · 30s','Muse 30초 체험')}</a></div>`}
+ function paneMuse(){return `<div class="hx-card hx-mucard"><div class="hx-mu"><img src="assets/muse-waving.webp" alt="${LX('Muse waving','손을 흔드는 Muse')}"><div class="bs"><span>${LX('Vision fight before dragon. See the jungler?','드래곤 앞 시야 싸움 시작이에요. 정글 위치 보여요?')}</span><span class="p">${LX("Baron steal!! We're back in it!",'와 바론 스틸!! 우리 다시 앞서요!')}</span><span class="d">${LX('Beside YouTube, CHZZK, SOOP and Twitch','YouTube·치지직·SOOP·Twitch 옆에서')}</span></div></div>
+  <div class="hx-acts"><a class="hx-go pri" href="${WEBSTORE}" target="_blank" rel="noopener">${LX('Add to Chrome · Free','Chrome에 추가 · 무료')}</a><a class="hx-go gh" href="#muse" onclick="nav(event,'muse')">${LX('Try Muse · 30s','Muse 30초 체험')}</a></div></div>`}
  function paneHolo(){const S=DB.sched.filter(pick).filter(x=>x.st!=='up');let best=null;S.forEach(m=>{const G=gameModel(m);G.ev.forEach(e=>{const d=Math.abs(wp(e.g1)-wp(e.g0));if(!best||d>best.d)best={m,e,d,G}})});
   if(!best)return '';const{m,e}=best;const fans=1200+(hashStr(m.id)%5000);const T=e.side==='a'?m.a:m.b;const p=SUP.isPartner('team',T);const when=localParts(m.at).d;
   return `<div class="hx-holo" style="--d:2s"><div><i class="gl" aria-hidden="true"></i><div class="tier"><span>${LX('Hologram · all-time moment','홀로그램 · 역대급 순간')}</span><em>${LX('Boost card','Boost 카드')}</em></div>
@@ -4445,13 +4460,15 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
    <span class="m">${p?`${m.a} vs ${m.b}`:LX("Today's match","오늘의 경기")} · ${when} · ${String(e.t).padStart(2,'0')}:${String(hashStr(m.id+e.t)%60).padStart(2,'0')}</span>
    <div class="k"><div>${LX('Win chance','승리확률')}<b>${wp(e.g0)}% → ${wp(e.g1)}%</b></div><div>${LX('Fans boosted','함께 Boost')}<b>${fans.toLocaleString('en-US')}</b></div><div>${LX('Card','카드')}<b>#${String(hashStr(m.id)%900+100).padStart(5,'0')}</b></div></div></div></div>
    <div class="hx-acts"><a class="hx-go pri" href="#match/${m.id}" data-m="${m.id}">${LX('Relive the moment','그 순간 다시 보기')}</a><a class="hx-go gh" href="#blog/moment-cards" onclick="nav(event,'blog/moment-cards')">${LX('About moment cards','모먼트 카드 안내')}</a></div><p class="bx-ext hxn">${LX('Moment cards are not sold · earned by Boosting during a live match, on the web or in the extension.','모먼트 카드는 판매하지 않아요 · 경기 중 Boost하면 웹·확장 프로그램 어디서든 받아요.')} <a href="${WEBSTORE}" target="_blank" rel="noopener">${LX('Get the extension →','확장 프로그램 받기 →')}</a></p>`}
- function paneRank(){const P=DB.players.filter(pick).slice().sort((a,b)=>b.ix-a.ix).slice(0,3);
+ function paneRank(){const P=DB.players.filter(pick).slice().sort((a,b)=>b.ix-a.ix).slice(0,5);
   return `<div class="hx-card"><div class="hx-top"><b style="font-size:18px;color:var(--ink)">${LX('Who carried · LwRC+','누가 캐리했나 · LwRC+')}</b><span>${LX('100 = league average for the role','100 = 포지션 리그 평균')}</span></div>
    <div class="hx-rank">${P.map((x,k)=>`<button type="button" data-hxp="${x.name}"><span class="n">${k+1}</span><span><b>${x.name}</b><small>${x.team} · ${MX.role(x.role)}</small></span><em>${x.ix}</em></button>`).join('')}</div>
    <div class="hx-acts" style="margin-top:0"><a class="hx-go pri" href="#wrc" onclick="nav(event,'wrc')">${LX('See LwRC+ rankings','LwRC+ 순위 보기')}</a><a class="hx-go gh" href="#blog/what-is-wrc" onclick="nav(event,'blog/what-is-wrc')">${LX('What is LwRC+?','LwRC+란?')}</a></div></div>`}
  const PANES=[paneMatch,paneMuse,paneRank];
  function tabs(){const T=TABS();const m=curMatch_();$('hx-tabs').innerHTML=T.map((x,k)=>`<button type="button" role="tab" id="hx-t${k}" aria-controls="hx-r" aria-selected="${k===i}"><span class="bar"><i></i></span><b>${k===0?(m&&m.st==='live'?x[0]:x[1]):x[0]}</b></button>`).join('');
   $('hx-tabs').style.setProperty('--hx-dur',DUR+'ms');$('hx-tabs').querySelectorAll('button').forEach((b,k)=>b.onclick=()=>go(k,1))}
+ let fitW=0,fitK='';function fitH(){const r=$('hx-r');if(!r)return;const k=LANG+LG+r.clientWidth;if(k===fitK)return;fitK=k;r.style.minHeight='';const m=document.createElement('div');m.setAttribute('aria-hidden','true');m.style.cssText='position:absolute;visibility:hidden;pointer-events:none;left:0;top:0;width:'+r.clientWidth+'px';r.appendChild(m);let mx=0;PANES.forEach(f=>{m.innerHTML=`<div class="hx-pane" style="animation:none">${f()}</div>`;mx=Math.max(mx,m.firstElementChild.offsetHeight)});m.remove();r.style.minHeight=mx+'px'}
+ addEventListener('resize',()=>{clearTimeout(fitW);fitW=setTimeout(()=>{fitK='';fitH()},150)});
  function pane(anim){const r=$('hx-r');r.innerHTML=`<div class="hx-pane"${anim?'':' style="animation:none"'}>${PANES[i]()}</div>`;r.setAttribute('aria-labelledby','hx-t'+i)}
  function go(n,user){i=(n+PANES.length)%PANES.length;tabs();pane(true);restart()}
  function restart(){clearTimeout(t);left=DUR;t0=Date.now();if(!RM&&!paused)t=setTimeout(tick,left)}
@@ -4474,7 +4491,7 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
    Q=[e?LX(`That ${KK[e.k][0]} just now, why did it go that way?`,`방금 ${KK[e.k][1]}, 왜 그렇게 된 거야?`):LX('What matters right now?','지금 뭐가 중요해?'),LX(`How much is ${lead} ahead right now?`,`${lead} 지금 몇 % 유리해?`),LX('Who built the gold lead?','골드 리드는 누가 만든 거야?')]}
   else Q=[LX("I'm new to LoL. What matters right now?",'롤 잘 모르는데, 지금 뭐가 중요해?'),LX('Who built the gold lead?','골드 리드는 누가 만든 거야?'),LX('Is this a comeback?','이거 역전각이야?')];
   box.innerHTML=Q.map(q=>`<button type="button" data-hxq="${q.replace(/"/g,'&quot;')}">${q}</button>`).join('')}
- let lastKey='';function render(){const key=LANG+LG;if(key!==lastKey){left_();lastKey=key}chips();tabs();pane(false);if(!t&&!RM)restart()}
+ let lastKey='';function render(){const key=LANG+LG;if(key!==lastKey){left_();lastKey=key}chips();tabs();fitK='';fitH();pane(false);if(!t&&!RM)restart()}
  return{render,go}})();
 
 /* ===== 3D holographic tilt (moment cards) ===== */
