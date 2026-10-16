@@ -2446,6 +2446,14 @@ a.p2-btn{text-decoration:none;display:inline-flex;align-items:center;justify-con
 .hx-rank{gap:6px}.hx-rank button{padding:10px 14px}
 .hx-tabs button{min-height:44px}
 @media (max-width:760px){.hx-mucard .hx-mu{min-height:260px}}
+
+/* ticker: past results off-screen to the left, spring back to live */
+.tk-tail{flex:none;display:block;height:1px}
+.tk.lastfin{margin-right:10px;box-shadow:10px 0 0 -9px var(--line)}
+.ticker .tk-lbl{transition:color .2s}
+.ticker.tk-pastv .tk-lbl{color:var(--v-ui)}
+.ticker.tk-pastv .tk-track{-webkit-mask-image:linear-gradient(90deg,#000 92%,transparent);mask-image:linear-gradient(90deg,#000 92%,transparent)}
+.tk-nav{width:44px!important}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -3876,18 +3884,28 @@ function tkCard(m){let st,sa='',sb='',ca='',cb='';
   else if(m.st==='final'){st=`<span class="tst">FINAL</span>`;[sa,sb]=m.sc.split(':');ca=+sa>+sb?'w':'l';cb=+sb>+sa?'w':'l'}
   else st=`<span class="tst">${fmtWhen(m)}</span>`;
   const fv=(window.PREFS&&PREFS.tm||[]);const star=fv.includes(m.a)||fv.includes(m.b);return `<a class="tk ${m.st} ${star?'fav':''}" href="#match/${m.id}" data-m="${m.id}"><div class="tk-top"><em>${m.lg}</em>${st}</div><div class="tk-row ${ca}"><b>${m.a}</b><span>${sa}</span></div><div class="tk-row ${cb}"><b>${m.b}</b><span>${sb}</span></div></a>`}
-/* default view: LIVE first at the far left, then upcoming. Past results load only via the left arrow. */
+/* default view: LIVE first at the left edge. Past results sit just off-screen to the left:
+   drag (or ‹) pulls them in, and the bar springs back to the live match when you let go. */
+function tkHome(){const tr=document.getElementById('tk-track');if(!tr)return 0;const f=tr.querySelector('.tk.live,.tk.up');if(!f)return tr.scrollWidth;return Math.round(f.getBoundingClientRect().left-tr.getBoundingClientRect().left+tr.scrollLeft)}
+function tkPad(){const tr=document.getElementById('tk-track');if(!tr)return;const p=tr.querySelector('.tk-tail');if(!p)return;p.style.width='0px';const need=tkHome()+tr.clientWidth-tr.scrollWidth;p.style.width=Math.max(0,need)+'px'}
+function tkSnap(smooth){const tr=document.getElementById('tk-track');if(!tr||tkPast)return;clearTimeout(tr._snap);const x=tkHome();if(Math.abs(tr.scrollLeft-x)<2)return;
+ tr.scrollTo({left:x,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});setTimeout(tkNavState,500)}
+function tkSnapLater(ms){const tr=document.getElementById('tk-track');if(!tr||tkPast)return;clearTimeout(tr._snap);tr._snap=setTimeout(()=>{tr._snap=0;tkSnap(true)},ms)}
 function renderTicker(){const tr=document.getElementById('tk-track');if(!tr)return;const t=tickerSets();
  const now=[...t.live,...t.up];tkPast=!now.length;
- tr.innerHTML=(tkPast?t.fin:now).map(tkCard).join('');tr.scrollLeft=tkPast?tr.scrollWidth:0;tkNavState();try{HC.render()}catch(e){}}
-function tkShowPast(){const tr=document.getElementById('tk-track');if(!tr||tkPast)return false;const t=tickerSets();if(!t.fin.length)return false;
- const w0=tr.scrollWidth;tr.insertAdjacentHTML('afterbegin',t.fin.map(tkCard).join(''));const fs=tr.querySelectorAll('.tk.final');fs[fs.length-1].classList.add('lastfin');
- tr.scrollLeft=tr.scrollWidth-w0;tkPast=true;return true}
+ tr.innerHTML=tkPast?t.fin.map(tkCard).join(''):t.fin.map(tkCard).join('')+now.map(tkCard).join('')+'<span class="tk-tail" aria-hidden="true"></span>';
+ const fs=tr.querySelectorAll('.tk.final');if(!tkPast&&fs.length)fs[fs.length-1].classList.add('lastfin');
+ if(tkPast)tr.scrollLeft=tr.scrollWidth;else{tkPad();tr.scrollLeft=tkHome()}tkNavState();try{HC.render()}catch(e){}}
+function tkShowPast(){return false}
 function tkNavState(){const tr=document.getElementById('tk-track');if(!tr)return;const l=document.querySelector('.tk-nav.l'),r=document.querySelector('.tk-nav.r');
- const hasPast=!tkPast&&tickerSets().fin.length;if(l)l.disabled=tr.scrollLeft<4&&!hasPast;if(r)r.disabled=tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-4}
+ if(l)l.disabled=tr.scrollLeft<4;const tail=tr.querySelector('.tk-tail');const end=tr.scrollWidth-(tail?tail.offsetWidth:0);if(r)r.disabled=tr.scrollLeft+tr.clientWidth>=end-4;
+ const tk=document.getElementById('ticker');if(tk&&!tkPast)tk.classList.toggle('tk-pastv',tr.scrollLeft<tkHome()-40)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-m]');if(a&&!e.target.closest('#ipanel .ent')){e.preventDefault();if(typeof closeEntity==='function')closeEntity();nav(null,'match/'+a.dataset.m)}
  const n=e.target.closest('.tk-nav');if(n){const tr=document.getElementById('tk-track');const left=n.classList.contains('l');if(left&&tr.scrollLeft<4)tkShowPast();
   tr.scrollBy({left:(left?-1:1)*tr.clientWidth*.8,behavior:'smooth'});setTimeout(tkNavState,450)}});
+document.addEventListener('DOMContentLoaded',()=>{const tk=document.getElementById('ticker');if(!tk)return;tk.addEventListener('mouseleave',()=>tkSnapLater(600));
+ const tr=document.getElementById('tk-track');tr.addEventListener('touchend',()=>tkSnapLater(1800),{passive:true});tr.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'&&tr._snap&&!tr.classList.contains('drag')){tkSnapLater(1800)}})});
+window.addEventListener('resize',()=>{try{tkPad();tkSnap(false)}catch(e){}});
 document.addEventListener('DOMContentLoaded',()=>{const tr=document.getElementById('tk-track');if(tr)tr.addEventListener('scroll',()=>{clearTimeout(tr._t);tr._t=setTimeout(tkNavState,80)},{passive:true})});
 window.addEventListener('resize',()=>{try{tkNavState()}catch(e){}});
 /* deterministic game model for a match */
@@ -4536,9 +4554,9 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
 
 /* score ticker: mouse drag-to-scroll (touch already scrolls natively); a drag never triggers a card click */
 (function(){const t=document.getElementById('tk-track');if(!t)return;let down=false,moved=false,x0=0,s0=0,id=null;
- t.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;down=true;moved=false;x0=e.clientX;s0=t.scrollLeft;id=e.pointerId});
+ t.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0)return;clearTimeout(t._snap);down=true;moved=false;x0=e.clientX;s0=t.scrollLeft;id=e.pointerId});
  t.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-x0;if(!moved&&Math.abs(dx)>5){moved=true;t.classList.add('drag');try{t.setPointerCapture(id)}catch(_){}}if(moved){t.scrollLeft=s0-dx;e.preventDefault()}});
- const end=()=>{if(!down)return;down=false;if(moved){t.classList.remove('drag');t.dispatchEvent(new Event('scroll'))}};
+ const end=()=>{if(!down)return;down=false;if(moved){t.classList.remove('drag');t.dispatchEvent(new Event('scroll'));try{tkSnapLater(1800)}catch(_){}}};
  t.addEventListener('pointerup',end);t.addEventListener('pointercancel',end);t.addEventListener('lostpointercapture',end);
  t.addEventListener('click',e=>{if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
  t.addEventListener('dragstart',e=>e.preventDefault());})();
