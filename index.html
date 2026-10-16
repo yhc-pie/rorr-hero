@@ -3143,6 +3143,14 @@ body.msv-on{overflow:hidden}
 @media (max-width:420px){.portal{grid-template-columns:minmax(0,1fr)!important}.portal>*{min-width:0}.pside{grid-template-columns:minmax(0,1fr)!important}.pside>*{min-width:0}#p-rank .tb th,#p-rank .tb td,#p-team .tb th,#p-team .tb td{padding-left:6px;padding-right:6px}.lgchips{flex-wrap:wrap}}
 .bx-df .dsn{margin:8px 0 4px;font-size:13px;line-height:1.55;color:var(--ink)}
 .l-ko{display:none}html[lang=ko] .l-ko{display:inline}html[lang=ko] .l-en{display:none}.au-terms a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+
+.np-wait{display:grid;gap:10px}
+.np-go{height:44px;width:100%;border:1px dashed color-mix(in srgb,var(--spark) 55%,var(--line));border-radius:999px;background:color-mix(in srgb,var(--spark) 8%,transparent);color:var(--mute);font:800 15px "Pretendard Variable",sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:not-allowed}
+.np-go .bx-i{opacity:.7}
+.np-wait p{margin:0;display:grid;gap:4px;font-size:13.5px;line-height:1.5;color:var(--mute)}.np-wait p b{color:var(--ink);font-size:14px}
+.np-bell{justify-self:start;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:none;color:var(--ink);font:700 13.5px "Pretendard Variable",sans-serif;cursor:pointer}
+.np-bell:hover{border-color:var(--v-ui)}.np-bell.on{border-color:var(--v-ui);color:var(--v-ui);background:color-mix(in srgb,var(--v-ui) 10%,transparent)}
+.np-bell:focus-visible{outline:2px solid var(--v-ui);outline-offset:2px}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -3861,6 +3869,18 @@ document.getElementById('teams')&&(document.getElementById('teams').innerHTML=TE
 const ITEMS=[{n:'Default look',s:'Equipped',img:'waving',c:'eq'},{n:'Cheer scarf',s:'Owned · tap to wear',img:'cheer'},{n:'Thinking pose pack',s:'Owned · tap to wear',img:'thinking'},{n:'Team home kit',s:'With team partners · soon',img:'excited',c:'lock'}];
 document.getElementById('items')&&(document.getElementById('items').innerHTML=ITEMS.map(it=>`<div class="it ${it.c||''}" onclick="${it.c==='lock'?"toast('Coming with team partners')":"this.parentNode.querySelectorAll('.it').forEach(x=>x.classList.remove('eq'));this.classList.add('eq');toast('Muse is wearing it')"}"><div class="th"><img src="${IMG[it.img]}" alt=""></div><div class="nm">${it.n}</div><div class="st">${it.s}</div></div>`).join(''));
 
+
+/* non-partner Spark box when no moment is open: show where/when the button opens, never a dead end (2026-10-17) */
+function npWait(tm){const live=DB.sched.find(x=>x.st==='live'&&(x.a===tm||x.b===tm));const nx=DB.sched.filter(x=>x.st==='up'&&(x.a===tm||x.b===tm)).sort((a,b)=>a.at-b.at)[0];
+ let on=false;try{on=(JSON.parse(localStorage.getItem('rorr-mstart')||'[]')).includes(tm)}catch(e){}
+ const when=live?LX('The match is live. The button opens at the next big moment.','지금 경기 중이에요. 다음 큰 순간이 오면 버튼이 열려요.'):nx?(()=>{const p=localParts(nx.at);const op=nx.a===tm?nx.b:nx.a;return LX(`Next ${tm} match: ${p.d} ${p.t} vs ${op}`,`다음 ${tm} 경기: ${p.d} ${p.t} · ${op}전`)})():LX('No match scheduled yet.','예정된 경기가 아직 없어요.');
+ return `<div class="np-wait"><button type="button" class="np-go" disabled aria-describedby="npw-${esc(tm)}">${BX.IC.s}<span>${LX('Spark Boost · opens during the match','Spark Boost · 경기 중에 열려요')}</span></button>
+  <p id="npw-${esc(tm)}"><b>${when}</b><span>${LX('Boost a big moment with Spark during the match to get its moment card and climb the supporter ranking.','경기 중 큰 순간에 Spark로 Boost하면 그 순간의 모먼트 카드를 받고 서포터 순위에 올라요.')}</span></p>
+  ${!live&&nx?`<button type="button" class="np-bell${on?' on':''}" data-npstart="${esc(tm)}" aria-pressed="${on}">${on?LX('Match alert on ✓','경기 시작 알림 켜짐 ✓'):LX(`Alert me when ${tm} plays`,`${tm} 경기 시작 알림 받기`)}</button>`:''}</div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-npstart]');if(!b)return;const tm=b.dataset.npstart;let L=[];try{L=JSON.parse(localStorage.getItem('rorr-mstart')||'[]')}catch(x){}
+ const on=!L.includes(tm);L=on?[...L,tm]:L.filter(x=>x!==tm);try{localStorage.setItem('rorr-mstart',JSON.stringify(L))}catch(x){}
+ b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);b.textContent=on?LX('Match alert on ✓','경기 시작 알림 켜짐 ✓'):LX(`Alert me when ${tm} plays`,`${tm} 경기 시작 알림 받기`);
+ toast(on?LX(`We'll let you know 10 minutes before ${tm} plays`,`${tm} 경기 시작 10분 전에 알려 드릴게요`):LX(`Match alerts for ${tm} turned off`,`${tm} 경기 시작 알림을 껐어요`))});
 /* ===== legal pages ===== */
 document.addEventListener('click',e=>{const a=e.target.closest('[data-aulg]');if(!a)return;document.body.classList.remove('authing');nav(e,a.dataset.aulg)});
 const LEGAL=(()=>{let D=null;const N={terms:['Terms of Service','이용약관'],privacy:['Privacy Policy','개인정보 처리방침'],refund:['Refund Policy','환불 정책']};let io=null;
@@ -4430,7 +4450,7 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
      <div class="bx-cur"><label class="s on"><input type="radio" name="bxc-${esc(id)}" value="spark" checked>${BX.IC.s}<span><b>Spark</b><em>${LX('Balance','보유')} <i class="sk">${S.spark}</i></em></span></label><label class="dis" aria-disabled="true"><input type="radio" disabled>${BX.IC.e}<span><b>Energy</b><em>${LX('Not available for this match','이 경기에서는 사용 불가')}</em></span></label></div>
      ${lm&&!lm.none?`<div class="sup-amts" role="radiogroup">${[5,10,20].map((n,i)=>`<button type="button" class="${i===1?'on':''}" data-amt="${n}">${n}</button>`).join('')}</div>
      <button class="sup-go spk" type="button">${LX('Boost this moment with Spark 10','Spark 10으로 이 순간 Boost')}</button><span class="bx-ded"></span>`
-     :`<p class="bx-wait">${LX('Spark Boosts open during big moments of a live match.','Spark 응원은 경기 중 큰 순간에 열려요.')}</p>`}
+     :npWait(tm)}
      <div class="bx-dist off"><b>${LX('Not shared with any team','팀에 분배되지 않음')}</b><span>${LX('Boosts in this match are not paid to any team. There are no paid items for sale either.','이 경기에서 보낸 Boost는 어느 팀에도 지급되지 않아요. 판매 상품과 유료 장식도 없어요.')}</span></div>
      <a class="lnk" href="#spark" onclick="nav(event,'spark')">${LX('Get Spark on the ad wall →','광고 월에서 Spark 받기 →')}</a></section>
     ${BX.pmHTML(tm,kind==='player'?id:null)}
