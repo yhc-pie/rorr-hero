@@ -3940,7 +3940,11 @@ function tkCard(m){let st,sa='',sb='',ca='',cb='';
 /* default view: LIVE first at the left edge. Past results sit just off-screen to the left:
    drag (or ‹) pulls them in, and the bar springs back to the live match when you let go. */
 function tkHome(){const tr=document.getElementById('tk-track');if(!tr)return 0;const f=tr.querySelector('.tk.live,.tk.up');if(!f)return tr.scrollWidth;return Math.round(f.getBoundingClientRect().left-tr.getBoundingClientRect().left+tr.scrollLeft)}
-function tkPad(){const tr=document.getElementById('tk-track');if(!tr)return;const p=tr.querySelector('.tk-tail');if(!p)return;p.style.width='0px';const need=tkHome()+tr.clientWidth-tr.scrollWidth;p.style.width=Math.max(0,need)+'px'}
+function tkPad(){const tr=document.getElementById('tk-track');if(!tr)return;const p=tr.querySelector('.tk-tail');if(!p)return;p.style.width=tr.clientWidth+'px'}
+/* keep the live match at the left edge whenever the bar's size or fonts change */
+(function(){const anchor=()=>{const tr=document.getElementById('tk-track');if(!tr||tkPast||tr.classList.contains('drag')||tr._snap||tr.matches(':hover'))return;tkPad();tr.scrollLeft=tkHome();tkNavState()};
+ addEventListener('load',anchor);try{document.fonts&&document.fonts.ready.then(anchor)}catch(e){}
+ const tr=document.getElementById('tk-track');if(tr&&'ResizeObserver' in window)new ResizeObserver(()=>anchor()).observe(tr)})();
 function tkSnap(smooth){const tr=document.getElementById('tk-track');if(!tr||tkPast)return;clearTimeout(tr._snap);const x=tkHome();if(Math.abs(tr.scrollLeft-x)<2)return;
  tr.scrollTo({left:x,behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'});setTimeout(tkNavState,500)}
 function tkSnapLater(ms){const tr=document.getElementById('tk-track');if(!tr||tkPast)return;clearTimeout(tr._snap);tr._snap=setTimeout(()=>{tr._snap=0;tkSnap(true)},ms)}
