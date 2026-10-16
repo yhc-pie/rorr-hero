@@ -2895,6 +2895,18 @@ body.pfc-on{overflow:hidden}
 }
 .fl-ms .ms-pl{border:0;background:none;padding:2px 0;font:700 11px "Pretendard Variable",sans-serif;color:var(--cyan);cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:2px;transition:text-decoration-color .2s}
 .fl-ms .ms-pl:hover{text-decoration-color:currentColor}.fl-ms .ms-pl:focus-visible{outline:2px solid var(--v-ui);outline-offset:2px;border-radius:4px}
+
+/* rank: bottom space + entity links (2026-10-16) */
+#pg-rank .wrap{padding-bottom:90px}
+.rk-lks{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.rk-lk{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font:600 13px "Pretendard Variable",sans-serif;text-decoration:none;cursor:pointer;transition:border-color .2s}
+.rk-lk:hover{border-color:var(--v-ui)}
+.rk-lk:focus-visible{outline:2px solid var(--v-ui);outline-offset:2px}
+.rk-lk.lv i{width:7px;height:7px;border-radius:50%;background:var(--live,#E5484D)}
+button.rk-pl{width:100%;border:0;border-bottom:1px solid var(--line);grid-template-columns:28px minmax(0,1fr) auto auto;padding:0 6px;background:transparent;color:inherit;font:inherit;text-align:left;cursor:pointer;border-radius:10px;transition:background .2s}
+button.rk-pl:hover{background:var(--bg3)}
+button.rk-pl:focus-visible{outline:2px solid var(--v-ui);outline-offset:1px}
+.rk-pl .rk-go{font-style:normal;color:var(--mute);font-size:18px;line-height:1;margin-left:4px}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -4191,6 +4203,7 @@ const RK=(()=>{let N=18402;let st={tm:null,per:'s',cr:'pts',near:false,ptx:false
   el.innerHTML=`<section class="rk-top"><div class="rk-head">
     <div class="rk-ht">${isP?`<img src="${T1LOGO}" alt="" width="44" height="44">`:''}<h1>${LX(`${TM} supporter ranking`,`${TM} 서포터 순위`)}</h1><label class="rk-tsel"><span class="sr">${LX('Team','팀')}</span><select data-rktm aria-label="${LX('Choose a team','팀 선택')}"><optgroup label="${LX('Partner teams','파트너 팀')}">${LCKT().filter(t=>PARTNER_T.includes(t)).map(t=>`<option value="${t}"${t===TM?' selected':''}>${t}</option>`).join('')}</optgroup><optgroup label="${LX('Other teams · Spark cheering','그 외 팀 · Spark 응원 기준')}">${LCKT().filter(t=>!PARTNER_T.includes(t)).sort().map(t=>`<option value="${t}"${t===TM?' selected':''}>${t}</option>`).join('')}</optgroup></select></label></div>
     <p class="rk-hs">${LX(`<b>${fmt(N)}</b> supporters this season · ranked by cheer points · payments never shown`,`이번 시즌 참여 팬 <b>${fmt(N)}</b>명 · 응원 포인트 기준 · 결제액 비공개`)}</p>
+     <div class="rk-lks"><button type="button" class="rk-lk" data-rkteam="${TM}">${LX(`${TM} team page`,`${TM} 팀 페이지`)} →</button>${isP?`<button type="button" class="rk-lk" data-rkcheer="${TM}">${LX(`Cheer ${TM}`,`${TM} 응원하기`)} →</button>`:''}${lv?`<a class="rk-lk lv" href="#match/${lv.id}" onclick="nav(event,'match/${lv.id}')"><i></i>${LX(`Live now · ${lv.a} vs ${lv.b}`,`지금 경기 중 · ${lv.a} vs ${lv.b}`)} →</a>`:''}</div>
     ${isP?'':`<p class="rk-npn">${LX(`${TM} can only be cheered with Spark, so this ranking uses Spark cheer points. Every moment you cheer earns the same points. This is a RORR fan record, not run or endorsed by ${TM}.`,`이 팀은 Spark로만 응원할 수 있어서, 순위도 Spark 응원 포인트로 매겨요. 포인트는 응원한 순간마다 똑같이 쌓여요. ${TM} 구단이 운영하거나 보증하지 않는 RORR 팬 기록이에요.`)}</p>`}
     ${isP?`<div class="rk-gl"><div><span>${LX('Fandom season goal','팬덤 시즌 응원 목표')}</span><span><b>${Math.min(100,Math.round(goal/10000))}%</b> · ${fmt(goal)} / 1,000,000 P</span></div><span class="pb"><i style="width:${Math.min(100,goal/10000)}%"></i></span></div>`:''}</div>
 </section>
@@ -4215,10 +4228,13 @@ const RK=(()=>{let N=18402;let st={tm:null,per:'s',cr:'pts',near:false,ptx:false
     <section class="box rk-sb"><div class="p2-hh"><h3>${LX('Supporter highlights','서포터 하이라이트')}</h3><span>${LX(`${TM} · this week`,`${TM} · 이번 주`)}</span></div><div class="rk-hl">${(()=>{const k=isP?1:.45;const c=Math.max(3,Math.round(41*k)),sk=Math.max(2,Math.round(23*k)),b=Math.max(1,Math.round(9*k));return [[LX('Most cards','카드 최다'),TLEAD.cards,LX(`${c} cards`,`${c}장`)],[LX('Longest streak','최장 연속 응원'),TLEAD.streak,LX(`${sk} games`,`${sk}경기`)],[LX('Most big moments','큰 순간 참여'),TLEAD.big,LX(`${b} times`,`${b}회`)]]})().map(h=>`<div><span>${h[0]}</span><b>${nm(h[1])}</b><em>${h[2]}</em></div>`).join('')}</div></section>
     <section class="box rk-sb"><div class="p2-hh"><h3>${LX('This match · top 5','이번 경기 TOP 5')}</h3>${lv?`<a class="rk-lv" href="#match/${lv.id}" onclick="nav(event,'match/${lv.id}')"><i></i>LIVE · ${lv.a} vs ${lv.b}</a>`:''}</div>${lv?`<ol class="bx-lb">${mt}</ol>`:`<p class="rk-nt">${LX(`Shown during ${TM} matches.`,`${TM} 경기 중에 표시돼요.`)}</p>`}</section>
     ${isP?`<section class="box rk-sb"><div class="p2-hh"><h3>${LX('Top supporter by player','선수별 대표 서포터')}</h3></div><p class="rk-nt" style="margin:0">${LX("Fan who cheered most for that player's moments · this season",'그 선수의 순간에 가장 많이 응원한 팬 · 이번 시즌')}</p>
-     <div class="rk-pls">${PLF.map(([p,n,v])=>`<div class="rk-pl"><img src="assets/t1/web/${T1P[p][1]}.webp" alt="" loading="lazy"><span><b>${p}</b> · ${nm(n)}</span><b class="v">${fmt(v)} P</b></div>`).join('')}</div>
+     <div class="rk-pls">${PLF.map(([p,n,v])=>`<button type="button" class="rk-pl" data-rkpl="${p}" aria-label="${LX(`${p} player page`,`${p} 선수 페이지`)}"><img src="assets/t1/web/${T1P[p][1]}.webp" alt="" loading="lazy"><span><b>${p}</b> · ${nm(n)}</span><b class="v">${fmt(v)} P</b><i class="rk-go" aria-hidden="true">›</i></button>`).join('')}</div>
      <div class="rk-sf"><span>${LX('By player-moment Boosts','선수 순간 Boost 기준')}</span></div></section>`:''}
    </aside></div>`;
   el.querySelectorAll('[data-rkp]').forEach(b=>b.onclick=()=>{st.per=b.dataset.rkp;render()});
+  el.querySelectorAll('[data-rkpl]').forEach(b=>b.onclick=()=>openPlayer(b.dataset.rkpl));
+  el.querySelectorAll('[data-rkteam]').forEach(b=>b.onclick=()=>openTeam(b.dataset.rkteam));
+  el.querySelectorAll('[data-rkcheer]').forEach(b=>b.onclick=()=>{PTAB['team/'+b.dataset.rkcheer]='cheer';openTeam(b.dataset.rkcheer)});
   const tsl=el.querySelector('[data-rktm]');if(tsl)tsl.onchange=()=>{st.tm=tsl.value;st.near=false;render()};
   el.classList.toggle('rk-np',!isP);
   el.querySelectorAll('[data-rkc]').forEach(b=>b.onclick=()=>{st.cr=b.dataset.rkc;render()});
