@@ -247,7 +247,7 @@ html[lang=ko] .pos h1{text-transform:none}
 .pmeta span+span::before{content:"·";margin-right:14px;color:var(--line)}
 .pcard h2{font-size:26px;margin:10px 0 8px}.pcard p{color:var(--mute);font-size:15.5px}
 .pcard .go{display:inline-block;margin-top:12px;font-size:14px;color:var(--gold)}
-.post{max-width:720px!important;padding-top:110px!important;padding-bottom:90px}
+.post{max-width:720px!important;padding-top:24px!important;padding-bottom:90px}
 .post h1{font-size:clamp(34px,5vw,52px);letter-spacing:-.03em;margin:14px 0 10px}
 .post .by{color:var(--mute);font-size:14px;margin-bottom:34px}
 .back2{font-size:14px;color:var(--mute);text-decoration:none;display:inline-block;margin-bottom:22px}
@@ -2528,10 +2528,18 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
 .mx-mb .bx-tc.gold{color:#C9A227;border-color:color-mix(in srgb,#C9A227 50%,var(--line))}.mx-mb .bx-tc.holo{color:var(--v-ui);border-color:color-mix(in srgb,var(--v-ui) 50%,var(--line))}
 .mx-tbl table{min-width:0}
 
+/* sub-page edge alignment on mobile (blog list, about): match the 20px content gutter */
+/* sub-page headers live inside their content column so the left edge always matches */
+body.pagev #pg-about .rhero.sub-h,body.pagev #pg-blog .rhero.sub-h{margin:0 0 28px!important;padding:0!important;max-width:none!important;text-align:left;border:0!important;background:none!important}
+body.pagev #pg-blog .rhero.sub-h{max-width:760px!important;margin:0 auto 28px!important}
+body.pagev .rhero.sub-h h1,body.pagev .rhero.sub-h .sub{margin-left:0!important;padding-left:0!important}
+#pg-about .ab h2,#pg-about .ab h3{text-transform:none!important;letter-spacing:-.01em}
+#pg-blog .plist-r .pcard{padding-left:0!important;padding-right:0!important}
+#pg-blog .wrap,#pg-about .ab{margin-top:36px}
 /* FAQ page */
-.fq{max-width:820px;margin:48px auto 90px}
+.fq{max-width:760px;margin:36px auto 90px}
 .fq-h{margin-bottom:20px}
-.fq-h h1{font-size:clamp(30px,4.2vw,44px);font-weight:800;letter-spacing:-.03em;margin:0 0 8px}
+.fq-h h1{font-size:clamp(30px,3.2vw,40px)!important;font-weight:800;letter-spacing:-.03em;margin:0 0 8px}
 .fq-h p{margin:0;color:var(--mute);font-size:16px;line-height:1.55;max-width:60ch}
 .fq-cats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 28px}
 .fq-cats button{min-height:40px;padding:0 16px;border-radius:9999px;border:1px solid var(--line);background:none;color:var(--ink);font:700 14px "Pretendard Variable",sans-serif;cursor:pointer}
@@ -2555,7 +2563,7 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
 .fq-more{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:12px;padding:20px 22px;border:1px solid var(--line);border-radius:16px;background:var(--bg2)}
 .fq-more>div:first-child{display:grid;gap:4px}.fq-more b{font-size:16px}.fq-more span{font-size:14px;color:var(--mute)}
 .fq-ma{display:flex;gap:8px;flex-wrap:wrap}
-@media (max-width:760px){.fq{margin-top:28px}.fq-i>summary{font-size:15px}}
+@media (max-width:760px){.fq{margin-top:36px}.fq-i>summary{font-size:15px}}
 /* ===== Stats hub (2026-10-16) ===== */
 .wg-ftg{display:none}
 .wg-view button:first-child,.wg-unit button:first-child{border-radius:7px 0 0 7px}.wg-view button:last-child,.wg-unit button:last-child{border-radius:0 7px 7px 0}
@@ -2572,8 +2580,8 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
 
 #pg-stats .wg .hub-h{margin:0 0 20px!important;padding:0!important;max-width:none!important;text-align:left}
 .hub-h h1{margin-bottom:8px}
-#pg-stats .wg{margin-top:48px}
-@media (max-width:760px){#pg-stats .wg{margin-top:28px}}
+#pg-stats .wg{margin-top:36px}
+@media (max-width:760px){#pg-stats .wg{margin-top:36px}}
 .hub-q{position:relative;display:flex;align-items:center;margin-bottom:14px}
 .hub-q svg{position:absolute;left:16px;width:18px;height:18px;fill:none;stroke:var(--mute);stroke-width:2;stroke-linecap:round;pointer-events:none}
 .hub-q input{width:100%;height:48px;border:1px solid var(--line);border-radius:12px;background:var(--bg2);color:var(--ink);font:500 15px "Pretendard Variable",sans-serif;padding:0 44px 0 44px;outline:0}
@@ -2890,12 +2898,12 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
 <div class="rpage" id="pg-wge" data-r="wge"></div>
 <div class="rpage" id="pg-faq" data-r="faq"><div class="fq wrap" id="fq"></div></div>
 <div class="rpage" id="pg-about" data-r="about">
- <section class="rhero" style="padding-bottom:40px">
+ <div class="ab wrap">
+ <section class="rhero sub-h">
   <div class="k">ABOUT US</div>
   <h1>We build the AI that knows pro League.</h1>
   <p class="sub">RORR is made by Pitch Interactive, a small team from esports, games and telecom research in Seoul.</p>
  </section>
- <div class="ab wrap">
   <section class="ab-s">
    <h2>What we make</h2>
    <div class="ab-g3">
@@ -2928,12 +2936,11 @@ body.hdrask .askfab{opacity:0!important;pointer-events:none!important;transform:
  </div>
 </div>
 <div class="rpage" id="pg-blog" data-r="blog">
- <section class="rhero" style="padding-bottom:44px">
+ <div class="wrap"><section class="rhero sub-h">
   <div class="k">BLOG</div>
   <h1>Notes from RORR</h1>
   <p class="sub">What we're building, how Muse reads a match, and the rules we keep.</p>
- </section>
- <div class="wrap"><div class="plist" id="plist"></div></div>
+ </section><div class="plist" id="plist"></div></div>
 </div>
 <div class="rpage" id="pg-post" data-r="post">
  <article class="post wrap" id="post"></article>
