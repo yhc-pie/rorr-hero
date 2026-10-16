@@ -1101,6 +1101,71 @@ body.onboarding{overflow:hidden}body.onboarding .onb{display:flex;animation:fade
 .rw-fx i{position:absolute;top:55%;width:9px;height:14px;border-radius:2px;opacity:0;animation:rwconf 1.8s cubic-bezier(.15,.7,.4,1) forwards}
 @keyframes rwconf{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx),calc(var(--dy) + 520px)) rotate(var(--r))}}
 
+/* ===== Boost reward v2: Muse cut-in (2026-10-17) — intensity follows the MOMENT tier, never the amount ===== */
+#reward{--rc-a:#3A4556;--rc-b:#8FA3BC;--rc-edge:#DDE6F2;--rc-glow:rgba(200,215,235,.35);--rc-ink:#fff}
+#reward[data-mt=gold]{--rc-a:#4A2C04;--rc-b:#F2B53A;--rc-edge:#FFE3A1;--rc-glow:rgba(245,190,80,.5)}
+#reward[data-mt=holo]{--rc-a:#2F9CFC;--rc-b:#FE2054;--rc-edge:#FFFFFF;--rc-glow:rgba(155,123,255,.55)}
+#reward[data-mt=ms]{--rc-a:#3B2A0E;--rc-b:#E9C57A;--rc-edge:#F8E7B8;--rc-glow:rgba(233,197,122,.5)}
+.rw-cut{position:absolute;inset:0;display:none;pointer-events:none;overflow:hidden}
+.reward.cut .rw-cut{display:block}
+.reward.cut .rw-card{visibility:hidden}
+.rc-band{position:absolute;left:-12%;right:-12%;top:50%;height:clamp(200px,40vh,340px);margin-top:calc(clamp(200px,40vh,340px) / -2);transform:skewY(-7deg);background:linear-gradient(100deg,var(--rc-a),var(--rc-b));box-shadow:0 0 0 2px var(--rc-edge),0 0 90px var(--rc-glow);clip-path:inset(0 100% 0 0);overflow:hidden;
+ animation:rcIn .3s cubic-bezier(.75,0,.2,1) forwards,rcOut .28s cubic-bezier(.6,0,.9,.35) var(--rc-out,1.1s) forwards}
+#reward[data-mt=holo] .rc-band{background:linear-gradient(100deg,#2F9CFC,#9B7BFF 28%,#FE2054 52%,#F2C766 76%,#2F9CFC);background-size:200% 100%;animation:rcIn .3s cubic-bezier(.75,0,.2,1) forwards,rcHolo 1.2s linear infinite,rcOut .28s cubic-bezier(.6,0,.9,.35) var(--rc-out,1.1s) forwards}
+@keyframes rcIn{to{clip-path:inset(0 0 0 0)}}
+@keyframes rcOut{from{clip-path:inset(0 0 0 0)}to{clip-path:inset(0 0 0 100%)}}
+@keyframes rcHolo{to{background-position:-200% 0}}
+.rc-lines{position:absolute;inset:0 -100% 0 0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.22) 0 2px,transparent 2px 38px,rgba(255,255,255,.1) 38px 39px,transparent 39px 91px);animation:rcLines .35s linear infinite;mix-blend-mode:overlay}
+@keyframes rcLines{to{transform:translateX(-91px)}}
+.rc-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,8,14,.62) 0%,rgba(6,8,14,.25) 45%,transparent 70%)}
+.rc-dots{position:absolute;right:4%;top:50%;width:min(62vw,560px);aspect-ratio:1;transform:translateY(-50%);background:radial-gradient(circle,var(--rc-edge) 1.6px,transparent 2.2px) 0 0/14px 14px;-webkit-mask:radial-gradient(circle,#000 0,transparent 62%);mask:radial-gradient(circle,#000 0,transparent 62%);opacity:0;animation:rcDots .9s ease .18s forwards}
+@keyframes rcDots{0%{opacity:0;transform:translateY(-50%) scale(.6) rotate(-20deg)}40%{opacity:.55}100%{opacity:.28;transform:translateY(-50%) scale(1) rotate(0)}}
+.rc-muse{position:absolute;right:max(2%,calc(50% - 560px));bottom:calc(50% - clamp(200px,40vh,340px) / 2 - 4vh);height:clamp(260px,58vh,500px);width:auto;filter:drop-shadow(0 0 2px var(--rc-edge)) drop-shadow(0 18px 40px rgba(0,0,0,.55));opacity:0;
+ animation:rcMuseIn .5s cubic-bezier(.2,1.4,.35,1) .14s forwards,rcMuseOut .26s cubic-bezier(.6,0,.9,.4) var(--rc-out,1.1s) forwards}
+@keyframes rcMuseIn{0%{opacity:0;transform:translateX(38vw) scale(1.15) rotate(6deg)}100%{opacity:1;transform:none}}
+@keyframes rcMuseOut{from{opacity:1;transform:none}to{opacity:0;transform:translateX(-22vw) scale(.92)}}
+.rc-txt{position:absolute;left:max(6%,calc(50% - 560px));top:50%;max-width:min(58vw,560px);transform:translateY(-50%) rotate(-7deg);display:grid;gap:6px;color:var(--rc-ink);text-shadow:0 2px 0 rgba(0,0,0,.35),0 0 24px rgba(0,0,0,.45);animation:rcOutTxt .24s ease-in var(--rc-out,1.1s) forwards}
+@keyframes rcOutTxt{to{opacity:0;transform:translateY(-50%) rotate(-7deg) translateX(-12vw)}}
+.rc-k{font:800 13px "Pretendard Variable",sans-serif;letter-spacing:.16em;text-transform:uppercase;opacity:0;animation:rcUp .3s ease .26s forwards}
+.rc-line{display:block;font:900 clamp(28px,5.4vw,60px)/1.06 "Pretendard Variable",sans-serif;letter-spacing:-.02em;transform:skewX(-8deg);word-break:keep-all}
+.rc-line .w{display:inline-block;white-space:nowrap}.rc-line i{display:inline-block;font-style:normal;opacity:0;transform:translateY(.5em) scale(1.3);animation:rcCh .34s cubic-bezier(.2,1.3,.4,1) calc(.3s + var(--i) * 28ms) forwards}
+@keyframes rcCh{to{opacity:1;transform:none}}
+@keyframes rcUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.rc-amt{display:inline-flex;align-items:center;gap:8px;font:800 clamp(18px,2.6vw,26px) "Pretendard Variable",sans-serif;font-variant-numeric:tabular-nums;opacity:0;animation:rcUp .3s ease .42s forwards}
+.rc-amt .bx-i{width:1em;height:1em}
+.rw-ring{position:fixed;left:var(--rx,50%);top:var(--ry,50%);width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;border:3px solid var(--rc-edge);box-shadow:0 0 30px var(--rc-glow),inset 0 0 20px var(--rc-glow);opacity:0;pointer-events:none}
+.reward.on .rw-ring{animation:rcRing .62s cubic-bezier(.1,.7,.3,1) forwards}
+@keyframes rcRing{0%{opacity:1;transform:scale(.2)}100%{opacity:0;transform:scale(16)}}
+.rw-flash{position:absolute;inset:0;background:var(--rc-edge);opacity:0;pointer-events:none}
+.reward.cut .rw-flash{animation:rcFlash .32s ease .16s}
+@keyframes rcFlash{0%{opacity:0}25%{opacity:.32}100%{opacity:0}}
+.reward.cut[data-mt=holo] .rw-cut{animation:rcShake .32s steps(2) .2s}
+@keyframes rcShake{0%{transform:translate(6px,-4px)}25%{transform:translate(-6px,3px)}50%{transform:translate(4px,4px)}75%{transform:translate(-3px,-3px)}100%{transform:none}}
+.rc-skip{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);font:600 12px "Pretendard Variable",sans-serif;color:rgba(255,255,255,.6);opacity:0;animation:rcUp .3s ease .8s forwards}
+.reward.cut{cursor:pointer}
+/* settle: card lands where Muse leaves */
+.reward.settle .rw-card{animation:rwLand .5s cubic-bezier(.2,1.15,.35,1) both}
+@keyframes rwLand{0%{opacity:0;transform:translateY(40px) scale(.94)}100%{opacity:1;transform:none}}
+.reward.settle .rw-muse{animation:rwMuseLand .55s cubic-bezier(.2,1.3,.35,1) .05s both}
+@keyframes rwMuseLand{0%{opacity:0;transform:translateX(60px) rotate(8deg) scale(.85)}100%{opacity:1;transform:none}}
+.rw-cwrap{position:relative;perspective:900px;border-radius:14px}
+.reward.settle .rw-cwrap .bx-card{animation:rwFlipIn .7s cubic-bezier(.2,.9,.3,1.1) .18s both;transform-origin:50% 50%}
+@keyframes rwFlipIn{0%{opacity:0;transform:rotateY(-110deg) translateY(16px)}60%{opacity:1}100%{opacity:1;transform:none}}
+.rw-cwrap::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.5) 50%,transparent 62%);transform:translateX(-130%);mix-blend-mode:overlay}
+.reward.settle .rw-cwrap::after{animation:rwSweep .8s ease .8s forwards}
+@keyframes rwSweep{to{transform:translateX(130%)}}
+#reward[data-mt=holo] .rw-cwrap::before{content:"";position:absolute;inset:-3px;border-radius:16px;background:conic-gradient(from var(--a,0deg),#2F9CFC,#9B7BFF,#FE2054,#F2C766,#2F9CFC);filter:blur(10px);opacity:.75;z-index:-1;animation:rwHoloRim 3s linear infinite}
+@property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes rwHoloRim{to{--a:360deg}}
+.reward.settle .rw-new{animation:rcUp .3s ease .55s both}
+.rw-up{display:inline-block;margin:0 auto;padding:4px 12px;border-radius:999px;font:800 12px "Pretendard Variable",sans-serif;color:#0B0E14;background:var(--rc-edge);box-shadow:0 0 18px var(--rc-glow)}
+.reward.settle .rw-up{animation:rwlv .7s ease .35s both}
+.rw-fx i.sh{width:7px;height:18px;border-radius:1px;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.rw-fx i.st{width:12px;height:12px;border-radius:0;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%)}
+.rw-fx i{top:var(--fy,55%)}
+@media (max-width:640px){.rc-muse{right:-18%;height:clamp(190px,32vh,270px);bottom:calc(50% - clamp(200px,40vh,340px) / 2 + 2px)}.rc-txt{left:6%;max-width:78vw;top:calc(50% - 9vh)}.rc-line{font-size:clamp(26px,7.6vw,38px)}.rc-dots{width:90vw;right:-20%}}
+@media (prefers-reduced-motion:reduce){.reward .rw-cut,.reward .rw-ring,.reward .rw-flash,.reward .rw-fx{display:none!important}.reward *{animation:none!important}.reward.cut .rw-card{visibility:visible}}
+
 /* league bar: coming-soon leagues */
 .lgchips button.soon{opacity:.55;border-style:dashed;display:inline-flex;align-items:center;gap:6px}
 .lgchips button.soon em{font-style:normal;font-size:9.5px;letter-spacing:.06em;border:1px solid var(--line);border-radius:3px;padding:0 4px;color:var(--mute)}
@@ -3515,6 +3580,8 @@ body.msv-on{overflow:hidden}
  </div>
 </div>
 <div class="reward" id="reward" role="dialog" aria-modal="true" aria-label="Boost sent">
+ <div class="rw-ring" aria-hidden="true"></div><div class="rw-flash" aria-hidden="true"></div>
+ <div class="rw-cut" aria-hidden="true"><div class="rc-band"><div class="rc-lines"></div><div class="rc-shade"></div></div><div class="rc-dots"></div><img class="rc-muse" alt=""><div class="rc-txt"><span class="rc-k"></span><b class="rc-line"></b><span class="rc-amt"></span></div><span class="rc-skip"></span></div>
  <div class="rw-fx"></div>
  <div class="rw-card"><div class="rw-glow"></div><img class="rw-muse" alt="Muse">
   <div class="rw-amt"></div><div class="rw-to"></div><p class="rw-line"></p><div class="rw-msg"></div><div class="rw-lv" hidden></div>
@@ -4336,18 +4403,43 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
     try{localStorage.setItem('rorr-amt-'+cur,amt)}catch(_){}const r=BX.addBoost({cur,amt,mom,partner:on,label:lbl,msg,team:tm});reward(on?id:LX("this moment",'이 순간'),cur,amt,msg,r);if(ipKey)openEntity(ipKey)};
    const run=()=>{if(cur==='spark')undoable(LX(`Sending Spark ${amt}`,`Spark ${amt} 보내는 중`),send);else send()};
    if(!document.body.classList.contains('body-in'))openAuth('login',run);else run()}}
- function reward(to,cur,amt,msg,r){const tier=amt>=500?4:amt>=100?3:amt>=50?2:1;const img=['muse-smile','muse-waving','muse-surprised','muse-excited'][tier-1];
-  const line=[LX(`${to} got your cheer!`,`${to}에 응원이 닿았어요!`),LX(`Waving at ${to} with you!`,`같이 손 흔들어요!`),LX("Wait, that's a big one!",'와, 이렇게나요?'),LX("You're the best fan ever!",'최고의 팬이에요!')][tier-1];
-  const el=document.getElementById('reward');el.dataset.tier=tier;el.querySelector('.rw-muse').src='assets/'+img+'.webp';el.querySelector('.rw-amt').innerHTML=(cur==='spark'?BX.IC.s:BX.IC.e)+' '+amt;el.querySelector('.rw-line').textContent=line;
+ function reward(to,cur,amt,msg,r){
+  /* v2 (2026-10-17): Muse cut-in. Intensity follows the moment tier (silver/gold/holo, commemorative), never the amount spent. */
+  const c=r.card||(r.up&&r.up.card)||null;const mt=c?(c.ed==='ms'?'ms':(c.tier||'silver')):'silver';const light=!r.card;
+  const IMG={silver:'muse-smile',gold:'muse-excited',holo:'muse-surprised',ms:'muse-waving'};const img=light?'muse-waving':IMG[mt];
+  const LINES={silver:[`${to} got your cheer!`,`${to}에 응원이 닿았어요!`],gold:['Right on the turning point!','승부처에 딱 맞췄어요!'],holo:["That's one for the history books!",'역사에 남을 순간이에요!'],ms:[`Celebrating ${c&&c.pl||to} together!`,`${c&&c.pl||to}, 같이 축하해요!`]};
+  const line=light?(r.up?LX('Your badge just went up!','배지가 한 단계 올랐어요!'):LX(`${to} got your cheer!`,`${to}에 응원이 닿았어요!`)):LX(...LINES[mt]);
+  const el=document.getElementById('reward');el.dataset.mt=mt;el.dataset.tier=1;
+  el.querySelector('.rw-muse').src='assets/'+img+'.webp';el.querySelector('.rw-amt').innerHTML=(cur==='spark'?BX.IC.s:BX.IC.e)+' '+amt;el.querySelector('.rw-line').textContent=line;
   const mb=el.querySelector('.rw-msg');mb.textContent=msg?`“${msg}”`:'';mb.hidden=!msg;el.querySelector('.rw-to').textContent=r.up&&!r.ptsAdd?LX(`Badge up · ${r.tot} on this moment · points already counted`,`배지 상승 · 이 순간 누적 ${r.tot} · 포인트는 이미 반영됐어요`):r.ptsAdd?LX(`Boost sent · +${r.ptsAdd} P`,`Boost 전송 · +${r.ptsAdd} P`):LX('Boost sent · points for this moment already counted','Boost 전송 · 이 순간 포인트는 이미 반영됐어요');
   let slot=el.querySelector('.rw-cardslot');if(!slot){slot=document.createElement('div');slot.className='rw-cardslot';el.querySelector('.rw-lv').before(slot)}
-  slot.innerHTML=r.card?`<span class="rw-new">${r.card.ed==='ms'?LX('New commemorative edition','새 기념 에디션'):LX('New moment card','새 모먼트 카드')}</span>${BX.cardHTML(r.card,{mine:1})}<button type="button" class="p2-btn" data-bxshare="${r.card.id}">${LX('Show it off','자랑하기')}</button>`:r.up?`<span class="rw-new">${LX(`${r.up.cur==='spark'?'Spark':'Energy'} badge Lv.${r.up.to}`,`${r.up.cur==='spark'?'Spark':'Energy'} 배지 ${r.up.to}단계로`)}</span>${BX.cardHTML(r.up.card,{mine:1})}`:`<p class="bx-ext">${BX_EXT()}</p>`;
+  slot.innerHTML=r.card?`<span class="rw-new">${r.card.ed==='ms'?LX('New commemorative edition','새 기념 에디션'):LX('New moment card','새 모먼트 카드')}</span><div class="rw-cwrap">${BX.cardHTML(r.card,{mine:1})}</div><button type="button" class="p2-btn" data-bxshare="${r.card.id}">${LX('Show it off','자랑하기')}</button>`:r.up?`<span class="rw-up">${LX(`${r.up.cur==='spark'?'Spark':'Energy'} badge Lv.${r.up.to}`,`${r.up.cur==='spark'?'Spark':'Energy'} 배지 ${r.up.to}단계로`)}</span><div class="rw-cwrap">${BX.cardHTML(r.up.card,{mine:1})}</div>`:`<p class="bx-ext">${BX_EXT()}</p>`;
   el.querySelector('.rw-lv').hidden=true;
-  const fx=el.querySelector('.rw-fx');fx.innerHTML='';const n=[14,24,40,70][tier-1];
-  for(let i=0;i<n;i++){const s=document.createElement('i');s.style.left=(50+(Math.random()-.5)*20)+'%';s.style.setProperty('--dx',(Math.random()*900-450)+'px');s.style.setProperty('--dy',(-200-Math.random()*420)+'px');s.style.setProperty('--r',(Math.random()*720-360)+'deg');s.style.background=['#2F9CFC','#6F4CFF','#FE2054','#fff'][i%4];s.style.animationDelay=(Math.random()*.25)+'s';fx.appendChild(s)}
-  el.classList.remove('on');void el.offsetWidth;el.classList.add('on');document.body.classList.add('rewarding')}
- function closeReward(){const el=document.getElementById('reward');if(!el.classList.contains('on'))return false;el.classList.remove('on');document.body.classList.remove('rewarding');return true}
- document.getElementById('reward').addEventListener('click',e=>{if(e.target.closest('[data-bxshare]')){closeReward();return}if(e.target.closest('.rw-ok')||e.target.id==='reward')closeReward()});
+  /* cut-in content */
+  const TK={silver:['Moment','순간'],gold:['Gold moment','골드 모먼트'],holo:['Hologram moment','홀로그램 모먼트'],ms:['Commemorative edition','기념 에디션']};
+  el.querySelector('.rc-k').textContent=LX(...TK[mt])+(r.ptsAdd?` · +${r.ptsAdd} P`:'');
+  {let k=0;el.querySelector('.rc-line').innerHTML=line.split(' ').map(wd=>`<span class="w">${[...wd].map(ch=>`<i style="--i:${k++}">${esc(ch)}</i>`).join('')}</span>`).join(' ')}
+  const am=el.querySelector('.rc-amt');am.innerHTML=`${cur==='spark'?BX.IC.s:BX.IC.e}<span>0</span><small>${cur==='spark'?'Spark':'Energy'}</small>`;
+  el.querySelector('.rc-muse').src='assets/'+img+'.webp';el.querySelector('.rc-skip').textContent=LX('Tap to skip','눌러서 건너뛰기');
+  const OUT={silver:1.0,gold:1.3,holo:1.55,ms:1.45}[mt];el.style.setProperty('--rc-out',OUT+'s');
+  if(rwLast){el.style.setProperty('--rx',rwLast[0]+'px');el.style.setProperty('--ry',rwLast[1]+'px')}else{el.style.removeProperty('--rx');el.style.removeProperty('--ry')}
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* particles: count by moment tier */
+  const PAL={silver:['#E8EEF6','#AFC2D6','#FFFFFF'],gold:['#F5C46A','#FFE7A3','#FFFFFF','#E09A1E'],holo:['#2F9CFC','#9B7BFF','#FE2054','#F2C766','#FFFFFF'],ms:['#F8E7B8','#E9C57A','#FFFFFF']}[mt].concat(cur==='spark'?['#A64DFF']:['#00C2A8']);
+  const fx=el.querySelector('.rw-fx');fx.innerHTML='';const n=reduce?0:light?12:{silver:16,gold:28,holo:44,ms:32}[mt];
+  const burst=(cx,cy,cnt,dl)=>{for(let k=0;k<cnt;k++){const q=document.createElement('i');q.className=k%3===0?'st':k%3===1?'sh':'';q.style.left=cx+'%';q.style.setProperty('--fy',cy+'%');const ang=Math.random()*Math.PI*2,d=180+Math.random()*420;q.style.setProperty('--dx',Math.cos(ang)*d+'px');q.style.setProperty('--dy',(Math.sin(ang)*d-260)+'px');q.style.setProperty('--r',(Math.random()*720-360)+'deg');q.style.background=PAL[k%PAL.length];q.style.animationDelay=(dl+Math.random()*.2)+'s';fx.appendChild(q)}};
+  clearTimeout(el._t1);clearTimeout(el._t2);clearInterval(el._ti);
+  el.classList.remove('on','cut','settle');void el.offsetWidth;el.classList.add('on');document.body.classList.add('rewarding');
+  const settle=()=>{clearTimeout(el._t1);clearInterval(el._ti);if(!el.classList.contains('on'))return;el.classList.remove('cut');el.classList.add('settle');const ok=el.querySelector('.rw-ok');ok&&ok.focus({preventScroll:true})};
+  el._settle=settle;
+  if(reduce||light){burst(50,52,n,0);settle();return}
+  el.classList.add('cut');burst(70,50,n,.18);
+  /* amount counter */
+  const t0=performance.now()+380,dur=520,sp=am.querySelector('span');el._ti=setInterval(()=>{const t=Math.min(1,Math.max(0,(performance.now()-t0)/dur));sp.textContent=Math.round(amt*(1-Math.pow(1-t,3))).toLocaleString('en-US');if(t>=1)clearInterval(el._ti)},30);
+  el._t1=setTimeout(settle,OUT*1000+260)}
+ let rwLast=null;document.addEventListener('pointerdown',e=>{rwLast=[e.clientX,e.clientY]},true);document.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')rwLast=null},true);
+ function closeReward(){const el=document.getElementById('reward');if(!el.classList.contains('on'))return false;if(el.classList.contains('cut')){el._settle&&el._settle();return true}clearTimeout(el._t1);clearInterval(el._ti);el.classList.remove('on','cut','settle');document.body.classList.remove('rewarding');return true}
+ document.getElementById('reward').addEventListener('click',e=>{const rw=document.getElementById('reward');if(rw.classList.contains('cut')){rw._settle&&rw._settle();return}if(e.target.closest('[data-bxshare]')){closeReward();return}if(e.target.closest('.rw-ok')||e.target.id==='reward')closeReward()});
  return{html,bind,closeReward,moments,isPartner,liveMoment,msItem}})();
 
 /* ===== supporter ranking: fans ranked within a partner team (policy: points, not money) ===== */
