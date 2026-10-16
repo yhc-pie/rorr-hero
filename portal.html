@@ -5347,7 +5347,7 @@ const MD=(()=>{const $=id=>document.getElementById(id);let tids=[],fav=null,opp=
   at(1700,()=>{say(L("Who are you cheering for today?","오늘 누구 응원해?"));chips()})}
  let qz=null,streak=0,boosted=false;
  function scene(n){document.querySelectorAll('#md-scn img').forEach(im=>{const on=im.dataset.s===n;if(on&&!im.classList.contains('on')){im.classList.remove('kb');void im.offsetWidth;im.classList.add('kb')}im.classList.toggle('on',on)})}
- function stk(){const e=$('md-stk');e.hidden=!streak;e.textContent=L(`🔥 ${streak} in a row`,`🔥 ${streak}연속`)}
+ function stk(){const e=$('md-stk');e.hidden=!streak;e.textContent=L(`🔥 ${streak} correct in a row`,`🔥 연속 정답 ${streak}`)}
  function sayKeep(text,mood){const f=$('md-feed'),keep=[...f.childNodes];say(text,mood);keep.forEach(n=>f.appendChild(n))}
  function quiz(){const f=$('md-feed');f.innerHTML='';qz={pick:null,open:true};const d=document.createElement('div');d.className='md-qz';d.setAttribute('role','group');d.setAttribute('aria-label',L('Quiz','퀴즈'));
   d.innerHTML=`<div class="qz-h"><b>${L('Next dragon?','다음 드래곤은?')}</b><span class="qz-free">${L('Free','무료')}</span></div><div class="qz-b">${[A,B].map(t=>`<button type="button" data-q="${t}" aria-pressed="false">${t}</button>`).join('')}</div><div class="qz-t"><i id="md-qbar"></i></div><div class="qz-m" id="md-qm">${L('Closes before any stream shows it','중계에 나오기 전에 마감')}</div>`;f.appendChild(d);
