@@ -2907,6 +2907,18 @@ button.rk-pl{width:100%;border:0;border-bottom:1px solid var(--line);grid-templa
 button.rk-pl:hover{background:var(--bg3)}
 button.rk-pl:focus-visible{outline:2px solid var(--v-ui);outline-offset:1px}
 .rk-pl .rk-go{font-style:normal;color:var(--mute);font-size:18px;line-height:1;margin-left:4px}
+
+/* boost amount stepper (2026-10-16) */
+.sup-stp{display:grid;grid-template-columns:48px minmax(0,1fr) 48px;gap:8px;align-items:center}
+.sup-stp .stp{width:48px;height:48px;border-radius:999px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:background .15s,border-color .15s}
+.sup-stp .stp:hover:not(:disabled){border-color:var(--v-ui)}
+.sup-stp .stp:active:not(:disabled){transform:scale(.96)}
+.sup-stp .stp:disabled{opacity:.35;cursor:not-allowed}
+.sup-stp .stp:focus-visible{outline:2px solid var(--v-ui);outline-offset:2px}
+.sup-box .sup-stp .sup-go{height:48px;min-width:0;padding:0 12px;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sup-lv{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 10px;margin-top:-4px;font-size:12.5px;color:var(--mute);text-align:center}
+.sup-lv a{color:var(--cyan);font-weight:700;text-decoration:none}.sup-lv a:hover{text-decoration:underline}
+.sup-box .sup-stp .sup-go>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sup-box .sup-stp .sup-go .bx-i{flex:none}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -3222,7 +3234,7 @@ button.rk-pl:focus-visible{outline:2px solid var(--v-ui);outline-offset:1px}
   <section class="ab-s">
    <h2>Team</h2>
    <div class="ab-g4">
-    <div class="ab-p"><div class="ab-r">CEO</div><h3>Mansoo</h3><p>Former Secretary General of the Korea e-Sports Association (KeSPA). Founding member of SKT T1.</p></div>
+    <div class="ab-p"><div class="ab-r">CEO</div><h3>Mike</h3><p>Former Secretary General of the Korea e-Sports Association (KeSPA). Founding member of SKT T1.</p></div>
     <div class="ab-p"><div class="ab-r">CPO</div><h3>Jun</h3><p>Former global PD at Softmax.</p></div>
     <div class="ab-p"><div class="ab-r">CTO</div><h3>Kazel</h3><p>Former researcher at KT's research institute.</p></div>
     <div class="ab-p"><div class="ab-r">CBO</div><h3>Charles</h3><p>Former PD at Sony PlayStation.</p></div>
@@ -4110,18 +4122,29 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
   const amts=box.querySelector('.sup-amts'),ded=box.querySelector('.bx-ded'),dist=box.querySelector('.bx-dist'),ta=box.querySelector('textarea'),forEl=box.querySelector('.sup-for');
   const A={energy:[10,50,100,500],spark:[5,10,20]};
   const label=()=>{clearTimeout(go._cf);delete go.dataset.cf;go.classList.remove('cf');const C=cur==='energy'?'Energy':'Spark';const bal=cur==='energy'?energy:S.spark;
-   go.innerHTML=`${cur==='energy'?BX.IC.e:BX.IC.s}${mid?LX(`Boost this moment with ${C} ${amt}`,`${C} ${amt}으로 이 순간 Boost`):LX(`Boost ${id} with ${C} ${amt}`,`${id}에 ${C} ${amt} Boost`)}`;go.classList.toggle('spk',cur==='spark');
+   const ro=n=>{const d=n%10;return d===0||d===3||d===6?'으로':'로'};go.innerHTML=`${cur==='energy'?BX.IC.e:BX.IC.s}<span>${LX(`Boost ${amt}`,`${amt} Boost`)}</span>`;go.setAttribute('aria-label',LX(`Boost ${amt} ${C}`,`${C} ${amt}${ro(amt)} Boost`));go.classList.toggle('spk',cur==='spark');
    const mom=mid&&lm&&mid===lm.id?lm:null;const card=mid?`${mom?LX(...BX.TIER[mom.tier]).split(' · ')[0]:LX('Gold','골드')} · ${cur==='spark'?'Spark':'Energy'} ${LX('Lv.'+BX.decoOf(cur,amt),BX.decoOf(cur,amt)+'단계')}`:'';
    ded.textContent=`${C} ${bal.toLocaleString()} → ${Math.max(0,bal-amt).toLocaleString()} · `+(card?LX('you get this moment card','이 순간 카드를 받아요'):cur==='energy'?LX('Spark balance unchanged','Spark 잔액은 그대로예요'):LX('Energy balance unchanged','Energy 잔액은 그대로예요'));
    if(dist&&on){const[a,c]=BX.CFG.teamShare;dist.className='bx-dist'+(cur==='spark'?' off':'');dist.innerHTML=cur==='energy'?`<details class="bx-df"><summary><span>${LX(`Part of every Energy Boost goes to ${tm}`,`Energy Boost의 일부는 ${tm}에 전달돼요`)}</span><em>${LX('How it is shared ⓘ','배분 안내 ⓘ')}</em></summary><div class="dsb"><i style="width:${a}%"></i><i style="width:${c}%"></i></div><div class="lg"><span>${tm} ${a}%</span><span>RORR ${c}%</span></div><small>${LX('Based on the payment amount · payment fees are covered by RORR','결제 금액 기준 · 결제 수수료는 RORR가 부담해요')}</small></details>`:`<b>${LX('Spark Boosts are not shared with the team','Spark Boost는 팀에 배분되지 않아요')}</b><span>${LX('Spark comes from ads, so nothing is paid to the team.','Spark는 광고 보상이라 팀에 지급되지 않아요.')}</span>`}};
-  const drawAmts=()=>{if(!amts)return;{amts.innerHTML=A[cur].map(n=>`<button type="button" class="${n===amt?'on':''} ${cur}" data-amt="${n}">${n}</button>`).join('')}amts.querySelectorAll('[data-amt]').forEach(b=>b.onclick=()=>{amts.querySelectorAll('[data-amt]').forEach(x=>x.classList.toggle('on',x===b));amt=+b.dataset.amt;label()})};
+  /* amount stepper: [−] [Boost with N] [+] (same as the extension panel) */
+  if(amts)amts.remove();
+  const MINUS='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg>',PLUS='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+  let stp=box.querySelector('.sup-stp'),lvn=box.querySelector('.sup-lv');
+  if(!stp){stp=document.createElement('div');stp.className='sup-stp';go.before(stp);stp.insertAdjacentHTML('beforeend',`<button type="button" class="stp" data-stp="-1" aria-label="${LX('Less','줄이기')}">${MINUS}</button>`);stp.appendChild(go);stp.insertAdjacentHTML('beforeend',`<button type="button" class="stp" data-stp="1" aria-label="${LX('More','늘리기')}">${PLUS}</button>`);
+   lvn=document.createElement('span');lvn.className='sup-lv';lvn.setAttribute('aria-live','polite');stp.after(lvn)}
+  const drawAmts=()=>{const L=A[cur];let i=L.indexOf(amt);if(i<0){amt=L[0];i=0}const nx=L[i+1];const inn=document.body.classList.contains('body-in');const bal=cur==='energy'?energy:S.spark;const low=inn&&!!nx&&nx>bal;
+   stp.querySelector('[data-stp="-1"]').disabled=i<=0;stp.querySelector('[data-stp="1"]').disabled=!nx||low;
+   const lv=BX.decoOf(cur,amt),th=lv===1?50:lv===2?100:0;
+   const txt=cur==='energy'?LX(`Lv.${lv} badge · part goes to ${tm}`+(th?` · Lv.${lv+1} from ${th}`:''),`배지 Lv.${lv} · ${tm} 배분`+(th?` · ${th}부터 Lv.${lv+1}`:'')):LX('Lv.1 badge · free, not shared with the team','배지 Lv.1 · 무료, 팀 배분 없음');
+   lvn.innerHTML=`<span>${txt}</span>${low?`<a href="#${cur==='energy'?'account/energy':'spark'}" onclick="nav(event,'${cur==='energy'?'account/energy':'spark'}')">${cur==='energy'?LX('Top up →','충전하기 →'):LX('Get Spark →','Spark 받기 →')}</a>`:''}`};
+  stp.querySelectorAll('[data-stp]').forEach(b=>b.onclick=()=>{const L=A[cur],i=L.indexOf(amt),j=i+(+b.dataset.stp);if(j<0||j>=L.length)return;amt=L[j];drawAmts();label()});
   box.querySelectorAll('.bx-cur input').forEach(r=>r.onchange=()=>{if(r.disabled)return;cur=r.value;amt=defAmt(cur);box.querySelectorAll('.bx-cur label').forEach(l=>l.classList.toggle('on',l.contains(r)));drawAmts();label()});
   box.querySelectorAll('[data-mom]').forEach(b=>b.onclick=()=>{mid=b.dataset.mom;mt=b.dataset.mt||'';box.querySelectorAll('[data-mom]').forEach(x=>x.classList.toggle('sel',x===b));box.querySelectorAll('.mom').forEach(x=>x.classList.toggle('sel',x.contains(b)));
    if(forEl&&mt){forEl.hidden=false;forEl.querySelector('b').textContent=mt}else if(forEl)forEl.hidden=true;label();(box.querySelector('.sup-box')||box).scrollIntoView({behavior:'smooth',block:'center'})});
   if(forEl)forEl.querySelector('.sup-for-x').onclick=()=>{mid='';mt='';forEl.hidden=true;box.querySelectorAll('[data-mom]').forEach(x=>x.classList.remove('sel'));box.querySelectorAll('.mom').forEach(x=>x.classList.remove('sel'));label()};
   const cnt=box.querySelector('.sup-msg em');if(ta)ta.oninput=()=>{cnt.textContent=ta.value.length+'/80'};
   drawAmts();label();
-  go.onclick=()=>{if(cur==='energy'&&!go.dataset.cf&&document.body.classList.contains('body-in')){go.dataset.cf='1';go.classList.add('cf');go.innerHTML=`${BX.IC.e}${LX(`Tap again to send Energy ${amt}`,`한 번 더 누르면 Energy ${amt}을 보내요`)}`;go._cf=setTimeout(label,5000);return}
+  go.onclick=()=>{if(cur==='energy'&&!go.dataset.cf&&document.body.classList.contains('body-in')){go.dataset.cf='1';go.classList.add('cf');go.innerHTML=`${BX.IC.e}<span>${LX(`Tap again · ${amt}`,`한 번 더 · ${amt}`)}</span>`;go.setAttribute('aria-label',LX(`Tap again to send Energy ${amt}`,`한 번 더 누르면 Energy ${amt}을 보내요`));go._cf=setTimeout(label,5000);return}
    const send=()=>{const msg=ta?ta.value.trim().slice(0,80):'';if(/\b(trash|idiot|stupid|retire|ff)\b|못하|쓰레기|은퇴/i.test(msg)){toast(LX('Let\'s keep it kind · edit your message','따뜻하게 보내 주세요 · 메시지를 수정해 주세요'));return}
     const isNow=lm&&mid===lm.id;const mom=isNow?lm:mid?{id:mid,tier:'gold',t:[mt,mt],sub:`${tm} · ${new Date(Date.now()+9*3600e3).toISOString().slice(0,10)} · ${LX('Milestone','기념일')} `,w0:50,w1:50,fans:300+hashStr(mid)%900}:null;
     const what=isNow?LX(lm.t[0],lm.t[1]):mt||id;
