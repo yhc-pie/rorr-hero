@@ -3192,6 +3192,17 @@ body.msv-on{overflow:hidden}
 .bx-strip.drag .bx-card{pointer-events:none}
 .bx-cw.bx-focus .bx-card{animation:bxFocus 1.8s ease 2}
 @keyframes bxFocus{0%,100%{box-shadow:0 0 0 0 transparent}40%{box-shadow:0 0 0 3px var(--v-ui),0 0 26px color-mix(in srgb,var(--v-ui) 60%,transparent)}}
+
+/* tap-again confirm: the button becomes a 5-second countdown ring (2026-10-17) */
+@property --cfp{syntax:"<angle>";inherits:false;initial-value:360deg}
+.sup-box .sup-go.cf{position:relative;outline:0;background:color-mix(in srgb,var(--energy) 18%,var(--bg2))!important;color:var(--energy)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--energy) 40%,transparent);animation:cfBeat 1s ease-in-out infinite}
+.sup-box .sup-go.spk.cf{background:color-mix(in srgb,var(--spark) 18%,var(--bg2))!important;color:var(--spark)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--spark) 40%,transparent)}
+.sup-go .cf-ring{position:absolute;inset:-4px;border-radius:999px;padding:3px;pointer-events:none;background:conic-gradient(from 0deg,currentColor var(--cfp),color-mix(in srgb,currentColor 14%,transparent) 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:cfRing 5s linear forwards}
+@keyframes cfRing{to{--cfp:0deg}}
+@keyframes cfBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+.cf-hint{color:var(--ink);font-weight:700}
+.sup-box .sup-stp .sup-go.cf{overflow:visible}
+@media (prefers-reduced-motion:reduce){.sup-box .sup-go.cf{animation:none}.sup-go .cf-ring{animation-duration:5s}}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -4553,7 +4564,7 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
   if(forEl)forEl.querySelector('.sup-for-x').onclick=()=>{mid='';mt='';forEl.hidden=true;box.querySelectorAll('[data-mom]').forEach(x=>x.classList.remove('sel'));box.querySelectorAll('.mom').forEach(x=>x.classList.remove('sel'));drawAmts();label()};
   const cnt=box.querySelector('.sup-msg em');if(ta)ta.oninput=()=>{cnt.textContent=ta.value.length+'/80'};
   drawAmts();label();
-  go.onclick=()=>{if(cur==='energy'&&!go.dataset.cf&&document.body.classList.contains('body-in')){go.dataset.cf='1';go.classList.add('cf');go.innerHTML=`${BX.IC.e}<span>${LX(`Tap again · ${amt}`,`한 번 더 · ${amt}`)}</span>`;go.setAttribute('aria-label',LX(`Tap again to send Energy ${amt}`,`한 번 더 누르면 Energy ${amt}을 보내요`));go._cf=setTimeout(label,5000);return}
+  go.onclick=()=>{if(!go.dataset.cf&&document.body.classList.contains('body-in')){const C=cur==='energy'?'Energy':'Spark';go.dataset.cf='1';go.classList.remove('cf');void go.offsetWidth;go.classList.add('cf');go.innerHTML=`${cur==='energy'?BX.IC.e:BX.IC.s}<span>${LX(`Tap again to send · ${amt}`,`한 번 더 눌러 보내기 · ${amt}`)}</span><i class="cf-ring" aria-hidden="true"></i>`;go.setAttribute('aria-label',LX(`Tap again within 5 seconds to send ${C} ${amt}`,`5초 안에 한 번 더 누르면 ${C} ${amt}을 보내요`));if(lvn){lvn.dataset.prev=lvn.innerHTML;lvn.innerHTML=`<span class="cf-hint">${LX('Tap again within 5 seconds to send. Nothing is spent yet.','5초 안에 한 번 더 누르면 보내요. 아직 차감되지 않았어요.')}</span>`}go._cf=setTimeout(()=>{label();drawAmts()},5000);return}
    const send=()=>{const msg=ta?ta.value.trim().slice(0,80):'';if(/\b(trash|idiot|stupid|retire|ff)\b|못하|쓰레기|은퇴/i.test(msg)){toast(LX('Let\'s keep it kind · edit your message','따뜻하게 보내 주세요 · 메시지를 수정해 주세요'));return}
     const isNow=lm&&mid===lm.id;const msm=mid&&/^ms:([^:]+):([gky])(\d+)$/.exec(mid);const msi=msm?msItem(msm[1],msm[2]+msm[3]):null;
     const mom=isNow?lm:mid?{id:mid,tier:msm?'ms':'gold',t:[mt,mt],sub:`${tm} · ${new Date(Date.now()+9*3600e3).toISOString().slice(0,10)} · ${LX('Milestone','기념일')} `,w0:50,w1:50,fans:msm?1200+hashStr(mid)%5000:300+hashStr(mid)%900,ms:msm?{pl:msm[1],k:msm[2],n:+msm[3],m:msi&&msi.m}:null}:null;
@@ -4561,7 +4572,7 @@ const SUP=(()=>{const PARTNERS=['T1'];/* signed partnership incl. player nicknam
     if(cur==='energy'){if(!spend(amt,'Boost',`${id} · ${what}${msg?` · "${msg}"`:''}`))return}else if(!BX.spendSpark(amt)){nav(null,'spark');return}
     const lbl=isNow?[`${on?`${lm.m.a} vs ${lm.m.b}`:"Today's match"} · G${lm.m.game} ${lm.tm} ${lm.t[0]}`,`${on?`${lm.m.a} vs ${lm.m.b}`:'오늘의 경기'} · ${lm.m.game}세트 ${lm.tm} ${lm.t[1]}`]:[`${id}${mt?' · '+mt:''}`,`${id}${mt?' · '+mt:''}`];
     try{localStorage.setItem('rorr-amt-'+cur,amt)}catch(_){}const r=BX.addBoost({cur,amt,mom,partner:on,label:lbl,msg,team:tm});reward(on?id:LX("this moment",'이 순간'),cur,amt,msg,r);if(ipKey)openEntity(ipKey)};
-   const run=()=>{if(cur==='spark')undoable(LX(`Sending Spark ${amt}`,`Spark ${amt} 보내는 중`),send);else send()};
+   const run=()=>send();
    if(!document.body.classList.contains('body-in'))openAuth('login',run);else run()}}
  function reward(to,cur,amt,msg,r){
   /* v2 (2026-10-17): Muse cut-in. Intensity follows the moment tier (silver/gold/holo, commemorative), never the amount spent. */
