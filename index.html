@@ -4065,7 +4065,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-npstart]')
  addEventListener('pointerup',end);addEventListener('pointercancel',end)})();
 
 /* ===== Branded moment — concept test (2026-10-17). Fictional sponsor; nothing is sold. Policy §6 draft: label only, never on cards, no extra points, partner-team matches only. ===== */
-var SPON=(()=>{const K='rorr-sp',KC='rorr-sp-claimed';let on=false;try{on=localStorage.getItem(K)==='1'||new URLSearchParams(location.search).get('sponsor')==='1'}catch(e){}
+var SPON=(()=>{const K='rorr-sp',KC='rorr-sp-claimed';let on=true;try{const q=new URLSearchParams(location.search).get('sponsor'),v=localStorage.getItem(K);on=q==='0'?false:q==='1'?true:v!=='0'}catch(e){}/* demo default: on (2026-10-17) — turn off via chip or ?sponsor=0 */
  const B={name:'NOVA Gear',tag:['Play sharper.','더 선명하게 플레이하세요.'],drop:5};
  const mark='<span class="sp-mk" aria-hidden="true">N</span>';
  const lock=(cls)=>`<span class="sp-lock ${cls||''}"><span class="sp-ad">${LX('Sponsored','후원')}</span><span class="sp-by">${LX('presented by','presented by')}</span>${mark}<b>${B.name}</b></span>`;
