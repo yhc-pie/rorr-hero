@@ -1,0 +1,1164 @@
+openapi: 3.1.0
+info:
+  title: RORR Service API
+  version: 1.0.0-draft
+  summary: 웹(rorr.club)·크롬 확장 공용 API — 핸드오프 초안
+  description: |
+    작성일 2026-10-17. 근거: 정책 v1.3, handoff/db/schema.sql, 서비스 플로우 v2.
+    - 웹은 세션 쿠키(+CSRF 헤더), 확장은 Bearer 토큰. 같은 계정·같은 원장
+    - 금액이 오가는 POST는 `Idempotency-Key` 필수(같은 키 재전송 시 처음 응답 그대로)
+    - 모든 판정(차감·카드·배지·포인트·박스 결과)은 서버. 클라이언트 값은 신뢰하지 않음
+    - 팀 배분 비율은 어떤 응답에도 포함하지 않음
+    - 오류 응답은 공통 `Error` 형식, `error.code`로 분기(handoff/12-api-spec.md §4)
+    - 실시간 이벤트(SSE)의 페이로드는 handoff/api/realtime-events.md
+servers:
+  - url: https://api.rorr.club
+    description: 운영
+  - url: https://api.stg.rorr.club
+    description: 스테이징
+security:
+  - cookieAuth: []
+  - bearerAuth: []
+tags:
+  - name: me
+  - name: catalog
+  - name: live
+  - name: boost
+  - name: cards
+  - name: sponsor
+  - name: community
+  - name: ranking
+  - name: wallet
+  - name: payments
+  - name: inbox
+  - name: extension
+  - name: quiz
+
+paths:
+  /v1/auth/ext/token:
+    post:
+      tags: [me, extension]
+      summary: 확장 로그인 코드 교환(PKCE) → 액세스 15분·리프레시 30일
+      operationId: extToken
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [code, code_verifier], properties: { code: { type: string }, code_verifier: { type: string } } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TokenPair' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /v1/auth/ext/refresh:
+    post:
+      tags: [me, extension]
+      summary: 리프레시 회전(재사용 감지 시 세션 폐기)
+      operationId: extRefresh
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [refresh_token], properties: { refresh_token: { type: string } } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/TokenPair' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /v1/auth/logout:
+    post:
+      tags: [me]
+      summary: 현재 세션 폐기(웹 쿠키·확장 토큰 공통)
+      operationId: logout
+      responses:
+        '204': { description: OK }
+  /v1/me:
+    get:
+      tags: [me]
+      summary: 내 계정·응원 팀·잔액·설정
+      operationId: getMe
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Me' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+  /v1/me/settings:
+    patch:
+      tags: [me]
+      summary: 공개·알림 설정 변경
+      operationId: patchSettings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/SettingsPatch' }
+      responses:
+        '200':
+          description: 저장된 설정
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Settings' }
+        '422': { $ref: '#/components/responses/Invalid' }
+  /v1/me/teams:
+    put:
+      tags: [me]
+      summary: 응원 팀 목록·대표 팀 저장(비로그인 로컬 선택 병합 포함)
+      operationId: putTeams
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [teams, primary]
+              properties:
+                teams: { type: array, items: { type: string }, minItems: 1, maxItems: 10 }
+                primary: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/UserTeam' } }
+  /v1/me/fav-player:
+    put:
+      tags: [me, extension]
+      summary: 확장 '내 선수'(카드 주인공 우선) 지정. null = 자동
+      operationId: putFavPlayer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [player_id]
+              properties:
+                player_id: { type: [string, 'null'] }
+      responses:
+        '204': { description: 저장 }
+        '409': { $ref: '#/components/responses/Conflict' }
+  /v1/me/wallet:
+    get:
+      tags: [wallet]
+      summary: 유료·보너스 Energy, Spark 잔액과 묶음별 만료
+      operationId: getWallet
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Wallet' }
+
+  /v1/matches:
+    get:
+      tags: [catalog]
+      summary: 경기 목록(라이브·예정·종료)
+      operationId: listMatches
+      parameters:
+        - { name: status, in: query, schema: { type: string, enum: [live, scheduled, finished] } }
+        - { name: league, in: query, schema: { type: string, default: lck } }
+        - { $ref: '#/components/parameters/Cursor' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/Match' } }
+                  next_cursor: { type: [string, 'null'] }
+  /v1/matches/{match_id}:
+    get:
+      tags: [catalog]
+      operationId: getMatch
+      parameters: [ { $ref: '#/components/parameters/MatchId' } ]
+      responses:
+        '200':
+          description: 경기·세트·열린 순간
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/MatchDetail' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /v1/players/{player_id}/milestones:
+    get:
+      tags: [catalog, cards]
+      summary: 기념할 순간(파트너 팀 선수만, 비제휴는 빈 목록)
+      operationId: listMilestones
+      parameters:
+        - { name: player_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Milestone' } }
+
+  /v1/live/stream:
+    get:
+      tags: [live]
+      summary: 실시간 이벤트 스트림(SSE). 이벤트 정의는 realtime-events.md
+      operationId: liveStream
+      security: []
+      parameters:
+        - { name: match_ids, in: query, required: true, schema: { type: array, items: { type: string } }, style: form, explode: false }
+        - { name: Last-Event-ID, in: header, schema: { type: string }, description: 재연결 시 놓친 이벤트 재전송(최대 2분) }
+      responses:
+        '200':
+          description: text/event-stream
+          content:
+            text/event-stream:
+              schema: { type: string }
+
+  /v1/boost-context:
+    get:
+      tags: [boost]
+      summary: Boost 상자를 그리기 위한 서버 판정값(파트너 여부·허용 재화·고지·누적·박스 여부)
+      description: Boost 상자·시트를 열 때와 재화 변경 시 호출. 화면 문구의 고지 버전도 여기서 받아 POST /v1/boosts에 그대로 보낸다
+      operationId: getBoostContext
+      parameters:
+        - { name: team_id, in: query, required: true, schema: { type: string } }
+        - { name: player_id, in: query, schema: { type: string } }
+        - { name: moment_id, in: query, schema: { type: string, format: uuid } }
+        - { name: milestone_id, in: query, schema: { type: string, format: uuid } }
+        - { name: currency, in: query, schema: { $ref: '#/components/schemas/Currency' } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BoostContext' }
+  /v1/boosts:
+    post:
+      tags: [boost]
+      summary: Boost 보내기(두 번째 누름에서만 호출)
+      operationId: createBoost
+      parameters: [ { $ref: '#/components/parameters/IdempotencyKey' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/BoostRequest' }
+      responses:
+        '201':
+          description: 처리됨
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BoostResult' }
+        '200':
+          description: 같은 Idempotency-Key 재전송 — 처음 응답 그대로
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/BoostResult' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '402': { $ref: '#/components/responses/InsufficientBalance' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/Invalid' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /v1/moments/{moment_id}/lucky-box:
+    post:
+      tags: [sponsor]
+      summary: 스폰서 행운 박스 열기(큰 순간 알림당 1회, 결과는 서버 난수)
+      operationId: openLuckyBox
+      parameters:
+        - { name: moment_id, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: '#/components/parameters/IdempotencyKey' }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [picked_index, client]
+              properties:
+                picked_index: { type: integer, minimum: 0, maximum: 2, description: 연출 기록용. 결과와 무관 }
+                client: { $ref: '#/components/schemas/Client' }
+      responses:
+        '200':
+          description: 결과(이미 연 순간이면 replayed=true)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LuckyBoxResult' }
+        '403':
+          description: box_holdout / box_minor — 클라이언트는 박스를 숨기고 라벨만
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '409':
+          description: box_unavailable(조건 불충족·총량 소진)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /v1/alerts/impressions:
+    post:
+      tags: [live]
+      summary: 큰 순간 알림 노출·클릭·닫기 기록(빈도 상한·측정)
+      operationId: logAlertImpression
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [moment_id, event, client]
+              properties:
+                moment_id: { type: string, format: uuid }
+                event: { type: string, enum: [shown, clicked, dismissed] }
+                client: { $ref: '#/components/schemas/Client' }
+                anon_id: { type: string }
+      responses:
+        '204': { description: 기록 }
+
+  /v1/me/cards:
+    get:
+      tags: [cards]
+      summary: 내 컬렉션(모먼트 카드·기념 에디션). 끝난 순간은 최종 배지
+      operationId: listMyCards
+      parameters:
+        - { name: kind, in: query, schema: { type: string, enum: [moment, commemorative] } }
+        - { name: tier, in: query, schema: { $ref: '#/components/schemas/Tier' } }
+        - { name: team_id, in: query, schema: { type: string } }
+        - { $ref: '#/components/parameters/Cursor' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  items: { type: array, items: { $ref: '#/components/schemas/Card' } }
+                  next_cursor: { type: [string, 'null'] }
+  /v1/cards/{card_id}:
+    get:
+      tags: [cards]
+      summary: 카드 상세(공유 링크 공개 조회 가능)
+      operationId: getCard
+      security: []
+      parameters:
+        - { name: card_id, in: path, required: true, schema: { type: string, format: uuid } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Card' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /v1/cards/{card_id}/image:
+    get:
+      tags: [cards]
+      summary: 공유 이미지(PNG, 화면 카드와 같은 디자인 + 날짜·출처·독립 서비스 고지)
+      operationId: getCardImage
+      security: []
+      parameters:
+        - { name: card_id, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: side, in: query, schema: { type: string, enum: [front, back], default: front } }
+      responses:
+        '200':
+          description: PNG
+          content:
+            image/png:
+              schema: { type: string, contentEncoding: base64 }
+
+  /v1/teams/{team_id}/rankings:
+    get:
+      tags: [ranking]
+      summary: 팀 내 서포터 순위(5분 스냅샷). 비제휴 팀은 Spark 기준 비공식 팬 순위
+      operationId: getRankings
+      security: []
+      parameters:
+        - { name: team_id, in: path, required: true, schema: { type: string } }
+        - { name: period, in: query, schema: { type: string, enum: [season, month, week, match], default: season } }
+        - { name: criterion, in: query, schema: { type: string, enum: [points, cards, streak, big_moments], default: points } }
+        - { name: around, in: query, schema: { type: string, enum: [me] } }
+        - { $ref: '#/components/parameters/Cursor' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Rankings' }
+  /v1/teams/{team_id}/share-disclosure:
+    get:
+      tags: [ranking]
+      summary: 시즌 누적 배분액(파트너, 월 1회 갱신, 정산 원장 값만). 원장 가동 전·비제휴는 404
+      operationId: getShareDisclosure
+      security: []
+      parameters:
+        - { name: team_id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [team_id, season, shared_krw, updated_at]
+                properties:
+                  team_id: { type: string }
+                  season: { type: string }
+                  shared_krw: { type: integer }
+                  updated_at: { type: string, format: date-time }
+                  quarter_confirmed: { type: [string, 'null'], description: "예: 2026 Q4 정산 · T1 확인" }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v1/messages:
+    get:
+      tags: [community]
+      summary: 응원 메시지(공개·검수 통과분)
+      operationId: listMessages
+      security: []
+      parameters:
+        - { name: team_id, in: query, schema: { type: string } }
+        - { name: player_id, in: query, schema: { type: string } }
+        - { name: filter, in: query, schema: { type: string, enum: [my_teams, all], default: my_teams } }
+        - { $ref: '#/components/parameters/Cursor' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items: { type: array, items: { $ref: '#/components/schemas/Message' } }
+                  next_cursor: { type: [string, 'null'] }
+  /v1/messages/{message_id}/reactions:
+    post:
+      tags: [community]
+      summary: '"나도 응원"(메시지당 1회, 포인트 미반영)'
+      operationId: react
+      parameters: [ { $ref: '#/components/parameters/MessageId' } ]
+      responses:
+        '200':
+          description: 갱신 카운트
+          content:
+            application/json:
+              schema: { type: object, properties: { reactions: { type: integer }, mine: { type: boolean } } }
+    delete:
+      tags: [community]
+      operationId: unreact
+      parameters: [ { $ref: '#/components/parameters/MessageId' } ]
+      responses:
+        '204': { description: 취소 }
+  /v1/messages/{message_id}/replies:
+    post:
+      tags: [community]
+      summary: 칩 답장(자유 텍스트 불가)
+      operationId: reply
+      parameters: [ { $ref: '#/components/parameters/MessageId' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [chip_id]
+              properties:
+                chip_id: { type: string, enum: [gg, next_match, best_moment, till_end] }
+      responses:
+        '200': { description: 칩별 카운트, content: { application/json: { schema: { type: object, additionalProperties: { type: integer } } } } }
+  /v1/messages/{message_id}/reports:
+    post:
+      tags: [community]
+      operationId: report
+      parameters: [ { $ref: '#/components/parameters/MessageId' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [reason], properties: { reason: { type: string, enum: [abuse, spam, player_insult, other] } } }
+      responses:
+        '202': { description: 접수 }
+
+  /v1/ads/rewarded/session:
+    post:
+      tags: [wallet]
+      summary: 광고 월 1회용 토큰 발급(웹 전용)
+      operationId: adSession
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [token, remaining_today]
+                properties:
+                  token: { type: string }
+                  remaining_today: { type: integer }
+                  next_available_at: { type: [string, 'null'], format: date-time }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /v1/ads/rewarded/grant:
+    post:
+      tags: [wallet]
+      summary: GAM RewardedSlotGranted 수신 후 Spark 적립(토큰 1회)
+      operationId: adGrant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [token], properties: { token: { type: string } } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  spark_added: { type: integer }
+                  balance: { $ref: '#/components/schemas/Balance' }
+                  remaining_today: { type: integer }
+        '409': { $ref: '#/components/responses/Conflict' }
+
+  /v1/energy/packages:
+    get:
+      tags: [payments]
+      operationId: listPackages
+      security: []
+      responses:
+        '200':
+          description: 패키지(단가 할인 상한 10%)
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id: { type: string }
+                    qty: { type: integer }
+                    price_krw: { type: integer }
+                    list_price_krw: { type: integer }
+                    discount_bp: { type: integer }
+  /v1/energy/orders:
+    post:
+      tags: [payments]
+      summary: 충전 주문 생성 → 토스페이먼츠 결제창 파라미터
+      operationId: createOrder
+      parameters: [ { $ref: '#/components/parameters/IdempotencyKey' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [package_id], properties: { package_id: { type: string }, return_to: { type: string, description: '충전 후 돌아갈 화면(예: #player/Faker?tab=cheer)' } } }
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id: { type: string, format: uuid }
+                  amount_krw: { type: integer }
+                  pg: { type: object, additionalProperties: true }
+        '403': { description: minor_limit — 미성년 월 한도 초과, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+  /v1/payments/toss/confirm:
+    post:
+      tags: [payments]
+      summary: 결제 승인(리다이렉트 성공 후). 묶음 생성·원장 적립
+      operationId: confirmPayment
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [order_id, payment_key, amount_krw], properties: { order_id: { type: string }, payment_key: { type: string }, amount_krw: { type: integer } } }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { type: object, properties: { balance: { $ref: '#/components/schemas/Balance' }, return_to: { type: [string, 'null'] } } }
+  /v1/payments/toss/webhook:
+    post:
+      tags: [payments]
+      summary: PG 웹훅(서명 검증, 서버 간)
+      operationId: tossWebhook
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: true }
+      responses:
+        '200': { description: 수신 }
+  /v1/me/refund-quote:
+    get:
+      tags: [payments]
+      summary: 환불 견적(묶음별 환불 가능액·수수료·실수령)
+      operationId: refundQuote
+      parameters:
+        - { name: lot_ids, in: query, schema: { type: array, items: { type: string, format: uuid } }, style: form, explode: false }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RefundQuote' }
+  /v1/refunds:
+    post:
+      tags: [payments]
+      operationId: createRefund
+      parameters: [ { $ref: '#/components/parameters/IdempotencyKey' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [lot_ids, method]
+              properties:
+                lot_ids: { type: array, items: { type: string, format: uuid }, minItems: 1 }
+                method: { type: string, enum: [pg_cancel, bank_transfer] }
+                bank_account: { type: object, properties: { bank: { type: string }, number: { type: string }, holder: { type: string } } }
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              schema: { type: object, properties: { refund_id: { type: string }, status: { type: string }, net_krw: { type: integer }, expected_by: { type: string, format: date } } }
+        '422': { $ref: '#/components/responses/Invalid' }
+
+  /v1/me/inbox:
+    get:
+      tags: [inbox]
+      summary: 알림함(웹 전용 화면, 확장은 미읽음 수만)
+      operationId: listInbox
+      parameters:
+        - { name: category, in: query, schema: { type: string, enum: [service, mine, team, promo] } }
+        - { $ref: '#/components/parameters/Cursor' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  unread: { type: integer }
+                  items: { type: array, items: { $ref: '#/components/schemas/InboxItem' } }
+                  next_cursor: { type: [string, 'null'] }
+  /v1/me/inbox/{id}/read:
+    post:
+      tags: [inbox]
+      operationId: markRead
+      parameters: [ { name: id, in: path, required: true, schema: { type: string, format: uuid } } ]
+      responses:
+        '204': { description: OK }
+  /v1/me/consents:
+    get:
+      tags: [inbox]
+      operationId: getConsents
+      responses:
+        '200':
+          description: 현재 동의 상태(분류×채널, 동의 일자, 재확인 기한)
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Consent' } }
+    put:
+      tags: [inbox]
+      summary: 동의·철회(즉시 처리, 결과 안내용 일자 반환). 광고 동의 OFF면 야간 동의 불가
+      operationId: putConsent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ConsentChange' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Consent' }
+        '422': { $ref: '#/components/responses/Invalid' }
+  /v1/me/match-alerts:
+    put:
+      tags: [inbox]
+      summary: 응원 팀 경기 시작 알림(옵트인, 한 사용자 한 채널)
+      operationId: putMatchAlerts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [team_id, enabled]
+              properties:
+                team_id: { type: string }
+                enabled: { type: boolean }
+                channel: { type: string, enum: [ext_notification, web_push, ics] }
+                push_subscription: { type: object, additionalProperties: true }
+      responses:
+        '200': { description: OK }
+
+  /v1/ext/match-resolve:
+    post:
+      tags: [extension]
+      summary: 중계 탭(URL·제목) → 경기 매칭 + 플랫폼 기본 지연 오프셋
+      operationId: extMatchResolve
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [host, url]
+              properties:
+                host: { type: string, enum: [youtube, chzzk, soop, twitch] }
+                url: { type: string }
+                title: { type: string }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  match_id: { type: [string, 'null'] }
+                  candidates: { type: array, items: { $ref: '#/components/schemas/Match' } }
+                  default_offset_ms: { type: integer }
+  /v1/quiz/current:
+    get:
+      tags: [quiz, extension]
+      operationId: quizCurrent
+      parameters: [ { name: game_id, in: query, required: true, schema: { type: string } } ]
+      responses:
+        '200':
+          description: 열린 문항(없으면 null)과 내 스트릭
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  question: { oneOf: [ { $ref: '#/components/schemas/QuizQuestion' }, { type: 'null' } ] }
+                  streak: { type: integer }
+  /v1/quiz/{question_id}/answers:
+    post:
+      tags: [quiz, extension]
+      summary: 응답(무료, 재화 없음). 마감 후 거절
+      operationId: quizAnswer
+      security: []
+      parameters: [ { name: question_id, in: path, required: true, schema: { type: string, format: uuid } } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object, required: [choice], properties: { choice: { type: string } } }
+      responses:
+        '202': { description: 접수 }
+        '409': { description: quiz_closed, content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } } }
+  /v1/quiz/leaderboard:
+    get:
+      tags: [quiz]
+      operationId: quizLeaderboard
+      security: []
+      parameters: [ { name: week, in: query, schema: { type: string, example: 2026-W42 } } ]
+      responses:
+        '200': { description: '주간 순위(포인트·스트릭, 금액 환산 없음)' }
+
+components:
+  securitySchemes:
+    cookieAuth: { type: apiKey, in: cookie, name: rorr_sid, description: '웹. 상태 변경 요청은 X-CSRF-Token 헤더 동반' }
+    bearerAuth: { type: http, scheme: bearer, description: '확장. chrome.identity로 받은 액세스 토큰(15분) + 리프레시' }
+  parameters:
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: 클라이언트 생성 UUIDv4. 24시간 보관, 같은 키·다른 본문은 409 idempotency_mismatch
+      schema: { type: string, format: uuid }
+    Cursor:
+      name: cursor
+      in: query
+      schema: { type: string }
+    MatchId:
+      name: match_id
+      in: path
+      required: true
+      schema: { type: string }
+    MessageId:
+      name: message_id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+  responses:
+    Unauthorized:
+      description: login_required
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    NotFound:
+      description: not_found
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Conflict:
+      description: 상태 충돌(moment_closed, milestone_closed, idempotency_mismatch, already_used 등)
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    Invalid:
+      description: 정책·입력 위반(amount_below_min, energy_not_allowed, not_partner_player, notice_version_stale 등)
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    InsufficientBalance:
+      description: insufficient_balance — details에 need·have·bonus_only 포함
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+    RateLimited:
+      description: rate_limited — Retry-After 헤더
+      content: { application/json: { schema: { $ref: '#/components/schemas/Error' } } }
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string, example: insufficient_balance }
+            message: { type: string, description: 개발용 설명(화면 문구 아님 — 화면은 code로 i18n 키 매핑) }
+            details: { type: object, additionalProperties: true }
+            request_id: { type: string }
+    TokenPair:
+      type: object
+      required: [access_token, expires_in, refresh_token]
+      properties:
+        access_token: { type: string }
+        expires_in: { type: integer, example: 900 }
+        refresh_token: { type: string }
+    Currency: { type: string, enum: [energy, spark] }
+    Client: { type: string, enum: [web, ext] }
+    Tier: { type: string, enum: [silver, gold, holo] }
+    Balance:
+      type: object
+      required: [energy_paid, energy_bonus, spark]
+      properties:
+        energy_paid: { type: integer, description: Boost·모든 장식 }
+        energy_bonus: { type: integer, description: RORR 장식 전용(v1.3) }
+        spark: { type: integer }
+    Wallet:
+      allOf:
+        - $ref: '#/components/schemas/Balance'
+        - type: object
+          properties:
+            lots:
+              type: array
+              items:
+                type: object
+                properties:
+                  id: { type: string, format: uuid }
+                  currency: { $ref: '#/components/schemas/Currency' }
+                  kind: { type: string, enum: [paid, bonus, free] }
+                  remaining: { type: integer }
+                  expires_at: { type: string, format: date-time }
+                  refundable: { type: boolean }
+    Settings:
+      type: object
+      properties:
+        locale: { type: string, enum: [ko, en] }
+        is_anonymous: { type: boolean }
+        show_in_highlights: { type: boolean, description: 미성년은 false 고정 }
+        msg_public: { type: boolean }
+        alert_level: { type: string, enum: [all, holo, off] }
+    SettingsPatch: { $ref: '#/components/schemas/Settings' }
+    UserTeam:
+      type: object
+      properties:
+        team_id: { type: string }
+        is_primary: { type: boolean }
+        is_partner: { type: boolean }
+    Me:
+      type: object
+      required: [id, display_name, age_band, teams, balance, settings]
+      properties:
+        id: { type: string, format: uuid }
+        display_name: { type: string }
+        avatar_url: { type: [string, 'null'] }
+        age_band: { type: string, enum: [under14, under19, adult, unknown] }
+        teams: { type: array, items: { $ref: '#/components/schemas/UserTeam' } }
+        favorite_players: { type: array, items: { type: string } }
+        fav_player: { type: [string, 'null'], description: 확장 '내 선수' }
+        fav_player_asked: { type: boolean }
+        balance: { $ref: '#/components/schemas/Balance' }
+        settings: { $ref: '#/components/schemas/Settings' }
+        inbox_unread: { type: integer }
+    Team:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string, description: 비제휴 팀은 경기 식별 1회 텍스트로만 사용 }
+        is_partner: { type: boolean }
+        logo_url: { type: [string, 'null'], description: 파트너만 }
+    Match:
+      type: object
+      properties:
+        id: { type: string }
+        league: { type: string }
+        team_a: { $ref: '#/components/schemas/Team' }
+        team_b: { $ref: '#/components/schemas/Team' }
+        starts_at: { type: string, format: date-time }
+        status: { type: string, enum: [scheduled, live, finished, cancelled] }
+        score: { type: array, items: { type: integer }, minItems: 2, maxItems: 2 }
+        my_teams: { type: array, items: { type: string } }
+    Moment:
+      type: object
+      required: [id, kind, tier, label]
+      properties:
+        id: { type: string, format: uuid }
+        game_no: { type: integer }
+        kind: { type: string, enum: [dragon, baron, elder, herald, teamfight, siege, nexus, steal, comeback, other] }
+        tier: { $ref: '#/components/schemas/Tier' }
+        team_id: { type: [string, 'null'] }
+        game_time: { type: string, example: '16:44' }
+        label: { type: object, properties: { ko: { type: string }, en: { type: string } } }
+        wp_before: { type: [number, 'null'] }
+        wp_after: { type: [number, 'null'] }
+        status: { type: string, enum: [predicted, open, resolved, void] }
+        alert_eta_at: { type: [string, 'null'], format: date-time }
+        closes_at: { type: [string, 'null'], format: date-time }
+        participants:
+          type: array
+          description: 파트너 팀 선수만 이름 포함, 비제휴는 빈 배열
+          items: { type: object, properties: { player_id: { type: string }, nickname: { type: string }, is_top: { type: boolean } } }
+    MatchDetail:
+      allOf:
+        - $ref: '#/components/schemas/Match'
+        - type: object
+          properties:
+            games: { type: array, items: { type: object, properties: { game_no: { type: integer }, winner: { type: [string, 'null'] } } } }
+            open_moments: { type: array, items: { $ref: '#/components/schemas/Moment' } }
+    Milestone:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        player_id: { type: string }
+        kind: { type: string }
+        value: { type: integer }
+        unit: { type: object, properties: { ko: { type: string }, en: { type: string } } }
+        achieved_on: { type: string, format: date }
+        window_from: { type: string, format: date }
+        window_to: { type: string, format: date }
+        state: { type: string, enum: [upcoming, open, closed] }
+        celebrations: { type: integer }
+        source: { type: string }
+        my_card_id: { type: [string, 'null'] }
+    BoostContext:
+      type: object
+      required: [is_partner, allowed_currencies, steps, min, balance, notices]
+      properties:
+        is_partner: { type: boolean }
+        allowed_currencies: { type: array, items: { $ref: '#/components/schemas/Currency' } }
+        steps: { type: object, properties: { energy: { type: array, items: { type: integer } }, spark: { type: array, items: { type: integer } } } }
+        min: { type: object, properties: { energy: { type: integer }, spark: { type: integer } } }
+        default_amount: { type: object, properties: { energy: { type: integer }, spark: { type: integer } } }
+        balance: { $ref: '#/components/schemas/Balance' }
+        moment: { oneOf: [ { $ref: '#/components/schemas/Moment' }, { type: 'null' } ] }
+        milestone: { oneOf: [ { $ref: '#/components/schemas/Milestone' }, { type: 'null' } ] }
+        boosting_now: { type: integer, description: 함께 Boost 중 인원 }
+        my_moment:
+          type: object
+          description: 이 순간 내 누적·배지·카드 보유
+          properties:
+            has_card: { type: boolean }
+            energy_total: { type: integer }
+            spark_total: { type: integer }
+            energy_badge: { type: integer }
+            spark_badge: { type: integer }
+            to_next: { type: object, properties: { energy: { type: [integer, 'null'] }, spark: { type: [integer, 'null'] } } }
+        star_preview: { type: [string, 'null'], description: '확장 카드 주인공 미리보기(fav가 참여하면 fav)' }
+        notices:
+          type: object
+          description: 화면에 그대로 표시할 고지(버전 포함). Energy 선택 시 energy 고지 필수
+          properties:
+            energy: { $ref: '#/components/schemas/Notice' }
+            spark: { $ref: '#/components/schemas/Notice' }
+            non_partner: { oneOf: [ { $ref: '#/components/schemas/Notice' }, { type: 'null' } ] }
+        share_line: { type: [string, 'null'], description: '"RORR는 Boost 수익의 일부를 T1과 나눠요"(파트너만, 비율 없음)' }
+        sponsor: { oneOf: [ { $ref: '#/components/schemas/SponsorLabel' }, { type: 'null' } ] }
+    Notice:
+      type: object
+      required: [version, text]
+      properties:
+        version: { type: string, example: 'boost_sheet_energy@2026-10-17' }
+        text: { type: string }
+    SponsorLabel:
+      type: object
+      properties:
+        sponsor_id: { type: string }
+        name: { type: string }
+        mark_url: { type: string }
+        label: { type: string, example: '후원 · presented by NOVA Gear' }
+        box_available: { type: boolean }
+        odds_text: { type: string }
+        my_result: { type: [string, 'null'], enum: [none, spark5, spark10, null] }
+    BoostRequest:
+      type: object
+      required: [team_id, currency, amount, client]
+      properties:
+        team_id: { type: string, description: 응원(적립) 팀 }
+        player_id: { type: [string, 'null'], description: 선수 대상(파트너 선수만) }
+        moment_id: { type: [string, 'null'], format: uuid }
+        milestone_id: { type: [string, 'null'], format: uuid }
+        currency: { $ref: '#/components/schemas/Currency' }
+        amount: { type: integer, minimum: 1 }
+        message: { type: [string, 'null'], maxLength: 80 }
+        message_anonymous: { type: boolean, default: false }
+        client: { $ref: '#/components/schemas/Client' }
+        entry: { type: string, enum: [panel, alert, player_chip, lucky_box, milestone, recap, other], default: panel }
+        notice_version: { type: [string, 'null'], description: Energy면 필수 — boost-context가 준 값 그대로 }
+    BoostResult:
+      type: object
+      required: [boost_id, balance, points_added]
+      properties:
+        boost_id: { type: string, format: uuid }
+        replayed: { type: boolean }
+        balance: { $ref: '#/components/schemas/Balance' }
+        points_added:
+          type: object
+          properties:
+            base: { type: integer }
+            tier: { type: integer }
+            streak: { type: integer }
+            total: { type: integer }
+        moment_totals:
+          oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                energy: { type: integer }
+                spark: { type: integer }
+                energy_badge: { type: integer, minimum: 0, maximum: 3 }
+                spark_badge: { type: integer, minimum: 0, maximum: 3 }
+                to_next: { type: object, properties: { energy: { type: [integer, 'null'] }, spark: { type: [integer, 'null'] } } }
+        level_up:
+          oneOf:
+            - type: 'null'
+            - type: object
+              properties:
+                currency: { $ref: '#/components/schemas/Currency' }
+                from: { type: integer }
+                to: { type: integer }
+        card: { oneOf: [ { $ref: '#/components/schemas/Card' }, { type: 'null' } ] }
+        message: { type: [object, 'null'], properties: { id: { type: string }, status: { type: string, enum: [pending, visible, rejected] } } }
+        rank_hint: { type: [object, 'null'], properties: { team_id: { type: string }, rank: { type: integer }, delta: { type: integer } } }
+    Card:
+      type: object
+      required: [id, kind, edition, team_id, issued_at]
+      properties:
+        id: { type: string, format: uuid }
+        is_new: { type: boolean, description: BoostResult 안에서만 }
+        kind: { type: string, enum: [moment, commemorative] }
+        tier: { oneOf: [ { $ref: '#/components/schemas/Tier' }, { type: 'null' } ] }
+        edition: { type: string, enum: [partner, rorr] }
+        team_id: { type: string }
+        star_player: { type: [object, 'null'], properties: { id: { type: string }, nickname: { type: string }, role: { type: string }, photo_url: { type: string } } }
+        star_rule: { type: [string, 'null'], enum: [fav, top, auto, null] }
+        moment: { oneOf: [ { $ref: '#/components/schemas/Moment' }, { type: 'null' } ] }
+        milestone: { oneOf: [ { $ref: '#/components/schemas/Milestone' }, { type: 'null' } ] }
+        celebration_no: { type: [integer, 'null'] }
+        badges: { type: object, properties: { energy: { type: integer }, spark: { type: integer } } }
+        totals: { type: object, properties: { energy: { type: integer }, spark: { type: integer } } }
+        final: { type: boolean, description: 순간 종료 → 최종 배지 }
+        boosted_together: { type: integer }
+        serial_no: { type: integer }
+        issued_at: { type: string, format: date-time }
+    LuckyBoxResult:
+      type: object
+      required: [result, spark, replayed]
+      properties:
+        open_id: { type: string, format: uuid }
+        replayed: { type: boolean }
+        result: { type: string, enum: [none, spark5, spark10] }
+        spark: { type: integer }
+        odds: { type: object, additionalProperties: { type: number } }
+        odds_version: { type: string }
+        next: { type: object, description: '다음 행동 — 당첨: {spark, N} / 꽝: {energy, 10}', properties: { currency: { $ref: '#/components/schemas/Currency' }, amount: { type: integer } } }
+        balance: { $ref: '#/components/schemas/Balance' }
+    Rankings:
+      type: object
+      properties:
+        updated_at: { type: string, format: date-time }
+        kind: { type: string, enum: [partner, unofficial_spark], description: 비제휴 = Spark 기준 비공식 팬 순위 }
+        total: { type: integer }
+        rows:
+          type: array
+          items:
+            type: object
+            properties:
+              rank: { type: integer }
+              name: { type: string, description: 익명 설정 시 '익명 서포터' }
+              value: { type: integer }
+              delta: { type: [integer, 'null'] }
+        me: { type: [object, 'null'], properties: { rank: { type: integer }, pct: { type: number }, to_next: { type: integer }, delta: { type: integer } } }
+    Message:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        author: { type: string }
+        team_id: { type: string }
+        context: { type: object, properties: { moment_label: { type: [string, 'null'] }, game_no: { type: [integer, 'null'] }, game_time: { type: [string, 'null'] }, player: { type: [string, 'null'] } } }
+        body: { type: string }
+        reactions: { type: integer }
+        mine_reacted: { type: boolean }
+        replies: { type: object, additionalProperties: { type: integer } }
+        created_at: { type: string, format: date-time }
+    RefundQuote:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              lot_id: { type: string, format: uuid }
+              type: { type: string, enum: [withdrawal, balance] }
+              refundable_krw: { type: integer }
+              fee_krw: { type: integer }
+              net_krw: { type: integer }
+              refundable: { type: boolean }
+              reason: { type: [string, 'null'], enum: [below_fee, bonus_not_refundable, locked, null] }
+        methods: { type: array, items: { type: string } }
+    InboxItem:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        category: { type: string, enum: [service, mine, team, promo] }
+        sender: { type: object, properties: { kind: { type: string, enum: [rorr, team] }, team_id: { type: [string, 'null'] }, verified: { type: boolean } } }
+        is_ad: { type: boolean }
+        title: { type: string }
+        body: { type: string }
+        delivered_at: { type: string, format: date-time }
+        read_at: { type: [string, 'null'], format: date-time }
+    Consent:
+      type: object
+      properties:
+        category: { type: string, enum: [team_news, promo, promo_night, match_start] }
+        channel: { type: string, enum: [inbox, email, web_push, ext_notification, ics] }
+        granted: { type: boolean }
+        recorded_at: { type: string, format: date-time }
+        reconfirm_due: { type: [string, 'null'], format: date }
+    ConsentChange:
+      type: object
+      required: [category, channel, granted, text_version]
+      properties:
+        category: { type: string, enum: [team_news, promo, promo_night, match_start] }
+        channel: { type: string, enum: [inbox, email, web_push, ext_notification, ics] }
+        granted: { type: boolean }
+        text_version: { type: string }
+    QuizQuestion:
+      type: object
+      properties:
+        id: { type: string, format: uuid }
+        prompt: { type: object, properties: { ko: { type: string }, en: { type: string } } }
+        options: { type: array, minItems: 2, maxItems: 2, items: { type: object, properties: { id: { type: string }, ko: { type: string }, en: { type: string } } } }
+        closes_at: { type: string, format: date-time }
+        my_choice: { type: [string, 'null'] }

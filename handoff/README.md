@@ -24,6 +24,19 @@
 | 9 | [08-a11y-i18n-edge.md](08-a11y-i18n-edge.md) | 접근성·다국어·엣지 케이스·QA 체크리스트 | 전원 |
 | 10 | [09-open-items.md](09-open-items.md) | 결정 대기·출시 블로커·알려진 부채 | 전원 |
 
+### 1-1. 개발 설계 (2026-10-17 추가)
+
+| 문서 | 내용 | 주 독자 |
+|---|---|---|
+| [10-system-architecture.md](10-system-architecture.md) | 전체 구성도, 계층 책임, 권장 기술(CTO 확정 필요), 모노레포 구조, 비기능 목표, 구축 순서 | 전원 |
+| [11-flowcharts.md](11-flowcharts.md) | 플로차트 16종(Mermaid): 여정·Boost 판정·시퀀스·알림·행운 박스·충전·환불·광고·로그인·확장 매칭·퀴즈·기념·검수·발송·정산 | 전원 |
+| [12-api-spec.md](12-api-spec.md) + [api/openapi.yaml](api/openapi.yaml) + [api/realtime-events.md](api/realtime-events.md) | REST 43개 오퍼레이션, 공통 규약·오류 코드·요청 한도·화면→API 매핑, SSE 이벤트 계약 | FE·BE |
+| [13-data-model.md](13-data-model.md) + [db/](db/) | PostgreSQL 스키마(테이블 52·뷰 4), ERD, 불변식, **실행 가능한 참조 구현**(Boost·행운 박스)과 테스트 37건 | BE |
+| [14-interaction-spec.md](14-interaction-spec.md) | 상태 기계 7종(Boost 상자·주 버튼·알림·행운 박스·헤더·실시간·확장 S0~S5), 카드 공개 분기, 이벤트→화면 표 | FE |
+| [15-frontend.md](15-frontend.md) | 웹 라우트 트리·상태 계층·오버레이 매니저·공용 컴포넌트 인터페이스, 확장 구성·메시지 흐름·권한 | FE |
+| [16-middle-tier.md](16-middle-tier.md) | BFF·게이트웨이(인증 통합·CSRF·멱등·한도·응답 필터)·실시간 게이트웨이·캐시 | FE·BE·인프라 |
+| [17-backend.md](17-backend.md) | 도메인 모듈 16개, 핵심 트랜잭션(Boost·충전·환불·정산), 순간 감지 워커, 배치, 외부 연동, 관측 | BE |
+
 ## 2. 기준 자료 우선순위 (충돌 시)
 
 1. **규칙** — 정책 v1.3. 화면·문구·데이터 모델이 정책과 다르면 정책을 따른다
