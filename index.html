@@ -2331,6 +2331,23 @@ body.pagev .stage,body.acct .stage,body.teamv .stage{padding-top:var(--hh,69px)}
 .ma-card .rw-muse{width:250px;margin-top:-120px}
 .ma-card .rw-to{color:#C9B8FF;margin-top:4px}
 .ma-sp{display:inline-flex;margin-left:8px;vertical-align:middle}.ma-sp .sp-lock{font-size:11px}.ma-card .ma-sp{display:flex;justify-content:center;margin:6px 0 0}
+.spb{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:8px}
+.spb-open{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 6px;border-radius:999px;border:1px solid color-mix(in srgb,var(--spark) 55%,transparent);background:color-mix(in srgb,var(--spark) 14%,transparent);color:var(--ink);font:700 13px "Pretendard Variable",sans-serif;cursor:pointer}
+.spb-open:hover{background:color-mix(in srgb,var(--spark) 22%,transparent)}
+.spb-odds{font-size:11.5px;color:var(--mute)}.spb-open .bn{font-style:normal}.spb-open span{white-space:nowrap}
+@media (max-width:640px){.ma-ban .spb-open .bn{display:none}.ma-ban .spb-open{height:30px;font-size:12.5px}}
+.spb.opening .spb-open{animation:spbShake .7s ease}.spb.opening .spb-open span{opacity:.6}
+@keyframes spbShake{0%,100%{transform:none}20%{transform:rotate(-4deg) scale(1.03)}40%{transform:rotate(4deg) scale(1.05)}60%{transform:rotate(-3deg)}80%{transform:rotate(2deg)}}
+.spb.win,.spb.miss{flex-direction:column;align-items:flex-start;gap:2px;padding:8px 12px;border-radius:12px;animation:rcUp .3s ease both}
+.spb.win{background:color-mix(in srgb,var(--spark) 14%,transparent);border:1px solid color-mix(in srgb,var(--spark) 45%,transparent)}
+.spb.miss{background:color-mix(in srgb,var(--energy) 10%,transparent);border:1px solid color-mix(in srgb,var(--energy) 40%,transparent)}
+.spb b{font-size:13px;display:flex;align-items:center;gap:6px}.spb.win b svg{width:14px;height:14px;color:var(--spark)}.spb span{font-size:12px;color:var(--mute);line-height:1.45}
+.ma-card .spb{justify-content:center;text-align:left;margin:10px 0 4px}.ma-card .spb.win,.ma-card .spb.miss{align-items:center;text-align:center}
+.ma-go.spk{background:var(--spark)!important;color:var(--spark-ink)!important}
+.sp-drop.info p{margin:0}
+.spb-s{display:none;font-style:normal;font-weight:700;font-size:12.5px;align-items:center;gap:5px;white-space:nowrap}.spb-s svg{width:12px;height:12px;color:var(--spark)}
+@media (max-width:640px){.ma-ban .spb-odds{display:none}.ma-ban .spb.win,.ma-ban .spb.miss{padding:3px 10px;border-radius:999px;display:inline-flex;margin-top:4px}.ma-ban .spb.win>:not(.spb-s),.ma-ban .spb.miss>:not(.spb-s){display:none}.ma-ban .spb-s{display:inline-flex}.ma-ban .ma-go .gl{display:none}.ma-ban .ma-go .gs{display:inline}}
+.ma-go .gs{display:none}.ma-go svg{width:14px;height:14px;vertical-align:-2px}
 @media (max-width:640px){.ma-ban .ma-sp .sp-by{display:none}.ma-ban .ma-sp{margin-left:4px}}
 .ma-card .ma-cd{font-size:48px;color:var(--ink)}
 .ma-info{margin:0 0 14px;font-size:13px;color:var(--mute)}
@@ -3226,6 +3243,57 @@ body.msv-on{overflow:hidden}
 #sp-chip{position:fixed;left:16px;bottom:16px;z-index:60;display:flex;align-items:center;gap:4px;padding:4px 4px 4px 12px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);box-shadow:var(--sh-surface);font-size:12.5px}
 #sp-chip a{color:var(--ink);text-decoration:none;font-weight:700}#sp-chip a::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--spark);margin-right:7px;vertical-align:1px}
 #sp-chip button{border:0;background:transparent;color:var(--mute);font:inherit;padding:6px 10px;border-radius:999px;cursor:pointer}#sp-chip button:hover{background:var(--bg3);color:var(--ink)}
+
+/* sponsor lucky box stage */
+.spb-msg{font-size:12.5px;color:var(--ink);font-weight:600}
+#spx{position:fixed;inset:0;z-index:140;display:grid;place-items:center;background:rgba(5,8,16,.72);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s;padding:16px}
+#spx.on{opacity:1}
+.spx-in{position:relative;width:min(460px,100%);padding:26px 22px 20px;border-radius:24px;text-align:center;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#12305A 0%,#0B1424 60%,#080D18 100%);border:1px solid rgba(124,245,255,.28);box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(47,123,255,.15) inset;color:#EAF2FF}
+.spx-rays{position:absolute;inset:-40%;background:conic-gradient(from 0deg,transparent 0 8deg,rgba(124,245,255,.08) 8deg 16deg,transparent 16deg 30deg);animation:spxSpin 14s linear infinite;pointer-events:none;opacity:.6}
+#spx.won .spx-rays{background:conic-gradient(from 0deg,transparent 0 8deg,rgba(255,181,71,.16) 8deg 16deg,transparent 16deg 30deg);animation-duration:6s;opacity:1}
+@keyframes spxSpin{to{transform:rotate(360deg)}}
+.spx-top{position:relative;display:flex;justify-content:center}.spx-top .sp-lock{color:#fff;font-size:13px}.spx-top .sp-by{color:#B9C3D6}.spx-top .sp-mk{width:22px;height:22px;font-size:13px}
+.spx-h{position:relative;text-transform:none;margin:14px 0 6px;font:800 22px/1.25 "Pretendard Variable",sans-serif;letter-spacing:-.01em;color:#fff}
+.spx-row{position:relative;display:flex;justify-content:center;gap:12px;margin:10px 0 6px;height:120px}
+.spx-b{width:96px;height:104px;padding:0;border:0;background:none;cursor:pointer;border-radius:16px;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s;filter:drop-shadow(0 10px 18px rgba(47,123,255,.35))}
+.spx-b:disabled{cursor:default}
+.spx-b:focus-visible{outline:2px solid #7CF5FF;outline-offset:4px}
+.spx-svg{width:100%;height:100%;overflow:visible}.spx-lid{transform-origin:60px 46px;transition:transform .5s cubic-bezier(.2,1.4,.4,1)}
+#spx.shuffle .spx-b{animation:spxShuf 1.5s ease-in-out}
+#spx.shuffle .spx-b[style*="--i:0"]{--dx:216px;--h:-26px}#spx.shuffle .spx-b[style*="--i:1"]{--dx:0px;--h:-34px}#spx.shuffle .spx-b[style*="--i:2"]{--dx:-216px;--h:22px}
+@keyframes spxShuf{0%,100%{transform:none}25%{transform:translate(calc(var(--dx)*.5),var(--h))}50%{transform:translate(var(--dx),0)}75%{transform:translate(calc(var(--dx)*.5),calc(var(--h)*-1))}}
+#spx.ready .spx-b{animation:spxBob 1.6s ease-in-out infinite;animation-delay:calc(var(--i)*.18s)}
+#spx.ready .spx-b:hover{transform:translateY(-6px) scale(1.05)}
+@keyframes spxBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+#spx.picked .spx-b:not(.pick){opacity:0;transform:scale(.7);width:0;margin:0 -6px;overflow:hidden}
+.spx-b{transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s,width .35s ease,margin .35s ease}
+#spx.picked .spx-b.pick{animation:spxShake .9s ease both}
+@keyframes spxShake{0%{transform:scale(1.15)}15%{transform:scale(1.2) rotate(-8deg)}30%{transform:scale(1.2) rotate(8deg)}45%{transform:scale(1.22) rotate(-6deg)}60%{transform:scale(1.24) rotate(6deg)}75%{transform:scale(1.26) rotate(-3deg)}100%{transform:scale(1.25)}}
+#spx .spx-b.lidoff .spx-lid{transform:translate(0,-34px) rotate(-18deg)}
+#spx.won .spx-b.lidoff,#spx.lost .spx-b.lidoff{animation:none;transform:scale(1.08);transform-origin:50% 100%}
+#spx.won .spx-row,#spx.lost .spx-row{margin-bottom:16px}
+#spx.won .spx-row{height:190px;align-items:flex-end}#spx.lost .spx-row{height:150px;align-items:flex-end}
+.spx-row{position:relative;transition:height .4s ease}
+.spx-pz{position:absolute;left:0;right:0;top:0;display:flex;justify-content:center;pointer-events:none}
+.spx-res{position:relative}
+.spx-puff{position:relative;width:120px;height:60px;margin-top:40px}.spx-puff i{position:absolute;left:50%;top:40px;width:26px;height:26px;border-radius:50%;background:rgba(185,195,214,.35);filter:blur(2px);animation:spxPuff 1s ease-out both}.spx-puff i:nth-child(2){--x:-34px;animation-delay:.05s}.spx-puff i:nth-child(3){--x:34px;animation-delay:.1s}
+@keyframes spxPuff{0%{transform:translate(-50%,0) scale(.3);opacity:.9}100%{transform:translate(calc(-50% + var(--x,0px)),-40px) scale(1.6);opacity:0}}
+.spx-prize{display:inline-flex;align-items:baseline;gap:8px;animation:spxPop .55s cubic-bezier(.2,1.6,.4,1) both;color:#FFB547;text-shadow:0 0 24px rgba(255,181,71,.6)}
+.spx-prize svg{width:34px;height:34px;align-self:center}.spx-prize b{font:900 64px/1 "Pretendard Variable",sans-serif}.spx-prize span{font:800 20px "Pretendard Variable",sans-serif}
+.spx-prize.miss{color:#B9C3D6;text-shadow:none}.spx-prize.miss b{font-size:34px}
+@keyframes spxPop{0%{transform:scale(.2) translateY(30px);opacity:0}70%{transform:scale(1.12)}100%{transform:none;opacity:1}}
+.spx-res p{margin:8px auto 0;max-width:34ch;font-size:13.5px;line-height:1.55;color:#C9D4E8;animation:rcUp .35s ease .25s both}
+.spx-burst{position:absolute;left:50%;top:40px;width:0;height:0}
+.spx-burst i{position:absolute;width:7px;height:7px;border-radius:50%;background:#FFB547;box-shadow:0 0 10px #FFB547;transform:rotate(var(--a)) translate(0);opacity:0;animation:spxBurst .9s cubic-bezier(.1,.8,.3,1) var(--t) both}
+.spx-burst i:nth-child(3n){background:#7CF5FF;box-shadow:0 0 10px #7CF5FF}
+@keyframes spxBurst{0%{opacity:1;transform:rotate(var(--a)) translate(0) scale(1.2)}100%{opacity:0;transform:rotate(var(--a)) translate(var(--d)) scale(.4)}}
+.spx-odds{position:relative;margin:12px 0 0;font-size:11.5px;color:#8FA0BC}
+.spx-act{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:12px}.spx-act:empty{display:none}
+.spx-go{width:100%;height:46px;justify-content:center;font-size:15px;background:linear-gradient(90deg,#00B395,#2BD4B4)!important;color:#04201B!important;border:0!important}.spx-go.spk{background:#FF8A1F!important;color:#1A0D00!important}.spx-go svg{width:16px;height:16px}
+.spx-later{border:0;background:none;color:#B9C3D6;font:600 13px "Pretendard Variable",sans-serif;cursor:pointer;padding:6px}
+.spx-x{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:#fff;font-size:20px;cursor:pointer}
+@media (max-width:420px){.spx-b{width:84px;height:92px}.spx-row{gap:6px}#spx.shuffle .spx-b[style*="--i:0"]{--dx:180px}#spx.shuffle .spx-b[style*="--i:2"]{--dx:-180px}.spx-h{font-size:20px}}
+@media (prefers-reduced-motion:reduce){.spx-rays,#spx.ready .spx-b,#spx.shuffle .spx-b,#spx.picked .spx-b.pick,.spx-burst i{animation:none}}
 /* concept page */
 .cpt{max-width:1080px;margin:36px auto 96px;display:grid;gap:28px}
 .cpt-h{display:grid;gap:10px}.cpt-h .k{font:600 12px "Pretendard Variable",sans-serif;letter-spacing:.18em;color:var(--cyan)}.cpt-h h1{margin:0;font-size:clamp(30px,3.4vw,42px);font-weight:800;letter-spacing:-.03em}.cpt-h p{margin:0;color:var(--mute);max-width:70ch;line-height:1.6}
@@ -4004,20 +4072,54 @@ var SPON=(()=>{const K='rorr-sp',KC='rorr-sp-claimed';let on=false;try{on=localS
  function chip(){let c=document.getElementById('sp-chip');if(!on){if(c)c.remove();return}if(!c){c=document.createElement('div');c.id='sp-chip';c.setAttribute('role','status');document.body.appendChild(c)}c.innerHTML=`<a href="#concept/branded-moment" onclick="nav(event,'concept/branded-moment')">${LX('Sponsor preview on','스폰서 미리보기 켜짐')}</a><button type="button" data-spoff aria-label="${LX('Turn off sponsor preview','스폰서 미리보기 끄기')}">${LX('Turn off','끄기')}</button>`}
  function set(v){on=!!v;try{localStorage.setItem(K,on?'1':'0')}catch(e){}document.documentElement.classList.toggle('sp-on',on);chip()}
  function claimed(id){try{return (JSON.parse(localStorage.getItem(KC)||'[]')).includes(id)}catch(e){return false}}
- function slot(tm,lm){if(!on||!lm||lm.none)return ''; /* preview shows on any live moment; launch scope = gold/holo only */const got=claimed(lm.id);
-  return `<section class="sp-drop${got?' got':''}" data-spid="${esc(lm.id)}"><div class="sp-dh">${lock()}</div>
-   <p><b>${got?LX(`You got ${B.drop} Spark from ${B.name}`,`${B.name}가 보낸 Spark ${B.drop}개를 받았어요`):LX(`${B.name} is sending ${B.drop} Spark to everyone watching this moment`,`${B.name}가 이 순간을 보는 팬 모두에게 Spark ${B.drop}개를 보내요`)}</b><span>${LX('Use it to Boost this moment. Points and cards follow the usual rules, and none of it goes to the team.','이 Spark로 지금 순간에 Boost할 수 있어요. 포인트·카드 규칙은 같고, 팀 배분은 없어요.')}</span></p>
-   ${got?'':`<button type="button" class="sp-get" data-spget="${esc(lm.id)}">${BX.IC.s}<span>${LX(`Get ${B.drop} Spark`,`Spark ${B.drop}개 받기`)}</span></button>`}</section>`}
- document.addEventListener('click',e=>{const g=e.target.closest('[data-spget]');if(!g)return;const id=g.dataset.spget;if(claimed(id))return;
-  if(!document.body.classList.contains('body-in')){openAuth('login');return}
-  let L=[];try{L=JSON.parse(localStorage.getItem(KC)||'[]')}catch(x){}L.push(id);try{localStorage.setItem(KC,JSON.stringify(L.slice(-200)))}catch(x){}
-  const S=BX.S();S.spark+=B.drop;BX.save();BX.setUI&&BX.setUI();
-  const box=g.closest('.sup')||document;const sp=box.querySelector('.bx-cur input[value=spark]');if(sp&&!sp.checked)sp.click();
-  const sec=g.closest('.sp-drop');sec.classList.add('got','pop');sec.querySelector('p b').textContent=LX(`You got ${B.drop} Spark from ${B.name}`,`${B.name}가 보낸 Spark ${B.drop}개를 받았어요`);g.remove();
-  toast(LX(`+${B.drop} Spark from ${B.name} · Sponsored`,`${B.name} 후원 · Spark +${B.drop}`))});
+ const ODDS=[[0,75],[5,20],[10,5]];/* concept odds (policy §6-1 draft) · free, login only, sponsor-funded */
+ const oddsTxt=()=>LX(`Odds: no prize ${ODDS[0][1]}% · 5 Spark ${ODDS[1][1]}% · 10 Spark ${ODDS[2][1]}%`,`확률: 꽝 ${ODDS[0][1]}% · Spark 5개 ${ODDS[1][1]}% · Spark 10개 ${ODDS[2][1]}%`);
+ const BOX={};
+ function roll(){let f=null;try{f=new URLSearchParams(location.search).get('box')}catch(e){}if(f!==null&&/^(0|5|10)$/.test(f))return +f;let r=Math.random()*100;for(const [n,w] of ODDS){if((r-=w)<0)return n}return 0}
+ function box(key){const b=BOX[key];const tp=`<span class="spb-odds">${oddsTxt()}</span>`;
+  if(!b)return `<div class="spb" data-spbox="${esc(key)}"><span class="spb-msg">${LX(`${B.name} has a lucky box for this moment`,`${B.name}가 이 순간 행운 박스를 준비했어요`)}</span><button type="button" class="spb-open" data-spbopen="${esc(key)}">${mark}<span>${LX('Play the lucky box','행운 박스 열기')}</span></button></div>`;
+  if(b.n)return `<div class="spb win" data-spbox="${esc(key)}"><em class="spb-s">${BX.IC.s} ${LX(`${b.n} Spark won`,`Spark ${b.n} 당첨`)}</em><b>${BX.IC.s} ${LX(`${B.name} sent you ${b.n} Spark`,`${B.name}가 Spark ${b.n}개를 보냈어요`)}</b><span>${LX('Cheer this moment with it. It stays in your wallet if you save it for later.','이 순간 Spark로 응원해 보세요. 나중에 써도 돼요.')}</span></div>`;
+  return `<div class="spb miss" data-spbox="${esc(key)}"><em class="spb-s">${LX('No prize','꽝')}</em><b>${LX('No prize this time','이번엔 꽝이에요')}</b><span>${LX(`Want to Boost this moment with Energy instead? RORR shares part of Boost revenue with ${PARTNER_T[0]}.`,`이 순간, Energy로 직접 Boost해 볼까요? RORR는 Boost 수익의 일부를 ${JO(PARTNER_T[0],'와')} 나눠요.`)}</span></div>`}
+ const BOXSVG=`<svg class="spx-svg" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="spxg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7CF5FF"/><stop offset="1" stop-color="#2F7BFF"/></linearGradient></defs><g class="spx-body"><rect x="14" y="52" width="92" height="58" rx="10" fill="url(#spxg)"/><rect x="54" y="52" width="12" height="58" fill="#06121F" opacity=".22"/><text x="60" y="92" text-anchor="middle" font-size="26" font-weight="900" fill="#06121F" font-family="Pretendard Variable,sans-serif">N</text></g><g class="spx-lid"><rect x="8" y="36" width="104" height="20" rx="7" fill="url(#spxg)"/><rect x="54" y="36" width="12" height="20" fill="#06121F" opacity=".22"/><path d="M60 36c-10-16-28-14-24-4 3 6 16 5 24 4zM60 36c10-16 28-14 24-4-3 6-16 5-24 4z" fill="#FFB547"/></g></svg>`;
+ let stg=null;
+ function closeStage(){if(stg){stg.classList.remove('on');document.body.classList.remove('spx-open');setTimeout(()=>{if(stg&&!stg.classList.contains('on')){stg.remove();stg=null}},250)}}
+ function openBox(key,cb,cta){if(BOX[key])return;if(!document.body.classList.contains('body-in')){openAuth('login',()=>openBox(key,cb,cta));return}
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(stg)stg.remove();stg=document.createElement('div');stg.id='spx';stg.className='spx';stg.setAttribute('role','dialog');stg.setAttribute('aria-modal','true');stg.setAttribute('aria-label',LX(`${B.name} lucky box`,`${B.name} 행운 박스`));
+  stg.innerHTML=`<div class="spx-in"><div class="spx-rays" aria-hidden="true"></div>
+   <div class="spx-top">${lock('big')}</div>
+   <h3 class="spx-h">${LX('Pick a box','박스 하나를 골라 보세요')}</h3>
+   <div class="spx-row">${[0,1,2].map(n=>`<button type="button" class="spx-b" data-spxi="${n}" style="--i:${n}" disabled aria-label="${LX(`Box ${n+1}`,`${n+1}번 박스`)}">${BOXSVG}</button>`).join('')}</div>
+   <div class="spx-res" aria-live="assertive"></div>
+   <p class="spx-odds">${oddsTxt()} · ${LX('Free · every box has the same odds','무료 · 어느 박스든 확률은 같아요')}</p>
+   <div class="spx-act"></div>
+   <button type="button" class="spx-x" aria-label="${LX('Close','닫기')}">×</button></div>`;
+  document.body.appendChild(stg);document.body.classList.add('spx-open');void stg.offsetWidth;stg.classList.add('on','shuffle');
+  stg.querySelector('.spx-x').onclick=()=>{closeStage()};
+  setTimeout(()=>{if(!stg)return;stg.classList.remove('shuffle');stg.classList.add('ready');stg.querySelectorAll('.spx-b').forEach(b=>b.disabled=false);stg.querySelector('.spx-b').focus()},reduce?50:1500);
+  stg.querySelectorAll('.spx-b').forEach(btn=>btn.onclick=()=>{if(BOX[key])return;const n=roll();BOX[key]={n};stg.classList.remove('ready');stg.classList.add('picked');btn.classList.add('pick');stg.querySelectorAll('.spx-b').forEach(b=>b.disabled=true);
+   stg.querySelector('.spx-h').textContent=LX('Opening…','여는 중…');
+   setTimeout(()=>{if(!stg)return;stg.classList.add(n?'won':'lost');btn.classList.add('lidoff');
+    if(n){const S=BX.S();S.spark+=n;BX.save();BX.setUI&&BX.setUI()}
+    const burst=n?Array.from({length:22},(_,k)=>`<i style="--a:${k*16.4}deg;--d:${60+(k%5)*18}px;--t:${(k%4)*.04}s"></i>`).join(''):'';
+    stg.querySelector('.spx-h').textContent=n?LX('You won!','당첨!'):LX('No prize this time','이번엔 꽝이에요');
+    if(n)stg.querySelector('.spx-row').insertAdjacentHTML('beforeend',`<div class="spx-pz"><div class="spx-burst" aria-hidden="true">${burst}</div><div class="spx-prize">${BX.IC.s}<b>${n}</b><span>Spark</span></div></div>`);
+    else stg.querySelector('.spx-row').insertAdjacentHTML('beforeend','<div class="spx-pz"><div class="spx-puff" aria-hidden="true"><i></i><i></i><i></i></div></div>');
+    stg.querySelector('.spx-res').innerHTML=n?`<p>${LX(`${B.name} sent you ${n} Spark. It goes to your wallet like any other Spark.`,`${B.name}가 Spark ${n}개를 보냈어요. 일반 Spark처럼 지갑에 들어가요.`)}</p>`
+     :`<p>${LX(`This moment is still live. Want to Boost it with Energy? RORR shares part of Boost revenue with ${PARTNER_T[0]}.`,`이 순간은 아직 진행 중이에요. Energy로 직접 Boost해 볼까요? RORR는 Boost 수익의 일부를 ${JO(PARTNER_T[0],'와')} 나눠요.`)}</p>`;
+    const act=stg.querySelector('.spx-act');
+    act.innerHTML=n?`<button type="button" class="pill spx-go spk">${BX.IC.s} ${LX(`Boost with Spark ${n}`,`Spark ${n}${n%10===0?'으로':'로'} 이 순간 Boost`)}</button><button type="button" class="spx-later">${LX('Later','나중에 쓸게요')}</button>`
+     :`<button type="button" class="pill spx-go">⚡ ${LX('Boost with Energy','Energy로 이 순간 Boost')}</button><button type="button" class="spx-later">${LX('Not now','괜찮아요')}</button>`;
+    act.querySelector('.spx-go').onclick=()=>{closeStage();cta&&cta(n?'spark':'energy')};act.querySelector('.spx-later').onclick=closeStage;
+    const cur=document.querySelector(`[data-spbox="${CSS.escape(key)}"]`);if(cur)cur.outerHTML=box(key);if(cb)cb(n);
+    toast(n?LX(`+${n} Spark from ${B.name} · Sponsored`,`${B.name} 후원 · Spark +${n}`):LX(`${B.name} lucky box · no prize`,`${B.name} 행운 박스 · 꽝`));
+    act.querySelector('.spx-go').focus()},reduce?100:1100)})}
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&stg&&stg.classList.contains('on')){e.stopPropagation();closeStage()}},true);
+ function slot(tm,lm){if(!on||!lm||lm.none)return '';
+  return `<section class="sp-drop info"><div class="sp-dh">${lock()}</div><p><b>${LX(`${B.name} lucky box opens with big-moment alerts`,`큰 순간 알림이 뜨면 ${B.name} 행운 박스를 열 수 있어요`)}</b><span>${oddsTxt()} · ${LX('Free, log in to open. Spark you win works like any other Spark.','무료, 로그인 후 열 수 있어요. 당첨 Spark는 일반 Spark와 똑같이 쓸 수 있어요.')}</span></p></section>`}
  document.documentElement.classList.toggle('sp-on',on);setTimeout(chip,0);
  document.addEventListener('click',e=>{if(!e.target.closest('[data-spoff]'))return;set(false);if(typeof renderConcept==='function')renderConcept();toast(LX('Sponsor preview off','스폰서 미리보기를 껐어요'))});
- return{get on(){return on},set,B,lock,slot,chip}})();
+ return{get on(){return on},set,B,lock,slot,chip,box,openBox,oddsTxt}})();
 
 /* concept page: #concept/branded-moment */
 function renderConcept(){const el=document.getElementById('cpt');if(!el)return;const on=SPON.on;const R=(typeof BX!=='undefined')?BX.S():null;
@@ -4028,7 +4130,7 @@ function renderConcept(){const el=document.getElementById('cpt');if(!el)return;c
   <div class="cpt-tg"><b>${LX('Sponsor preview','스폰서 미리보기')}</b><span>${on?LX('On · live screens show the sponsor','켜짐 · 실제 화면에 스폰서가 보여요'):LX('Off','꺼짐')}</span><button type="button" class="pill ${on?'ghost':''}" data-cptog>${on?LX('Turn off','끄기'):LX('Turn on','켜기')}</button>${SPON.lock()}</div>
   <div class="cpt-g">
    <section class="cpt-c"><span class="n">A</span><h3>${LX('Presented moment','Presented moment')}</h3><p>${LX('When you Boost a gold or hologram moment, the cut-in shows a small "presented by" tag for two seconds. The result screen says the moment was sponsored; your card stays clean.','골드·홀로그램 순간에 Boost하면 컷인에 "presented by" 표시가 2초 나와요. 결과 화면에 후원 사실을 알리고, 카드에는 넣지 않아요.')}</p><ul><li>${LX('Sold as a range: "every Baron moment in the final"','범위로 판매: "결승의 모든 바론 순간"')}</li><li>${LX('Minimum impressions with make-goods','최소 노출 보장 + 미달 시 보상')}</li></ul><button type="button" class="pill" data-cptry="a">${LX('Try it on a live moment','라이브 순간에서 체험')}</button></section>
-   <section class="cpt-c"><span class="n">B</span><h3>${LX('Sponsor Spark drop','스폰서 Spark 드롭')}</h3><p>${LX('During a big moment the sponsor sends Spark to everyone watching. Fans cheer with it, so the brand arrives as a gift rather than an ad break.','큰 순간에 스폰서가 보고 있는 팬 모두에게 Spark를 보내요. 팬은 그 Spark로 응원하므로 광고가 아니라 선물로 느껴져요.')}</p><ul><li>${LX('Same daily limit and no team sharing as ad Spark','광고 Spark와 같은 1일 한도, 팀 배분 없음')}</li><li>${LX('Needs a policy update: a new Spark source','정책 개정 필요: Spark 지급 경로 추가')}</li></ul><button type="button" class="pill" data-cptry="b">${LX('Try the drop','드롭 체험')}</button></section>
+   <section class="cpt-c"><span class="n">B</span><h3>${LX('Sponsor lucky box','스폰서 행운 박스')}</h3><p>${LX('The big-moment alert carries only the sponsor message; tapping it opens a lucky-box game in the middle of the screen. Pick one of three boxes and the result pops out. A win gives Spark to cheer with; an empty box becomes a nudge to Boost the moment with Energy.','큰 순간 알림에는 스폰서 메시지만 보이고, 누르면 화면 가운데에서 행운 박스 게임이 열려요. 박스 셋 중 하나를 고르면 결과가 터져 나와요. 당첨되면 Spark로 응원하고, 꽝이면 그 순간 Energy로 Boost해 보도록 이어 줘요.')}</p><ul><li>${SPON.oddsTxt()}</li><li>${LX('Free, login only, odds shown next to the box. Won Spark works like any Spark','무료·로그인 필요·확률은 박스 옆에 공개. 당첨 Spark는 일반 Spark와 동일')}</li><li>${LX('Needs a policy update: random-free principle exception and a new Spark source','정책 개정 필요: 무작위 없음 원칙 예외, Spark 지급 경로 추가')}</li></ul><button type="button" class="pill" data-cptry="b">${LX('Try it with an alert','알림으로 체험')}</button></section>
    <section class="cpt-c"><span class="n">C</span><h3>${LX('Moment of the week','이번 주의 명장면')}</h3><p>${LX('A weekly collection page and recap carry the sponsor name. Nothing appears during the match, so it is the lightest on policy.','주간 명장면 모음 페이지와 리캡에 스폰서 이름을 붙여요. 경기 중 노출이 없어 정책 부담이 가장 적어요.')}</p><ul><li>${LX('Fans vote for the moment of the week','팬 투표로 이번 주 명장면 선정')}</li><li>${LX('Good fit for a season package','시즌 패키지로 판매하기 좋음')}</li></ul></section>
   </div>
   <section class="cpt-wk"><div class="cpt-wk-h"><h3>${LX(`${SPON.B.name} Clutch Moment of the Week`,`${SPON.B.name} 이번 주의 클러치 모먼트`)}</h3>${SPON.lock()}</div>
@@ -4036,7 +4138,7 @@ function renderConcept(){const el=document.getElementById('cpt');if(!el)return;c
    <p style="margin:0;font-size:12.5px;color:var(--mute)">${LX('Sample cards. Votes stay in this browser.','샘플 카드예요. 투표는 이 브라우저에만 저장돼요.')}</p></section>`}
 document.addEventListener('click',e=>{if(!e.target.closest('#cpt'))return;
  if(e.target.closest('[data-cptog]')){SPON.set(!SPON.on);renderConcept();toast(SPON.on?LX('Sponsor preview on','스폰서 미리보기를 켰어요'):LX('Sponsor preview off','스폰서 미리보기를 껐어요'));return}
- const t=e.target.closest('[data-cptry]');if(t){if(!SPON.on){SPON.set(true);renderConcept()}PTAB['team/T1']='cheer';openTeam('T1');setTimeout(()=>{const s=document.querySelector(t.dataset.cptry==='b'?'#ip-body .sp-drop':'#ip-body .sup-box');s&&s.scrollIntoView({behavior:'smooth',block:'center'})},500);return}
+ const t=e.target.closest('[data-cptry]');if(t){if(!SPON.on){SPON.set(true);renderConcept()}if(t.dataset.cptry==='b'){if(!document.body.classList.contains('body-in'))document.body.classList.add('body-in');MA.demo('gold');return}PTAB['team/T1']='cheer';openTeam('T1');setTimeout(()=>{const s=document.querySelector(t.dataset.cptry==='b'?'#ip-body .sp-drop':'#ip-body .sup-box');s&&s.scrollIntoView({behavior:'smooth',block:'center'})},500);return}
  const v=e.target.closest('[data-cpvote]');if(v){document.querySelectorAll('#cpt [data-cpvote]').forEach(b=>{b.classList.toggle('on',b===v);b.textContent=b===v?LX('Voted ✓','투표함 ✓'):LX('Vote','투표하기')})}});
 /* ===== legal pages ===== */
 document.addEventListener('click',e=>{const a=e.target.closest('[data-aulg]');if(!a)return;document.body.classList.remove('authing');nav(e,a.dataset.aulg)});
@@ -4878,19 +4980,21 @@ document.addEventListener('click',e=>{document.querySelectorAll('details.fl-how[
 const MA=(()=>{const K='rorr-ma';const get=()=>{try{return localStorage.getItem(K)||'all'}catch(e){return'all'}};const set=v=>{try{localStorage.setItem(K,v)}catch(e){}};
  let tmr=null,t0=document.title,last=0;const shown=new Set();
  const liveFav=()=>{const fv=(typeof favTeams==='function'?favTeams():[]);return DB.sched.find(x=>x.st==='live'&&(fv.includes(x.a)||fv.includes(x.b)))||DB.sched.find(x=>x.st==='live'&&(x.a==='T1'||x.b==='T1'))||DB.sched.find(x=>x.st==='live')};
- const busy=()=>{const b=document.body.classList;return b.contains('rewarding')||b.contains('bx-modal-on')||!!document.querySelector('.au.on,.ob.on,#ma-pop.on')};
+ const busy=()=>{const b=document.body.classList;return b.contains('rewarding')||b.contains('bx-modal-on')||b.contains('spx-open')||!!document.querySelector('.au.on,.ob.on,#ma-pop.on')};
  const fmtS=n=>`0:${String(Math.max(0,n)).padStart(2,'0')}`;
  function title(on,k){document.title=on?`(⚡ ${k==='holo'?LX('Elder soon','장로 임박'):LX('Baron soon','바론 임박')}) ${t0}`:t0;let f=document.querySelector('link[rel=icon]');if(f){if(on){f.dataset.o=f.dataset.o||f.href;const c=document.createElement('canvas');c.width=c.height=32;const x=c.getContext('2d');const im=new Image();im.onload=()=>{x.drawImage(im,0,0,32,32);x.fillStyle='#FFB020';x.beginPath();x.arc(25,7,6,0,7);x.fill();try{f.href=c.toDataURL()}catch(e){}};im.src=f.dataset.o}else if(f.dataset.o)f.href=f.dataset.o}}
  function close(){clearInterval(tmr);tmr=null;['ma-ban','ma-pop'].forEach(id=>{const e=document.getElementById(id);if(e)e.classList.remove('on')});document.body.classList.remove('ma-on');title(false)}
- function go(m){close();const tm=m?(PARTNER_T.includes(m.a)?m.a:PARTNER_T.includes(m.b)?m.b:m.a):'T1';PTAB['team/'+tm]='cheer';openTeam(tm);setTimeout(()=>{const s=document.querySelector('#ip-body .sup');if(s)s.scrollIntoView({behavior:'smooth',block:'start'})},250)}
+ function go(m,cur){close();const tm=m?(PARTNER_T.includes(m.a)?m.a:PARTNER_T.includes(m.b)?m.b:m.a):'T1';PTAB['team/'+tm]='cheer';openTeam(tm);setTimeout(()=>{const s=document.querySelector('#ip-body .sup');if(cur){const r=s&&s.querySelector(`.bx-cur input[value=${cur}]`);if(r&&!r.checked&&!r.disabled)r.click()}if(s)s.scrollIntoView({behavior:'smooth',block:'start'})},250)}
+ let bseq=0;
+ function wire(e,bk,m){delete e.dataset.cur;const b=e.querySelector('[data-spbopen]');if(!b)return;b.onclick=x=>{x.stopPropagation();SPON.openBox(bk,n=>{const g=e.querySelector('.ma-go');if(!g)return;e.dataset.cur=n?'spark':'energy';g.innerHTML=n?`${BX.IC.s} <span class="gl">${LX(`Boost with Spark ${n}`,`Spark ${n}${n%10===0?'으로':'로'} Boost 준비`)}</span><span class="gs">Boost</span>`:`⚡ <span class="gl">${LX('Boost with Energy','Energy로 Boost 준비')}</span><span class="gs">Boost</span>`;g.classList.toggle('spk',!!n)},cur=>go(m,cur))}}
  function el(id,html){let e=document.getElementById(id);if(!e){e=document.createElement('div');e.id=id;document.body.appendChild(e)}e.innerHTML=html;return e}
  function show(k,force){const pref=get();if(!force&&(pref==='off'||(pref==='holo'&&k==='gold')))return false;if(!force&&busy())return false;const m=liveFav();if(!m&&!force)return false;
   const now=Date.now();if(!force&&k==='gold'&&now-last<180e3)return false;const key=k+(m?m.id:'');if(!force&&k==='holo'&&shown.has(key))return false;shown.add(key);last=now;close();
-  const g=m?LX(`G${m.game||1}`,`${m.game||1}세트`):'';const spOn=window.SPON&&SPON.on&&(!m||PARTNER_T.includes(m.a)||PARTNER_T.includes(m.b));const spL=spOn?`<span class="ma-sp">${SPON.lock()}</span>`:'';const vs=m?`${m.a} ${LX('vs','대')} ${m.b}`:'T1';let n=k==='holo'?32:38;
-  if(k==='gold'){const e=el('ma-ban',`<img class="ma-bm" src="assets/muse-waving.webp" alt="Muse"><div class="ma-bt"><span class="ma-tg">⚡ ${LX('Gold moment','골드 순간')}</span>${spL}<b>${LX('Baron fight incoming','바론 교전 임박')}</b><span class="ma-ln">“${LX("A fight at Baron is coming. Get your cheer ready!",'바론 앞에서 한타 각이에요! 같이 응원 준비해요')}” <em>${vs} · ${g}</em></span></div><b class="ma-cd">${fmtS(n)}</b><button type="button" class="ma-go">⚡ ${LX('Get ready','Boost 준비')}</button><button type="button" class="ma-x" aria-label="${LX('Close','닫기')}">×</button><span class="ma-pb"><i></i></span>`);e.className='ma-ban';e.setAttribute('role','status');void e.offsetWidth;e.classList.add('on');
-   e.querySelector('.ma-go').onclick=()=>go(m);e.querySelector('.ma-x').onclick=close;e.querySelector('.ma-pb i').style.animationDuration=n+'s'}
-  else{const e=el('ma-pop',`<div class="rw-card ma-card"><div class="rw-glow"></div><img class="rw-muse" src="assets/muse-surprised.webp" alt="Muse"><div class="rw-to">${LX(`Hologram moment incoming · ${g}`,`홀로그램 순간 임박 · ${g}`)}</div>${spL}<div class="rw-amt ma-cd">${fmtS(n)}</div><p class="rw-line">“${LX("Elder dragon fight! This could decide the game. Cheer with me?",'장로 드래곤 한타예요! 여기서 승부가 갈릴 수도 있어요. 같이 응원할래요?')}”</p><p class="ma-info">${vs} · ${LX('win chance can swing hard here','승리확률이 크게 흔들릴 수 있는 순간')}</p><button type="button" class="pill rw-ok ma-go">⚡ ${LX('Get ready to Boost this moment','이 순간 Boost 준비')}</button><button type="button" class="ma-later">${LX('Maybe next time','다음에 할게요')}</button><p class="ma-ext">${LX('Boost it and the moment card is yours.','Boost하면 이 순간 카드도 받아요.')} · <button type="button" class="ma-off">${LX('Alert settings','알림 설정')}</button></p></div>`);e.className='reward ma-pop';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Muse');void e.offsetWidth;e.classList.add('on');
-   e.querySelector('.ma-go').onclick=()=>go(m);e.querySelector('.ma-later').onclick=close;e.querySelector('.ma-off').onclick=()=>{close();nav(null,'account/boost')};e.onclick=x=>{if(x.target===e)close()}}
+  const g=m?LX(`G${m.game||1}`,`${m.game||1}세트`):'';const spOn=window.SPON&&SPON.on&&(!m||PARTNER_T.includes(m.a)||PARTNER_T.includes(m.b));const spL=spOn?`<span class="ma-sp">${SPON.lock()}</span>`:'';const bk=`ma${++bseq}`;const spB=spOn?SPON.box(bk):'';const vs=m?`${m.a} ${LX('vs','대')} ${m.b}`:'T1';let n=k==='holo'?32:38;
+  if(k==='gold'){const e=el('ma-ban',`<img class="ma-bm" src="assets/muse-waving.webp" alt="Muse"><div class="ma-bt"><span class="ma-tg">⚡ ${LX('Gold moment','골드 순간')}</span>${spL}<b>${LX('Baron fight incoming','바론 교전 임박')}</b><span class="ma-ln">“${LX("A fight at Baron is coming. Get your cheer ready!",'바론 앞에서 한타 각이에요! 같이 응원 준비해요')}” <em>${vs} · ${g}</em></span>${spB}</div><b class="ma-cd">${fmtS(n)}</b><button type="button" class="ma-go">⚡ ${LX('Get ready','Boost 준비')}</button><button type="button" class="ma-x" aria-label="${LX('Close','닫기')}">×</button><span class="ma-pb"><i></i></span>`);e.className='ma-ban';e.setAttribute('role','status');void e.offsetWidth;e.classList.add('on');
+   e.querySelector('.ma-go').onclick=()=>go(m,e.dataset.cur);e.querySelector('.ma-x').onclick=close;wire(e,bk,m);e.querySelector('.ma-pb i').style.animationDuration=n+'s'}
+  else{const e=el('ma-pop',`<div class="rw-card ma-card"><div class="rw-glow"></div><img class="rw-muse" src="assets/muse-surprised.webp" alt="Muse"><div class="rw-to">${LX(`Hologram moment incoming · ${g}`,`홀로그램 순간 임박 · ${g}`)}</div>${spL}<div class="rw-amt ma-cd">${fmtS(n)}</div><p class="rw-line">“${LX("Elder dragon fight! This could decide the game. Cheer with me?",'장로 드래곤 한타예요! 여기서 승부가 갈릴 수도 있어요. 같이 응원할래요?')}”</p><p class="ma-info">${vs} · ${LX('win chance can swing hard here','승리확률이 크게 흔들릴 수 있는 순간')}</p>${spB}<button type="button" class="pill rw-ok ma-go">⚡ ${LX('Get ready to Boost this moment','이 순간 Boost 준비')}</button><button type="button" class="ma-later">${LX('Maybe next time','다음에 할게요')}</button><p class="ma-ext">${LX('Boost it and the moment card is yours.','Boost하면 이 순간 카드도 받아요.')} · <button type="button" class="ma-off">${LX('Alert settings','알림 설정')}</button></p></div>`);e.className='reward ma-pop';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Muse');void e.offsetWidth;e.classList.add('on');
+   e.querySelector('.ma-go').onclick=()=>go(m,e.dataset.cur);e.querySelector('.ma-later').onclick=close;wire(e,bk,m);e.querySelector('.ma-off').onclick=()=>{close();nav(null,'account/boost')};e.onclick=x=>{if(x.target===e)close()}}
   document.body.classList.add('ma-on');title(true,k);
   tmr=setInterval(()=>{n--;document.querySelectorAll('#ma-ban.on .ma-cd,#ma-pop.on .ma-cd').forEach(c=>c.textContent=fmtS(n));if(n<=0)close()},1000);return true}
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('ma-on'))close()});
