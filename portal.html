@@ -5742,8 +5742,8 @@ const MD=(()=>{const $=id=>document.getElementById(id);let tids=[],fav=null,opp=
  function nextMatch(t){const m=DB.sched.filter(x=>x.st==='up'&&(x.a===t||x.b===t)).sort((a,b)=>a.at-b.at)[0];return m?localParts(m.at):null}
  function ctaText(){const t=fav||getTeam();$('md-cta').textContent=t?L(`Bring Muse to ${t}'s next match · Free`,`${t} 다음 경기에 Muse 데려오기 · 무료`):L('Add Muse to Chrome · Free','크롬에 Muse 추가 · 무료')}
  function intro(){reset();fav=null;streak=0;stk();
-  at(500,()=>say(L("Hi! I'm Seoha from Muse. I'll watch right here beside the stream with you.","안녕! 나는 Muse의 서하야. 중계 옆에서 너랑 같이 경기 볼 거야.")));
-  at(1700,()=>{say(L("Who are you cheering for today?","오늘 누구 응원해?"));chips()})}
+  at(500,()=>say(L("Hi! I'm Seoha from Muse. I'll watch right here beside the stream with you.","안녕하세요! Muse의 서하예요. 중계 바로 옆에서 같이 볼게요.")));
+  at(1700,()=>{say(L("Who are you cheering for today?","오늘은 어느 팀 응원해요?"));chips()})}
  let qz=null,streak=0,boosted=false;
  function scene(n){document.querySelectorAll('#md-scn img').forEach(im=>{const on=im.dataset.s===n;if(on&&!im.classList.contains('on')){im.classList.remove('kb');void im.offsetWidth;im.classList.add('kb')}im.classList.toggle('on',on)})}
  function stk(){const e=$('md-stk');e.hidden=!streak;e.textContent=L(`🔥 ${streak} correct in a row`,`🔥 연속 정답 ${streak}`)}
@@ -5752,12 +5752,12 @@ const MD=(()=>{const $=id=>document.getElementById(id);let tids=[],fav=null,opp=
   d.innerHTML=`<div class="qz-h"><b>${L('Next dragon?','다음 드래곤은?')}</b><span class="qz-free">${L('Free','무료')}</span></div><div class="qz-b">${[A,B].map(t=>`<button type="button" data-q="${t}" aria-pressed="false">${t}</button>`).join('')}</div><div class="qz-t"><i id="md-qbar"></i></div><div class="qz-m" id="md-qm">${L('Closes before any stream shows it','중계에 나오기 전에 마감')}</div>`;f.appendChild(d);
   const bar=$('md-qbar');bar.style.transition='none';bar.style.width='100%';void bar.offsetWidth;bar.style.transition='width 6s linear';bar.style.width='0%';
   d.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{if(!qz||!qz.open)return;qz.pick=b.dataset.q;d.querySelectorAll('[data-q]').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});
-   me(b.dataset.q);sayKeep(qz.pick===fav?L("Same pick as me. Let's see.",'나도 그거 골랐어. 어디 보자.'):L("Bold. Let's see.",'오, 과감한데? 어디 보자.'))})}
+   me(b.dataset.q);sayKeep(qz.pick===fav?L("Same pick as me. Let's see.",'저도 같은 팀 골랐어요. 지켜봐요!'):L("Bold. Let's see.",'오, 과감한데요? 한번 봐요.'))})}
  function qLock(){if(!qz)return;qz.open=false;const d=document.querySelector('.md-qz');if(!d)return;d.classList.add('lock');$('md-qm').textContent=L('Locked. Waiting for the dragon…','마감! 드래곤 기다리는 중…')}
  function qResult(){if(!qz)return;const d=document.querySelector('.md-qz');const ok=qz.pick===fav,none=!qz.pick;
   if(ok)streak++;else if(!none)streak=0;stk();
   if(d){d.classList.add(ok?'ok':none?'nn':'no');$('md-qm').textContent=ok?L(`Correct · ${fav} took the dragon · +30`,`정답 · ${fav} 드래곤 획득 · +30`):none?L(`No answer · ${fav} took it · streak kept`,`미응답 · ${fav} 획득 · 연속 기록 유지`):L(`Not this time · ${fav} took it · streak reset`,`아쉽다 · ${fav} 획득 · 연속 기록 초기화`)}
-  sayKeep(ok?L("Dragon's ours! Catch the next one with me.",'드래곤 우리 거! 다음 문제도 같이 맞히자.'):L("Dragon's ours! Missed the quiz, but we'll get the next one.",'드래곤 우리 거! 퀴즈는 아쉽지만 다음엔 맞히자.'),'happy');qz=null}
+  sayKeep(ok?L("Dragon's ours! Catch the next one with me.",'드래곤 가져왔어요! 다음 문제도 같이 맞혀 봐요.'):L("Dragon's ours! Missed the quiz, but we'll get the next one.",'드래곤 가져왔어요! 퀴즈는 아쉽지만 다음 건 맞혀 봐요.'),'happy');qz=null}
  function heads(){const h=$('md-hu');const np=fav!==A;let n=5;
   h.innerHTML=`<div class="hu-t"><b>${L('Gold moment','골드 모먼트')}</b><span>${L('Baron fight incoming','바론 교전 임박')}</span><em id="md-hun">0:0${n}</em></div><button type="button" id="md-hub">${np?L('Cheer with Spark','Spark로 응원하기'):L('Boost this moment','이 순간 Boost')}</button>`;h.hidden=false;h.classList.remove('done');
   const iv=setInterval(()=>{n=Math.max(0,n-1);const e=$('md-hun');if(e)e.textContent='0:0'+n;if(!n)clearInterval(iv)},1000);tids.push(iv);
@@ -5766,25 +5766,25 @@ const MD=(()=>{const $=id=>document.getElementById(id);let tids=[],fav=null,opp=
   c.innerHTML=`<span class="mc-k">${L('Gold moment card','골드 모먼트 카드')}</span><b>${L('Baron fight · Game 2','바론 교전 · 2세트')}</b><span class="mc-s">${L('Win chance 44% → 72%','승리확률 44% → 72%')}</span>`;f.appendChild(c)}
  function start(t){fav=t;opp=t===A?B:A;setTeam(t);me(t);$('md-panel').dataset.team=t===A?'a':'b';ctaText();$('md-react').classList.add('on');boosted=false;
   const up=fav===A?1:-1;const side=g=>g?(fav===A?'a':'b'):(fav===A?'b':'a');
-  say(L("Here we go. I'm right here with you.",'시작한다! 나 바로 옆에 있을게.'),'happy');
+  say(L("Here we go. I'm right here with you.",'시작해요! 끝까지 옆에서 같이 볼게요.'),'happy');
   clock(14,24,31000);
-  at(2600,()=>{scene('dragon');say(L('Dragon in a minute. Who\'s taking it?','1분 뒤면 드래곤이야. 누가 가져갈까?'),'tense');quiz()});
+  at(2600,()=>{scene('dragon');say(L('Dragon in a minute. Who\'s taking it?','1분 뒤에 드래곤이에요. 누가 가져갈까요?'),'tense');quiz()});
   at(8600,qLock);
   at(10200,()=>{flash(L(`DRAGON · ${fav}`,`드래곤 · ${fav}`));document.getElementById('md-drg').classList.add('taken',fav===A?'a':'b');setGold(900*up);qResult()});
   at(13600,()=>scene('fight'));
   at(14200,()=>{flash(L(`TEAMFIGHT · ${opp}`,`한타 · ${opp}`));kill(side(false));kill(side(false));kill(side(false));kill(side(true));setGold(-1400*up)});
-  at(14900,()=>say(L("I know. Breathe. It's not over.",'아프다… 숨 한 번 고르자. 아직 안 끝났어.'),'sad'));
-  at(17800,()=>{scene('baron');heads();say(L("Baron's up and they've burned two summoner spells. This could be it.",'바론 떴어. 상대 스펠도 두 개 빠졌고. 지금이 기회일지도 몰라.'),'tense')});
+  at(14900,()=>say(L("I know. Breathe. It's not over.",'아, 아프다… 괜찮아요. 아직 안 끝났어요.'),'sad'));
+  at(17800,()=>{scene('baron');heads();say(L("Baron's up and they've burned two summoner spells. This could be it.",'바론 나왔어요. 상대 스펠도 두 개 빠졌고요. 지금이 기회일 수 있어요.'),'tense')});
   at(22800,()=>{flash(L(`BARON STOLEN · ${fav}`,`바론 스틸 · ${fav}`));document.getElementById('md-brn').classList.add('taken',fav===A?'a':'b');kill(side(true));kill(side(true));setGold(600*up);$('md-hu').hidden=true;
-   say(L("WE GOT IT! I'm literally screaming!",'먹었다!! 나 방금 소리 질렀어!'),'hype');if(boosted)cardPop()});
-  at(26800,()=>{scene('crowd');flash(L(`${fav} PUSHES MID`,`${fav} 미드 진격`));kill(side(true));kill(side(true));setGold(2600*up);say(L('This is it. One more push, together!','이번에 끝내자. 한 번만 더, 같이 밀어!'),'happy')});
+   say(L("WE GOT IT! I'm literally screaming!",'바론 먹었어요!! 저 방금 소리 질렀어요!'),'hype');if(boosted)cardPop()});
+  at(26800,()=>{scene('crowd');flash(L(`${fav} PUSHES MID`,`${fav} 미드 진격`));kill(side(true));kill(side(true));setGold(2600*up);say(L('This is it. One more push, together!','이번에 끝내요. 한 번만 더 밀어붙여요!'),'happy')});
   at(31500,()=>{const n=nextMatch(fav);
-   say(L("That's how I'll watch every match with you.",'매 경기 이렇게 옆에서 같이 볼게.'));
-   at(1300,()=>{say(n?L(`${fav} plays ${n.d} at ${n.t}. Want me to ping you 10 minutes before?`,`${fav} 다음 경기는 ${n.d} ${n.t}이야. 시작 10분 전에 알려 줄까?`):L(`Want me there for ${fav}'s next match?`,`${fav} 다음 경기도 같이 볼까?`),'happy');
+   say(L("That's how I'll watch every match with you.",'경기마다 이렇게 옆에서 같이 볼게요.'));
+   at(1300,()=>{say(n?L(`${fav} plays ${n.d} at ${n.t}. Want me to ping you 10 minutes before?`,`${fav} 다음 경기는 ${n.d} ${n.t}에 시작해요. 10분 전에 알려 드릴까요?`):L(`Want me there for ${fav}'s next match?`,`${fav} 다음 경기도 같이 볼까요?`),'happy');
     const f=$('md-feed');const s2=document.createElement('p');s2.className='md-sum';s2.textContent=streak?L(`Your quiz streak (${streak}) carries over to the next match. The top 10 quiz players each week get Spark.`,`연속 정답 ${streak}회 기록은 다음 경기에도 이어져요. 매주 퀴즈 상위 10명에게 Spark를 드려요.`):L('Quiz streaks carry over between matches. The top 10 quiz players each week get Spark.','연속 정답 기록은 다음 경기에도 이어져요. 매주 퀴즈 상위 10명에게 Spark를 드려요.');f.appendChild(s2);
     const d=document.createElement('div');d.className='md-chips end';d.innerHTML=`<a class="pill sm" href="https://chromewebstore.google.com/detail/rorr/aeijenbcnhhmcgknnimiddbdgpndfcpn" target="_blank" rel="noopener">${L('Add to Chrome','크롬에 추가')}</a><button type="button" data-rp>${L('Watch again','다시 보기')}</button>`;f.appendChild(d);f.scrollTop=f.scrollHeight;
     d.querySelector('[data-rp]').onclick=()=>{reset();start(fav)}})})}
- const RE={cheer:[['Louder! They can feel it.','더 크게! 선수들도 느낄 거야.'],['Yes! Keep it coming!','좋아! 계속 가자!']],ugh:[["I know. Breathe. It's not over.",'아프다… 숨 한 번 고르자. 아직 안 끝났어.'],['I felt that too.','나도 철렁했어.']],hype:[["LET'S GO!",'가자!'],["I'm on my feet!",'나 벌떡 일어났어!']]};
+ const RE={cheer:[['Louder! They can feel it.','더 크게요! 선수들한테도 닿을 거예요.'],['Yes! Keep it coming!','좋아요! 계속 가요!']],ugh:[["I know. Breathe. It's not over.",'아, 아프다… 괜찮아요. 아직 안 끝났어요.'],['I felt that too.','저도 철렁했어요.']],hype:[["LET'S GO!",'가자!'],["I'm on my feet!",'저 벌떡 일어났어요!']]};
  document.getElementById('md-react').addEventListener('click',e=>{const b=e.target.closest('[data-r]');if(!b||!fav)return;me(b.textContent);const opts=RE[b.dataset.r];const o=opts[Math.floor(Math.random()*opts.length)];at(600,()=>sayKeep(L(o[0],o[1]),b.dataset.r==='ugh'?'sad':'happy'))});
  function open(fromRoute){if(document.body.classList.contains('museing'))return;if(typeof closeEntity==='function')closeEntity();
   prevHash=fromRoute?'':location.hash.slice(1);const src=document.querySelector('.pm-img');if(src)$('md-av').src=src.src;
@@ -6015,12 +6015,12 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
   if(m.st==='live'){const G=gameModel(m);const[sa,sb]=m.series.split(':');const pts=G.pts;const n=pts.length-1||1;const W=520,H=110;const vs=pts.map(p=>wp(p.g));let lo=Math.floor((Math.min(...vs)-3)/5)*5,hi=Math.ceil((Math.max(...vs)+3)/5)*5;if(hi-lo<20){const c=(hi+lo)/2;lo=Math.max(0,Math.round((c-10)/5)*5);hi=lo+20}const x=k=>Math.round(k/n*(W-12)+4),y=v=>Math.round(H-6-((v-lo)/(hi-lo))*(H-12));
    const line=pts.map((p,k)=>`${x(k)},${y(wp(p.g))}`).join(' ');const sw=G.sw.filter(e=>e.t<=pts.length-1).sort((a,b)=>b.t-a.t)[0]||G.ev[G.ev.length-1];
    const now=wp(G.g);const lead=G.g>=0?m.a:m.b;const pa=Math.max(now,100-now);
-   let mk='',mkTag='',cap=LX(`${G.dur} minutes in. ${lead} lead by ${Math.abs(G.g).toLocaleString('en-US')} gold.`,`${G.dur}분 진행. ${lead}가 골드 ${Math.abs(G.g).toLocaleString('en-US')} 앞서 있어요.`),muse=LX(`${lead} are ahead. Stay with me!`,`${lead}가 앞서고 있어요. 끝까지 같이 봐요!`);
+   let mk='',mkTag='',cap=LX(`${G.dur} minutes in. ${lead} lead by ${Math.abs(G.g).toLocaleString('en-US')} gold.`,`${G.dur}분 진행. ${JO(lead,'이')} 골드 ${Math.abs(G.g).toLocaleString('en-US')} 앞서 있어요.`),muse=LX(`${lead} are ahead. Stay with me!`,`${JO(lead,'이')} 앞서고 있어요. 끝까지 같이 봐요!`);
    const evs=G.ev.filter(e=>e.t<=pts.length-1&&Math.abs(e.d)>900).slice(-5);
-   const evq=e=>{const T=e.side==='a'?m.a:m.b;const mm=String(e.t).padStart(2,'0');return LX(`${mm}:00 ${kName[e.k]||'moment'} — why did ${T} win it?`,`${e.t}분 ${({fb:'퍼스트 블러드',drg:'드래곤',her:'전령',fight:'한타',baron:'바론',push:'푸시'})[e.k]||'순간'}, ${T}가 어떻게 가져간 거야?`)};
+   const evq=e=>{const T=e.side==='a'?m.a:m.b;const mm=String(e.t).padStart(2,'0');return LX(`${mm}:00 ${kName[e.k]||'moment'} — why did ${T} win it?`,`${e.t}분 ${({fb:'퍼스트 블러드',drg:'드래곤',her:'전령',fight:'한타',baron:'바론',push:'푸시'})[e.k]||'순간'}, ${JO(T,'이')} 어떻게 가져간 거야?`)};
    mk=evs.filter(e=>e!==sw).map(e=>`<circle class="evp" cx="${x(e.t)}" cy="${y(wp(e.g1))}" r="5" data-hxq="${esc(evq(e))}"><title>${esc(evq(e))}</title></circle>`).join('');
    if(sw){const b0=wp(sw.g0),b1=wp(sw.g1);const KN={fb:['First blood','퍼스트 블러드'],drg:['Dragon','드래곤'],her:['Herald','전령'],fight:['Fight','한타'],baron:['Baron','바론'],push:['Push','푸시']}[sw.k]||['Moment','순간'];const dd=b1-b0;mk+=`<line class="mkl" x1="${x(sw.t)}" x2="${x(sw.t)}" y1="${y(b1)}" y2="${H}"/><circle class="mk evp" cx="${x(sw.t)}" cy="${y(b1)}" r="6" data-hxq="${esc(evq(sw))}"><title>${esc(evq(sw))}</title></circle>`;const fx=x(sw.t)/W;mkTag=`<span class="hx-mtag${fx>.7?' r':''}" style="left:calc(34px + (100% - 34px) * ${fx.toFixed(3)});top:${Math.max(0,(y(b1)-30)/H*100).toFixed(1)}%">${LX(KN[0],KN[1])} ${dd>=0?'+':''}${dd}%p</span>`;
-    cap=`${evText(sw,m)} · ${m.a} ${b0}% → ${b1}%`;muse=sw.k==='baron'?LX('Did you see that Baron?!','방금 그 바론 봤어요?!'):sw.k==='fight'?LX('What a fight!','와, 방금 한타!'):LX('That changes things!','이걸로 흐름이 바뀌어요!')}
+    cap=`${evText(sw,m)} · ${m.a} ${b0}% → ${b1}%`;muse=sw.k==='baron'?LX('Did you see that Baron?!','방금 그 바론 봤어요?!'):sw.k==='fight'?LX('What a fight!','와, 방금 한타!'):LX('That changes things!','흐름이 확 바뀌었어요!')}
    return `<article class="hx-card live hx-click" data-m="${m.id}" title="${LX('Open the match','경기 페이지로 이동')}"><div class="hx-top"><span class="hx-lv"><i></i>LIVE · ${LX('Game','')} ${m.game}${LX('','세트')} ${G.dur}′</span><span><em class="hx-lg">${m.lg}</em> 2026 · ${LX('Best of 3','3판 2선승')}</span></div>
     ${teams(`<div class="c"><b>${sa} : ${sb}</b><span>${LX('Gold','골드')} ${goldStr(G.g)}</span></div>`)}
     <div class="hx-wp"><div class="h"><span>${m.a} ${LX('win chance','승리확률')}</span><b>${now}%</b></div><div class="hx-plot"><span class="ax t">${hi}%</span><span class="ax b">${lo}%</span><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" role="img" aria-label="${LX(`${m.a} win chance over time, axis ${lo} to ${hi}%`,`${m.a} 승리확률 추이, 세로축 ${lo}~${hi}%`)}">${lo<50&&hi>50?`<line class="base" x1="0" x2="${W}" y1="${y(50)}" y2="${y(50)}"/>`:''}<polygon class="ar" points="${x(0)},${H} ${line} ${x(n)},${H}"/><polyline class="ln" points="${line}"/>${mk}<circle class="end" cx="${x(n)}" cy="${y(now)}" r="5"/></svg>${mkTag}</div><p>${cap} <span class="hx-tip">${LX('· tap a dot to ask about that moment','· 점을 누르면 그 순간을 질문해요')}</span></p></div>
@@ -6030,7 +6030,7 @@ const HC=(()=>{const root=document.getElementById('hc');if(!root)return{render()
    ${teams(`<div class="hx-cd"><span>${LX('Starts in','시작까지')}</span><b>${MX.countdown(m)}</b></div>`)}
    <div class="hx-wp"><div class="h"><span>${LX('Last 5','최근 5경기')}</span><span>Team LwRC+ ${A.ix} · ${B.ix}</span></div><div class="hx-frm"><span class="f">${fm(A)}</span><span></span><span class="f r">${fm(B)}</span></div><p>${LX(`${A.ix>=B.ix?m.a:m.b} come in with the higher team LwRC+. Check the lane matchups before it starts.`,`팀 LwRC+는 ${A.ix>=B.ix?m.a:m.b}가 앞서요. 시작 전에 라인별 매치업을 확인해 보세요.`)}</p></div>
    <div class="hx-muse"><img src="assets/muse-waving.webp" alt="Muse"><span class="hx-bub">${LX('I will ping you when it starts!','시작하면 바로 알려 드릴게요!')}</span><a class="hx-go" href="#match/${m.id}" data-m="${m.id}">${LX('Preview →','미리보기 →')}</a></div></article>`}
- function paneMuse(){return `<div class="hx-card hx-mucard"><div class="hx-mu"><img src="assets/muse-waving.webp" alt="${LX('Muse waving','손을 흔드는 Muse')}"><div class="bs"><span>${LX('Vision fight before dragon. See the jungler?','드래곤 앞 시야 싸움 시작이에요. 정글 위치 보여요?')}</span><span class="p">${LX("Baron steal!! We're back in it!",'와 바론 스틸!! 우리 다시 앞서요!')}</span><span class="d">${LX('Beside YouTube, CHZZK, SOOP and Twitch','YouTube·치지직·SOOP·Twitch 옆에서')}</span></div></div>
+ function paneMuse(){return `<div class="hx-card hx-mucard"><div class="hx-mu"><img src="assets/muse-waving.webp" alt="${LX('Muse waving','손을 흔드는 Muse')}"><div class="bs"><span>${LX('Vision fight before dragon. See the jungler?','드래곤 앞에서 시야 싸움 시작됐어요. 정글러 어디 있는지 보여요?')}</span><span class="p">${LX("Baron steal!! We're back in it!",'와, 바론 스틸!! 다시 우리가 앞서요!')}</span><span class="d">${LX('Beside YouTube, CHZZK, SOOP and Twitch','YouTube·치지직·SOOP·Twitch, 어디서 봐도 옆에 있어요')}</span></div></div>
   <div class="hx-acts"><a class="hx-go pri" href="${WEBSTORE}" target="_blank" rel="noopener">${LX('Add to Chrome · Free','Chrome에 추가 · 무료')}</a><a class="hx-go gh" href="#muse" onclick="nav(event,'muse')">${LX('Try Muse · 30s','Muse 30초 체험')}</a></div></div>`}
  function paneHolo(){const S=DB.sched.filter(pick).filter(x=>x.st!=='up');let best=null;S.forEach(m=>{const G=gameModel(m);G.ev.forEach(e=>{const d=Math.abs(wp(e.g1)-wp(e.g0));if(!best||d>best.d)best={m,e,d,G}})});
   if(!best)return '';const{m,e}=best;const fans=1200+(hashStr(m.id)%5000);const T=e.side==='a'?m.a:m.b;const p=SUP.isPartner('team',T);const when=localParts(m.at).d;
