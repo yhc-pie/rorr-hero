@@ -42,13 +42,13 @@
   --color-energy: #00B395;       /* --energy */
   --color-energy-hover: #26BEA5; /* --energy-h */
   --color-energy-soft: #4CCAB5;  /* --energy-p */
-  --color-spark: #FF6F00;        /* --spark  [불일치] 확장 #FFB547 */
+  --color-spark: #FF6F00;        /* --spark  T-3 결정(2026-10-17): Spark 아이콘·숫자 공용(확장 라벤더 폐기) */
   --color-spark-ink: #1A0D00;    /* --spark-ink Spark 면 위 글자 */
 
   /* 팀 */
   --color-team-left: #2F9CFC;    /* --team-l / --brand-a */
   --color-team-left-50: #C0E1FE; /* --team-l50 */
-  --color-team-right: #FF3A66;   /* --team-r  (라이트 #FE2054) */
+  --color-team-right: #FE2054;   /* --team-r  T-5 결정(2026-10-17): 확장 값, 다크·라이트 동일 */
   --color-team-right-50: #FFBCCB;/* --team-r50 */
   --color-t1: #E4002B;           /* --t1 파트너 팀 색(T1) */
 
@@ -59,7 +59,7 @@
   --color-sponsor-mark-a: #7CF5FF;                /* .sp-mk 그라디언트 시작 */
   --color-sponsor-mark-b: #2F7BFF;                /* .sp-mk 그라디언트 끝 */
   --color-sponsor-mark-ink: #06121F;
-  --color-prize: #FFB547;                         /* 행운 박스 당첨 수량·입자 (원본 하드코딩) */
+  --color-prize: #FFB547;                         /* 당첨 강조 공용(T-3 결정) — 행운 박스 당첨 수량·입자 */
   --color-scrim-stage: rgba(5, 8, 16, .72);       /* #spx 무대 배경 */
 
   /* 카드 등급 글자색(다크) — .bx-card .tr */
