@@ -3304,7 +3304,7 @@ body.msv-on{overflow:hidden}
 .spb-open{min-height:40px;height:auto;padding:0 14px 0 8px!important;border:1px solid rgba(124,245,255,.6)!important;background:rgba(47,123,255,.12)!important;color:var(--ink)!important}
 .spb-open:hover{background:rgba(47,123,255,.22)!important}
 .spx-x{width:40px!important;height:40px!important}
-#sp-chip{left:auto!important;right:16px}
+
 .sp-drop.slim{padding:10px 12px;border-radius:12px}
 .sp-drop.slim summary{display:flex;align-items:center;gap:10px;cursor:pointer;list-style:none;min-height:24px}
 .sp-drop.slim summary::-webkit-details-marker{display:none}
@@ -3360,6 +3360,82 @@ body.msv-on{overflow:hidden}
 .lb-back{color:var(--ink);font-weight:700;font-size:13.5px;text-decoration:none}
 .pk.rec{position:relative;border-color:#F2B53A!important;box-shadow:0 0 0 2px color-mix(in srgb,#F2B53A 35%,transparent)}
 .pk.rec::after{content:attr(data-rec);position:absolute;top:-10px;right:10px;padding:2px 8px;border-radius:999px;background:#F2B53A;color:#2A1B00;font:800 11px "Pretendard Variable",sans-serif}
+
+/* ===== Moment alerts v2 (2026-10-17) — alerts are always a dark broadcast surface, so sponsor and copy never inherit light-theme ink ===== */
+.ma-ban,#ma-pop .ma-card{--bg:#0B0A10;--bg2:#15131E;--bg3:#1E1B29;--line:rgba(255,255,255,.14);--ink:#F4F2F7;--mute:#B4B0C2;--cyan:#B8A4FF;--spark:#FF6F00;--spark-ink:#1A0E00;--energy:#00B395;color:var(--ink)}
+.ma-ban{grid-template-columns:72px minmax(0,1fr) auto 36px;grid-template-areas:"m t a x" "m s s s";align-items:center;gap:6px 16px;width:min(780px,calc(100% - 24px));padding:14px 14px 16px 18px;border-radius:18px;background:radial-gradient(120% 140% at 0% 0%,rgba(242,199,102,.22),transparent 55%),linear-gradient(180deg,#1C1712,#121018);border:1px solid rgba(242,199,102,.55);box-shadow:0 18px 48px rgba(0,0,0,.5),0 0 0 1px rgba(0,0,0,.4)}
+.ma-ban .ma-bm{grid-area:m;position:static;width:72px;height:72px;object-fit:cover;object-position:50% 12%;border-radius:50%;border:2px solid #F2C766;background:#241E14;filter:none;align-self:start}
+.ma-ban .ma-bt{grid-area:t;grid-column:auto;gap:4px}
+.ma-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ma-tg{font:800 11.5px "Pretendard Variable",sans-serif;letter-spacing:.02em;color:#1E1A10;background:#F2C766;border-radius:9999px;padding:3px 9px}
+.ma-tg.holo{color:#fff;background:linear-gradient(90deg,#2F9CFC,#9B7BFF 55%,#FE2054)}
+.ma-meta{font-size:12.5px;font-weight:600;color:var(--mute)}
+.ma-tt{font-size:18px;font-weight:800;letter-spacing:-.01em;color:var(--ink);line-height:1.25}
+.ma-ban .ma-ln{font-size:13.5px;color:#D9D2C0;white-space:normal;line-height:1.45}
+.ma-act{grid-area:a;display:flex;align-items:center;gap:14px}
+.ma-cdw{display:grid;justify-items:center;line-height:1}
+.ma-cdw small{font-size:11px;font-weight:600;color:var(--mute);margin-top:3px}
+.ma-ban .ma-cd{font:800 24px "Pretendard Variable",sans-serif;color:#F2C766;font-variant-numeric:tabular-nums}
+.ma-ban .ma-go{height:44px;padding:0 18px;font-size:14px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 6px 18px rgba(231,162,58,.3)}
+.ma-ban .ma-go:hover{filter:brightness(1.06)}
+.ma-x{grid-area:x;align-self:start;display:grid;place-items:center;width:36px;height:36px;border-radius:999px;color:var(--mute);font-size:0}
+.ma-x:hover{background:rgba(255,255,255,.08);color:var(--ink)}
+.ma-ban .ma-pb{left:18px;right:18px;bottom:6px;background:rgba(255,255,255,.08)}
+/* sponsor strip: its own band, white type, clearly labelled */
+.ma-ban .ma-sprow,.ma-card .ma-sprow{grid-area:s;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin:6px 0 4px;padding:8px 8px 8px 12px;border:1px solid rgba(255,255,255,.12);border-top:1px solid rgba(255,255,255,.12);border-radius:12px;background:rgba(255,255,255,.05)}
+.ma-ban .ma-sp,.ma-card .ma-sp{margin:0!important;display:flex}
+.ma-ban .sp-lock,.ma-card .sp-lock{color:#fff!important;font-size:12.5px}
+.ma-ban .sp-by,.ma-card .sp-by{display:inline!important;color:#C9C4D6!important}
+.ma-ban .sp-ad,.ma-card .sp-ad{color:#E6E1F0;opacity:1}
+.ma-ban .spb,.ma-card .spb{margin:0!important;gap:6px 10px}
+.ma-ban .spb-msg,.ma-card .spb-msg{font-size:12.5px;color:#C9C4D6}
+.ma-ban .spb-open,.ma-card .spb-open{min-height:36px;color:#fff!important;border-color:rgba(124,245,255,.55)!important;background:rgba(47,123,255,.18)!important}
+.ma-ban .spb-open:hover,.ma-card .spb-open:hover{background:rgba(47,123,255,.28)!important}
+.ma-ban .spb span,.ma-card .spb span{color:#C9C4D6}
+.ma-ban .spb b,.ma-card .spb b{color:#fff}
+.ma-ban .spb.win b svg,.ma-card .spb.win b svg,.ma-ban .spb-s svg,.ma-card .spb-s svg{color:#FFB547}
+.ma-ban .spb.win,.ma-card .spb.win{background:rgba(255,181,71,.12);border-color:rgba(255,181,71,.5)}
+.ma-ban .spb-s,.ma-card .spb-s{color:#fff}
+.ma-ban .ma-go.spk,.ma-card .ma-go.spk{background:linear-gradient(90deg,#FF8A2B,#FF6F00)!important;color:#1A0E00!important}.ma-go.spk svg{color:#1A0E00!important}
+/* hologram popup */
+#ma-pop .ma-card{width:min(420px,92vw);padding:0 24px 20px;background:linear-gradient(180deg,#17142A 0%,#0F0D17 70%);border:1px solid rgba(155,123,255,.55);box-shadow:0 24px 70px rgba(0,0,0,.6),0 0 60px rgba(110,75,219,.35)}
+#ma-pop .ma-card .rw-muse{width:220px;margin:-104px auto 2px}
+#ma-pop .ma-card .ma-top{justify-content:center;margin-top:2px}
+#ma-pop .ma-cdw.big{margin:10px 0 2px}
+#ma-pop .ma-cdw.big .ma-cd{font:800 46px "Pretendard Variable",sans-serif;color:#fff;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+#ma-pop .rw-line{font-size:17px;line-height:1.45;margin:10px 0 4px;color:var(--ink)}
+#ma-pop .ma-info{font-size:13px;color:var(--mute);margin:0 0 14px}
+#ma-pop .ma-card .ma-sprow{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:8px;padding:12px;margin:0 0 14px;text-align:left}
+#ma-pop .ma-card .ma-sp{justify-content:flex-start}
+#ma-pop .ma-card .spb{justify-content:space-between;align-items:center;flex-wrap:wrap}
+#ma-pop .ma-card .spb.win,#ma-pop .ma-card .spb.miss{align-items:flex-start;text-align:left}
+#ma-pop .ma-card .ma-go{height:48px;font-size:15.5px;display:flex;align-items:center;justify-content:center;gap:6px}
+#ma-pop .ma-later{min-height:40px;margin-top:4px;color:var(--mute)}
+#ma-pop .ma-later:hover{color:var(--ink)}
+#ma-pop .ma-ext{margin-top:6px;color:var(--mute)}
+#ma-pop .ma-ext button{color:#C7B8FF}
+.ma-go .gs{display:none}
+.ma-ban .ma-go:focus-visible,#ma-pop .ma-go:focus-visible,.ma-x:focus-visible,.ma-later:focus-visible,.spb-open:focus-visible{outline:2px solid #fff;outline-offset:2px}
+@media (max-width:640px){
+ .ma-ban{top:76px;grid-template-columns:44px minmax(0,1fr) 36px;grid-template-areas:"m t x" "a a a" "s s s";gap:10px 10px;padding:12px 10px 14px 12px}
+ .ma-ban .ma-bm{width:44px;height:44px;display:block}
+ .ma-ban .ma-ln{display:none}
+ .ma-ban .ma-tt{font-size:16px}
+ .ma-ban .ma-cd{display:block!important;font-size:20px}
+ .ma-act{justify-content:space-between}
+ .ma-act .ma-go{flex:1;justify-content:center}
+ .ma-cdw{grid-auto-flow:column;align-items:baseline;gap:4px}
+ .ma-ban .ma-sprow{margin:0;padding:6px 6px 6px 10px}
+ .ma-ban .ma-go .gl{display:inline!important}.ma-ban .ma-go .gs{display:none!important}
+ .ma-ban .ma-sp .sp-by{display:none!important}
+ #ma-pop .ma-card .rw-muse{width:180px;margin-top:-84px}
+ #ma-pop .ma-cdw.big .ma-cd{font-size:40px}
+}
+@media (prefers-reduced-motion:reduce){.ma-ban .ma-pb i{animation:none}}
+#ma-pop .ma-cdw .ma-cd{display:block!important}
+#ma-pop .ma-cdw.big{grid-auto-flow:row!important}
+/* never sit on top of sign-in or another modal; reappears when it closes */
+.authing .ma-ban,.bx-modal-on .ma-ban,.spx-open .ma-ban{visibility:hidden}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 </head>
@@ -5052,9 +5128,9 @@ const MA=(()=>{const K='rorr-ma';const get=()=>{try{return localStorage.getItem(
  function show(k,force){const pref=get();if(!force&&(pref==='off'||(pref==='holo'&&k==='gold')))return false;if(!force&&busy())return false;const m=liveFav();if(!m&&!force)return false;
   const now=Date.now();if(!force&&k==='gold'&&now-last<180e3)return false;const key=k+(m?m.id:'');if(!force&&k==='holo'&&shown.has(key))return false;shown.add(key);last=now;close();
   const g=m?LX(`G${m.game||1}`,`${m.game||1}세트`):'';const spOn=window.SPON&&SPON.on&&(!m||PARTNER_T.includes(m.a)||PARTNER_T.includes(m.b));const spL=spOn?`<span class="ma-sp">${SPON.lock()}</span>`:'';const bk=`ma${++bseq}`;const spB=spOn?`<div class="ma-sprow">${spL}${SPON.box(bk)}</div>`:'';const vs=m?`${m.a} ${LX('vs','대')} ${m.b}`:'T1';let n=k==='holo'?32:38;
-  if(k==='gold'){const e=el('ma-ban',`<img class="ma-bm" src="assets/muse-waving.webp" alt="Muse"><div class="ma-bt"><span class="ma-tg">⚡ ${LX('Gold moment','골드 순간')}</span><b>${LX('Baron fight incoming','바론 교전 임박')}</b><span class="ma-ln">“${LX("A fight at Baron is coming. Get your cheer ready!",'바론 앞에서 한타 각이에요! 같이 응원 준비해요')}” <em>${vs} · ${g}</em></span>${spB}</div><b class="ma-cd">${fmtS(n)}</b><button type="button" class="ma-go">⚡ ${LX('Get ready','Boost 준비')}</button><button type="button" class="ma-x" aria-label="${LX('Close','닫기')}">×</button><span class="ma-pb"><i></i></span>`);e.className='ma-ban';e.setAttribute('role','status');void e.offsetWidth;e.classList.add('on');
+  if(k==='gold'){const e=el('ma-ban',`<img class="ma-bm" src="assets/muse-waving.webp" alt=""><div class="ma-bt"><div class="ma-top"><span class="ma-tg">⚡ ${LX('Gold moment','골드 순간')}</span><span class="ma-meta">${vs} · ${g}</span></div><b class="ma-tt">${LX('Baron fight incoming','바론 교전 임박')}</b><span class="ma-ln">“${LX("A fight at Baron is coming. Get your cheer ready!",'바론 앞에서 한타 각이에요! 같이 응원 준비해요')}”</span></div><div class="ma-act"><span class="ma-cdw" aria-label="${LX('Time left','남은 시간')}"><b class="ma-cd">${fmtS(n)}</b><small>${LX('left','남음')}</small></span><button type="button" class="ma-go">⚡ <span class="gl">${LX('Get ready','Boost 준비')}</span><span class="gs">Boost</span></button></div><button type="button" class="ma-x" aria-label="${LX('Close','닫기')}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>${spB}<span class="ma-pb"><i></i></span>`);e.className='ma-ban';e.setAttribute('role','status');void e.offsetWidth;e.classList.add('on');
    e.querySelector('.ma-go').onclick=()=>go(m,e.dataset.cur,e.dataset.amt);e.querySelector('.ma-x').onclick=close;wire(e,bk,m);e.querySelector('.ma-pb i').style.animationDuration=n+'s'}
-  else{const e=el('ma-pop',`<div class="rw-card ma-card"><div class="rw-glow"></div><img class="rw-muse" src="assets/muse-surprised.webp" alt="Muse"><div class="rw-to">${LX(`Hologram moment incoming · ${g}`,`홀로그램 순간 임박 · ${g}`)}</div><div class="rw-amt ma-cd">${fmtS(n)}</div><p class="rw-line">“${LX("Elder dragon fight! This could decide the game. Cheer with me?",'장로 드래곤 한타예요! 여기서 승부가 갈릴 수도 있어요. 같이 응원할래요?')}”</p><p class="ma-info">${vs} · ${LX('win chance can swing hard here','승리확률이 크게 흔들릴 수 있는 순간')}</p>${spB}<button type="button" class="pill rw-ok ma-go">⚡ ${LX('Get ready to Boost this moment','이 순간 Boost 준비')}</button><button type="button" class="ma-later">${LX('Maybe next time','다음에 할게요')}</button><p class="ma-ext">${LX('Boost it and the moment card is yours.','Boost하면 이 순간 카드도 받아요.')} · <button type="button" class="ma-off">${LX('Alert settings','알림 설정')}</button></p></div>`);e.className='reward ma-pop';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label','Muse');void e.offsetWidth;e.classList.add('on');
+  else{const e=el('ma-pop',`<div class="rw-card ma-card"><div class="rw-glow"></div><img class="rw-muse" src="assets/muse-surprised.webp" alt=""><div class="ma-top"><span class="ma-tg holo">✦ ${LX('Hologram moment','홀로그램 순간')}</span><span class="ma-meta">${vs} · ${g}</span></div><div class="ma-cdw big"><b class="ma-cd">${fmtS(n)}</b><small>${LX('until the fight','교전까지')}</small></div><p class="rw-line">“${LX("Elder dragon fight! This could decide the game. Cheer with me?",'장로 드래곤 한타예요! 여기서 승부가 갈릴 수도 있어요. 같이 응원할래요?')}”</p><p class="ma-info">${LX('Win chance can swing hard here','승리확률이 크게 흔들릴 수 있는 순간')}</p>${spB}<button type="button" class="pill rw-ok ma-go">⚡ <span class="gl">${LX('Get ready to Boost this moment','이 순간 Boost 준비')}</span><span class="gs">Boost</span></button><button type="button" class="ma-later">${LX('Maybe next time','다음에 할게요')}</button><p class="ma-ext">${LX('Boost it and the moment card is yours.','Boost하면 이 순간 카드도 받아요.')} · <button type="button" class="ma-off">${LX('Alert settings','알림 설정')}</button></p></div>`);e.className='reward ma-pop';e.setAttribute('role','dialog');e.setAttribute('aria-modal','true');e.setAttribute('aria-label',LX('Hologram moment alert','홀로그램 순간 알림'));void e.offsetWidth;e.classList.add('on');setTimeout(()=>{const f=e.querySelector('.ma-go');if(f)f.focus({preventScroll:true})},120);
    e.querySelector('.ma-go').onclick=()=>go(m,e.dataset.cur,e.dataset.amt);e.querySelector('.ma-later').onclick=close;wire(e,bk,m);e.querySelector('.ma-off').onclick=()=>{close();nav(null,'account/boost')};e.onclick=x=>{if(x.target===e)close()}}
   document.body.classList.add('ma-on');title(true,k);
   tmr=setInterval(()=>{n--;document.querySelectorAll('#ma-ban.on .ma-cd,#ma-pop.on .ma-cd').forEach(c=>c.textContent=fmtS(n));if(n<=0)close()},1000);return true}
