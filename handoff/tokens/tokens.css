@@ -1,0 +1,243 @@
+/*
+ * RORR 디자인 토큰 — 핸드오프용 단일 원본
+ * 작성일: 2026-10-17
+ * 출처: rorr-hero index.html(193dbc6) 실측 getComputedStyle, rorr-extension mockup v44 실측
+ * 원칙
+ *  - 값은 화면 실측값. 원본 CSS는 같은 변수를 여러 번 재정의하므로 원본의 위쪽 정의를 옮기지 말 것
+ *  - 이름은 의미(역할) 기준으로 새로 붙임. 원본 변수명은 각 줄 주석에 표기(이식 시 대조용)
+ *  - 웹·확장이 다른 값은 [불일치] 표시 → handoff/02-tokens.md §4에서 결정 필요
+ */
+
+/* ---------- 1. 색 — 웹 다크(기본) ---------- */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* 면(중립 4단) */
+  --color-bg-page: #14181F;      /* --bg   페이지 */
+  --color-bg-surface: #191F28;   /* --bg2  헤더·티커·카드 */
+  --color-bg-raised: #1D2333;    /* --bg3  올린 면(Boost 상자 등) */
+  --color-line: #2A3040;         /* --line 1px 구분선 */
+
+  /* 글자 */
+  --color-ink: #F0F2F5;          /* --ink */
+  --color-ink-mute: #9AA1B5;     /* --mute 보조 글자 */
+
+  /* 행동(보라) — 채운 보라 버튼은 화면당 1개 */
+  --color-action: #6F4CFF;       /* --cta / --v-solid / --brand-v */
+  --color-on-action: #FFFFFF;    /* --on-cta */
+  --color-action-ui: #9CA3F1;    /* --v-ui / --gold / --cyan 선택 테두리·링크 */
+  --color-action-line: #3D1A73;  /* --gold-line / --cyan-line */
+
+  /* 상태 */
+  --color-live: #E5484D;         /* --live  LIVE 배지·점에만 */
+  --color-live-strong: #CF3036;  /* --live-strong */
+  --color-error: #EB4B5C;        /* --err */
+  --color-error-line: #5A2229;   /* --err-line */
+  --color-success: #11C72D;      /* --success */
+  --color-upcoming: #5618DA;     /* --upcoming */
+  --color-upcoming-ink: #B79BFF; /* --upcoming-t */
+
+  /* 재화 — 아이콘·숫자에만(예외: 사이드 패널 Boost 버튼) */
+  --color-energy: #00B395;       /* --energy */
+  --color-energy-hover: #26BEA5; /* --energy-h */
+  --color-energy-soft: #4CCAB5;  /* --energy-p */
+  --color-spark: #FF6F00;        /* --spark  [불일치] 확장 #FFB547 */
+  --color-spark-ink: #1A0D00;    /* --spark-ink Spark 면 위 글자 */
+
+  /* 팀 */
+  --color-team-left: #2F9CFC;    /* --team-l / --brand-a */
+  --color-team-left-50: #C0E1FE; /* --team-l50 */
+  --color-team-right: #FF3A66;   /* --team-r  (라이트 #FE2054) */
+  --color-team-right-50: #FFBCCB;/* --team-r50 */
+  --color-t1: #E4002B;           /* --t1 파트너 팀 색(T1) */
+
+  /* 스폰서(브랜드 모먼트 · 가상 스폰서 NOVA Gear) — 원본은 하드코딩, 토큰화 권장 */
+  --color-sponsor-line: rgba(124, 245, 255, .6);  /* .spb-open 테두리 */
+  --color-sponsor-fill: rgba(47, 123, 255, .12);  /* .spb-open 면 */
+  --color-sponsor-fill-hover: rgba(47, 123, 255, .22);
+  --color-sponsor-mark-a: #7CF5FF;                /* .sp-mk 그라디언트 시작 */
+  --color-sponsor-mark-b: #2F7BFF;                /* .sp-mk 그라디언트 끝 */
+  --color-sponsor-mark-ink: #06121F;
+  --color-prize: #FFB547;                         /* 행운 박스 당첨 수량·입자 (원본 하드코딩) */
+  --color-scrim-stage: rgba(5, 8, 16, .72);       /* #spx 무대 배경 */
+
+  /* 카드 등급 글자색(다크) — .bx-card .tr */
+  --color-grade-gold: #F2C766;
+  --color-grade-holo: #C9B8FF;
+
+  /* 유리·말풍선 */
+  --color-glass: rgba(25, 31, 40, .78);  /* --glass */
+  --color-bubble: rgba(29, 35, 51, .94); /* --bubble */
+  --color-ai-glow: #138DFF;              /* --ai-glow */
+
+  /* 그림자(사용 최소화 — Design v2: 컨테이너는 면 톤·1px 선으로 구분) */
+  --shadow-surface: 0 2px 4px rgba(255, 255, 255, .06); /* --sh-surface */
+  --shadow-float: 0 2px 6px rgba(0, 0, 0, .15);         /* --sh-float */
+  --shadow-live: 0 2px 4px rgba(86, 24, 218, .2);       /* --sh-live */
+  --shadow-overlay: rgba(0, 0, 0, .45);                 /* --shadow */
+}
+
+/* ---------- 2. 색 — 웹 라이트 ---------- */
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg-page: #F0F2F5;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-raised: #E9EEF4;
+  --color-line: #CED6E6;
+  --color-ink: #000000; /* 실측 --ink(1308행 공식 DS 정렬 블록). 초기 정의 #15151A는 덮임 */
+  --color-ink-mute: #757B90;
+  --color-action-ui: #6F4CFF;
+  --color-action-line: #D9C2FF;
+  --color-live: #C10F0F;
+  --color-upcoming-ink: #5618DA;
+  --color-spark: #B84E00;
+  --color-spark-ink: #FFFFFF;
+  --color-team-right: #FE2054;
+  --color-t1: #C8102E;
+  --color-glass: rgba(255, 255, 255, .8);
+  --color-bubble: rgba(255, 255, 255, .96);
+  --shadow-surface: 0 2px 4px rgba(0, 0, 0, .08);
+  --shadow-overlay: rgba(0, 0, 0, .12);
+  /* --color-error-line 라이트 값이 다크와 같음(#5A2229) — 원본 누락. 02-tokens.md §5 */
+}
+
+/* ---------- 3. 확장 패널(rorr-extension mockup v44, 다크 단일) ---------- */
+.rorr-ext {
+  --ext-page: #141016;         /* --page   [불일치] 웹 #14181F */
+  --ext-panel: #1D2333;        /* --panel  = 웹 --color-bg-raised */
+  --ext-panel-2: #262D40;      /* --panel-2 */
+  --ext-panel-3: #2A2F3E;      /* --panel-3 */
+  --ext-sheet: #282D3C;        /* --sheet  Boost 시트 */
+  --ext-sunk: #141824;         /* --surface-sunk */
+  --ext-field: #3D4252;        /* --field 입력 */
+  --ext-line: #313644;         /* --line   [불일치] 웹 #2A3040 */
+  --ext-line-2: #4A4F62;       /* --line-2 */
+  --ext-ink: #F0F2F5;          /* --ink    = 웹 */
+  --ext-ink-2: #C9CDDA;        /* --ink-2 */
+  --ext-mute: #9AA1B5;         /* --mute   = 웹 */
+  --ext-faint: #8A91A6;        /* --faint */
+  --ext-action: #6F4CFF;       /* --brand / --send = 웹 action */
+  --ext-action-hover: #7B5CFF; /* --send-h */
+  --ext-link: #9CA3F1;         /* --link   = 웹 action-ui */
+  --ext-selected: #209FEE;     /* --selected [불일치] 웹 선택 = 보라 테두리 */
+  --ext-live: #E5484D;         /* --live   = 웹 */
+  --ext-energy: #00B395;       /* --energy = 웹 */
+  --ext-energy-ink: #4CCAB5;   /* --energy-ink */
+  --ext-spark-amber: #FFB547;  /* Spark 수량·아이콘(하드코딩) [불일치] 웹 #FF6F00 */
+  --ext-streak: #FF9A3D;       /* --streak 퀴즈 스트릭(확장 전용) */
+  --ext-gold: #C98500;         /* --gold   골드 예고 배너 */
+  --ext-gold-ink: #F5C46A;
+  --ext-gold-bg: #2E2414;
+  --ext-ok-bg: #16302B;
+  --ext-ok-line: #1D7A64;
+  --ext-red: #FE2054;          /* --red    팀 우측 */
+  --ext-red-ink: #FF8FA8;
+  --ext-blue: #2F9CFC;         /* --blue   팀 좌측 */
+  --ext-blue-ink: #7FBFFD;
+  --ext-scorebar: #15171C;
+  /* 목업 전용(브라우저 크롬 모형) — 이식 대상 아님: --frame --frame-ink --tab --url --video */
+}
+
+/* ---------- 4. 타이포 ---------- */
+:root {
+  --font-ui: "Pretendard Variable", Pretendard, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+  --text-body: 17px;          /* 웹 본문, 줄간격 1.55 */
+  --text-body-lh: 1.55;
+  --text-panel-body: 14px;    /* 확장 본문, 줄간격 1.5 */
+  --text-sm: 13px;            /* 보조 문구 — 웹 사용 빈도 1위 */
+  --text-xs: 12px;            /* 캡션·칩 */
+  --text-2xs: 11px;           /* 최소. 이보다 작게 쓰지 않음 */
+  --text-ui: 14px;            /* 버튼 */
+  --text-ui-lg: 15px;         /* 큰 버튼 */
+  --text-h3: 20px;
+  --text-h2: 26px;
+  --text-page-title: 40px;    /* .rhero h1, 700, 자간 -0.02em, 줄간격 1.2 */
+  --text-entity-name: 44px;   /* 패널 선수·팀 이름 #ip-name, 800, 자간 -0.01em, 줄간격 1 */
+  --text-display: 52px;       /* 홈 히어로 h1(51.84px), 800, 자간 -0.035em, 줄간격 1.14 */
+
+  --weight-regular: 400;
+  --weight-medium: 600;
+  --weight-bold: 700;
+  --weight-heavy: 800;        /* 제목·숫자 */
+  /* 금지: 대문자 + 넓은 자간 라벨 (Design v2) */
+}
+
+/* ---------- 5. 모서리·간격·크기 ---------- */
+:root {
+  --radius-input: 8px;
+  --radius-inner: 12px;
+  --radius-container: 16px;
+  --radius-pill: 9999px;      /* 버튼·칩·배지 */
+  --radius-sheet: 24px 24px 0 0; /* 확장 Boost 시트 */
+
+  --space-1: 4px;
+  --space-2: 6px;
+  --space-3: 8px;   /* 기본 간격 */
+  --space-4: 10px;
+  --space-5: 12px;
+  --space-6: 16px;
+  --space-7: 20px;
+  --space-8: 24px;
+  --space-section: 72px;      /* 서브 페이지 섹션 간격(모바일 56px) */
+
+  --control-h-lg: 48px;       /* 패널 Boost 주 버튼 */
+  --control-h: 44px;          /* 기본 버튼 */
+  --control-h-md: 40px;       /* 재화 선택·행운 박스 열기 */
+  --control-h-sm: 36px;       /* 확장 행운 박스 버튼 */
+  --control-h-xs: 28px;       /* 확장 칩 */
+  --touch-min: 40px;          /* 최소 터치 높이(44 권장) */
+
+  --focus-ring: 0 0 0 2px var(--color-action-ui); /* 모든 조작 요소 :focus-visible */
+}
+
+/* ---------- 6. 레이아웃 ---------- */
+:root {
+  --header-h: 69px;
+  --ticker-h: 64px;
+  --panel-w: 560px;           /* 선수·팀 사이드 패널 */
+  --panel-topbar-h: 56px;
+  --page-w-data: 1008px;      /* 통계·소개·순위 */
+  --page-w-read: 760px;       /* 블로그·FAQ */
+  --page-w-article: 720px;    /* 글 본문 */
+  --ext-panel-w: 360px;       /* 확장 설계 기준, 320px 깨짐 없음 */
+  --ext-panel-real: 380px;    /* 실측(브라우저 사이드 패널 헤더 포함 380×952) */
+}
+
+/* ---------- 7. 쌓임 순서(z-index) ---------- */
+:root {
+  --z-header: 40;
+  --z-menu: 60;          /* 메뉴·팝오버·질문 버튼·스폰서 칩 */
+  --z-toast: 80;
+  --z-panel-scrim: 85;
+  --z-panel: 90;         /* 선수·팀 사이드 패널 */
+  --z-popover: 95;
+  --z-muse-demo: 100;
+  --z-auth: 110;
+  --z-onboarding: 115;
+  --z-reward: 120;       /* Boost 완료 연출 */
+  --z-alert-banner: 125; /* 큰 순간 골드 배너 */
+  --z-alert-pop: 126;    /* 큰 순간 홀로그램 팝업 */
+  --z-luckybox: 140;     /* 행운 박스 중앙 무대 #spx */
+  --z-share: 200;
+  --z-system-bar: 400;   /* 오프라인 바·취소 바 */
+  --z-crop: 500;
+  --z-viewer: 520;
+}
+
+/* ---------- 8. 동작 ---------- */
+:root {
+  --ease-standard: cubic-bezier(.2, .8, .2, 1); /* 원본 최다 사용 */
+  --ease-pop: cubic-bezier(.2, 1.6, .4, 1);     /* 당첨 수량 튀어나옴 */
+  --dur-fast: 150ms;
+  --dur-base: 200ms;     /* 원본 최다 사용 */
+  --dur-slow: 300ms;
+  --dur-overlay: 250ms;  /* 무대·모달 페이드 */
+  --dur-toast: 2400ms;   /* 토스트 표시 시간 */
+  --dur-confirm-window: 5000ms; /* Boost 두 번 누르기 유효 시간 */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur-base: 0ms; --dur-slow: 0ms; --dur-overlay: 0ms; }
+}
