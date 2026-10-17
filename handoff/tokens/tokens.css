@@ -124,7 +124,8 @@
   --ext-live: #E5484D;         /* --live   = 웹 */
   --ext-energy: #00B395;       /* --energy = 웹 */
   --ext-energy-ink: #4CCAB5;   /* --energy-ink */
-  --ext-spark-amber: #FFB547;  /* Spark 수량·아이콘(하드코딩) [불일치] 웹 #FF6F00 */
+  --ext-spark: #C9CDFA;        /* --spark  Spark 글자·배지 [불일치] 웹 #FF6F00 */
+  --ext-prize: #FFB547;        /* --prize  당첨 금액(확장 handoff/css/tokens.css) = 웹 --color-prize */
   --ext-streak: #FF9A3D;       /* --streak 퀴즈 스트릭(확장 전용) */
   --ext-gold: #C98500;         /* --gold   골드 예고 배너 */
   --ext-gold-ink: #F5C46A;

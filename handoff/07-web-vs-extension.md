@@ -1,6 +1,6 @@
 # 07. 웹·확장 비교와 정합
 
-- 작성일: 2026-10-17 · 원본: rorr-extension `docs/15-web-ext-gap.md`, `docs/13-design-review.md` §20~24
+- 작성일: 2026-10-17 · 원본: rorr-extension `docs/15-web-ext-gap.md`, `docs/13-design-review.md` §20~24, 확장 `handoff/`(v45)
 - 원칙: **웹은 찾아보는 곳, 확장은 보는 곳**. 계정·재화·카드·포인트·순위는 같고, 차이는 시청 경험
 
 ---

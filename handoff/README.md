@@ -1,9 +1,9 @@
-# RORR 개발 핸드오프 패키지 (웹 + 크롬 확장)
+# RORR 개발 핸드오프 패키지 — 웹 + 웹·확장 정합
 
 - 작성일: 2026-10-17 · 작성: Pitch Interactive(사업·디자인) · 대상: 웹(Next.js 포팅)·확장(MV3) 개발 담당
 - 기준 시점
   - 웹: `yhc-pie/rorr-hero` `main` **193dbc6** (`index.html` = `portal.html`)
-  - 확장: `rorr-extension` 목업 **v44** (`2c3d579`, `mockup/index.html`) — 기획 전용 저장소, 구현 코드는 별도 저장소(OI-15)
+  - 확장: `rorr-extension` 목업 v44(`2c3d579`) 기준으로 대조. **확장 상세 명세는 확장 저장소 `handoff/`(v45, cb425fb)가 원본** — 화면 명세·컴포넌트 CSS·i18n·캡처 18장 포함
   - 규칙: `docs/policy/boost-economy-policy.md` **v1.3**(2026-10-17)
 - 상태: 데모(서버 연결 없음). 화면·동작·규칙 확정본이며, 미정 값은 설정 변수로 둠
 
@@ -41,6 +41,7 @@
 | 환불 개발 명세 | rorr-hero `docs/specs/refund.md` | 그대로 사용(형식: 규칙 → 설정값 → 데이터 → API → 화면 → 완료 기준) |
 | 법적 고지 초안 | rorr-hero `docs/legal/*.md` | 그대로 사용. `[대괄호]` 값 확정 전 게시 금지 |
 | 확장 기획 문서 00~15 | rorr-extension `docs/` | 확장 기능·흐름 원본. 07에서 웹과 대조 |
+| **확장 핸드오프 패키지** | rorr-extension `handoff/`(규칙·화면 명세·토큰·컴포넌트·상태 로직·QA·`css/`·`i18n-ko.json`·`screens/`) | 확장 구현은 그 패키지 기준. 이 패키지는 웹 전체 + 두 제품 정합(02 §4·07·09)을 담당 |
 | 정책 | rorr-hero `docs/policy/boost-economy-policy.md` (원본은 사업 담당 관리) | 06에서 구현 규칙으로 변환. 문구·조항은 정책 원문이 우선 |
 
 ## 4. 작업 원칙
