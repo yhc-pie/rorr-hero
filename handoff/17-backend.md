@@ -11,13 +11,13 @@
 |---|---|---|---|
 | identity | 계정·OAuth·세션·연령대·법정대리인 동의 | users, auth_identities, sessions | user.created |
 | catalog | 리그·팀·선수·협약 조회, 파트너 판정 함수 `isPartner(team, at)` | teams, players, partner_agreements | — |
-| live | 경기·세트·순간·기념일, 순간 상태 전이 | matches, games, moments, moment_participants, milestones | moment.alert/open/resolved/closed/void |
+| live | 경기·세트·순간·기념일, 순간 상태 전이 | matches, games, moments, moment_participants, milestones | moment.upcoming/open/resolved/closed/void |
 | wallet | 묶음·원장·잔액·만료, 차감 서비스 `spend(user, currency, qty, purpose)` | wallet_lots, wallet_ledger | wallet.changed |
 | boost | Boost 트랜잭션(`reference_boost.sql`과 동등), 누적·배지 | boosts, boost_lot_usage, moment_totals | boost.created |
 | cards | 카드 발급·조회·공유 이미지 렌더 | cards | card.issued |
 | points | 포인트·연속 응원·순위 스냅샷 | point_events, cheer_streaks, ranking_snapshots | ranking.updated |
 | community | 메시지·검수·반응·답장·신고 | messages, message_* | message.visible |
-| sponsor | 캠페인·홀드아웃·행운 박스(`reference_luckybox.sql`과 동등) | sponsor_*, lucky_box_opens | luckybox.opened |
+| sponsor | 캠페인·홀드아웃·행운 박스(`reference_luckybox.sql`과 동등) | sponsor_*, sponsor_box_opens | sponsor_box.opened |
 | ads | 광고 월 토큰·보상 | ad_sessions | — |
 | payments | 주문·토스 승인·웹훅·환불 | energy_orders, refunds | order.paid, refund.done |
 | settlement | 월 정산·팀 확인·공개 배분액 | settlements | settlement.confirmed |
@@ -32,10 +32,11 @@
 
 1. 게이트웨이 멱등 선점 → `boost.send(ctx, req)`
 2. 하나의 DB 트랜잭션(격리 수준 READ COMMITTED + 행 잠금):
-   - 최소 단가 → 파트너 판정 → 순간·기념 창 확인
+   - 금액이 스테퍼 단계 값인지 → 파트너 판정 → 순간·기념 창 확인(+`BOOST_GRACE_MS`)
    - `boosts` 삽입 → 유료(또는 Spark) 묶음을 만료 빠른 순으로 `FOR UPDATE` 잠금·차감 → `boost_lot_usage` → `wallet_ledger`
-   - `moment_totals` 갱신 → 배지 재계산 → 카드(없을 때만) → 포인트(dedup) → 연속 응원
-   - 메시지 있으면 `messages(status=pending)` → 검수 큐
+   - `moment_totals` 갱신 → 배지 재계산 → 카드(없을 때만, 등급은 Boost 시점 값) → 포인트(dedup) → 연속 응원(첫 경기 0)
+   - `BOOST_SETTLE_MODE=on_moment`면 `status=pending`·원장 `boost_hold`로 넣고 순간 확정 워커가 위 단계를 실행(성립 시 `boost.settled`, 불발 시 `boost_release` + `boost.voided`)
+   - 메시지 있으면 `cheer_messages(status=pending)` → 검수 큐
    - `outbox_events('boost.created')`
 3. 커밋 후 응답. 실패 시 전체 롤백(부분 차감 없음)
 - 정답 동작: `db/reference_boost.sql`. 앱 코드로 구현할 경우 같은 입력으로 `db/test_boost.sql` 시나리오를 통합 테스트로 옮겨 통과시킬 것
@@ -76,16 +77,16 @@ GROUP BY b.team_id;
 ```mermaid
 flowchart LR
   A["Datacenter 승률 프레임<br/>(1초)"] --> B["예측: 오브젝트 타이머·교전 밀집·골드 격차"]
-  B -->|임박| C["moments INSERT status=predicted<br/>alert_eta_at, tier 예상"]
-  C --> D["outbox moment.alert"]
+  B -->|임박| C["moments INSERT status=upcoming<br/>alert_eta_at, tier_hint"]
+  C --> D["outbox moment.upcoming"]
   A --> E["확정: 오브젝트 획득·한타 종료<br/>wp_before/after"]
   E --> F{"승률 변화"}
   F -->|"≥ 홀로 임계"| G["tier=holo"]
   F -->|"≥ 골드 임계"| H["tier=gold"]
   F -->|"그 외"| I["tier=silver"]
   G & H & I --> J["status=open, opens_at, closes_at<br/>outbox moment.open/resolved"]
-  C -->|"이벤트 미발생"| K["status=void<br/>outbox moment.void"]
-  J -->|"창 종료"| L["status=resolved 유지, closes_at 경과<br/>outbox moment.closed"]
+  C -->|"이벤트 미발생"| K["status=cancelled<br/>outbox moment.cancelled"]
+  J -->|"창 종료"| L["status=closed<br/>outbox moment.closed"]
 ```
 
 - 등급 임계값은 설정값(확장 목업 기준 골드 ≥12%p·홀로그램 ≥30%p) — 실측 후 확정

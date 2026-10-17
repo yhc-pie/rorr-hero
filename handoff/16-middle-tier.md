@@ -76,7 +76,7 @@ sequenceDiagram
 
 | 항목 | 규칙 |
 |---|---|
-| 연결 | `GET /v1/live/stream?match_ids=` — 비로그인 허용, IP당 5개 |
+| 연결 | `GET /v1/stream?match_ids=` — 비로그인 허용, IP당 5개 |
 | 팬아웃 | Redis Pub/Sub `live:{match_id}` 구독 → 연결별 필터(구독 경기) → 전송 |
 | 재전송 | `Last-Event-ID` → Redis Stream `live-buf:{match_id}`(최근 2분)에서 재생. 범위 밖이면 `snapshot` |
 | 하트비트 | 15초 `: ping` |

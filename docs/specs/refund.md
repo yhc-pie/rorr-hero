@@ -1,6 +1,7 @@
 # 개발 명세 · Energy 환불 (정책 §1-1)
 
-- 작성일: 2026-10-15 · 상태: 정책 결정 완료(수수료 5%·최소 1,000원, 임시), 약관 문구는 법률 검토 후 확정
+- 작성일: 2026-10-15 · 개정: 2026-10-17(정책 v1.3 반영 — Boost는 유료 Energy만, 정산은 정가 기준, 묶음 테이블 `wallet_lots` 통합. 근거: `handoff/18-canonical-merge.md`, 확장 handoff 15 X-1·X-2) · 상태: 정책 결정 완료(수수료 5%·최소 1,000원, 임시), 약관 문구는 법률 검토 후 확정
+- DDL 기준: `handoff/db/schema.sql`(웹·확장 공용)
 - 기준: `docs/policy/boost-economy-policy.md` §1-1(환불), §8(배분)
 - 규칙과 숫자가 이 문서와 정책 문서 사이에서 다르면 **정책 문서가 우선**
 
@@ -11,8 +12,8 @@
 - 7일 이내 청약철회: 미사용 유료분 전액, 수수료 0
 - 7일 이후: 미사용 유료분 환불, 수수료 5%(최소 1,000원) 공제
 - Boost에 사용한 Energy·보너스 Energy·Spark: 환불 없음
-- 사용 순서: 보너스 → 유료, 같은 종류는 만료일 빠른 묶음부터
-- 파트너 배분: Boost에 사용된 **유료** Energy만 대상
+- 사용처·순서(v1.3 §1-1 안 C): **Boost·팀 장식 = 유료 Energy만**(만료 빠른 묶음부터) / RORR 장식 = 보너스 먼저 → 유료
+- 파트너 배분: Boost에 사용된 유료 Energy × **정가(할인 전) 단가**. 패키지 할인은 RORR 몫에서만 부담
 
 ## 2. 설정값 (코드 하드코딩 금지)
 
@@ -24,26 +25,27 @@
 | `PAID_EXPIRY_YEARS` | 5 | 유료 Energy |
 | `BONUS_EXPIRY_DAYS` | 365 | 보너스 Energy |
 | `REFUND_SLA_BUSINESS_DAYS` | 3 | 접수 후 환급 기한 |
-| `PARTNER_SHARE_BP` | 7000 (T1) | `partner_agreements`에서 조회 |
+| `TEAM_SHARE_RATE` | 팀별 협약값(대외 비공개) | `partner_agreements.team_share_bp`에서 조회. 화면·응답에 노출 금지 |
 
 ## 3. 데이터
 
-**energy_lots** (구매·지급 1건 = 1행)
+**wallet_lots** (구매·지급 1건 = 1행, Energy·Spark 공용 — `currency`·`kind` 구분)
 
 | 컬럼 | 설명 |
 |---|---|
 | `id, user_id` | |
-| `kind` | `paid` / `bonus` |
+| `currency`, `kind` | `energy`+`paid`/`bonus`, `spark`+`free` |
 | `order_id` | 유료면 결제 주문, 보너스면 지급 사유 ID |
 | `qty, remaining` | 지급 수량, 남은 수량 |
-| `unit_price_krw` | 유료 1 Energy당 결제 환산가 (결제 금액 ÷ 유료 수량). 보너스는 0 |
+| `unit_price_krw` | 유료 1 Energy당 실결제 환산가(결제 금액 ÷ 수량) — **환불 기준**. 보너스·Spark는 0 |
+| `list_unit_price_krw` | 유료 1 Energy당 정가 환산가(할인 전) — **정산 기준**(v1.3 §8) |
 | `purchased_at, expires_at` | |
-| `status` | `active` / `refunded` / `expired` / `cancelled` |
+| `status` | `active` / `depleted` / `refund_locked` / `refunded` / `expired` / `cancelled` |
 
 **wallet_ledger** (append-only): 모든 증감을 `lot_id`와 함께 기록. 사유 `purchase / bonus / boost / refund / expire / cancel / adjust`
 
-**boost_lot_usage**: Boost 1건이 어느 묶음에서 몇 개를 썼는지 기록 → 정산 계산 근거
-`boost_id, lot_id, qty, unit_price_krw`
+**boost_lot_usage**: Boost 1건이 어느 묶음에서 몇 개를 썼는지 기록 → 정산 계산 근거. 보너스 묶음은 트리거로 거부
+`boost_id, lot_id, qty, unit_price_krw, list_unit_price_krw`
 
 **refunds**
 
@@ -56,11 +58,11 @@
 | `status` | `requested → approved → processing → done` / `rejected` |
 | `requested_at, done_at, reason` | |
 
-**settlements**: 월별·팀별 `sum(boost_lot_usage.qty × unit_price_krw)` 중 `kind=paid`만. 정산 후 취소된 금액은 `adjust_krw`(음수)로 다음 달에 반영
+**settlements**: 월별·팀별 `sum(boost_lot_usage.qty × list_unit_price_krw)`(정가 기준) 중 `kind=paid`만 × 협약 배분율. 정산 후 취소된 금액은 `adjust_krw`(음수)로 다음 달에 반영
 
 ## 4. 계산 규칙
 
-- **차감 순서**: Boost 시 `bonus` 묶음을 `expires_at` 오름차순으로 먼저 쓰고, 부족분을 `paid` 묶음에서 `expires_at` 오름차순으로 사용
+- **차감 순서**: Boost(·팀 장식)는 `paid` 묶음만 `expires_at` 오름차순으로 사용. 유료 잔액이 부족하면 보너스가 있어도 `insufficient_paid_energy`(`params.bonus_available=true`) / RORR 장식은 `bonus` 먼저 → `paid`
 - **환불 견적** (묶음별):
   - `refundable = remaining × unit_price_krw` (paid만)
   - 구매 후 7일 이내 → `fee = 0`
@@ -74,7 +76,7 @@
 
 | 엔드포인트 | 요청 | 응답 |
 |---|---|---|
-| `GET /me/wallet` | — | 유료·보너스 잔액, 묶음별 남은 수량·만료일 |
+| `GET /me/wallet` | — | 유료·보너스 Energy·Spark 잔액 분리, 묶음별 남은 수량·만료일(`handoff/api/openapi.yaml`) |
 | `GET /me/refund-quote` | `lot_ids?` | 묶음별 환불 가능액, 수수료, 실수령액, 적용 유형(7일 이내/이후), 환급 방법 |
 | `POST /refunds` | `lot_ids, method, bank_account?` + `Idempotency-Key` | `refund_id, status, net_krw, expected_by` |
 | `GET /me/refunds` | — | 환불 내역·상태 |
@@ -102,12 +104,13 @@
 | 3-1 | 50,000원(유료 500) 구매, 10일째, 미사용 | 수수료 2,500원 → 47,500원 환불 |
 | 3-2 | 10일째, 유료 잔액 8개(단가 100원 = 800원) | 수수료 공제 후 0원 이하 → 신청 불가, 사유 안내 |
 | 3-3 | 10일째, 서비스 장애로 회사 귀책 처리 | 수수료 0 |
-| 4 | 유료 100 + 보너스 20 패키지, 30 사용 | 보너스 20 먼저 소진 → 유료 90 남음 → 유료 90 기준 환불 |
+| 4 | 유료 100 + 보너스 20 보유, Boost 30 | 유료에서 30 차감 → 유료 70·보너스 20 남음 → 유료 70 기준 환불, 보너스는 환불 없음 |
 | 5 | 보너스만 15 남음 | 환불 0원, 신청 버튼 비활성 |
 | 6 | 보너스 지급 후 366일 | 보너스 만료 처리, 원장 `expire` 기록 |
-| 7 | 미성년 결제 취소, 60 사용·그중 40 Boost(T1) 정산 완료 | 주문 전액 취소, 다음 달 T1 정산에서 40 × 단가 × 70% 차감 |
+| 7 | 미성년 결제 취소, 60 사용·그중 40 Boost(T1) 정산 완료 | 주문 전액 취소, 다음 달 T1 정산에서 40 × 정가 단가 × 협약 배분율 차감 |
 | 8 | 환불 요청 처리 중 Boost 시도 | 잠긴 묶음은 사용 불가, 다른 묶음 또는 잔액 부족 안내 |
-| 9 | Boost 50 사용(보너스 20 + 유료 30) | T1 정산 대상은 유료 30 × 단가만 |
+| 9 | 유료 30 + 보너스 20 보유, Boost 50 시도 | `insufficient_paid_energy`(bonus_available=true) — 보너스로 Boost 불가. 유료 30으로 Boost 하면 정산 대상 = 30 × 정가 단가 |
+| 9-1 | 10% 할인 패키지(정가 단가 100원, 실결제 단가 90원)로 산 유료 50을 Boost | 정산 = 50 × 100원 × 배분율(할인은 RORR 몫), 환불 기준은 90원 |
 | 10 | 같은 환불 요청 2회 전송 | 멱등 키로 1회만 처리 |
 | 11 | PG 취소 실패 | 계좌 환급으로 전환, 상태 `processing` 유지 |
 | 12 | 서비스 종료 공지 후 환불 | 미사용 유료분 전액, 수수료 0 |

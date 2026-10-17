@@ -1,6 +1,6 @@
 # 01. 화면 지도·상태·서버 경계
 
-- 작성일: 2026-10-17 · 기준: rorr-hero 193dbc6, rorr-extension v44
+- 작성일: 2026-10-17 · 기준: rorr-hero 193dbc6, rorr-extension v45(cb425fb)
 
 ---
 
@@ -52,7 +52,7 @@
 | S4 세트 사이·경기 후 | 세트 종료 | 리캡, 세트 사이 한정 "웹에서 Spark 받기" |
 | S5 비지원 리그 | LCK 외 | 준비 중·알림 신청 |
 
-- 하단 탭: Watch / Ranking(퀴즈) / Me
+- 하단 구성(v45): 독(질문 · 오늘의 모먼트 · Boost) + 메뉴. 초기 기획의 하단 탭 Watch / Ranking / Me는 v45에서 대체(확장 handoff 02-screen-spec §0)
 - 패널 크기: 설계 360px(320px 깨짐 없음), 실측 380×952px
 
 ## 4. 서버 경계

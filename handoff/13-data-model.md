@@ -1,9 +1,9 @@
 # 13. 스키마 정의
 
 - 작성일: 2026-10-17
-- DDL 원본: [`db/schema.sql`](db/schema.sql) — PostgreSQL 16, 테이블 52개·뷰 4개·트리거 3개
+- DDL 원본: [`db/schema.sql`](db/schema.sql) — PostgreSQL 16, 테이블 59개·뷰 4개·트리거 3개 · **웹·확장 공용 단일 기준**(2026-10-17 통합, [18-canonical-merge](18-canonical-merge.md)). 확장 저장소 `handoff/schema/`는 참고용으로 대체됨
 - 참조 구현: [`db/reference_boost.sql`](db/reference_boost.sql) · [`db/reference_luckybox.sql`](db/reference_luckybox.sql)
-- 테스트: [`db/test_boost.sql`](db/test_boost.sql)(27건) · [`db/test_luckybox.sql`](db/test_luckybox.sql)(10건) — 모두 통과(§6)
+- 테스트: [`db/test_boost.sql`](db/test_boost.sql)(30건) · [`db/test_luckybox.sql`](db/test_luckybox.sql)(11건) — 모두 통과(§6)
 
 ---
 
@@ -24,6 +24,8 @@
 ```mermaid
 erDiagram
   USERS ||--o{ USER_TEAMS : cheers
+  USERS ||--o{ USER_MY_PLAYERS : "내 선수(팀별)"
+  MATCHES ||--o{ BROADCASTS : "중계 매칭"
   TEAMS ||--o{ USER_TEAMS : ""
   TEAMS ||--o{ PARTNER_AGREEMENTS : "agreement"
   TEAMS ||--o{ PLAYERS : ""
@@ -43,11 +45,11 @@ erDiagram
   USERS ||--o{ MOMENT_TOTALS : "per moment"
   BOOSTS ||--o| CARDS : "first boost issues"
   BOOSTS ||--o{ POINT_EVENTS : ""
-  BOOSTS ||--o| MESSAGES : ""
-  MESSAGES ||--o{ MESSAGE_REACTIONS : ""
-  SPONSOR_CAMPAIGNS ||--o{ LUCKY_BOX_OPENS : ""
-  MOMENTS ||--o{ LUCKY_BOX_OPENS : ""
-  LUCKY_BOX_OPENS ||--o| WALLET_LOTS : "spark lot"
+  BOOSTS ||--o| CHEER_MESSAGES : ""
+  CHEER_MESSAGES ||--o{ MESSAGE_REACTIONS : ""
+  SPONSOR_CONTRACTS ||--o{ SPONSOR_BOX_OPENS : ""
+  MOMENTS ||--o{ SPONSOR_BOX_OPENS : ""
+  SPONSOR_BOX_OPENS ||--o| WALLET_LOTS : "spark lot"
   TEAMS ||--o{ SETTLEMENTS : monthly
   USERS ||--o{ REFUNDS : ""
 
@@ -61,7 +63,7 @@ erDiagram
     currency currency
     int amount
     bool is_partner "판정 시점 복사"
-    text notice_version FK "Energy 필수"
+    text disclosure_version FK "Energy 필수"
     text idempotency_key UK
   }
   MOMENT_TOTALS {
@@ -77,6 +79,7 @@ erDiagram
     card_kind kind "moment / commemorative"
     tier tier "기념은 NULL"
     edition edition "발급 시점 고정"
+    star_reason star_reason "fav_in_play 등"
     text star_player_id "파트너만"
     int celebration_no
     bigint serial_no
@@ -97,17 +100,19 @@ erDiagram
 | 도메인 | 테이블 | 핵심 제약·불변식 |
 |---|---|---|
 | 설정 | `app_config` | 정책 §8 미정 값. 코드 상수 금지 |
-| 계정 | `users` `auth_identities` `sessions` | 미성년(`age_band≠adult`)은 `show_in_highlights=false` 체크 제약 |
+| 계정 | `users` `auth_identities` `sessions` `user_my_players`(확장 '내 선수', 팀별: 행 없음=안 물음·NULL=자동) | 미성년(`age_band≠adult`)은 `show_in_highlights=false` 체크 제약 |
 | 팀·선수·협약 | `leagues` `teams` `players` `partner_agreements` `user_teams` `user_favorite_players` | 협약 기간 중복 금지(EXCLUDE). 대표 팀 사용자당 1개(부분 유니크). **배분율은 이 테이블에만** |
 | 경기·순간 | `matches` `games` `moments` `moment_participants` `milestones` | 순간 게임 내 `moment_key` 유일. 순간당 주인공 1명. 기념 기간 `celebrate_window` |
 | 재화 | `energy_packages` `energy_orders` `wallet_lots` `wallet_ledger` `v_wallet_balance` | 원장 append-only(트리거). Energy 묶음은 paid/bonus, Spark는 free. 보너스·Spark 단가 0. 패키지 할인 0~10% |
-| Boost | `legal_notice_versions` `boosts` `boost_lot_usage` `moment_totals` | 비제휴+Energy 금지(체크 + 협약 재확인 트리거). Energy는 고지 버전 필수. **보너스 묶음 사용 금지 트리거**(v1.3). 멱등 키 사용자당 유일 |
+| Boost | `disclosures` `boosts` `boost_lot_usage` `moment_totals` | 비제휴+Energy 금지(체크 + 협약 재확인 트리거). Energy는 고지 버전 필수. **보너스 묶음 사용 금지 트리거**(v1.3). 멱등 키 사용자당 유일 |
 | 카드·포인트 | `cards` `v_card_with_badges` `point_events` `cheer_streaks` | 사용자·순간당 카드 1장, 사용자·기념일당 1장. 비제휴 카드에 선수 금지. 포인트 `dedup_key` 유일(순간당 1회) |
-| 커뮤니티 | `messages` `message_reactions` `message_replies` `message_reports` | 본문 1~80자. 반응 1인 1회. 답장은 칩 4종만 |
+| 커뮤니티 | `cheer_messages` `message_reactions` `message_replies` `message_reports` | 본문 1~80자(상한 D-9 결정 대기 — 확장 60). 반응 1인 1회. 답장은 칩 4종만 |
 | 순위 | `ranking_snapshots` | 5분 배치. "내 주변" 인덱스 |
 | 광고 | `ad_sessions` | 토큰 1회용 |
-| 스폰서 | `sponsors` `sponsor_campaigns` `sponsor_holdout` `lucky_box_opens` | 사용자·순간당 1회. 결과-수량 일치 체크. 총량 초과 금지. 확률표 버전 기록 |
-| 알림 | `alert_impressions` `consent_records` `v_current_consent` `match_alert_subscriptions` `inbox_messages` `inbox_deliveries` | 광고 메시지 제목 "(광고)" 시작, 서비스 공지에 광고 금지. 경기 시작 알림 사용자·팀당 한 채널 |
+| 확장 | `match_lineups` `broadcasts` `stream_offset_reports` `muse_lines` | 중계 매칭·지연 보정(익명, 90일)·서하 대사 버전 |
+| 측정 | `analytics_events_buffer` | `POST /v1/events` 수신 버퍼(가명 키) |
+| 스폰서 | `sponsors` `sponsor_contracts` `sponsor_moment_exposures` `sponsor_holdout` `sponsor_box_opens` | 사용자·순간당 1회. 결과(win/miss)-수량 일치 체크. 난수 감사 기록 `rng_seed_ref`. 총량 초과 금지. 확률표 버전 기록 |
+| 알림 | `headsup_impressions` `consent_records` `v_current_consent` `match_alert_subscriptions` `inbox_messages` `inbox_deliveries` | 광고 메시지 제목 "(광고)" 시작, 서비스 공지에 광고 금지. 경기 시작 알림 사용자·팀당 한 채널 |
 | 결제·정산 | `refunds` `settlements` `v_team_share_disclosure` | 환불 실수령 > 0. 정산 월 1일 고정. 공개 뷰는 집계액만(비율 없음) |
 | 퀴즈(확장) | `quiz_questions` `quiz_answers` `quiz_streaks` `quiz_weekly_results` | 선택지 2개. 1인 1응답 |
 | 장식 | `deco_items` `deco_purchases` | 팀 장식은 팀 필수. 같은 아이템 1회 구매 |
@@ -129,12 +134,15 @@ erDiagram
 | I-10 | 기념 에디션은 등급 없음·기념일당 1장·축하 순번 | 체크 + 함수 | T11 |
 | I-11 | 원장 수정·삭제 불가 | 트리거 | T12 |
 | I-12 | 정산 근거는 유료 사용분만 | `boost_lot_usage` + 함수 | T13 |
-| I-13 | 행운 박스 순간당 1회·총량·미성년·홀드아웃 | 유니크 + 함수 | 박스 10건 |
+| I-13 | 행운 박스 순간당 1회·총량·미성년·대조군·난수 기록 | 유니크 + 함수 | 박스 11건 |
+| I-14 | 금액은 스테퍼 단계 값만 | 함수(`STEP_*`) | T9 |
+| I-15 | 연속 응원 보너스 첫 경기 0, 2경기째 +10 | 함수 | T1·T15 |
+| I-16 | 카드 주인공: 내 선수 참여 시 내 선수, 아니면 기여 1위(사유 기록) | 함수 | T1·T16 |
 
 ## 5. 운영 메모
 
 - **배치**: 순위 스냅샷 5분 / 경기 종료 시 연속 응원 초기화(응원 팀 경기에 Boost 없으면 `current=0`) / 만료(유료 5년·보너스 1년·Spark 시즌 말 → 원장 `expire`) / 월 정산 / 2년 동의 재확인 대상 추출
-- **파티션**: `wallet_ledger`·`point_events`·`alert_impressions`·`outbox_events`는 월 단위 파티션 권장(출시 후 6개월 내)
+- **파티션**: `wallet_ledger`·`point_events`·`headsup_impressions`·`outbox_events`는 월 단위 파티션 권장(출시 후 6개월 내)
 - **보존**: 결제·환불·원장·고지 노출 기록 5년(전자상거래법) / 메시지 신고 처리 기록 1년 / 탈퇴 시 개인정보 파기·원장은 가명 처리 후 보존 — 법률 확인 필요
 - **개인정보**: 팀에 개인 단위 데이터 제공 금지(집계만). `ad_sessions.ip_hash`는 솔트 해시
 - **서비스 플로우 v2 대비 변경**: ① `energy_lots` → `wallet_lots`(Spark 포함 통합, 정가 단가 컬럼 추가) ② `moment_totals` 신설(배지 누적) ③ `cards.deco_level` 제거 → `moment_totals`에서 조회 ④ Boost 차감 순서 "보너스 먼저" → **유료만**(v1.3) ⑤ 기념 에디션·행운 박스·알림함·동의·퀴즈·장식 테이블 신설 ⑥ `partner_agreements`의 배분율 기본값 제거
@@ -142,9 +150,9 @@ erDiagram
 ## 6. 검증 기록 (2026-10-17)
 
 ```
-PostgreSQL 16.13 — schema.sql: 테이블 52 · 뷰 4 생성, 오류 0
-test_boost.sql:     ok 27 · ALL BOOST TESTS PASSED
-test_luckybox.sql:  ok 10 · ALL LUCKY BOX TESTS PASSED
+PostgreSQL 16.13 — schema.sql: 테이블 59 · 뷰 4 생성, 오류 0 (2026-10-17 통합본)
+test_boost.sql:     ok 30 · ALL BOOST TESTS PASSED
+test_luckybox.sql:  ok 11 · ALL LUCKY BOX TESTS PASSED
 ```
 
 - 실행: `psql -v ON_ERROR_STOP=1 -d <db> -f schema.sql -f reference_boost.sql -f reference_luckybox.sql -f test_boost.sql -f test_luckybox.sql` (테스트는 트랜잭션 안에서 실행 후 롤백)

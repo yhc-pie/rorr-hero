@@ -5,9 +5,12 @@
 --       실제 서비스는 애플리케이션 코드로 구현해도 되지만, 결과는 이 함수와 같아야 한다
 --       (handoff/db/test_boost.sql 의 케이스를 통과할 것)
 -- 호출: SELECT rorr.send_boost(...)  — 한 트랜잭션 안에서 실행
+-- 모드: BOOST_SETTLE_MODE = immediate (on_moment 모드는 status='pending'으로 넣고 순간 확정 워커가 같은 6~8단계를 실행)
 -- 오류 코드(SQLSTATE P0001, MESSAGE = API 오류 코드와 동일):
---   amount_below_min, energy_not_allowed, moment_closed, milestone_closed,
---   not_partner_player, insufficient_balance
+--   amount_not_allowed, energy_not_allowed, moment_closed, milestone_closed,
+--   not_partner_player, insufficient_paid_energy, insufficient_spark
+-- 통합(2026-10-17): 확장 boost_tx.sql의 규칙 반영 — 단계 금액만 허용, 연속 보너스 첫 경기 0(BE-1),
+--   카드 주인공 star_reason 4종, 팀별 '내 선수'(user_my_players), 고지 = disclosures
 -- =====================================================================
 SET search_path = rorr, public;
 
@@ -21,13 +24,16 @@ CREATE OR REPLACE FUNCTION send_boost(
   p_amount     int,
   p_client     client_kind,
   p_entry      boost_entry,
-  p_notice     text,            -- Energy면 필수(§1-2 고지 버전)
+  p_disclosure text,            -- Energy면 필수(§1-2 고지 버전)
   p_idem       text
-) RETURNS jsonb LANGUAGE plpgsql AS $$
+) RETURNS jsonb LANGUAGE plpgsql SET search_path = rorr, public AS $$
 DECLARE
   v_now        timestamptz := now();
   v_existing   boosts%ROWTYPE;
-  v_min        int;
+  v_steps      jsonb;
+  v_grace      int;
+  v_tier       moment_tier;
+  v_pick       record;
   v_partner    boolean;
   v_moment     moments%ROWTYPE;
   v_ms         milestones%ROWTYPE;
@@ -43,7 +49,7 @@ DECLARE
   v_card       cards%ROWTYPE;
   v_is_new     boolean := false;
   v_star       text;
-  v_rule       text;
+  v_reason     star_reason;
   v_pts        jsonb := '{}'::jsonb;
   v_ptcfg      jsonb;
   v_streak     int;
@@ -53,12 +59,13 @@ BEGIN
   -- 0) 멱등: 같은 키면 처음 결과를 다시 돌려준다
   SELECT * INTO v_existing FROM boosts WHERE user_id = p_user AND idempotency_key = p_idem;
   IF FOUND THEN
-    RETURN jsonb_build_object('boost_id', v_existing.id, 'replayed', true);
+    RETURN jsonb_build_object('boost_id', v_existing.id, 'status', v_existing.status, 'replayed', true);  -- API 계층은 저장된 첫 응답을 그대로 재반환
   END IF;
 
-  -- 1) 최소 단가
-  SELECT (value->>p_currency::text)::int INTO v_min FROM app_config WHERE key = 'boost_min';
-  IF p_amount < v_min THEN RAISE EXCEPTION 'amount_below_min'; END IF;
+  -- 1) 금액: 스테퍼 단계 값만 허용
+  SELECT value INTO v_steps FROM app_config WHERE key = CASE p_currency WHEN 'energy' THEN 'STEP_ENERGY' ELSE 'STEP_SPARK' END;
+  IF NOT (v_steps @> to_jsonb(p_amount)) THEN RAISE EXCEPTION 'amount_not_allowed'; END IF;
+  SELECT value::text::int INTO v_grace FROM app_config WHERE key = 'BOOST_GRACE_MS';
 
   -- 2) 파트너 판정(현재 시점 협약)
   SELECT EXISTS (SELECT 1 FROM partner_agreements WHERE team_id = p_team AND valid @> v_now) INTO v_partner;
@@ -68,10 +75,12 @@ BEGIN
   -- 3) 순간·기념일 창
   IF p_moment IS NOT NULL THEN
     SELECT * INTO v_moment FROM moments WHERE id = p_moment;
-    IF NOT FOUND OR v_moment.status <> 'open' OR NOT (v_now >= v_moment.opens_at AND v_now < v_moment.closes_at) THEN
+    IF NOT FOUND OR v_moment.status NOT IN ('open','resolved')
+       OR NOT (v_now >= v_moment.opens_at AND v_now < v_moment.closes_at + make_interval(secs => COALESCE(v_grace,0) / 1000.0)) THEN
       RAISE EXCEPTION 'moment_closed';
     END IF;
     SELECT g.match_id INTO v_match FROM games g WHERE g.id = v_moment.game_id;
+    v_tier := COALESCE(v_moment.tier, v_moment.tier_hint);   -- Boost 시점 등급으로 고정(BE-2)
   END IF;
   IF p_milestone IS NOT NULL THEN
     SELECT * INTO v_ms FROM milestones WHERE id = p_milestone FOR UPDATE;
@@ -82,12 +91,12 @@ BEGIN
 
   -- 4) Boost 행(차감 전에 만들어 FK 확보)
   INSERT INTO boosts (user_id, match_id, moment_id, milestone_id, target, team_id, player_id,
-                      currency, amount, is_partner, client, entry, notice_version, notice_shown_at,
-                      idempotency_key, created_at)
+                      currency, amount, is_partner, status, client, entry, disclosure_version, disclosure_shown_at,
+                      idempotency_key, created_at, settled_at)
   VALUES (p_user, v_match, p_moment, p_milestone,
           CASE WHEN p_player IS NULL THEN 'team' ELSE 'player' END::boost_target,
-          p_team, p_player, p_currency, p_amount, v_partner, p_client, p_entry,
-          p_notice, CASE WHEN p_notice IS NULL THEN NULL ELSE v_now END, p_idem, v_now)
+          p_team, p_player, p_currency, p_amount, v_partner, 'settled', p_client, p_entry,
+          p_disclosure, CASE WHEN p_disclosure IS NULL THEN NULL ELSE v_now END, p_idem, v_now, v_now)
   RETURNING id INTO v_boost;
 
   -- 5) 차감: Energy=유료 묶음만(v1.3), Spark=무료 묶음. 만료 빠른 순, 행 잠금
@@ -107,7 +116,9 @@ BEGIN
     INSERT INTO boost_lot_usage VALUES (v_boost, v_lot.id, v_take, v_lot.unit_price_krw, v_lot.list_unit_price_krw);
     v_need := v_need - v_take;
   END LOOP;
-  IF v_need > 0 THEN RAISE EXCEPTION 'insufficient_balance'; END IF;  -- 트랜잭션 전체 롤백
+  IF v_need > 0 THEN   -- 트랜잭션 전체 롤백. API는 보너스 잔액이 있으면 params.bonus_available=true
+    RAISE EXCEPTION '%', CASE p_currency WHEN 'energy' THEN 'insufficient_paid_energy' ELSE 'insufficient_spark' END;
+  END IF;
 
   SELECT COALESCE(SUM(remaining),0) INTO v_bal FROM wallet_lots
    WHERE user_id = p_user AND currency = p_currency AND status = 'active' AND expires_at > v_now;
@@ -141,21 +152,23 @@ BEGIN
     SELECT * INTO v_card FROM cards WHERE user_id = p_user AND moment_id = p_moment;
     IF NOT FOUND THEN
       IF v_partner THEN
-        SELECT CASE WHEN u.fav_player_id IS NOT NULL AND EXISTS
-                     (SELECT 1 FROM moment_participants mp WHERE mp.moment_id = p_moment AND mp.player_id = u.fav_player_id)
-                    THEN u.fav_player_id END
-          INTO v_star FROM users u WHERE u.id = p_user;
-        IF v_star IS NOT NULL THEN v_rule := 'fav';
+        -- 카드 주인공: 팀별 '내 선수'가 교전에 참여했으면 그 선수, 아니면 기여 1위
+        SELECT player_id INTO v_pick FROM user_my_players WHERE user_id = p_user AND team_id = p_team;
+        IF FOUND AND v_pick.player_id IS NOT NULL AND EXISTS
+           (SELECT 1 FROM moment_participants mp WHERE mp.moment_id = p_moment AND mp.player_id = v_pick.player_id) THEN
+          v_star := v_pick.player_id; v_reason := 'fav_in_play';
         ELSE
           SELECT player_id INTO v_star FROM moment_participants WHERE moment_id = p_moment AND is_top;
-          v_rule := CASE WHEN v_star IS NULL THEN 'auto' ELSE 'top' END;
+          v_reason := CASE WHEN FOUND AND v_pick.player_id IS NOT NULL THEN 'fav_not_in_play' ELSE 'auto' END;
         END IF;
+      ELSE
+        v_reason := 'non_partner';
       END IF;
       INSERT INTO cards (user_id, kind, moment_id, first_boost_id, team_id, tier, edition,
-                         star_player_id, star_rule, issued_client)
-      VALUES (p_user, 'moment', p_moment, v_boost, p_team, v_moment.tier,
+                         star_player_id, star_reason, issued_client)
+      VALUES (p_user, 'moment', p_moment, v_boost, p_team, v_tier,
               CASE WHEN v_partner THEN 'partner' ELSE 'rorr' END::card_edition,
-              v_star, v_rule, p_client)
+              v_star, v_reason, p_client)
       RETURNING * INTO v_card;
       v_is_new := true;
     END IF;
@@ -164,43 +177,44 @@ BEGIN
     IF NOT FOUND THEN
       UPDATE milestones SET celebrations = celebrations + 1 WHERE id = p_milestone RETURNING celebrations INTO v_celebr;
       INSERT INTO cards (user_id, kind, milestone_id, first_boost_id, team_id, tier, edition,
-                         star_player_id, star_rule, celebration_no, issued_client)
+                         star_player_id, star_reason, celebration_no, issued_client)
       VALUES (p_user, 'commemorative', p_milestone, v_boost, p_team, NULL, 'partner',
-              v_ms.player_id, 'fav', v_celebr, p_client)
+              v_ms.player_id, 'milestone', v_celebr, p_client)
       RETURNING * INTO v_card;
       v_is_new := true;
     END IF;
   END IF;
 
-  -- 8) 응원 포인트: 순간당 1회(base+tier), 경기당 첫 Boost에 streak 1회
+  -- 8) 응원 포인트: 순간당 1회(base+tier), 경기·팀당 첫 Boost에 연속 보너스 1회
+  --    연속 보너스 = min((연속 경기 수 − 1) × STEP, MAX) → 첫 경기 0, 2경기째 +10 (BE-1, 정책 §5-3 예시 '골드 = 50 P')
   IF p_moment IS NOT NULL THEN
-    SELECT value INTO v_ptcfg FROM app_config WHERE key = 'points';
     INSERT INTO point_events (user_id, team_id, match_id, moment_id, boost_id, kind, points, currency, dedup_key)
-    VALUES (p_user, p_team, v_match, p_moment, v_boost, 'base', (v_ptcfg->>'base')::int, p_currency,
-            p_user || ':' || p_moment || ':base')
+    VALUES (p_user, p_team, v_match, p_moment, v_boost, 'base',
+            (SELECT value::text::int FROM app_config WHERE key='POINTS_BASE'), p_currency, p_user || ':' || p_moment || ':base')
     ON CONFLICT (dedup_key) DO NOTHING;
     GET DIAGNOSTICS v_added = ROW_COUNT;
     IF v_added = 1 THEN
       INSERT INTO point_events (user_id, team_id, match_id, moment_id, boost_id, kind, points, currency, dedup_key)
       VALUES (p_user, p_team, v_match, p_moment, v_boost, 'tier',
-              (v_ptcfg->'tier'->>v_moment.tier::text)::int, p_currency, p_user || ':' || p_moment || ':tier');
-      v_pts := jsonb_build_object('base', (v_ptcfg->>'base')::int,
-                                  'tier', (v_ptcfg->'tier'->>v_moment.tier::text)::int);
+              (SELECT (value->>v_tier::text)::int FROM app_config WHERE key='POINTS_TIER'), p_currency, p_user || ':' || p_moment || ':tier');
+      v_pts := jsonb_build_object('base', (SELECT value::text::int FROM app_config WHERE key='POINTS_BASE'),
+                                  'tier', (SELECT (value->>v_tier::text)::int FROM app_config WHERE key='POINTS_TIER'),
+                                  'streak', 0);
 
-      -- 연속 응원: 이 경기·이 팀의 첫 Boost일 때만. 쉬었는지(초기화)는 경기 종료 워커가 판정
       INSERT INTO cheer_streaks AS s (user_id, team_id, current, best, last_match_id)
       VALUES (p_user, p_team, 1, 1, v_match)
       ON CONFLICT (user_id, team_id) DO UPDATE
         SET current = s.current + 1, best = GREATEST(s.best, s.current + 1), last_match_id = v_match
         WHERE s.last_match_id IS DISTINCT FROM v_match
       RETURNING current INTO v_streak;
-      IF v_streak IS NOT NULL THEN
+      IF v_streak IS NOT NULL AND v_streak > 1 THEN
+        v_added := LEAST((v_streak - 1) * (SELECT value::text::int FROM app_config WHERE key='POINTS_STREAK_STEP'),
+                         (SELECT value::text::int FROM app_config WHERE key='POINTS_STREAK_MAX'));
         INSERT INTO point_events (user_id, team_id, match_id, moment_id, boost_id, kind, points, currency, dedup_key)
-        VALUES (p_user, p_team, v_match, p_moment, v_boost, 'streak',
-                LEAST(v_streak * (v_ptcfg->>'streak_step')::int, (v_ptcfg->>'streak_max')::int), p_currency,
+        VALUES (p_user, p_team, v_match, p_moment, v_boost, 'streak', v_added, p_currency,
                 p_user || ':' || v_match || ':' || p_team || ':streak')
         ON CONFLICT (dedup_key) DO NOTHING;
-        v_pts := v_pts || jsonb_build_object('streak', LEAST(v_streak * (v_ptcfg->>'streak_step')::int, (v_ptcfg->>'streak_max')::int));
+        v_pts := v_pts || jsonb_build_object('streak', v_added);
       END IF;
     END IF;
   END IF;
@@ -214,6 +228,7 @@ BEGIN
   -- 10) 응답(OpenAPI BoostResult와 같은 모양. star_player_id는 API 계층이 star_player{id,nickname,role,photo_url}로 확장)
   RETURN jsonb_build_object(
     'boost_id', v_boost,
+    'status', 'settled',
     'replayed', false,
     'balance', (SELECT to_jsonb(b) - 'user_id' FROM v_wallet_balance b WHERE b.user_id = p_user),
     'points_added', v_pts || jsonb_build_object('total',
@@ -226,7 +241,7 @@ BEGIN
     'card', CASE WHEN v_card.id IS NULL THEN NULL ELSE jsonb_build_object(
         'id', v_card.id, 'is_new', v_is_new, 'kind', v_card.kind, 'tier', v_card.tier,
         'team_id', v_card.team_id, 'issued_at', v_card.issued_at,
-        'edition', v_card.edition, 'star_player_id', v_card.star_player_id, 'star_rule', v_card.star_rule,
+        'edition', v_card.edition, 'star_player_id', v_card.star_player_id, 'star_reason', v_card.star_reason,
         'celebration_no', v_card.celebration_no, 'serial_no', v_card.serial_no) END
   );
 END $$;

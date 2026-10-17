@@ -1,92 +1,83 @@
-# 실시간 이벤트 계약 (SSE)
+# 실시간 이벤트 계약 (SSE) — 웹·확장 공용
 
-- 작성일: 2026-10-17
-- 엔드포인트: `GET /v1/live/stream?match_ids=m1,m2` (웹·확장 공용, 비로그인 허용)
-- 형식: Server-Sent Events. 각 이벤트는 `id`(단조 증가 문자열), `event`(아래 이름), `data`(JSON 한 줄)
-- 재연결: 클라이언트는 `Last-Event-ID`를 보내고 서버는 최근 2분 이벤트를 재전송. 그 이상 끊겼으면 `snapshot`을 먼저 보낸다
-- 하트비트: 15초마다 `: ping` 주석 줄(프록시 타임아웃 방지). 30초 무수신이면 클라이언트가 재연결
-- 개인 이벤트(내 잔액·카드)는 이 스트림에 싣지 않는다 — POST 응답과 `GET /v1/me`로만. 스트림은 경기 단위 공개 정보만
-- 지연 보정: 결과형 이벤트(`moment.resolved`, `score`)는 클라이언트가 플랫폼 지연 오프셋만큼 늦춰 표시(확장). 예고형(`moment.alert`)은 즉시
+- 작성일: 2026-10-17 · 통합: 웹(df84cfb)·확장(rorr-extension 6e9eca4) 이벤트 정의를 하나로 합침(이름은 확장 정의 채택, `handoff/18-canonical-merge.md`)
+- 엔드포인트: `GET /v1/stream?match_ids=m1,m2` — 비로그인은 **경기 채널**만, 로그인하면 **사용자 채널**이 자동 합류
+- 형식: `id`(단조 증가) · `event` · `data`(JSON 한 줄). 모든 `data`에 `server_ts`
+- 하트비트: 15초 `event: ping`. 30초 무수신 시 클라이언트 재연결
+- 재연결: `Last-Event-ID` → 최근 5분 재전송. 그 이상이면 `event: resync` → 클라이언트가 REST로 현재 상태 재조회(`/v1/matches/{id}`, `/v1/matches/{id}/moments?status=open`, `/v1/me/wallet`)
+- 표시 시각: 결과형 이벤트는 `server_ts + offset_ms`(확장 지연 보정), 예고형(`moment.upcoming`, `quiz.opened`)은 즉시
+- 확장: 패널이 열려 있는 동안만 연결. 닫히면 서비스 워커가 1분 간격 `GET /v1/matches/{id}/moments?status=open`으로 아이콘 배지만 표시(정책 §5-4 푸시 금지)
 
 ---
 
 ## 1. 이벤트 목록
 
-| event | 언제 | 소비자 | 클라이언트 동작 |
-|---|---|---|---|
-| `snapshot` | 연결·장기 단절 후 | 웹·확장 | 상태 전체 교체 |
-| `score` | 킬·오브젝트·세트 변화 | 웹 티커·경기 페이지·확장 스트립 | 숫자 갱신(지연 보정) |
-| `moment.alert` | 큰 순간 예고(골드·홀로그램) | 웹 배너/팝업·확장 예고 줄 | 빈도 상한·모달 겹침 확인 후 표시 |
-| `moment.open` | Boost 창 열림 | Boost 상자 | "지금 이 순간" 칩 활성, 선수 칩 갱신 |
-| `moment.resolved` | 순간 확정(승률 변화 포함) | 알림·카드 | 예고 철회 또는 확정 라벨("BARON STOLEN — T1") |
-| `moment.closed` | Boost 창 닫힘(누적 종료) | Boost 상자 | 순간 칩 해제, 열린 상자에 "마감" 안내 |
-| `moment.void` | 예고 무산 | 알림 | 조용히 철회(문구 없음) |
-| `boosting.count` | 5초 간격 집계 | Boost 상자 | "함께 Boost 중 n" |
-| `sponsor.pool` | 캠페인 총량 소진·재개 | 후원 줄 | 박스 버튼 숨김/표시(라벨은 유지) |
-| `quiz.open` / `quiz.closed` / `quiz.result` / `quiz.void` | 퀴즈 문항 상태 | **확장만** | 퀴즈 카드 |
-| `message.new` | 검수 통과 메시지 | 팬덤 라이브·응원 피드 | 아래에 추가(채팅 순서) |
-| `match.status` | 경기 시작·세트 종료·종료 | 전부 | S3/S4 전환, 리캡 |
+| event | 채널 | 주요 필드 | 웹 | 확장 |
+|---|---|---|---|---|
+| `ping` | 공통 | `server_ts` | 연결 유지 | 같음 |
+| `resync` | 공통 | `reason` | 상태 재조회 | 같음 |
+| `config.changed` | 공통 | `keys[]` | `/v1/config` 재조회 | 같음 |
+| `match.state` | 경기 | `match_id, game_no, clock_s, score[2], gold_diff` (5초·변화 시) | 티커·경기 페이지 | 매치 스트립 |
+| `match.started` / `match.ended` | 경기 | `match_id, result?` | 경기 페이지 상태 | S3·S4·S1 전환 |
+| `game.started` / `game.ended` | 경기 | `game_no, winner?` | 세트 표시 | 세트 사이 화면 |
+| `moment.upcoming` | 경기 | `moment_id, kind, label{ko,en}, team_id, tier_hint, eta_at, closes_at, participants[], top_performer, sponsor?` | 골드 배너 / 홀로그램 팝업 | 예고 줄(카운트다운 `HEADSUP_COUNTDOWN_S`) |
+| `moment.open` | 경기 | `moment_id, opens_at, closes_at` | "지금 이 순간" 칩·선수 칩 | Boost CTA 활성 |
+| `moment.stats` | 경기 | `moment_id, boosters_count` (2초 묶음) | "함께 Boost 중 n" | 같음 |
+| `moment.resolved` | 경기 | `moment_id, final_tier, outcome, top_performer, winprob_delta_pp, label` | 확정 라벨 | 순간 플래시 + 서하 hype |
+| `moment.closed` | 경기 | `moment_id, closed_at` | 순간 칩 해제·두 번 누르기 해제 | 같음 |
+| `moment.cancelled` | 경기 | `moment_id, reason` | 예고 조용히 철회 | 같음(`on_moment` 모드면 `boost.voided`가 뒤따름) |
+| `sponsor.pool` | 경기 | `contract_id, box_enabled` | 박스 버튼 숨김/표시(라벨 유지) | 같음 |
+| `message.new` | 경기 | `message{…}` (검수 통과분) | 팬덤 라이브·응원 피드 | 리캡 |
+| `quiz.opened` | 경기 | `quiz_id, prompt{ko,en}, options[2], closes_at` | — | 퀴즈 카드 `QUIZ_WINDOW_S` |
+| `quiz.resolved` | 경기 + 사용자 | `quiz_id, correct_option, my?{correct, streak, score}` | — | 정답·스트릭 |
+| `quiz.void` | 경기 | `quiz_id` | — | "This one happened too fast. It won't count." |
+| `boost.settled` | 사용자 | `boost_id, card{…}, points_added` (`on_moment` 모드) | 카드 공개 | 같음 |
+| `boost.voided` | 사용자 | `boost_id, reason` | "순간이 성립하지 않아 돌려드렸어요" | 같음 |
+| `wallet.changed` | 사용자 | `balance{energy_paid, energy_bonus, spark}, reason` | 헤더 잔액 | 패널 잔액(웹 충전 즉시 반영) |
+| `card.updated` | 사용자 | `card_id, tier?, badges?` | 컬렉션 갱신 | 같음 |
 
-## 2. 페이로드
+## 2. 예시
 
 ```text
-event: moment.alert
+event: moment.upcoming
 id: 1729150000123-42
-data: {"match_id":"lck-2026-10-15-t1-gen","game_no":2,"moment_id":"5b1e…","moment_key":"baron-2-24",
-       "kind":"baron","tier":"gold","team_id":"T1",
+data: {"server_ts":"2026-10-15T08:24:00Z","match_id":"lck-2026-10-15-t1-gen","game_no":2,
+       "moment_id":"5b1e…","kind":"baron","tier_hint":"gold","team_id":"T1",
        "label":{"ko":"바론 교전 임박","en":"Baron fight incoming"},
        "eta_at":"2026-10-15T08:24:38Z","closes_at":"2026-10-15T08:26:10Z",
-       "participants":[{"player_id":"oner","is_top":true},{"player_id":"faker","is_top":false}],
+       "participants":["oner","faker","keria"],"top_performer":"faker",
        "sponsor":{"sponsor_id":"nova","label":{"ko":"후원 · presented by NOVA Gear","en":"Sponsored · presented by NOVA Gear"},
-                  "box":true,"odds":{"none":75,"spark5":20,"spark10":5},"odds_version":"odds@2026-10-17"}}
+                  "box_enabled":true,"odds":[[0,75],[5,20],[10,5]],"odds_version":"odds@2026-10-17"}}
+
+event: moment.resolved
+data: {"server_ts":"…","moment_id":"5b1e…","final_tier":"gold","outcome":"secured","team_id":"T1","top_performer":"oner",
+       "label":{"ko":"T1 바론 스틸","en":"BARON STOLEN — T1"},"winprob_delta_pp":26.8,"game_time":"24:10"}
+
+event: wallet.changed
+data: {"server_ts":"…","balance":{"energy_paid":120,"energy_bonus":0,"spark":35},"reason":"purchase"}
 ```
 
 | 필드 | 규칙 |
 |---|---|
-| `tier` | `gold` → 배너(웹)·예고 줄(확장), `holo` → 중앙 팝업. `silver`는 알림 없음 |
-| `team_id` | 순간을 만든 팀. 비제휴 팀이면 `participants`는 빈 배열, 라벨에 선수명 없음 |
-| `participants` | 파트너 팀 선수만. 웹 "이 교전의 선수" 칩·확장 카드 주인공 미리보기 |
-| `sponsor` | 파트너 경기·캠페인 범위일 때만. 비제휴·범위 밖은 키 없음. `box:false`면 라벨만 |
-| `eta_at` | 카운트다운 기준(서버 시각). 클라이언트 시계 오차는 `snapshot.server_time`으로 보정 |
-
-```text
-event: moment.resolved
-data: {"moment_id":"5b1e…","outcome":"secured","team_id":"T1",
-       "label":{"ko":"T1 바론 스틸","en":"BARON STOLEN — T1"},"wp_before":41.2,"wp_after":68.0,"game_time":"24:10"}
-
-event: moment.closed
-data: {"moment_id":"5b1e…","closed_at":"2026-10-15T08:26:10Z"}
-
-event: boosting.count
-data: {"moment_id":"5b1e…","count":1240}
-
-event: sponsor.pool
-data: {"campaign_id":"…","box":false}
-
-event: quiz.open
-data: {"question_id":"…","game_id":"…-g2","prompt":{"ko":"다음 드래곤, 어느 팀?","en":"Next dragon?"},
-       "options":[{"id":"a","ko":"T1","en":"T1"},{"id":"b","ko":"GEN","en":"GEN"}],"closes_at":"…"}
-
-event: snapshot
-data: {"server_time":"…","matches":[{"id":"…","status":"live","score":[1,0],"game_no":2,
-       "open_moments":[…],"alert":null}]}
-```
+| `tier_hint` | `gold` → 배너·예고 줄, `holo` → 중앙 팝업. `silver`는 알림 없음. 확정 등급은 `moment.resolved.final_tier` |
+| `participants` | 파트너 팀 선수만. 비제휴 팀이면 빈 배열, 라벨에 선수명 없음 |
+| `sponsor` | 파트너 경기·계약 범위일 때만. 대조군 사용자에게는 `box_enabled:false`로 보냄(사용자 채널 덮어쓰기) |
+| `eta_at` | 카운트다운 기준. 클라이언트 시계 오차는 `server_ts`로 보정 |
 
 ## 3. 클라이언트 처리 규칙
 
 | 규칙 | 내용 |
 |---|---|
-| 빈도 상한 | 웹 골드 180초·방문당 3회·홀로그램 경기당 1회 / 확장 `EXT_HEADSUP_MIN_GAP`. 서버도 같은 값으로 `alert_impressions`를 보고 판단할 수 있으나, 1차 판정은 클라이언트(오프라인 허용) |
-| 모달 겹침 | 결제·Boost 완료·로그인·행운 박스 무대가 열려 있으면 알림을 보류했다가 닫힌 뒤 `eta_at`이 남아 있으면 표시 |
+| 빈도 상한 | 웹 `HEADSUP_GOLD_MIN_GAP`(180초)·방문당 3회·홀로그램 경기당 1회 / 확장 `EXT_HEADSUP_MIN_GAP`. 노출은 `POST /v1/headsup/impressions`로 기록 |
+| 모달 겹침 | 결제·Boost 완료·로그인·행운 박스 무대가 열려 있으면 보류 → 닫힌 뒤 `eta_at`이 남아 있으면 표시 |
 | 설정 | `alert_level=holo`면 골드 무시, `off`면 전부 무시 |
-| 탭 신호(웹) | `document.hidden`이면 탭 제목 앞 "(⚡ 곧 바론)" + 파비콘 점, 돌아오면 원복 |
-| 아이콘 배지(확장) | 패널 닫힘 시 `chrome.action.setBadgeText`로 신호(서비스 워커) |
-| 순서 보장 | 같은 `moment_id`의 이벤트는 `alert → open → resolved/void → closed` 순. 역순 도착 시 `id` 기준 정렬 |
-| 중복 | 같은 `id` 재수신은 무시 |
+| 탭 신호(웹) | 탭이 숨겨져 있으면 제목 앞 "(⚡ 곧 바론)" + 파비콘 점 |
+| 아이콘 배지(확장) | 패널 닫힘 시 `chrome.action.setBadgeText` |
+| 순서 | 같은 `moment_id`는 `upcoming → open → resolved|cancelled → closed`. 역순 도착 시 `id` 기준 정렬, 같은 `id` 재수신 무시 |
 
 ## 4. 서버 측 발행
 
-- 원천: 순간 감지 워커(datacenter 승률·wGE+ ΔG) → `moments` 갱신 + `outbox_events`(`moment.*`)
-- 팬아웃: 아웃박스 퍼블리셔 → Redis Pub/Sub 채널 `live:{match_id}` → 실시간 게이트웨이(SSE 노드) → 연결된 클라이언트
-- `boosting.count`: `boost.created` 이벤트를 5초 창으로 집계해 발행(개인 식별 정보 없음)
-- 재전송 버퍼: 매치별 Redis Stream(최근 2분, `MAXLEN ~ 2000`)
+- 원천: 순간 감지 워커 → `moments` 갱신 + `outbox_events`(`moment.*`) / Boost·지갑 트랜잭션 → `outbox_events`(`boost.*`, `wallet.changed`)
+- 팬아웃: 아웃박스 퍼블리셔 → Redis Pub/Sub `live:{match_id}`(경기) · `user:{user_id}`(사용자) → 실시간 게이트웨이 → 클라이언트
+- `moment.stats`: `boost.created`를 2초 창으로 집계(개인 식별 정보 없음)
+- 재전송 버퍼: 채널별 Redis Stream(최근 5분)

@@ -64,13 +64,13 @@ stateDiagram-v2
 ```mermaid
 stateDiagram-v2
   [*] --> None
-  None --> Queued: moment.alert (모달 열림)
-  None --> Shown: moment.alert (표시 조건 통과, F-4)
+  None --> Queued: moment.upcoming (모달 열림)
+  None --> Shown: moment.upcoming (표시 조건 통과, F-4)
   Queued --> Shown: 모달 닫힘 & eta 남음
   Queued --> None: eta 지남
   Shown --> PanelOpen: 이 순간 Boost 준비
   Shown --> Stage: 행운 박스 열기
-  Shown --> None: 닫기·Esc / moment.void(조용히) / 카운트다운 0
+  Shown --> None: 닫기·Esc / moment.cancelled(조용히) / 카운트다운 0
   Shown --> Resolved: moment.resolved → 확정 라벨 1.5초
   Resolved --> None
   Stage --> Shown: 결과 후 무대 닫기(버튼 → 결과 칩)
@@ -94,8 +94,8 @@ stateDiagram-v2
   Opening --> Shuffling: 250ms
   Shuffling --> Picking: 1.5s (동작 줄이기 50ms)
   Picking --> Shaking: 박스 선택(클릭·Enter·Space)
-  Shaking --> Won: 서버 결과 spark5·spark10 & 1.1s
-  Shaking --> Lost: 서버 결과 none & 1.1s
+  Shaking --> Won: 서버 결과 win(Spark 5·10) & 1.1s
+  Shaking --> Lost: 서버 결과 miss & 1.1s
   Shaking --> Failed: 서버 오류
   Won --> BoostPreset: "Spark N으로 이 순간 Boost"
   Lost --> BoostPreset: "Energy로 Boost"
@@ -130,7 +130,7 @@ stateDiagram-v2
 | `!is_new && !level_up` | 기존 카드 + "Energy 누적 20 · 2단계까지 30 남음"(최고 단계면 "최고 단계") |
 | `card = null`(순간 미선택) | 축약 연출 + "응원을 보냈어요" |
 | `card.kind = commemorative` | 기념 틀 + "412번째 축하" → "축하 완료 ✓" |
-| 확장 `star_rule` | fav: "내 선수 {P}의 순간" / top: "이번엔 {top}의 순간이었어요 · {fav}는 이 교전에 없었어요" / auto: "가장 크게 기여한 선수 · {top}" |
+| 확장 `star_reason` | fav_in_play: "내 선수 {P}의 순간" / fav_not_in_play: "이번엔 {top}의 순간이었어요 · {fav}는 이 교전에 없었어요" / auto: "가장 크게 기여한 선수 · {top}" |
 
 ## 7. 실시간 연결
 
@@ -164,7 +164,7 @@ stateDiagram-v2
   S5_Unsupported --> S1_Idle
 ```
 
-- S3 진입 시 `fav_player_asked`가 false면 퀴즈 자리에 "오늘 누구 응원해?" 카드(5명 + 자동으로 둘게요) → `PUT /me/fav-player`
+- S3 진입 시 그 팀의 `my_players` 키가 없으면(아직 안 물음) 퀴즈 자리에 "오늘 누구 응원해?" 카드(5명 + 자동으로 둘게요) → `PUT /me/my-player`
 - S4에서만 "웹에서 Spark 받기" 노출(경기 중 광고 유도 금지)
 
 ## 9. 이벤트 → 화면 반응 표
@@ -172,15 +172,15 @@ stateDiagram-v2
 | 입력 | 웹 | 확장 |
 |---|---|---|
 | SSE `score` | 티커·경기 페이지 숫자 | 매치 스트립(지연 보정) |
-| SSE `moment.alert` | 배너/팝업(F-4) | 예고 줄/패널 중앙 + Muse 감정 tense |
+| SSE `moment.upcoming` | 배너/팝업(F-4) | 예고 줄/패널 중앙 + Muse 감정 tense |
 | SSE `moment.open` | 패널 "지금 이 순간" 칩, 선수 칩 갱신 | Boost CTA 활성 |
 | SSE `moment.resolved` | 확정 라벨 | 순간 플래시 "BARON STOLEN — T1" + Muse hype |
 | SSE `moment.closed` | 순간 칩 해제, Armed 해제 | 같음 |
-| SSE `boosting.count` | "함께 Boost 중 n" | 같음 |
+| SSE `moment.stats` | "함께 Boost 중 n" | 같음 |
 | SSE `sponsor.pool{box:false}` | 박스 버튼 숨김 | 같음 |
 | SSE `quiz.*` | — | 퀴즈 카드 |
 | SSE `match.status` | 경기 페이지 상태 | S3/S4/S1 전환 |
 | `visibilitychange: visible` | 탭 신호 원복 | 잔액 재조회(충전 복귀) |
-| 402 응답 | 충전 이동 + 복귀 배너 | 토스트 + 웹 링크 |
+| 409 insufficient_* 응답 | 충전 이동 + 복귀 배너 | 토스트 + 웹 링크 |
 | 409 `moment_closed` | "마감됐어요" + 순간 해제 | 같음 |
 | `prefers-reduced-motion` | 반복·장식 정지, 전환 단축 | 같음 |

@@ -11,6 +11,7 @@
 --   4) 팀 배분율은 partner_agreements에만. 클라이언트 응답에 내보내지 않는다
 --   5) 미정 값은 app_config에서 읽는다(코드 고정 금지)
 -- 검증: PostgreSQL 16.13에서 전체 실행 확인(handoff/13-data-model.md §6)
+-- 통합: 2026-10-17 웹(df84cfb)·확장(rorr-extension 6e9eca4) 설계를 이 파일 하나로 통합(handoff/18-canonical-merge.md)
 -- =====================================================================
 
 CREATE EXTENSION IF NOT EXISTS citext;
@@ -30,15 +31,17 @@ CREATE TYPE auth_provider    AS ENUM ('google','apple','microsoft','email');
 CREATE TYPE match_status     AS ENUM ('scheduled','live','finished','cancelled');
 CREATE TYPE moment_kind      AS ENUM ('dragon','baron','elder','herald','teamfight','siege','nexus','steal','comeback','other');
 CREATE TYPE moment_tier      AS ENUM ('silver','gold','holo');
-CREATE TYPE moment_status    AS ENUM ('predicted','open','resolved','void');
+CREATE TYPE moment_status    AS ENUM ('upcoming','open','resolved','closed','cancelled');
 CREATE TYPE milestone_kind   AS ENUM ('career_games','career_kills','debut_anniversary','other');
 CREATE TYPE currency_kind    AS ENUM ('energy','spark');
 CREATE TYPE lot_kind         AS ENUM ('paid','bonus','free');           -- free = Spark
-CREATE TYPE lot_source       AS ENUM ('purchase','signup_bonus','promo_bonus','ad_reward','quiz_prize','lucky_box','admin_grant');
+CREATE TYPE lot_source       AS ENUM ('purchase','signup_bonus','promo_bonus','ad_reward','quiz_prize','sponsor_box','admin_grant');
 CREATE TYPE lot_status       AS ENUM ('active','depleted','refund_locked','refunded','expired','cancelled');
-CREATE TYPE ledger_reason    AS ENUM ('purchase','bonus','ad_reward','quiz_prize','lucky_box','boost','deco_purchase','refund','expire','cancel','adjust');
+CREATE TYPE ledger_reason    AS ENUM ('purchase','bonus','ad_reward','quiz_prize','sponsor_box','boost','boost_hold','boost_release','deco_purchase','refund','expire','cancel','adjust');
 CREATE TYPE boost_target     AS ENUM ('team','player');
-CREATE TYPE boost_entry      AS ENUM ('panel','alert','player_chip','lucky_box','milestone','recap','other');
+CREATE TYPE boost_entry      AS ENUM ('panel','alert','player_chip','sponsor_box','milestone','recap','other');
+CREATE TYPE boost_status     AS ENUM ('pending','settled','voided','rejected');   -- BOOST_SETTLE_MODE
+CREATE TYPE star_reason      AS ENUM ('fav_in_play','fav_not_in_play','auto','non_partner','milestone');
 CREATE TYPE card_kind        AS ENUM ('moment','commemorative');
 CREATE TYPE card_edition     AS ENUM ('partner','rorr');
 CREATE TYPE point_kind       AS ENUM ('base','tier','streak');
@@ -51,7 +54,7 @@ CREATE TYPE refund_type      AS ENUM ('withdrawal','balance','minor_cancel','ser
 CREATE TYPE refund_method    AS ENUM ('pg_cancel','bank_transfer');
 CREATE TYPE refund_status    AS ENUM ('requested','approved','processing','done','rejected');
 CREATE TYPE settle_status    AS ENUM ('draft','calculated','team_confirmed','paid','adjusted');
-CREATE TYPE box_result       AS ENUM ('none','spark5','spark10');
+CREATE TYPE box_result       AS ENUM ('win','miss');
 CREATE TYPE holdout_group    AS ENUM ('treatment','holdout');
 CREATE TYPE inbox_category   AS ENUM ('service','mine','team','promo');
 CREATE TYPE sender_kind      AS ENUM ('rorr','team');
@@ -86,8 +89,6 @@ CREATE TABLE users (
   show_in_highlights   boolean NOT NULL DEFAULT true,       -- 미성년 기본 false(앱에서 설정)
   msg_public           boolean NOT NULL DEFAULT true,
   alert_level          alert_level NOT NULL DEFAULT 'all',
-  fav_player_id        text,                                -- 확장 '내 선수'(NULL=자동), FK는 players 생성 후
-  fav_player_asked_at  timestamptz,                         -- NULL이면 아직 안 물음(경기 시작 때 묻기)
   created_at           timestamptz NOT NULL DEFAULT now(),
   deleted_at           timestamptz,                         -- 삭제 요청(유예 후 파기)
   CONSTRAINT minor_highlight CHECK (age_band = 'adult' OR show_in_highlights = false OR age_band = 'unknown')
@@ -140,7 +141,6 @@ CREATE TABLE players (
   photo_asset  text,                           -- 구단 제공 공식 파일만
   is_active    boolean NOT NULL DEFAULT true
 );
-ALTER TABLE users ADD CONSTRAINT users_fav_player_fk FOREIGN KEY (fav_player_id) REFERENCES players(id);
 
 -- 협약: 기간 중복 금지. 배분율은 서버 정산 전용(대외 비공개)
 CREATE TABLE partner_agreements (
@@ -165,6 +165,16 @@ CREATE TABLE user_teams (
 );
 CREATE UNIQUE INDEX user_one_primary_team ON user_teams (user_id) WHERE is_primary;
 
+-- 확장 '내 선수'(카드 주인공 우선): 팀별. 행 없음 = 아직 안 물음, player_id NULL = 자동
+CREATE TABLE user_my_players (
+  user_id     uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  team_id     text NOT NULL REFERENCES teams(id),
+  player_id   text REFERENCES players(id),
+  asked_at    timestamptz NOT NULL DEFAULT now(),
+  PRIMARY KEY (user_id, team_id)
+);
+
+-- 웹 ★ 즐겨찾기 선수 — '내 선수'와 별개
 CREATE TABLE user_favorite_players (
   user_id     uuid NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   player_id   text NOT NULL REFERENCES players(id),
@@ -202,23 +212,55 @@ CREATE TABLE games (
   UNIQUE (match_id, game_no)
 );
 
+CREATE TABLE match_lineups (
+  match_id    text NOT NULL REFERENCES matches(id),
+  game_no     int  NOT NULL,
+  team_id     text NOT NULL REFERENCES teams(id),
+  player_id   text NOT NULL REFERENCES players(id),
+  role        text NOT NULL CHECK (role IN ('top','jungle','mid','bot','support')),
+  PRIMARY KEY (match_id, game_no, player_id)
+);
+
+-- 확장 중계 매칭(/v1/ext/match/resolve)
+CREATE TABLE broadcasts (
+  id           bigserial PRIMARY KEY,
+  match_id     text NOT NULL REFERENCES matches(id),
+  host         text NOT NULL CHECK (host IN ('youtube','chzzk','soop','twitch')),
+  channel_id   text,
+  url_pattern  text,
+  default_offset_ms int NOT NULL DEFAULT 0,
+  UNIQUE (match_id, host, channel_id)
+);
+
+-- 익명 지연 보정 보고(사용자 ID 미저장, 90일 보관)
+CREATE TABLE stream_offset_reports (
+  id          bigserial PRIMARY KEY,
+  host        text NOT NULL,
+  match_id    text NOT NULL REFERENCES matches(id),
+  delta_ms    int NOT NULL,
+  reported_at timestamptz NOT NULL DEFAULT now()
+);
+
 CREATE TABLE moments (
   id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   game_id       text NOT NULL REFERENCES games(id),
   moment_key    text NOT NULL,                  -- 'baron-2-24' (게임 안 고유)
   kind          moment_kind NOT NULL,
-  tier          moment_tier NOT NULL,           -- 승률 변화 기반, 서버 판정
+  tier_hint     moment_tier NOT NULL,           -- 예고 시 예상 등급(알림 종류 결정)
+  tier          moment_tier,                    -- 확정 등급(resolved). 카드·포인트는 Boost 시점 값으로 고정(BE-2)
   team_id       text REFERENCES teams(id),      -- 순간을 만든 팀(승률이 움직인 쪽)
   game_sec      int,                            -- 게임 시각(초)
   label_ko      text NOT NULL,
   label_en      text NOT NULL,
   wp_before     numeric(5,2),
   wp_after      numeric(5,2),
-  status        moment_status NOT NULL DEFAULT 'predicted',
+  winprob_delta_pp numeric(5,2),
+  status        moment_status NOT NULL DEFAULT 'upcoming',
   alert_eta_at  timestamptz,                    -- 예고 시각(카운트다운 기준)
   opens_at      timestamptz,                    -- Boost 창 열림
   closes_at     timestamptz,                    -- Boost 창 닫힘(누적 종료)
   resolved_at   timestamptz,
+  cancel_reason text,
   created_at    timestamptz NOT NULL DEFAULT now(),
   UNIQUE (game_id, moment_key),
   CHECK (closes_at IS NULL OR opens_at IS NULL OR closes_at > opens_at)
@@ -332,9 +374,9 @@ GROUP BY u.id;
 -- ---------------------------------------------------------------------
 -- 6. Boost·누적·카드·포인트
 -- ---------------------------------------------------------------------
-CREATE TABLE legal_notice_versions (
-  id            text PRIMARY KEY,               -- 'boost_sheet_energy@2026-10-17'
-  notice_key    text NOT NULL,
+CREATE TABLE disclosures (                       -- 고지 문구 버전(환불 불가·보너스 용도·행운 박스 확률)
+  id            text PRIMARY KEY,               -- 'boost_no_refund@2026-10-17'
+  disclosure_key text NOT NULL,
   locale        text NOT NULL,
   body          text NOT NULL,
   effective_at  timestamptz NOT NULL
@@ -352,17 +394,22 @@ CREATE TABLE boosts (
   currency         currency_kind NOT NULL,
   amount           int NOT NULL CHECK (amount > 0),
   is_partner       boolean NOT NULL,                     -- 판정 시점 값 복사
+  status           boost_status NOT NULL DEFAULT 'settled', -- immediate=settled / on_moment=pending→settled|voided
+  game_clock_s     int,                                  -- 게임 시각(초)
   client           client_kind NOT NULL,
+  client_version   text,
   entry            boost_entry NOT NULL DEFAULT 'panel',
-  notice_version   text REFERENCES legal_notice_versions(id),  -- 노출된 고지(§1-2)
-  notice_shown_at  timestamptz,
+  disclosure_version text REFERENCES disclosures(id),    -- 노출된 고지(§1-2)
+  disclosure_shown_at timestamptz,
   idempotency_key  text NOT NULL,
   created_at       timestamptz NOT NULL DEFAULT now(),
+  settled_at       timestamptz,
+  void_reason      text,
   UNIQUE (user_id, idempotency_key),
   CHECK (NOT (moment_id IS NOT NULL AND milestone_id IS NOT NULL)),
   CHECK (target = 'team' OR player_id IS NOT NULL),
   CHECK (currency = 'spark' OR is_partner),                    -- 비제휴 + Energy 금지(§2)
-  CHECK (currency = 'spark' OR notice_version IS NOT NULL)     -- Energy는 고지 기록 필수
+  CHECK (currency = 'spark' OR disclosure_version IS NOT NULL) -- Energy는 고지 기록 필수
 );
 CREATE INDEX ON boosts (moment_id);
 CREATE INDEX ON boosts (user_id, created_at DESC);
@@ -401,7 +448,7 @@ CREATE TABLE cards (
   tier             moment_tier,                         -- 기념 에디션은 NULL(등급 없음)
   edition          card_edition NOT NULL,               -- 발급 시점 협약으로 고정(§4-1)
   star_player_id   text REFERENCES players(id),         -- 카드 주인공(파트너만)
-  star_rule        text CHECK (star_rule IN ('fav','top','auto')),
+  star_reason      star_reason,
   celebration_no   int,                                 -- 기념 에디션 "N번째 축하"
   serial_no        bigint GENERATED ALWAYS AS IDENTITY,
   issued_client    client_kind NOT NULL,
@@ -446,7 +493,7 @@ CREATE TABLE cheer_streaks (
 -- ---------------------------------------------------------------------
 -- 7. 응원 메시지·반응·신고
 -- ---------------------------------------------------------------------
-CREATE TABLE messages (
+CREATE TABLE cheer_messages (
   id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   boost_id     uuid UNIQUE REFERENCES boosts(id),
   user_id      uuid NOT NULL REFERENCES users(id),
@@ -454,16 +501,17 @@ CREATE TABLE messages (
   moment_id    uuid REFERENCES moments(id),
   milestone_id uuid REFERENCES milestones(id),     -- 응원 롤 수록 대상
   player_id    text REFERENCES players(id),
-  body         text NOT NULL CHECK (char_length(body) BETWEEN 1 AND 80),
+  match_id     text REFERENCES matches(id),
+  body         text NOT NULL CHECK (char_length(body) BETWEEN 1 AND 80),  -- 상한 결정 대기(D-9: 웹 80 / 확장 60)
   is_anonymous boolean NOT NULL DEFAULT false,
   status       msg_status NOT NULL DEFAULT 'pending',
   moderated_at timestamptz,
   created_at   timestamptz NOT NULL DEFAULT now()
 );
-CREATE INDEX ON messages (team_id, created_at DESC) WHERE status = 'visible';
+CREATE INDEX ON cheer_messages (team_id, created_at DESC) WHERE status = 'visible';
 
 CREATE TABLE message_reactions (
-  message_id  uuid NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
+  message_id  uuid NOT NULL REFERENCES cheer_messages(id) ON DELETE CASCADE,
   user_id     uuid NOT NULL REFERENCES users(id),
   created_at  timestamptz NOT NULL DEFAULT now(),
   PRIMARY KEY (message_id, user_id)                 -- '나도 응원' 1회
@@ -471,7 +519,7 @@ CREATE TABLE message_reactions (
 
 CREATE TABLE message_replies (
   id          bigserial PRIMARY KEY,
-  message_id  uuid NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
+  message_id  uuid NOT NULL REFERENCES cheer_messages(id) ON DELETE CASCADE,
   user_id     uuid NOT NULL REFERENCES users(id),
   chip_id     text NOT NULL CHECK (chip_id IN ('gg','next_match','best_moment','till_end')), -- 칩만 허용
   created_at  timestamptz NOT NULL DEFAULT now(),
@@ -480,7 +528,7 @@ CREATE TABLE message_replies (
 
 CREATE TABLE message_reports (
   id           bigserial PRIMARY KEY,
-  message_id   uuid NOT NULL REFERENCES messages(id),
+  message_id   uuid NOT NULL REFERENCES cheer_messages(id),
   reporter_id  uuid NOT NULL REFERENCES users(id),
   reason       text NOT NULL,
   status       report_status NOT NULL DEFAULT 'open',
@@ -530,7 +578,7 @@ CREATE TABLE sponsors (
   blocked_categories text[] NOT NULL DEFAULT '{}'
 );
 
-CREATE TABLE sponsor_campaigns (
+CREATE TABLE sponsor_contracts (
   id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   sponsor_id        text NOT NULL REFERENCES sponsors(id),
   team_id           text NOT NULL REFERENCES teams(id),          -- 파트너 팀만(앱 검증)
@@ -540,22 +588,31 @@ CREATE TABLE sponsor_campaigns (
   pool_spark_total  int NOT NULL CHECK (pool_spark_total >= 0),
   pool_spark_used   int NOT NULL DEFAULT 0,
   holdout_bp        int NOT NULL DEFAULT 1000 CHECK (holdout_bp BETWEEN 0 AND 5000),
+  min_tier          moment_tier NOT NULL DEFAULT 'gold',
+  kill_drop_bp      int,                                         -- SPONSOR_BOX_KILL_DROP
   valid             tstzrange NOT NULL,
   is_active         boolean NOT NULL DEFAULT true,
   CHECK (pool_spark_used <= pool_spark_total)
 );
 
+CREATE TABLE sponsor_moment_exposures (       -- 순간에 후원 라벨이 붙었는지(노출 판정 결과)
+  moment_id    uuid PRIMARY KEY REFERENCES moments(id),
+  contract_id  uuid NOT NULL REFERENCES sponsor_contracts(id),
+  box_enabled  boolean NOT NULL,
+  decided_at   timestamptz NOT NULL DEFAULT now()
+);
+
 CREATE TABLE sponsor_holdout (
-  campaign_id  uuid NOT NULL REFERENCES sponsor_campaigns(id),
+  contract_id  uuid NOT NULL REFERENCES sponsor_contracts(id),
   user_id      uuid NOT NULL REFERENCES users(id),
   grp          holdout_group NOT NULL,
   assigned_at  timestamptz NOT NULL DEFAULT now(),
-  PRIMARY KEY (campaign_id, user_id)
+  PRIMARY KEY (contract_id, user_id)
 );
 
-CREATE TABLE lucky_box_opens (
+CREATE TABLE sponsor_box_opens (
   id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  campaign_id   uuid NOT NULL REFERENCES sponsor_campaigns(id),
+  contract_id   uuid NOT NULL REFERENCES sponsor_contracts(id),
   user_id       uuid NOT NULL REFERENCES users(id),
   moment_id     uuid NOT NULL REFERENCES moments(id),
   odds_version  text NOT NULL,
@@ -563,16 +620,17 @@ CREATE TABLE lucky_box_opens (
   spark         int NOT NULL DEFAULT 0,
   lot_id        uuid REFERENCES wallet_lots(id),
   client        client_kind NOT NULL,
-  picked_index  smallint CHECK (picked_index BETWEEN 0 AND 2),   -- 연출용 기록(결과와 무관)
+  picked_index  smallint CHECK (picked_index BETWEEN 0 AND 2),   -- 연출용 기록(결과와 무관, 선택)
+  rng_seed_ref  text NOT NULL,                                   -- 서버 난수 감사 기록
   opened_at     timestamptz NOT NULL DEFAULT now(),
   UNIQUE (user_id, moment_id),                                   -- 큰 순간 알림당 1회
-  CHECK ((result='none' AND spark=0) OR (result='spark5' AND spark=5) OR (result='spark10' AND spark=10))
+  CHECK ((result='miss' AND spark=0) OR (result='win' AND spark IN (5,10)))
 );
 
 -- ---------------------------------------------------------------------
 -- 11. 알림 노출 기록(빈도 상한·측정)
 -- ---------------------------------------------------------------------
-CREATE TABLE alert_impressions (
+CREATE TABLE headsup_impressions (
   id            bigserial PRIMARY KEY,
   user_id       uuid REFERENCES users(id),       -- 비로그인은 NULL + anon_id
   anon_id       text,
@@ -582,9 +640,10 @@ CREATE TABLE alert_impressions (
   shown_at      timestamptz NOT NULL DEFAULT now(),
   clicked_at    timestamptz,
   dismissed_at  timestamptz,
-  sponsor_campaign_id uuid REFERENCES sponsor_campaigns(id)
+  moment_cancelled boolean NOT NULL DEFAULT false,
+  sponsor_contract_id uuid REFERENCES sponsor_contracts(id)
 );
-CREATE INDEX ON alert_impressions (user_id, shown_at DESC);
+CREATE INDEX ON headsup_impressions (user_id, shown_at DESC);
 
 -- ---------------------------------------------------------------------
 -- 12. 메시지 발송(알림함)·수신 동의(§5-5·§5-7)
@@ -644,6 +703,28 @@ CREATE TABLE inbox_deliveries (
   PRIMARY KEY (message_id, user_id)
 );
 CREATE INDEX ON inbox_deliveries (user_id, delivered_at DESC);
+
+CREATE TABLE muse_lines (                        -- 서하 대사 세그먼트 캐시(/v1/ext/muse/lines)
+  id          bigserial PRIMARY KEY,
+  segment     text NOT NULL CHECK (segment IN ('pre','live','between','post')),
+  trigger_key text NOT NULL,
+  team_mode   text NOT NULL DEFAULT 'neutral',
+  lang        text NOT NULL CHECK (lang IN ('ko','en')),
+  body        text NOT NULL,
+  version     int NOT NULL,
+  UNIQUE (segment, trigger_key, team_mode, lang, version)
+);
+
+-- 측정 이벤트 수신(POST /v1/events) → DW 적재 전 버퍼(user_id는 가명 키)
+CREATE TABLE analytics_events_buffer (
+  id          bigserial PRIMARY KEY,
+  pseudo_user text,
+  client      client_kind NOT NULL,
+  name        text NOT NULL,
+  props       jsonb NOT NULL DEFAULT '{}',
+  occurred_at timestamptz NOT NULL,
+  received_at timestamptz NOT NULL DEFAULT now()
+);
 
 -- ---------------------------------------------------------------------
 -- 13. 환불·정산
@@ -778,7 +859,7 @@ CREATE TABLE idempotency_keys (
 
 CREATE TABLE outbox_events (
   id            bigserial PRIMARY KEY,
-  topic         text NOT NULL,                   -- 'boost.created','card.issued','moment.alert' ...
+  topic         text NOT NULL,                   -- 'boost.created','card.issued','moment.upcoming' ...
   aggregate_id  text NOT NULL,
   payload       jsonb NOT NULL,
   created_at    timestamptz NOT NULL DEFAULT now(),
@@ -825,30 +906,52 @@ CREATE TRIGGER boost_lot_usage_kind BEFORE INSERT ON boost_lot_usage
   FOR EACH ROW EXECUTE FUNCTION check_boost_lot_kind();
 
 -- 배지 단계 계산(설정값은 app_config 'badge_thresholds')
-CREATE FUNCTION badge_level(total int, cur currency_kind) RETURNS smallint LANGUAGE sql STABLE AS $$
+CREATE FUNCTION badge_level(total int, cur currency_kind) RETURNS smallint LANGUAGE sql STABLE SET search_path = rorr, public AS $$
   SELECT CASE
-    WHEN total >= (c.value->cur::text->>'l3')::int THEN 3
-    WHEN total >= (c.value->cur::text->>'l2')::int THEN 2
-    WHEN total >= (c.value->cur::text->>'l1')::int THEN 1
+    WHEN total >= (SELECT value::text::int FROM app_config WHERE key = 'BADGE_' || upper(cur::text) || '_L3') THEN 3
+    WHEN total >= (SELECT value::text::int FROM app_config WHERE key = 'BADGE_' || upper(cur::text) || '_L2') THEN 2
+    WHEN total >= (SELECT value::text::int FROM app_config WHERE key = 'BADGE_' || upper(cur::text) || '_L1') THEN 1
     ELSE 0 END::smallint
-  FROM app_config c WHERE c.key = 'badge_thresholds'
 $$;
 
 -- ---------------------------------------------------------------------
 -- 18. 초기 설정값(정책 §8 현재값 — 운영에서 변경)
 -- ---------------------------------------------------------------------
 INSERT INTO app_config (key, value, note) VALUES
- ('badge_thresholds',   '{"energy":{"l1":10,"l2":50,"l3":100},"spark":{"l1":5,"l2":20,"l3":50}}', '§4·§8 1차값'),
- ('boost_steps',        '{"energy":[10,50,100,500],"spark":[5,10,20,50]}', '스테퍼 단계'),
- ('boost_min',          '{"energy":10,"spark":5}', '최소 단가'),
- ('points',             '{"base":20,"tier":{"silver":10,"gold":30,"holo":60},"streak_step":10,"streak_max":100}', '§5-3'),
- ('ad_reward',          '{"spark_per_ad":5,"daily_limit":10,"min_gap_sec":null}', '§6, 임시'),
- ('refund',             '{"window_days":7,"fee_rate":0.05,"fee_min_krw":1000,"sla_business_days":3}', '§1-1, 임시'),
- ('expiry',             '{"paid_years":5,"bonus_days":365,"spark":"season_end"}', '§1-1'),
- ('bonus_energy_scope', '"rorr_deco"', 'v1.3 안 C'),
- ('headsup',            '{"web_gold_min_gap_sec":180,"web_max_per_visit":3,"holo_per_match":1,"ext_min_gap_sec":90}', '§5-4, ext는 제안값'),
- ('milestone_window_days', '3', '§4-2'),
- ('quiz',               '{"top_n":10,"pool":30,"table":[8,5,4,3,3,2,2,1,1,1],"gap_sec":180,"per_set":6}', '§5-6'),
- ('messaging',          '{"team_weekly_cap":1,"promo_weekly_cap":2,"daily_cap":3,"min_audience":50,"night":["21:00","08:00"]}', '§5-7, 제안'),
- ('partner_energy_share_floor', '0.20', 'v1.3 §6-1, 제안'),
- ('confirm_window_ms',  '5000', '두 번 누르기');
+ -- 응답 GET /v1/config 의 키 = 이 표의 key (정책 §8 이름, 평면)
+ ('min_ext_version',          '"2.0.0"', '구버전 확장 차단'),
+ ('flags',                    '{"sponsor_moment_enabled":false,"partner_official_label":false,"fav_player_star":true}', '기능 플래그'),
+ ('BOOST_SETTLE_MODE',        '"immediate"', 'OI-13 결정 전 기본. on_moment = 202 pending → SSE boost.settled/voided'),
+ ('STEP_ENERGY',              '[10,50,100,500]', '허용 금액(이 값만)'),
+ ('STEP_SPARK',               '[5,10,20,50]', '허용 금액(이 값만)'),
+ ('BADGE_ENERGY_L1',          '10',  '1단계 = 최소 단가'),
+ ('BADGE_ENERGY_L2',          '50',  '§8 1차값'),
+ ('BADGE_ENERGY_L3',          '100', '§8 1차값'),
+ ('BADGE_SPARK_L1',           '5',   '1단계 = 최소 단가'),
+ ('BADGE_SPARK_L2',           '20',  '§8 1차값'),
+ ('BADGE_SPARK_L3',           '50',  '§8 1차값 = 하루 광고 한도'),
+ ('POINTS_BASE',              '20',  '§5-3'),
+ ('POINTS_TIER',              '{"silver":10,"gold":30,"holo":60}', '§5-3'),
+ ('POINTS_STREAK_STEP',       '10',  '§5-3 — 첫 경기 0, 2경기째 +10 (BE-1 2026-10-17)'),
+ ('POINTS_STREAK_MAX',        '100', '§5-3'),
+ ('BOOST_CONFIRM_WINDOW_MS',  '5000', '두 번 누르기'),
+ ('HEADSUP_COUNTDOWN_S',      '40',  '큰 순간 알림 카운트다운'),
+ ('HEADSUP_GOLD_MIN_GAP',     '180', '웹 골드 배너 간격(초)'),
+ ('HEADSUP_WEB_MAX_PER_VISIT','3',   '웹 방문당'),
+ ('EXT_HEADSUP_MIN_GAP',      '90',  '확장(제안, 실측 후)'),
+ ('BOOST_GRACE_MS',           '0',   'BE-4 마감 직후 여유(지연 실측 후)'),
+ ('QUIZ_WINDOW_S',            '12',  '퀴즈 응답 시간'),
+ ('QUIZ_GRACE_MS',            '0',   '지연 실측 후'),
+ ('QUIZ_PRIZE',               '{"top_n":10,"pool":30,"table":[8,5,4,3,3,2,2,1,1,1]}', '§5-6'),
+ ('MOMENT_TIER_GOLD_PP',      '12',  '승률 변화 %p'),
+ ('MOMENT_TIER_HOLO_PP',      '30',  '승률 변화 %p'),
+ ('SPARK_PER_AD',             '5',   '§6 임시'),
+ ('AD_DAILY_LIMIT',           '10',  '§6'),
+ ('SPONSOR_BOX_ODDS',         '[[0,75],[5,20],[10,5]]', '§6-1 B 임시 [spark, %]'),
+ ('REFUND',                   '{"window_days":7,"fee_rate":0.05,"fee_min_krw":1000,"sla_business_days":3}', '§1-1 임시'),
+ ('EXPIRY',                   '{"paid_years":5,"bonus_days":365,"spark":"season_end"}', '§1-1'),
+ ('BONUS_ENERGY_SCOPE',       '"rorr_deco"', 'v1.3 안 C'),
+ ('MS_WINDOW_DAYS',           '3',   '§4-2'),
+ ('MESSAGE_MAX_CHARS',        '80',  'D-9 결정 대기(확장 60)'),
+ ('MESSAGING',                '{"team_weekly_cap":1,"promo_weekly_cap":2,"daily_cap":3,"min_audience":50,"night":["21:00","08:00"]}', '§5-7 제안'),
+ ('PARTNER_ENERGY_SHARE_FLOOR','0.20', 'v1.3 §6-1 제안');

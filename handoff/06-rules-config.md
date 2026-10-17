@@ -49,7 +49,7 @@
 | 배지 | 같은 순간 누적량, 재화별: Energy 10~49=1 · 50~99=2 · 100+=3 / Spark 5~19=1 · 20~49=2 · 50+=3 |
 | 에디션 | 발급 시점 협약 상태로 저장(`edition`), 렌더는 저장값 기준 |
 | 기념 에디션 | 파트너 선수만, 달성일 ±3일(`MS_WINDOW_DAYS`), 기념일당 1장, 등급 없음, 축하 순번 저장 |
-| 응원 포인트 | 순간당 1회 +20 · 크기 보너스 +10/+30/+60 · 연속 응원 경기당 +10(최대 +100, 경기당 첫 Boost에 1회) · 수량·광고 0 P |
+| 응원 포인트 | 순간당 1회 +20 · 크기 보너스 +10/+30/+60 · 연속 응원 보너스 = (연속 경기 수 − 1) × 10, 최대 +100 — **첫 경기 0, 2경기째 +10**(BE-1 2026-10-17, 정책 예시 '골드 = 50 P'), 경기당 첫 Boost에 1회 · 수량·광고 0 P |
 | 무작위 | 등급·배지·연출 무작위 금지. 예외: 행운 박스(판촉 추첨, 카드·배지·포인트에 직접 반영 없음) |
 | 복수 응원 팀 | 포인트·카드·연속 응원은 팀별 분리 적립. 양팀 응원 경기는 "그 순간을 만든 팀"에 적립, 화면에 "T1 응원" 명시 |
 
@@ -80,17 +80,27 @@
 
 ## 6. 설정 변수 (코드에 고정하지 않음)
 
-- 변수명은 정책 §8 표기를 따르며, 정책에 이름이 없는 항목(`SPARK_PER_AD` `DAILY_AD_LIMIT` `BADGE_*` `STEP_*` `HEADSUP_GOLD_MIN_GAP` `TEAM_SHARE_RATE` `MINOR_MONTHLY_CAP`)은 이 문서의 제안 이름
+- 원본은 `app_config`(`db/schema.sql` §18), 클라이언트는 `GET /v1/config`로 읽음(배분율 등 비공개 값 제외). 이름은 정책 §8 표기 + 웹·확장 통합 제안(2026-10-17)
 
 | 변수 | 현재 값 | 상태 | 조항 |
 |---|---|---|---|
 | `SPARK_PER_AD` | 5 | 임시 | §6 |
-| `DAILY_AD_LIMIT` | 10 | 기본 | §6 |
+| `AD_DAILY_LIMIT` | 10 | 기본 | §6 |
 | `SPARK_DAILY_CAP` | 미정 | 사업 | §8 |
 | `BADGE_ENERGY_L2` / `L3` | 50 / 100 | 1차값 | §8 |
 | `BADGE_SPARK_L2` / `L3` | 20 / 50 | 1차값 | §8 |
 | `STEP_ENERGY` | [10, 50, 100, 500] | 화면 | — |
 | `STEP_SPARK` | [5, 10, 20, 50] | 화면 | — |
+| `BOOST_SETTLE_MODE` | `immediate` | OI-13 결정 전 기본(`on_moment` = 202 → SSE 확정) | — |
+| `BOOST_CONFIRM_WINDOW_MS` | 5000 | 두 번 누르기 | — |
+| `BOOST_GRACE_MS` | 0 | 마감 직후 여유(BE-4, 지연 실측 후) | — |
+| `POINTS_BASE` / `POINTS_TIER` / `POINTS_STREAK_STEP` / `POINTS_STREAK_MAX` | 20 / {10,30,60} / 10 / 100 | 연속 보너스 = (연속 경기 − 1) × STEP | §5-3 |
+| `HEADSUP_COUNTDOWN_S` | 40 | 큰 순간 알림 카운트다운 | — |
+| `QUIZ_WINDOW_S` / `QUIZ_GRACE_MS` | 12 / 0 | 퀴즈 응답 시간·지연 여유 | §5-6 |
+| `MOMENT_TIER_GOLD_PP` / `MOMENT_TIER_HOLO_PP` | 12 / 30 | 순간 등급 기준(승률 변화 %p) | §4 |
+| `MESSAGE_MAX_CHARS` | 80 | 결정 대기(D-9, 확장 60) | §5-1 |
+| `min_ext_version` | 2.0.0 | 구버전 확장 차단 | — |
+| `flags.*` | `sponsor_moment_enabled` 등 | 기능 즉시 차단 | — |
 | `REFUND_FEE_RATE` / `REFUND_FEE_MIN_KRW` | 0.05 / 1000 | 임시 | §1-1 |
 | `BONUS_ENERGY_SCOPE` | rorr_deco | 결정 | §1-1 |
 | `SIGNUP_BONUS_START` | 첫 RORR 장식 출시일 | 미정 | §1-1 |

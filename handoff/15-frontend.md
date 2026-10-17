@@ -72,7 +72,7 @@ interface StepperProps { steps: number[]; value: number; onChange(n: number): vo
 
 interface SendButtonProps {                // 두 번 누르기 상태 기계(14 §2)
   currency: Currency; amount: number;
-  confirmWindowMs: number;                 // 서버 설정 confirm_window_ms
+  confirmWindowMs: number;                 // GET /v1/config BOOST_CONFIRM_WINDOW_MS
   disabled?: boolean;
   onConfirm(): Promise<void>;
 }
@@ -88,7 +88,7 @@ interface LuckyBoxStageProps {
   momentId: string;
   sponsor: SponsorLabel;
   container: 'fullscreen' | 'panel';       // 웹 / 확장(폭 304px)
-  onResult(r: LuckyBoxResult): void;       // r.next로 BoostBox preset
+  onResult(r: SponsorBoxResult): void;       // r.next로 BoostBox preset
 }
 
 interface IdentityHeaderProps {            // 패널 축소형 헤더(04 §2)
@@ -122,7 +122,7 @@ interface IdentityHeaderProps {            // 패널 축소형 헤더(04 §2)
 
 | 부분 | 역할 | 비고 |
 |---|---|---|
-| 사이드 패널(`side_panel`) | 모든 UI(React) | 하단 탭 Watch / Ranking / Me |
+| 사이드 패널(`side_panel`) | 모든 UI(React) | 독(질문·오늘의 모먼트·Boost) + 메뉴(v45) |
 | 서비스 워커 | 인증 토큰 보관·갱신, SSE 연결(패널 열림 동안), 탭 감지(`tabs.onUpdated`), 아이콘 배지, 경기 시작 알림(`alarms`·`notifications`) | 비활성 종료 전제 — 패널 열림 동안만 SSE 유지 |
 | 콘텐츠 스크립트 | 없음(권장) — `tabs` API로 URL·제목만 | DOM 삽입·변경 금지 |
 | 저장 | `chrome.storage.local`(설정·토큰·지연 오프셋·코치마크), IndexedDB(관계 기억) | |
@@ -141,7 +141,7 @@ interface IdentityHeaderProps {            // 패널 축소형 헤더(04 §2)
   · badge.clear
 ```
 
-- 패널이 닫혀 있으면 SW는 `moment.alert`(골드 이상)만 받아 아이콘 배지 표시, 푸시 알림은 띄우지 않음(정책 §5-4)
+- 패널이 닫혀 있으면 SW는 `moment.upcoming`(골드 이상)만 받아 아이콘 배지 표시, 푸시 알림은 띄우지 않음(정책 §5-4)
 - 충전 복귀: 패널 `visibilitychange`(visible) → `GET /me` 재조회 → 직전 상태가 Boost 시트·큰 순간 알림이면 시트를 Energy 선택으로 다시 엶
 
 ### 2-3. 권한

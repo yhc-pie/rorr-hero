@@ -3,7 +3,7 @@
 - 작성일: 2026-10-17 · 작성: Pitch Interactive(사업·디자인) · 대상: 웹(Next.js 포팅)·확장(MV3) 개발 담당
 - 기준 시점
   - 웹: `yhc-pie/rorr-hero` `main` **193dbc6** (`index.html` = `portal.html`)
-  - 확장: `rorr-extension` 목업 v44(`2c3d579`) 기준으로 대조. **확장 상세 명세는 확장 저장소 `handoff/`(v45, cb425fb)가 원본** — 화면 명세·컴포넌트 CSS·i18n·캡처 18장 포함
+  - 확장: `rorr-extension` 목업 v45(`cb425fb`) 기준으로 대조. **확장 상세 명세는 확장 저장소 `handoff/`(v45, cb425fb)가 원본** — 화면 명세·컴포넌트 CSS·i18n·캡처 18장 포함
   - 규칙: `docs/policy/boost-economy-policy.md` **v1.3**(2026-10-17)
 - 상태: 데모(서버 연결 없음). 화면·동작·규칙 확정본이며, 미정 값은 설정 변수로 둠
 
@@ -30,18 +30,19 @@
 |---|---|---|
 | [10-system-architecture.md](10-system-architecture.md) | 전체 구성도, 계층 책임, 권장 기술(CTO 확정 필요), 모노레포 구조, 비기능 목표, 구축 순서 | 전원 |
 | [11-flowcharts.md](11-flowcharts.md) | 플로차트 16종(Mermaid): 여정·Boost 판정·시퀀스·알림·행운 박스·충전·환불·광고·로그인·확장 매칭·퀴즈·기념·검수·발송·정산 | 전원 |
-| [12-api-spec.md](12-api-spec.md) + [api/openapi.yaml](api/openapi.yaml) + [api/realtime-events.md](api/realtime-events.md) | REST 43개 오퍼레이션, 공통 규약·오류 코드·요청 한도·화면→API 매핑, SSE 이벤트 계약 | FE·BE |
-| [13-data-model.md](13-data-model.md) + [db/](db/) | PostgreSQL 스키마(테이블 52·뷰 4), ERD, 불변식, **실행 가능한 참조 구현**(Boost·행운 박스)과 테스트 37건 | BE |
+| [12-api-spec.md](12-api-spec.md) + [api/openapi.yaml](api/openapi.yaml) + [api/realtime-events.md](api/realtime-events.md) | **웹·확장 공용 단일 API** 54개(공용 32·웹 13·확장 9), 공통 규약·오류 코드·요청 한도·화면→API 매핑, SSE 이벤트 계약 | FE·BE |
+| [13-data-model.md](13-data-model.md) + [db/](db/) | **웹·확장 공용 단일 스키마**(테이블 59·뷰 4), ERD, 불변식, **실행 가능한 참조 구현**(Boost·행운 박스)과 테스트 41건 | BE |
 | [14-interaction-spec.md](14-interaction-spec.md) | 상태 기계 7종(Boost 상자·주 버튼·알림·행운 박스·헤더·실시간·확장 S0~S5), 카드 공개 분기, 이벤트→화면 표 | FE |
 | [15-frontend.md](15-frontend.md) | 웹 라우트 트리·상태 계층·오버레이 매니저·공용 컴포넌트 인터페이스, 확장 구성·메시지 흐름·권한 | FE |
 | [16-middle-tier.md](16-middle-tier.md) | BFF·게이트웨이(인증 통합·CSRF·멱등·한도·응답 필터)·실시간 게이트웨이·캐시 | FE·BE·인프라 |
+| [18-canonical-merge.md](18-canonical-merge.md) | 웹·확장 두 설계를 하나로 합친 기록 — 항목 30개별 채택 근거, 확장 쪽 변경 사항(E-1~E-6) | 전원 |
 | [17-backend.md](17-backend.md) | 도메인 모듈 16개, 핵심 트랜잭션(Boost·충전·환불·정산), 순간 감지 워커, 배치, 외부 연동, 관측 | BE |
 
 ## 2. 기준 자료 우선순위 (충돌 시)
 
 1. **규칙** — 정책 v1.3. 화면·문구·데이터 모델이 정책과 다르면 정책을 따른다
 2. **화면·동작** — 웹 `index.html`(193dbc6) 실측값(`getComputedStyle`). CSS 원문은 같은 셀렉터를 여러 번 덮어쓰므로 원문 위쪽 정의를 옮기지 않는다
-3. **확장 화면** — 확장 목업 v44 + 확장 `docs/02`(기능 명세)·`docs/03`(화면·흐름)
+3. **확장 화면** — 확장 목업 v45 + 확장 `docs/02`(기능 명세)·`docs/03`(화면·흐름)
 4. **토큰** — 이 패키지 `tokens/tokens.css`. 웹·확장 불일치 항목은 `02-tokens.md` §4 결정 후 적용
 5. **변경 이력** — 웹 `docs/HANDOFF.md` §5(커밋별), 확장 `docs/13-design-review.md`(버전별)
 

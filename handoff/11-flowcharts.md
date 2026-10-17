@@ -57,24 +57,24 @@ flowchart TD
 flowchart TD
   S["POST /v1/boosts"] --> I{"Idempotency-Key 기존?"}
   I -- "완료" --> R0["처음 응답 재반환"]
-  I -- "신규" --> M{"amount ≥ 최소 단가?"}
-  M -- "아니오" --> E1["422 amount_below_min"]
+  I -- "신규" --> M{"amount ∈ STEP_ENERGY·STEP_SPARK?"}
+  M -- "아니오" --> E1["422 amount_not_allowed"]
   M -- "예" --> P{"팀 협약 유효?<br/>(현재 시각)"}
   P -- "아니오" --> PE{"currency = energy?"}
   PE -- "예" --> E2["422 energy_not_allowed"]
   PE -- "아니오(Spark)" --> W
   P -- "예" --> NV{"Energy면 고지 버전 최신?"}
-  NV -- "아니오" --> E3["422 notice_version_stale"]
+  NV -- "아니오" --> E3["422 disclosure_version_stale"]
   NV -- "예" --> W{"순간·기념 창 열림?"}
   W -- "아니오" --> E4["409 moment_closed / milestone_closed"]
   W -- "예 또는 순간 미선택" --> D["묶음 잠금·차감<br/>Energy=유료만 / Spark"]
   D --> B{"잔액 충분?"}
-  B -- "아니오" --> E5["402 insufficient_balance<br/>(전체 롤백)"]
+  B -- "아니오" --> E5["409 insufficient_paid_energy·insufficient_spark<br/>(전체 롤백)"]
   B -- "예" --> T["moment_totals 누적 → 배지 재계산"]
   T --> C{"이 순간·기념일 카드 있음?"}
   C -- "없음" --> C1["카드 발급<br/>에디션=발급 시점 협약<br/>주인공=내 선수(참여 시)→기여 1위"]
   C -- "있음" --> C2["카드 유지 · level_up 판정"]
-  C1 --> PT["포인트: base+tier(순간당 1회)<br/>streak(경기·팀당 1회)"]
+  C1 --> PT["포인트: base+tier(순간당 1회)<br/>streak=(연속 경기−1)×10(경기·팀당 1회, 첫 경기 0)"]
   C2 --> OB
   PT --> OB["아웃박스 boost.created · 메시지 검수 큐"]
   OB --> R["201 BoostResult"]
@@ -109,14 +109,14 @@ sequenceDiagram
   FE->>U: 연출 → 카드(신규·배지 상승·N 남음)
   OB->>DB: 미발행 outbox 읽기
   OB->>RT: boost.created (Redis)
-  RT-->>FE: boosting.count (5초 집계)
+  RT-->>FE: moment.stats (5초 집계)
 ```
 
 ## F-4. 큰 순간 알림 표시 판정 (클라이언트)
 
 ```mermaid
 flowchart TD
-  A["SSE moment.alert 수신"] --> B{"tier = silver?"}
+  A["SSE moment.upcoming 수신"] --> B{"tier = silver?"}
   B -- "예" --> X["표시 안 함"]
   B -- "아니오" --> C{"alert_level 설정"}
   C -- "off" --> X
@@ -134,7 +134,7 @@ flowchart TD
   I --> S
   S -- "예" --> SP["후원 줄: 라벨 + 행운 박스 열기 + 확률"]
   S -- "라벨만" --> SL["후원 라벨"]
-  H --> L["POST /alerts/impressions shown"]
+  H --> L["POST /headsup/impressions shown"]
   I --> L
 ```
 
@@ -153,7 +153,7 @@ sequenceDiagram
   end
   FE->>FE: 무대 열기(250ms) · 후원 라벨·확률 상시
   FE->>FE: 섞기 1.5초 (서버 호출과 병행)
-  FE->>API: POST /moments/{id}/lucky-box {picked_index}
+  FE->>API: POST /sponsor/boxes {picked_index}
   API->>DB: 캠페인 잠금 · 홀드아웃 · 미성년 · 1회 확인 · 서버 난수 · 총량 차감 · Spark 묶음
   DB-->>API: result
   API-->>FE: {result, spark, next}
@@ -179,7 +179,7 @@ sequenceDiagram
   participant API as API
   U->>W: Boost(Energy 50)
   W->>API: POST /boosts
-  API-->>W: 402 insufficient_balance {need:50, have:20, bonus_only:false}
+  API-->>W: 409 insufficient_paid_energy {need:50, have:20, bonus_available:false}
   W->>U: 토스트 "Energy 50 필요 · 보유 20"
   W->>W: /account/energy?return_to=/team/T1?tab=cheer&moment=…&cur=energy&amt=50
   W->>U: 상단 배너(부족 30 · 돌아가기) + 충분한 최소 팩 강조
@@ -188,7 +188,7 @@ sequenceDiagram
   rect rgba(127,127,127,0.08)
   U->>X: Boost(Energy 50)
   X->>API: POST /boosts
-  API-->>X: 402
+  API-->>X: 409 insufficient_paid_energy
   X->>U: 토스트 + "rorr.club에서 충전" (새 탭)
   U->>X: 패널로 돌아옴(visibilitychange)
   X->>API: GET /me
@@ -302,7 +302,7 @@ sequenceDiagram
 flowchart TD
   A["탭 활성·URL 변경"] --> B{"지원 호스트?<br/>YouTube·치지직·SOOP·Twitch"}
   B -- "아니오" --> S1["S1 평시: Muse 채팅 + 다음 경기"]
-  B -- "예" --> C["POST /ext/match-resolve {host,url,title}"]
+  B -- "예" --> C["POST /ext/match/resolve {host,url,title}"]
   C --> D{"match_id 확정?"}
   D -- "예" --> E["SSE 구독 + 기본 오프셋 적용"]
   D -- "후보 여러 개" --> F["경기 선택 목록"] --> E
